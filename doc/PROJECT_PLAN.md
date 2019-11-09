@@ -2,8 +2,8 @@
 
 ## Mid-point Demo Goals by Module
 
-### Graphical Authoring Environment (GAE)
-* Complete uses cases unrelated to Live Game Editing
+### Gaphical Authoring Environment (GAE)
+* Complete use cases unrelated to Live Game Editing
 * Export an XML file with game setup 
 
 ### Game Player
@@ -46,16 +46,10 @@
 
 ## Game Player
 
-* Michael Castro (mc546)
-    * Build and populate game map component based on attributes set in XML or from the serialized game object
-    * Build right pane used to select and upgrade towers and obstacles, as well as drag and drop feature
-    * Create game loop that can start the animation of enemies spawning and following the path as well as tower projectile/attack animations
-* Ben Keegan (bk142)
-    * Build and populate game map component based on attributes set in XML or from the serialized game object
-    * Build right pane used to select and upgrade towers and obstacles, as well as drag and drop feature
-    * Create game loop that can start the animation of enemies spawning and following the path as well as tower projectile/attack animations
 * Sumer Vardhan (sv110)
-    * Build and populate game map component based on attributes set in XML or from the serialized game object
+    * Visualise game from XML file and Serializable Objects
+
+* Michael Castro (mc546), Ben Keegan (bk142)
     * Build right pane used to select and upgrade towers and obstacles, as well as drag and drop feature
     * Create game loop that can start the animation of enemies spawning and following the path as well as tower projectile/attack animations
 
@@ -74,4 +68,3 @@
     * Create Sprite class and its subclass that represents the different actors in every level
     * Write HandleDeath which handles the consequences of a sprite's death on the game and removes it from the level
     * Handle map of objects passed in from the XML file and parse them into sprite objects 
-
