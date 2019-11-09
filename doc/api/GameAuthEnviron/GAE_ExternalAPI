@@ -1,7 +1,0 @@
-public interface GAE_ExternalAPI {
-
-    XMLWriter
-        public void updateXML(File xml)
-        public void exportToXML()
-
-}
