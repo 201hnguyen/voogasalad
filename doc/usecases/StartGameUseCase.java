@@ -1,5 +1,7 @@
-import GamePlayer
+package useCases;
 
-public class GamePlayer implements GamePlayerExternalAPI, GamePlayerInternalAPI {
-
+public class GamePlayerUseCase{
+    GamePlayer obj = new GamePlayer();
+    obj.loadXML(String xmlPath);
+    obj.startGame();
 }
