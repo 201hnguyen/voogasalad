@@ -3,7 +3,8 @@ package voogasalad.gameengine.engine.action.auto;
 import voogasalad.gameengine.engine.elements.Level;
 import voogasalad.gameengine.engine.elements.LevelMap;
 import voogasalad.gameengine.playerengineapi.specs.SpritePrototypeSpecs;
-import voogasalad.gameengine.playerengineapi.sprites.ConcreteSprite;
+import voogasalad.gameengine.playerengineapi.sprites.JavaFXSprite;
+import voogasalad.gameengine.playerengineapi.sprites.Sprite;
 
 import java.awt.Point;
 import java.util.List;
@@ -21,10 +22,10 @@ public class SpawnSpritesAutoAction implements GameAutoAction {
 
         for (Point spawnCoordinate : enemySpawnCoordinates) {
             System.out.println("Will be spawning enemies at this coordinate:" + spawnCoordinate);
-            //TODO: This should be spawning waves instead of sprites, and shouldn't be calling new
+            //TODO: This should be spawning waves instead of sprites, and shouldn't be calling new; also use factories or some shit to construct JavaFXSprite so we're not explicitly calling it
             for (SpritePrototypeSpecs prototypeSpec : level.getSpritePrototypeSpecs()) {
-                ConcreteSprite sampleConcreteSprite = new ConcreteSprite(spawnCoordinate.x, spawnCoordinate.y, level.getNextSpriteId(), prototypeSpec);
-                level.getSpriteManager().addSprite(sampleConcreteSprite);
+                Sprite sampleSprite = new JavaFXSprite(spawnCoordinate.x, spawnCoordinate.y, level.getNextSpriteId(), prototypeSpec);
+                level.getSpriteManager().addSprite(sampleSprite);
             }
         }
 

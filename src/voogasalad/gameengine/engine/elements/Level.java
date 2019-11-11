@@ -2,12 +2,12 @@ package voogasalad.gameengine.engine.elements;
 
 import voogasalad.gameengine.playerengineapi.specs.LevelSpecs;
 import voogasalad.gameengine.playerengineapi.specs.SpritePrototypeSpecs;
-import voogasalad.gameengine.playerengineapi.sprites.ConcreteSpriteManager;
+import voogasalad.gameengine.playerengineapi.sprites.JavaFXSpriteManager;
 
 import java.util.Set;
 
 public class Level {
-    ConcreteSpriteManager myConcreteSpriteManager;
+    JavaFXSpriteManager myJavaFXSpriteManager;
     LevelMap myLevelMap;
     LevelSpecs myLevelSpecs;
     int mySpriteIdGenerator;
@@ -15,7 +15,7 @@ public class Level {
     public Level(LevelSpecs levelSpecs) {
         myLevelSpecs = levelSpecs;
         mySpriteIdGenerator = 0;
-        myConcreteSpriteManager = new ConcreteSpriteManager();
+        myJavaFXSpriteManager = new JavaFXSpriteManager();
         myLevelMap = new LevelMap(levelSpecs.getLevelMapSpecs());
     }
 
@@ -31,8 +31,8 @@ public class Level {
         return mySpriteIdGenerator++;
     }
 
-    public ConcreteSpriteManager getSpriteManager() {
-        return myConcreteSpriteManager;
+    public JavaFXSpriteManager getSpriteManager() {
+        return myJavaFXSpriteManager;
     }
 
 }

@@ -3,10 +3,10 @@ package voogasalad.gameengine.playerengineapi.sprites;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConcreteSpriteManager implements SpriteManager {
+public class JavaFXSpriteManager implements SpriteManager {
     List<Sprite> myOnScreenSprites;
 
-    public ConcreteSpriteManager() {
+    public JavaFXSpriteManager() {
         myOnScreenSprites = new ArrayList<>();
     }
 
