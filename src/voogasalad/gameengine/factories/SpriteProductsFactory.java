@@ -8,7 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ResourceBundle;
 
 public class SpriteProductsFactory {
-    public static final String SPRITE_FRONTEND_RESOURCE_PATH = "resources.SpriteFrontend";
+    public static final String SPRITE_FRONTEND_RESOURCE_PATH = "resources.SpriteFrontendSelection";
     private final static String CLASS_PATH = "voogasalad.gameengine.playerengineapi.sprites.";
     private final ResourceBundle SpriteFrontendSelection = ResourceBundle.getBundle(SPRITE_FRONTEND_RESOURCE_PATH);
 
