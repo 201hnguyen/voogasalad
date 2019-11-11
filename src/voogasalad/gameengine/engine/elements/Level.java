@@ -1,5 +1,6 @@
 package voogasalad.gameengine.engine.elements;
 
+import voogasalad.gameengine.factories.SpriteProductsFactory;
 import voogasalad.gameengine.playerengineapi.specs.LevelSpecs;
 import voogasalad.gameengine.playerengineapi.specs.SpritePrototypeSpecs;
 import voogasalad.gameengine.playerengineapi.sprites.JavaFXSpriteManager;
@@ -14,10 +15,11 @@ public class Level {
     int mySpriteIdGenerator;
 
     public Level(LevelSpecs levelSpecs) {
+        SpriteProductsFactory spriteProductsFactory = new SpriteProductsFactory();
         myLevelSpecs = levelSpecs;
         mySpriteIdGenerator = 0;
         //TODO: This shouldn't be created using new and calling explicitly to JavaFXSpriteManager
-        mySpriteManager = new JavaFXSpriteManager();
+        mySpriteManager = spriteProductsFactory.makeSpriteManager();
         myLevelMap = new LevelMap(levelSpecs.getLevelMapSpecs());
     }
 
