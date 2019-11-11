@@ -18,6 +18,6 @@ public class ConcreteSprite implements Sprite {
     }
 
     public void printSpriteInfo() {
-        System.out.println("SPRITE INFO: x coordinate: " + myXCenterCoordinate + " | y coordinate: " + myYCenterCoordinate + " | health: " + myHealth + " | id: " + mySpriteId);
+        System.out.println("SPRITE INFO: x coordinate: " + myXCenterCoordinate + " | y coordinate: " + myYCenterCoordinate + " | health: " + myHealth + " | id: " + mySpriteId + " | prototype id: " + myPrototypeSpecs.getPrototypeId());
     }
 }
