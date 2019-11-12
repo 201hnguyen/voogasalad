@@ -1,14 +1,20 @@
 package voogasalad;
 
+import GamePlayer.Player;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
-/**
- * Feel free to completely change this code or delete it entirely. 
- */
-public class Main {
-    /**
-     * Start of the program.
-     */
+public class Main extends Application {
+
+    public static final String XML = "src/Example_Resources/MockData.xml";
+
     public static void main (String[] args) {
-        System.out.println("Hello world");
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        Player player = new Player(primaryStage, XML);
+        player.startGame();
     }
 }
