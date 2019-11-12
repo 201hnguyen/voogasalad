@@ -1,8 +1,8 @@
 package voogasalad.gameengine.playerengineapi.specs;
 
 public class SpritePrototypeSpecs {
-    private int myHealth;
-    private int myPrototypeId;
+    private final int myHealth;
+    private final int myPrototypeId;
 
     public SpritePrototypeSpecs(int health, int prototypeId) {
         myHealth = health;

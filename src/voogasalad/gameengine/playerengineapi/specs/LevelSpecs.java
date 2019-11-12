@@ -3,8 +3,8 @@ package voogasalad.gameengine.playerengineapi.specs;
 import java.util.Set;
 
 public class LevelSpecs {
-    LevelMapSpecs myLevelMapSpecs;
-    Set<SpritePrototypeSpecs> mySpritePrototypeSpecs;
+    private final LevelMapSpecs myLevelMapSpecs;
+    private final Set<SpritePrototypeSpecs> mySpritePrototypeSpecs;
 
     public LevelSpecs(LevelMapSpecs levelMapSpecs, Set<SpritePrototypeSpecs> spritePrototypeSpecs) {
         mySpritePrototypeSpecs = spritePrototypeSpecs;

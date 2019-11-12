@@ -2,11 +2,11 @@ package voogasalad.gameengine.playerengineapi.specs;
 
 public class LevelMapSpecs {
 
-    private int myScreenWidth;
-    private int myScreenHeight;
-    private int myNumRows;
-    private int myNumColumns;
-    private int[] myMapEncodings;
+    private final int myScreenWidth;
+    private final int myScreenHeight;
+    private final int myNumRows;
+    private final int myNumColumns;
+    private final int[] myMapEncodings;
 
     public LevelMapSpecs(int numRows, int numCols, int[] mapEncodings, int screenWidth, int screenHeight) {
         myNumRows = numRows;
