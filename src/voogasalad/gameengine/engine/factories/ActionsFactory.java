@@ -5,13 +5,13 @@ import voogasalad.gameengine.engine.exceptions.GameEngineException;
 
 import java.lang.reflect.InvocationTargetException;
 
-public class ActionFactory {
+public class ActionsFactory {
 
     public GameAction makeGameAction(String action) throws GameEngineException {
         try {
             return (GameAction) Class.forName(action).getConstructor().newInstance();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | ClassNotFoundException e) {
-            throw new GameEngineException(e, "ActionExecutionFailed");
+            throw new GameEngineException(e, "ActionFailedAtInitializationStage");
         }
     }
 }

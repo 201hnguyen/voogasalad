@@ -3,28 +3,28 @@ package voogasalad.gameengine.engine.conditions;
 import voogasalad.gameengine.engine.action.GameAction;
 import voogasalad.gameengine.engine.elements.Level;
 import voogasalad.gameengine.engine.exceptions.GameEngineException;
-import voogasalad.gameengine.engine.factories.ActionFactory;
+import voogasalad.gameengine.engine.factories.ActionsFactory;
 
 public class TemporalGameCondition implements GameCondition {
 
     int myMarkedTime;
     String myActionName;
-    ActionFactory myActionFactory;
+    ActionsFactory myActionsFactory;
 
     public TemporalGameCondition(int markedTime, String actionName) {
         myMarkedTime = markedTime;
         myActionName = actionName;
-        myActionFactory = new ActionFactory();
+        myActionsFactory = new ActionsFactory();
     }
 
     @Override
-    public boolean conditionIsMet(Level level) {
+    public boolean isMet(Level level) {
         return level.getElapsedTime() == myMarkedTime;
     }
 
     @Override
     public void executeAction(Level level) throws GameEngineException {
-        GameAction action = myActionFactory.makeGameAction(myActionName);
+        GameAction action = myActionsFactory.makeGameAction(myActionName);
         action.executeAction(level);
     }
 }

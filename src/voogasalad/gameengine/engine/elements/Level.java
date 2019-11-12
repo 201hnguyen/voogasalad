@@ -34,7 +34,7 @@ public class Level {
 
     public void executeNextScene() throws GameEngineException {
         for (GameCondition gameCondition: myLevelGameConditions) {
-            if (gameCondition.conditionIsMet(this)) {
+            if (gameCondition.isMet(this)) {
                 gameCondition.executeAction(this);
             }
         }

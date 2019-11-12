@@ -4,6 +4,6 @@ import voogasalad.gameengine.engine.elements.Level;
 import voogasalad.gameengine.engine.exceptions.GameEngineException;
 
 public interface GameCondition {
-    boolean conditionIsMet(Level level);
+    boolean isMet(Level level);
     void executeAction(Level level) throws GameEngineException;
 }
