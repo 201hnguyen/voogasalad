@@ -1,9 +1,9 @@
-package voogasalad.gameengine.engine.action.auto;
+package voogasalad.gameengine.engine.action;
 
 import voogasalad.gameengine.engine.elements.Level;
 import voogasalad.gameengine.engine.elements.LevelMap;
 import voogasalad.gameengine.engine.exceptions.GameEngineException;
-import voogasalad.gameengine.factories.SpriteProductsFactory;
+import voogasalad.gameengine.engine.factories.SpriteProductsFactory;
 import voogasalad.gameengine.playerengineapi.specs.SpritePrototypeSpecs;
 import voogasalad.gameengine.playerengineapi.sprites.Sprite;
 
@@ -11,7 +11,7 @@ import java.awt.Point;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class SpawnSpritesAutoAction implements GameAutoAction {
+public class SpawnNextWaveAction implements GameAction {
 
     public static final String MAP_CODES_RESOURCE_PATH = "resources.MapCodes";
 

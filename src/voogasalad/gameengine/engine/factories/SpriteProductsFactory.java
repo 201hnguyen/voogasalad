@@ -1,4 +1,4 @@
-package voogasalad.gameengine.factories;
+package voogasalad.gameengine.engine.factories;
 
 import voogasalad.gameengine.engine.exceptions.GameEngineException;
 import voogasalad.gameengine.playerengineapi.specs.SpritePrototypeSpecs;

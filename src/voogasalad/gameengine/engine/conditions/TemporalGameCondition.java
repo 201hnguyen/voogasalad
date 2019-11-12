@@ -1,0 +1,30 @@
+package voogasalad.gameengine.engine.conditions;
+
+import voogasalad.gameengine.engine.action.GameAction;
+import voogasalad.gameengine.engine.elements.Level;
+import voogasalad.gameengine.engine.exceptions.GameEngineException;
+import voogasalad.gameengine.engine.factories.ActionFactory;
+
+public class TemporalGameCondition implements GameCondition {
+
+    int myMarkedTime;
+    String myActionName;
+    ActionFactory myActionFactory;
+
+    public TemporalGameCondition(int markedTime, String actionName) {
+        myMarkedTime = markedTime;
+        myActionName = actionName;
+        myActionFactory = new ActionFactory();
+    }
+
+    @Override
+    public boolean conditionIsMet(Level level) {
+        return level.getElapsedTime() == myMarkedTime;
+    }
+
+    @Override
+    public void executeAction(Level level) throws GameEngineException {
+        GameAction action = myActionFactory.makeGameAction(myActionName);
+        action.executeAction(level);
+    }
+}
