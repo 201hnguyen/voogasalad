@@ -7,8 +7,8 @@ public class GameEngineException extends Exception {
     private static final String EXCEPTIONS_MESSAGES_RESOURCE_PATH = "resources.ExceptionsEnglish";
     private static final ResourceBundle EXCEPTION_MESSAGES_BUNDLE = ResourceBundle.getBundle(EXCEPTIONS_MESSAGES_RESOURCE_PATH);
 
-    private Throwable myThrowableEx = new Exception();
-    private String myMessageKey;
+    private final Throwable myThrowableEx;
+    private final String myMessageKey;
 
 
     public GameEngineException(Throwable e, String exceptionMessageKey) {
@@ -17,6 +17,7 @@ public class GameEngineException extends Exception {
     }
 
     public GameEngineException(String exceptionMessageKey) {
+        myThrowableEx = new Throwable();
         myMessageKey = exceptionMessageKey;
     }
 

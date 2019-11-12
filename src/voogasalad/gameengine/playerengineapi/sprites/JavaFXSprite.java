@@ -6,8 +6,8 @@ public class JavaFXSprite implements Sprite {
     private int myXCenterCoordinate;
     private int myYCenterCoordinate;
     private int myHealth;
-    private int mySpriteId;
-    private SpritePrototypeSpecs myPrototypeSpecs;
+    private final int mySpriteId;
+    private final SpritePrototypeSpecs myPrototypeSpecs;
 
     public JavaFXSprite(int xPos, int yPos, int spriteId, SpritePrototypeSpecs spritePrototypeSpecs) {
         myPrototypeSpecs = spritePrototypeSpecs;

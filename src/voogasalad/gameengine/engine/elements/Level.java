@@ -9,11 +9,11 @@ import voogasalad.gameengine.playerengineapi.sprites.SpriteManager;
 import java.util.Set;
 
 public class Level {
-    SpriteManager mySpriteManager;
-    LevelMap myLevelMap;
-    LevelSpecs myLevelSpecs;
-    int mySpriteIdGenerator;
-    int myStartTime;
+    private final SpriteManager mySpriteManager;
+    private LevelMap myLevelMap;
+    private LevelSpecs myLevelSpecs;
+    private int mySpriteIdGenerator;
+    private int myStartTime;
 
     public Level(LevelSpecs levelSpecs, int startTime) throws GameEngineException {
         SpriteProductsFactory spriteProductsFactory = new SpriteProductsFactory();
