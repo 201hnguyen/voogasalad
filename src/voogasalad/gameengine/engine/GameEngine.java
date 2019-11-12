@@ -2,23 +2,25 @@ package voogasalad.gameengine.engine;
 
 import voogasalad.gameengine.engine.action.auto.SpawnSpritesAutoAction;
 import voogasalad.gameengine.engine.elements.Level;
+import voogasalad.gameengine.engine.exceptions.GameEngineException;
 import voogasalad.gameengine.playerengineapi.specs.LevelSpecs;
 
 public class GameEngine {
 
-    private Level myLevel;
+    private LevelSpecs myLevelSpecs;
+    private Level myCurrentLevel;
 
-    public GameEngine() {
-
+    public GameEngine(LevelSpecs levelSpecs) {
+        myLevelSpecs = levelSpecs;
     }
 
-    public void createNewLevel(LevelSpecs levelSpecs) {
-        myLevel = new Level(levelSpecs);
-    }
+    public void executeNextScene(int elapsedTime) throws GameEngineException {
+        //TODO: Check conditions and figure out what to do
+        if (elapsedTime == 0) { // this is basically a condition of the like that you check for
+            myCurrentLevel = new Level(myLevelSpecs, elapsedTime);
+        }
 
-    public void executeNextScene(int elapsedTime) {
-        //TODO: Check conditions, then decide what to do for this time
         SpawnSpritesAutoAction spawnSpritesAction = new SpawnSpritesAutoAction();
-        spawnSpritesAction.executeAction(myLevel);
+        spawnSpritesAction.executeAction(myCurrentLevel);
     }
 }
