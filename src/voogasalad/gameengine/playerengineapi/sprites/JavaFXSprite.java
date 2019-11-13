@@ -5,7 +5,6 @@ import voogasalad.gameengine.playerengineapi.specs.SpritePrototypeSpecs;
 public class JavaFXSprite implements Sprite {
     private int myXCenterCoordinate;
     private int myYCenterCoordinate;
-    private int myHealth;
     private final int mySpriteId;
     private final SpritePrototypeSpecs myPrototypeSpecs;
 
@@ -13,11 +12,10 @@ public class JavaFXSprite implements Sprite {
         myPrototypeSpecs = spritePrototypeSpecs;
         myXCenterCoordinate = xPos;
         myYCenterCoordinate = yPos;
-        myHealth = spritePrototypeSpecs.getHealth();
         mySpriteId = spriteId;
     }
 
     public void printSpriteInfo() {
-        System.out.println("SPRITE INFO: x coordinate: " + myXCenterCoordinate + " | y coordinate: " + myYCenterCoordinate + " | health: " + myHealth + " | id: " + mySpriteId + " | prototype id: " + myPrototypeSpecs.getPrototypeId());
+        System.out.println("SPRITE INFO: x coordinate: " + myXCenterCoordinate + " | y coordinate: " + myYCenterCoordinate + " | id: " + mySpriteId + " | prototype id: " + myPrototypeSpecs.getPrototypeId());
     }
 }
