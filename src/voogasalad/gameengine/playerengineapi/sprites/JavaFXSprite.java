@@ -1,11 +1,13 @@
 package voogasalad.gameengine.playerengineapi.sprites;
 
+import voogasalad.gameengine.engine.spritestrategies.health.HealthStrategy;
 import voogasalad.gameengine.playerengineapi.specs.SpritePrototypeSpecs;
 
 public class JavaFXSprite implements Sprite {
     private int myXCenterCoordinate;
     private int myYCenterCoordinate;
     private final int mySpriteId;
+    private HealthStrategy myHealthStrategy;
     private final SpritePrototypeSpecs myPrototypeSpecs;
 
     public JavaFXSprite(int xPos, int yPos, int spriteId, SpritePrototypeSpecs spritePrototypeSpecs) {
