@@ -2,7 +2,6 @@ package voogasalad;
 
 import voogasalad.gameengine.engine.GameEngine;
 import voogasalad.gameengine.engine.conditions.GameCondition;
-import voogasalad.gameengine.engine.conditions.TemporalGameCondition;
 import voogasalad.gameengine.engine.exceptions.GameEngineException;
 import voogasalad.gameengine.playerengineapi.specs.LevelMapSpecs;
 import voogasalad.gameengine.playerengineapi.specs.LevelSpecs;
@@ -17,15 +16,12 @@ public class MockPlayer {
 
     public MockPlayer() {
         int[] myMapEncodings = new int[] {0, 0, 0, 2, 1, 1, 0, 0, 0};
-        GameCondition spawnCondition = new TemporalGameCondition(2, "voogasalad.gameengine.engine.action.SpawnNextWaveAction");
-        GameCondition spawnCondition2 = new TemporalGameCondition(4, "voogasalad.gameengine.engine.action.SpawnNextWaveAction");
-        List<GameCondition> levelConditions = new ArrayList<>(){{ add(spawnCondition); add(spawnCondition2); }};
 
         LevelMapSpecs levelMapSpecs = new LevelMapSpecs(3, 3, myMapEncodings, 900, 900);
         SpritePrototypeSpecs spritePrototypeSpecs1 = new SpritePrototypeSpecs(10, 1);
         SpritePrototypeSpecs spritePrototypeSpecs2 = new SpritePrototypeSpecs(15, 2);
         Set<SpritePrototypeSpecs> spritePrototypes = new HashSet<>() {{ add(spritePrototypeSpecs1); add(spritePrototypeSpecs2); }} ;
-        LevelSpecs levelSpecs = new LevelSpecs(levelMapSpecs, spritePrototypes, levelConditions);
+        LevelSpecs levelSpecs = new LevelSpecs(levelMapSpecs, spritePrototypes, new ArrayList<>());
         GameEngine engine = new GameEngine(levelSpecs);
 
         int maxTime = 10;

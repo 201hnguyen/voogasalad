@@ -18,6 +18,7 @@ public class GameEngine {
     public void executeNextScene(double elapsedTime) throws GameEngineException {
         // check events --> implement actions
         // check conditions --> implement actions
+        // check currently happening actions????
         myTotalTimePassed+= elapsedTime;
         System.out.println("CURRENT TIME: " + myTotalTimePassed);
         if (myTotalTimePassed == 0.5) { // this is basically a condition of the like that you check for
