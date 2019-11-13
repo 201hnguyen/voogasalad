@@ -8,15 +8,19 @@ public class GameEngine {
 
     private LevelSpecs myLevelSpecs;
     private Level myCurrentLevel;
+    private double myTotalTimePassed;
 
     public GameEngine(LevelSpecs levelSpecs) {
         myLevelSpecs = levelSpecs;
+        myTotalTimePassed = 0;
     }
 
-    public void executeNextScene(int elapsedTime) throws GameEngineException {
+    public void executeNextScene(double elapsedTime) throws GameEngineException {
         // check events --> implement actions
         // check conditions --> implement actions
-        if (elapsedTime == 0) { // this is basically a condition of the like that you check for
+        myTotalTimePassed+= elapsedTime;
+        System.out.println("CURRENT TIME: " + myTotalTimePassed);
+        if (myTotalTimePassed == 0.5) { // this is basically a condition of the like that you check for
             myCurrentLevel = new Level(myLevelSpecs);
         }
         myCurrentLevel.executeNextScene();

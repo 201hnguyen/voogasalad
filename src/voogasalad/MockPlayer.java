@@ -28,11 +28,10 @@ public class MockPlayer {
         LevelSpecs levelSpecs = new LevelSpecs(levelMapSpecs, spritePrototypes, levelConditions);
         GameEngine engine = new GameEngine(levelSpecs);
 
-        int maxTime = 5;
+        int maxTime = 10;
         for (int i=0; i<=maxTime; i++) {
-            System.out.println("CURRENT TIME: " + i);
             try {
-                engine.executeNextScene(i);
+                engine.executeNextScene(0.5);
             } catch (GameEngineException e) {
                 System.out.println(e.getMessage()); //this should be something shown in the front-end.
             }

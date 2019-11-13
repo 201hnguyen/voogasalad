@@ -19,7 +19,7 @@ public class TemporalGameCondition implements GameCondition {
 
     @Override
     public boolean isMet(Level level) {
-        return level.getElapsedTime() == myMarkedTime;
+        return level.getLevelTimePassed() == myMarkedTime;
     }
 
     @Override

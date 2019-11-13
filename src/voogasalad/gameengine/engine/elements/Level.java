@@ -15,7 +15,7 @@ public class Level {
     private LevelMap myLevelMap;
     private LevelSpecs myLevelSpecs;
     private int mySpriteIdGenerator;
-    private int myElapsedTime;
+    private double myTotalTimePassed;
     private List<GameCondition> myLevelGameConditions;
 
     public Level(LevelSpecs levelSpecs) throws GameEngineException {
@@ -24,12 +24,12 @@ public class Level {
         mySpriteIdGenerator = 0;
         mySpriteManager = spriteProductsFactory.makeSpriteManager();
         myLevelMap = new LevelMap(levelSpecs.getLevelMapSpecs());
-        myElapsedTime = 0;
+        myTotalTimePassed = 0;
         myLevelGameConditions = levelSpecs.getLevelConditions();
     }
 
-    public int getElapsedTime() {
-        return myElapsedTime;
+    public double getLevelTimePassed() {
+        return myTotalTimePassed;
     }
 
     public void executeNextScene() throws GameEngineException {
@@ -38,7 +38,7 @@ public class Level {
                 gameCondition.executeAction(this);
             }
         }
-        myElapsedTime++;
+        myTotalTimePassed++;
     }
 
     public Set<SpritePrototypeSpecs> getSpritePrototypeSpecs() {
