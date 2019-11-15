@@ -1,12 +1,16 @@
 package voogasalad.gameengine.engine.spritestrategies.health;
 
-public class Health implements HealthStrategy {
+import voogasalad.gameengine.engine.exceptions.GameEngineException;
+import voogasalad.gameengine.engine.utils.Utilities;
 
+import java.util.Map;
+
+public class Health implements HealthStrategy {
     private Integer myHealth;
 
-    public void setHealth(int value) {
-        myHealth = value;
-        System.out.println("Health value set to: " + myHealth);
+    public Health(Map<String, Object> parameters) throws GameEngineException {
+        myHealth = (Integer) Utilities.verifyAndGet(parameters, "myHealth");
+        System.out.println("Health value: " + myHealth);
     }
 
     @Override
