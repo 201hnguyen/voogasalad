@@ -4,9 +4,6 @@ import voogasalad.gameengine.engine.exceptions.GameEngineException;
 import voogasalad.gameengine.engine.factories.SpriteProductsFactory;
 import voogasalad.gameengine.engine.factories.StrategiesFactory;
 import voogasalad.gameengine.engine.spritestrategies.health.HealthStrategy;
-import voogasalad.gameengine.playerengineapi.specs.LevelMapSpecs;
-import voogasalad.gameengine.playerengineapi.specs.LevelSpecs;
-import voogasalad.gameengine.playerengineapi.specs.SpritePrototypeSpecs;
 import voogasalad.gameengine.playerengineapi.sprites.Sprite;
 import voogasalad.gameengine.playerengineapi.sprites.SpriteManager;
 
@@ -22,7 +19,7 @@ public class MockPlayer {
         StrategiesFactory strategiesFactory = new StrategiesFactory();
         SpriteManager spriteManager = spriteProductsFactory.makeSpriteManager();
         HealthStrategy healthStrategy = strategiesFactory.makeHealth("Health");
-        Sprite sprite = spriteProductsFactory.makeSprite(450, 450, 0);
+        Sprite sprite = spriteProductsFactory.makeSprite(450, 450, 0, healthStrategy);
 
     }
 }
