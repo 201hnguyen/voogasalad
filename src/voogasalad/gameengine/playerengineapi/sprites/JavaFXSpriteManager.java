@@ -15,8 +15,5 @@ public class JavaFXSpriteManager implements SpriteManager {
         myOnScreenSprites.add(sprite);
 
         System.out.println("Current number of sprites: " + myOnScreenSprites.size());
-        for (Sprite s : myOnScreenSprites) {
-            s.printSpriteInfo();
-        }
     }
 }
