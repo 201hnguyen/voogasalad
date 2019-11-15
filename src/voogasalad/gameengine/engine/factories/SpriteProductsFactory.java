@@ -1,6 +1,7 @@
 package voogasalad.gameengine.engine.factories;
 
 import voogasalad.gameengine.engine.exceptions.GameEngineException;
+import voogasalad.gameengine.engine.spritestrategies.health.HealthStrategy;
 import voogasalad.gameengine.playerengineapi.specs.SpritePrototypeSpecs;
 import voogasalad.gameengine.playerengineapi.sprites.Sprite;
 import voogasalad.gameengine.playerengineapi.sprites.SpriteManager;
@@ -13,12 +14,12 @@ public class SpriteProductsFactory {
     private final static String CLASS_PATH = "voogasalad.gameengine.playerengineapi.sprites.";
     private final ResourceBundle SpriteFrontendSelection = ResourceBundle.getBundle(SPRITE_FRONTEND_RESOURCE_PATH);
 
-    public Sprite makeSprite(int xCoordinate, int yCoordinate, int spriteId, SpritePrototypeSpecs spritePrototypeSpecs) throws GameEngineException {
+    public Sprite makeSprite(int xCoordinate, int yCoordinate, int spriteId, HealthStrategy healthStrategy) throws GameEngineException {
         String spriteClassSelection = SpriteFrontendSelection.getString("Sprite");
         try {
             return (Sprite) Class.forName(CLASS_PATH + spriteClassSelection)
-                    .getConstructor(int.class, int.class, int.class, voogasalad.gameengine.playerengineapi.specs.SpritePrototypeSpecs.class)
-                    .newInstance(xCoordinate, yCoordinate, spriteId, spritePrototypeSpecs);
+                    .getConstructor(int.class, int.class, int.class)
+                    .newInstance(xCoordinate, yCoordinate, spriteId);
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | ClassNotFoundException e) {
             throw new GameEngineException(e, "SpriteProductionFailed");
         }

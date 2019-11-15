@@ -7,11 +7,12 @@ import java.lang.reflect.InvocationTargetException;
 
 public class StrategiesFactory {
 
-    private final static String CLASS_PATH = "voogasalad.gameengine.engine.spritestrategies.";
+    private static final String CLASS_PATH = "voogasalad.gameengine.engine.spritestrategies.";
+    private static final String HEALTH_DIRECTORY = "health.";
+
     public HealthStrategy makeHealth(String healthStrategy) throws GameEngineException {
-        String healthDirectory = "health.";
         try {
-            return (HealthStrategy) Class.forName(CLASS_PATH + healthDirectory + healthStrategy).getConstructor().newInstance();
+            return (HealthStrategy) Class.forName(CLASS_PATH + HEALTH_DIRECTORY + healthStrategy).getConstructor().newInstance();
         } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException | ClassNotFoundException e) {
             e.printStackTrace();
             throw new GameEngineException(e, "SpriteHealthInitializationFailed");
