@@ -1,9 +1,9 @@
 package voogasalad.gameengine.engine.factories;
 
 import voogasalad.gameengine.engine.exceptions.GameEngineException;
-import voogasalad.gameengine.engine.spritestrategies.health.HealthStrategy;
-import voogasalad.gameengine.playerengineapi.sprites.Sprite;
-import voogasalad.gameengine.playerengineapi.sprites.SpriteManager;
+import voogasalad.gameengine.engine.sprites.strategies.health.HealthStrategy;
+import voogasalad.gameengine.engine.sprites.Sprite;
+import voogasalad.gameengine.engine.sprites.SpriteManager;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ResourceBundle;
@@ -17,7 +17,7 @@ public class SpriteProductsFactory {
         String spriteClassSelection = SpriteFrontendSelection.getString("Sprite");
         try {
             return (Sprite) Class.forName(CLASS_PATH + spriteClassSelection)
-                    .getConstructor(int.class, int.class, int.class, voogasalad.gameengine.engine.spritestrategies.health.HealthStrategy.class)
+                    .getConstructor(int.class, int.class, int.class, voogasalad.gameengine.engine.sprites.strategies.health.HealthStrategy.class)
                     .newInstance(xCoordinate, yCoordinate, spriteId, healthStrategy);
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | ClassNotFoundException e) {
             e.printStackTrace(); //TODO: Delete; currently here so we can see what is going on.

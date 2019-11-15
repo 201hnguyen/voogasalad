@@ -1,14 +1,14 @@
 package voogasalad.gameengine.engine.factories;
 
 import voogasalad.gameengine.engine.exceptions.GameEngineException;
-import voogasalad.gameengine.engine.spritestrategies.health.HealthStrategy;
+import voogasalad.gameengine.engine.sprites.strategies.health.HealthStrategy;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
 public class StrategiesFactory {
 
-    private static final String CLASS_PATH = "voogasalad.gameengine.engine.spritestrategies.";
+    private static final String CLASS_PATH = "voogasalad.gameengine.engine.sprites.strategies.";
     private static final String HEALTH_DIRECTORY = "health.";
 
     public HealthStrategy makeHealth(String healthStrategy, Map<String, Object> parameters) throws GameEngineException {

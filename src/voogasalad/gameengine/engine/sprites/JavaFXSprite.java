@@ -1,6 +1,9 @@
-package voogasalad.gameengine.playerengineapi.sprites;
+package voogasalad.gameengine.engine.sprites;
 
-import voogasalad.gameengine.engine.spritestrategies.health.HealthStrategy;
+import voogasalad.gameengine.engine.sprites.Sprite;
+import voogasalad.gameengine.engine.sprites.strategies.health.HealthStrategy;
+
+import java.util.Map;
 
 public class JavaFXSprite implements Sprite {
     private int myXCenterCoordinate;
@@ -13,7 +16,6 @@ public class JavaFXSprite implements Sprite {
         myYCenterCoordinate = yPos;
         mySpriteId = spriteId;
         myHealthStrategy = healthStrategy;
-        System.out.println("center x: " + myXCenterCoordinate + " | center y: " + myYCenterCoordinate + " | sprite id: " + mySpriteId);
     }
 
 }

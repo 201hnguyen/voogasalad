@@ -3,9 +3,9 @@ package voogasalad;
 import voogasalad.gameengine.engine.exceptions.GameEngineException;
 import voogasalad.gameengine.engine.factories.SpriteProductsFactory;
 import voogasalad.gameengine.engine.factories.StrategiesFactory;
-import voogasalad.gameengine.engine.spritestrategies.health.HealthStrategy;
-import voogasalad.gameengine.playerengineapi.sprites.Sprite;
-import voogasalad.gameengine.playerengineapi.sprites.SpriteManager;
+import voogasalad.gameengine.engine.sprites.strategies.health.HealthStrategy;
+import voogasalad.gameengine.engine.sprites.Sprite;
+import voogasalad.gameengine.engine.sprites.SpriteManager;
 
 import java.util.*;
 

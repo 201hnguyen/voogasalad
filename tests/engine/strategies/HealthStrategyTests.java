@@ -1,13 +1,12 @@
 package engine.strategies;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import voogasalad.gameengine.engine.exceptions.GameEngineException;
 import voogasalad.gameengine.engine.factories.StrategiesFactory;
-import voogasalad.gameengine.engine.spritestrategies.health.HealthStrategy;
+import voogasalad.gameengine.engine.sprites.strategies.health.HealthStrategy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,5 +65,21 @@ public class HealthStrategyTests {
         health.alterHealthByAddition(5);
         health.alterHealthByAddition(-7);
         Assert.assertEquals(expectedValue, health.getHealth());
+    }
+
+    @Test
+    public void testHealthMakeClone() throws GameEngineException {
+        Integer expectedValue = 10;
+        Map<String, Object> parameter = new HashMap<>() {{ put("health", 10); }};
+        HealthStrategy health = strategiesFactory.makeHealth("Health", parameter);
+        HealthStrategy healthClone = health.makeClone();
+        Assert.assertEquals(expectedValue, healthClone.getHealth());
+    }
+
+    public void testNoHealthMakeClone() throws GameEngineException {
+        Integer expectedValue = null;
+        HealthStrategy noHealth = strategiesFactory.makeHealth("NoHealth", new HashMap<>());
+        HealthStrategy noHealthClone = noHealth.makeClone();
+        Assert.assertEquals(expectedValue, noHealthClone.getHealth());
     }
 }

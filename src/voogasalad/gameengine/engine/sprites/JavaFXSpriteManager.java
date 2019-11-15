@@ -1,4 +1,7 @@
-package voogasalad.gameengine.playerengineapi.sprites;
+package voogasalad.gameengine.engine.sprites;
+
+import voogasalad.gameengine.engine.sprites.Sprite;
+import voogasalad.gameengine.engine.sprites.SpriteManager;
 
 import java.util.ArrayList;
 import java.util.List;
