@@ -20,7 +20,7 @@ public class MockPlayer {
             HashMap<String, Object> healthParameters = new HashMap<>() {{
                 put("health", 10);
             }};
-            HealthStrategy healthStrategy = strategiesFactory.makeHealth("Health", healthParameters);
+            HealthStrategy healthStrategy = strategiesFactory.makeHealth("Helth", healthParameters);
             Sprite sprite = spriteProductsFactory.makeSprite(450, 450, 0, healthStrategy);
         } catch (GameEngineException e) {
             System.out.println(e.getMessage());;
