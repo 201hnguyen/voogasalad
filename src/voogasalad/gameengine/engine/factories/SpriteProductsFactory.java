@@ -2,7 +2,6 @@ package voogasalad.gameengine.engine.factories;
 
 import voogasalad.gameengine.engine.exceptions.GameEngineException;
 import voogasalad.gameengine.engine.spritestrategies.health.HealthStrategy;
-import voogasalad.gameengine.playerengineapi.specs.SpritePrototypeSpecs;
 import voogasalad.gameengine.playerengineapi.sprites.Sprite;
 import voogasalad.gameengine.playerengineapi.sprites.SpriteManager;
 
