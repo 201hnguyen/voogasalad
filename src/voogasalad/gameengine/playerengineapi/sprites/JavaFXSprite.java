@@ -8,7 +8,7 @@ public class JavaFXSprite implements Sprite {
     private final int mySpriteId;
     private HealthStrategy myHealthStrategy;
 
-    public JavaFXSprite(int xPos, int yPos, int spriteId) {
+    public JavaFXSprite(int xPos, int yPos, int spriteId, HealthStrategy healthStrategy) {
         myXCenterCoordinate = xPos;
         myYCenterCoordinate = yPos;
         mySpriteId = spriteId;

@@ -17,8 +17,8 @@ public class SpriteProductsFactory {
         String spriteClassSelection = SpriteFrontendSelection.getString("Sprite");
         try {
             return (Sprite) Class.forName(CLASS_PATH + spriteClassSelection)
-                    .getConstructor(int.class, int.class, int.class)
-                    .newInstance(xCoordinate, yCoordinate, spriteId);
+                    .getConstructor(int.class, int.class, int.class, voogasalad.gameengine.engine.spritestrategies.health.HealthStrategy.class)
+                    .newInstance(xCoordinate, yCoordinate, spriteId, healthStrategy);
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | ClassNotFoundException e) {
             throw new GameEngineException(e, "SpriteProductionFailed");
         }
