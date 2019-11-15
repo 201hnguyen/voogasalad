@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 public class Verifier {
-    public static final String PARAMETERS_IDENTIFIER_RESOURCE_PATH = "resources.StrategyParameters";
+    public static final String PARAMETERS_IDENTIFIER_RESOURCE_PATH = "resources.engine.StrategyParameters";
     public static final ResourceBundle PARAMETERS_IDENTIFIER_BUNDLE = ResourceBundle.getBundle(PARAMETERS_IDENTIFIER_RESOURCE_PATH);
 
     public static Object verifyAndGetStrategyParameter(Map<String, Object> parameterMap, String key) throws GameEngineException {
