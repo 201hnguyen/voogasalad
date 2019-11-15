@@ -1,9 +1,8 @@
 package voogasalad.gameengine.engine.sprites;
 
-import voogasalad.gameengine.engine.sprites.Sprite;
+import voogasalad.gameengine.engine.exceptions.GameEngineException;
+import voogasalad.gameengine.engine.factories.SpriteProductsFactory;
 import voogasalad.gameengine.engine.sprites.strategies.health.HealthStrategy;
-
-import java.util.Map;
 
 public class JavaFXSprite implements Sprite {
     private int myXCenterCoordinate;
@@ -18,4 +17,28 @@ public class JavaFXSprite implements Sprite {
         myHealthStrategy = healthStrategy;
     }
 
+    @Override
+    public Sprite makeClone(int x, int y, int spriteId) throws GameEngineException {
+        SpriteProductsFactory spriteFactory = new SpriteProductsFactory();
+        return spriteFactory.makeSprite(x, y, spriteId, myHealthStrategy.makeClone());
+    }
+
+    @Override
+    public int getX() {
+        return myXCenterCoordinate;
+    }
+
+    @Override
+    public int getY() {
+        return myYCenterCoordinate;
+    }
+
+    @Override
+    public int getId() {
+        return mySpriteId;
+    }
+
+    public HealthStrategy getHealthStrategy() throws GameEngineException {
+        return myHealthStrategy.makeClone();
+    }
 }

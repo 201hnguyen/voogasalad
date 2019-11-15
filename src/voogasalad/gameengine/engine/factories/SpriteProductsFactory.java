@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
 
 public class SpriteProductsFactory {
     public static final String SPRITE_FRONTEND_RESOURCE_PATH = "resources.engine.SpriteFrontendSelection";
-    private final static String CLASS_PATH = "voogasalad.gameengine.playerengineapi.sprites.";
+    private final static String CLASS_PATH = "voogasalad.gameengine.engine.sprites.";
     private final ResourceBundle SpriteFrontendSelection = ResourceBundle.getBundle(SPRITE_FRONTEND_RESOURCE_PATH);
 
     public Sprite makeSprite(int xCoordinate, int yCoordinate, int spriteId, HealthStrategy healthStrategy) throws GameEngineException {

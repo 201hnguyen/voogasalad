@@ -1,4 +1,4 @@
-package engine.strategies;
+package engine.sprites.strategies;
 
 import org.junit.Assert;
 import org.junit.Rule;
