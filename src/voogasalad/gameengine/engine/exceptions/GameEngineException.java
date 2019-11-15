@@ -4,7 +4,7 @@ import java.util.ResourceBundle;
 
 public class GameEngineException extends Exception {
 
-    private static final String EXCEPTIONS_MESSAGES_RESOURCE_PATH = "resources.English";
+    private static final String EXCEPTIONS_MESSAGES_RESOURCE_PATH = "resources.engine.English";
     private static final ResourceBundle EXCEPTION_MESSAGES_BUNDLE = ResourceBundle.getBundle(EXCEPTIONS_MESSAGES_RESOURCE_PATH);
 
     private final Throwable myThrowableEx;
