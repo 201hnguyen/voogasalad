@@ -12,9 +12,7 @@ public class JavaFXSprite implements Sprite {
         myXCenterCoordinate = xPos;
         myYCenterCoordinate = yPos;
         mySpriteId = spriteId;
+        myHealthStrategy = healthStrategy;
     }
 
-    public void printSpriteInfo() {
-        System.out.println("SPRITE INFO: x coordinate: " + myXCenterCoordinate + " | y coordinate: " + myYCenterCoordinate + " | id: " + mySpriteId);
-    }
 }
