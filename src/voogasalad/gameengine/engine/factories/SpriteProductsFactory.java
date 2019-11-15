@@ -20,6 +20,7 @@ public class SpriteProductsFactory {
                     .getConstructor(int.class, int.class, int.class, voogasalad.gameengine.engine.spritestrategies.health.HealthStrategy.class)
                     .newInstance(xCoordinate, yCoordinate, spriteId, healthStrategy);
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | ClassNotFoundException e) {
+            e.printStackTrace(); //TODO: Delete; currently here so we can see what is going on.
             throw new GameEngineException(e, "SpriteProductionFailed");
         }
     }
@@ -29,6 +30,7 @@ public class SpriteProductsFactory {
         try {
             return (SpriteManager) Class.forName(CLASS_PATH + spriteManagerClassSelection).getConstructor().newInstance();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | ClassNotFoundException e) {
+            e.printStackTrace(); //TODO: Delete; currently here so we can see what is going on.
             throw new GameEngineException(e, "SpriteManagerProductionFailed");
         }
     }
