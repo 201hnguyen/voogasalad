@@ -5,11 +5,11 @@ import voogasalad.gameengine.engine.exceptions.GameEngineException;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-public class Utilities {
+public class Verifier {
     public static final String PARAMETERS_IDENTIFIER_RESOURCE_PATH = "resources.StrategyParameters";
     public static final ResourceBundle PARAMETERS_IDENTIFIER_BUNDLE = ResourceBundle.getBundle(PARAMETERS_IDENTIFIER_RESOURCE_PATH);
 
-    public static Object verifyAndGet(Map<String, Object> parameterMap, String key) throws GameEngineException {
+    public static Object verifyAndGetStrategyParameter(Map<String, Object> parameterMap, String key) throws GameEngineException {
        String[] keyValuePair = PARAMETERS_IDENTIFIER_BUNDLE.getString(key).split(",");
            return checkNotNull(parameterMap.get(keyValuePair[0]));
     }
