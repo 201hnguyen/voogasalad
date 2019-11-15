@@ -15,6 +15,7 @@ public class StrategiesFactory {
         try {
             return (HealthStrategy) Class.forName(CLASS_PATH + HEALTH_DIRECTORY + healthStrategy).getConstructor(Map.class).newInstance(parameters);
         } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException | ClassNotFoundException e) {
+            e.printStackTrace(); //TODO: Delete; currently here so we can see what is going on.
             throw new GameEngineException(e, "SpriteHealthInitializationFailed");
         }
     }

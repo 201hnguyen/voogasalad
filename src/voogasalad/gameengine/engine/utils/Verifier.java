@@ -11,11 +11,16 @@ public class Verifier {
 
     public static Object verifyAndGetStrategyParameter(Map<String, Object> parameterMap, String key) throws GameEngineException {
        String[] keyValuePair = PARAMETERS_IDENTIFIER_BUNDLE.getString(key).split(",");
-           return checkNotNull(parameterMap.get(keyValuePair[0]));
+        try {
+            return verifyValidKey(parameterMap.get(keyValuePair[0]), Class.forName(keyValuePair[1]));
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace(); //TODO: Delete; currently here so we can see what is going on.
+            throw new GameEngineException("InvalidValueInStrategyInitialization");
+        }
     }
 
-    public static Object checkNotNull(Object object) throws GameEngineException {
-        if (object != null) {
+    public static Object verifyValidKey(Object object, Class<?> expectedType) throws GameEngineException {
+        if (object != null && object.getClass().equals(expectedType)) {
             return object;
         } else {
             throw new GameEngineException("InvalidValueInStrategyInitialization");
