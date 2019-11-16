@@ -14,7 +14,6 @@ public class Health implements HealthStrategy {
     public Health(Map<String, Object> parameters) throws GameEngineException {
         myOriginalParameters = parameters;
         myHealth = (Integer) Verifier.verifyAndGetStrategyParameter(parameters, "myHealth");
-        System.out.println("Health value: " + myHealth);
     }
 
     @Override
