@@ -8,5 +8,5 @@ public interface Sprite {
     int getX();
     int getY();
     int getId();
-    HealthStrategy getHealthStrategy() throws GameEngineException;
+    int getHealth();
 }

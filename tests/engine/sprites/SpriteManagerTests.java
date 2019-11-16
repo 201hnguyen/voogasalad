@@ -34,8 +34,8 @@ public class SpriteManagerTests {
         spriteManager.addSpritePrototype(6, spritePrototype2);
         spriteManager.makeSpriteFromPrototype(250, 100, 5);
         spriteManager.makeSpriteFromPrototype(100, 200, 6);
-        Assert.assertEquals((Integer) 10, spriteManager.getOnScreenSprites().get(0).getHealthStrategy().getHealth());
-        Assert.assertEquals((Integer) 15, spriteManager.getOnScreenSprites().get(1).getHealthStrategy().getHealth());
+        Assert.assertEquals(10, spriteManager.getOnScreenSprites().get(0).getHealth());
+        Assert.assertEquals(15, spriteManager.getOnScreenSprites().get(1).getHealth());
         Assert.assertEquals(0, spriteManager.getOnScreenSprites().get(0).getId());
         Assert.assertEquals(1, spriteManager.getOnScreenSprites().get(1).getId());
     }
