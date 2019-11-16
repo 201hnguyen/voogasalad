@@ -75,4 +75,8 @@ public class Level {
     public Wave getNextWave() {
         return mySpritesWavesQueue.remove();
     }
+
+    public boolean hasNextWave() {
+        return mySpritesWavesQueue.size() > 0;
+    }
 }

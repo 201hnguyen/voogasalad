@@ -48,7 +48,7 @@ public class Main {
 
             Queue<Integer> spritesWaveQueue = new LinkedList<>() {{ add(0); add(1); add(0); }};
             Wave wave = new Wave(spritesWaveQueue, spawnPoint);
-            Queue<Wave> wavesQueue = new LinkedList<>() {{ add(wave); }};
+            Queue<Wave> wavesQueue = new LinkedList<>() {{ }};
             Level level = new Level(spriteManager, wavesQueue, levelConditionList);
 
             for (int i=0; i<5; i++) {

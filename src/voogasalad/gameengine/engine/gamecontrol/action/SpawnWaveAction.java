@@ -13,7 +13,11 @@ public class SpawnWaveAction implements LevelAction {
     @Override
     public void execute(Level level) throws GameEngineException {
         if (myWave == null) {
-            myWave = level.getNextWave();
+            if (level.hasNextWave()) {
+                myWave = level.getNextWave();
+            } else {
+                throw new GameEngineException("SpecifyWavesToExecuteAction");
+            }
         }
 
         level.getSpriteManager().makeSpriteFromPrototype(myWave.getSpawnPoint().getX(), myWave.getSpawnPoint().getY(), myWave.getNextSpriteToSpawn());
