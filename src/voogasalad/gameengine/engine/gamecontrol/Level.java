@@ -1,35 +1,66 @@
 package voogasalad.gameengine.engine.gamecontrol;
 
 import voogasalad.gameengine.engine.exceptions.GameEngineException;
-import voogasalad.gameengine.engine.factories.SpriteProductsFactory;
+import voogasalad.gameengine.engine.gamecontrol.action.LevelAction;
 import voogasalad.gameengine.engine.gamecontrol.condition.LevelCondition;
 import voogasalad.gameengine.engine.sprites.SpriteManager;
 
 import java.awt.Point;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class Level {
 
     SpriteManager mySpriteManager;
-    Queue<Integer> mySpritesQueue; //TODO: this may get changed later for waves, but currently, let's simplify with this.
-    Point mySpawnPoint; //TODO: this may also get changed/moved to handle waves
+    Queue<Wave> mySpritesWavesQueue;
     double myElapsedTime;
-    List<LevelCondition> myLevelConditions;
+    Set<LevelCondition> myLevelConditions;
+    Set<LevelAction> myActionsInProgress;
 
-    public Level(SpriteManager spriteManager, Queue<Integer> spritesQueue, Point spawnPoint, List<LevelCondition> levelConditions) throws GameEngineException {
+    public Level(SpriteManager spriteManager, Queue<Wave> spritesWaveQueue, Set<LevelCondition> levelConditions) throws GameEngineException {
         mySpriteManager = spriteManager;
-        mySpritesQueue = spritesQueue;
-        mySpawnPoint = spawnPoint;
+        mySpritesWavesQueue = spritesWaveQueue;
         myElapsedTime = 0;
         myLevelConditions = levelConditions;
+        myActionsInProgress = new HashSet<>();
     }
 
     public void execute(double elapsedTime) throws GameEngineException {
+        myElapsedTime += elapsedTime;
+        executeActionsInProgress();
+        checkLevelConditions();
+    }
+
+    private void checkLevelConditions() throws GameEngineException {
+        List<LevelCondition> conditionsToRemove = new ArrayList<>();
         for (LevelCondition condition : myLevelConditions) {
             if (condition.hasHappened(this)) {
-                condition.getAction().execute(this);
+                conditionsToRemove.add(condition);
+                LevelAction action = condition.getAction();
+                executeAction(action);
             }
+        }
+        for (LevelCondition condition : conditionsToRemove){
+            myLevelConditions.remove(condition);
+        }
+    }
+
+    private void executeAction(LevelAction action) throws GameEngineException{
+        action.execute(this);
+        if (!action.isFinished()) {
+            myActionsInProgress.add(action);
+        }
+    }
+
+    private void executeActionsInProgress() throws GameEngineException{
+        List<LevelAction> actionsToRemove = new ArrayList<>();
+        for (LevelAction action : myActionsInProgress) {
+            executeAction(action);
+            if (action.isFinished()) {
+                actionsToRemove.add(action);
+            }
+        }
+        for (LevelAction action : actionsToRemove) {
+            myActionsInProgress.remove(action);
         }
     }
 
@@ -41,12 +72,7 @@ public class Level {
         return mySpriteManager;
     }
 
-    public Integer getNextSpriteInQueue() {
-        return mySpritesQueue.remove();
+    public Wave getNextWave() {
+        return mySpritesWavesQueue.remove();
     }
-
-    public Point getSpawnPoint() {
-        return mySpawnPoint;
-    }
-
 }

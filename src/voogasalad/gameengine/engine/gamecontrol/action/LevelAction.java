@@ -5,4 +5,5 @@ import voogasalad.gameengine.engine.gamecontrol.Level;
 
 public interface LevelAction {
     void execute(Level level) throws GameEngineException;
+    boolean isFinished();
 }
