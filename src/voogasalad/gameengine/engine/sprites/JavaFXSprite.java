@@ -5,12 +5,12 @@ import voogasalad.gameengine.engine.factories.SpriteProductsFactory;
 import voogasalad.gameengine.engine.sprites.strategies.health.HealthStrategy;
 
 public class JavaFXSprite implements Sprite {
-    private int myXCenterCoordinate;
-    private int myYCenterCoordinate;
+    private double myXCenterCoordinate;
+    private double myYCenterCoordinate;
     private final int mySpriteId;
     private HealthStrategy myHealthStrategy;
 
-    public JavaFXSprite(int xPos, int yPos, int spriteId, HealthStrategy healthStrategy) {
+    public JavaFXSprite(double xPos, double yPos, int spriteId, HealthStrategy healthStrategy) {
         myXCenterCoordinate = xPos;
         myYCenterCoordinate = yPos;
         mySpriteId = spriteId;
@@ -18,18 +18,18 @@ public class JavaFXSprite implements Sprite {
     }
 
     @Override
-    public Sprite makeClone(int x, int y, int spriteId) throws GameEngineException {
+    public Sprite makeClone(double x, double y, int spriteId) throws GameEngineException {
         SpriteProductsFactory spriteFactory = new SpriteProductsFactory();
         return spriteFactory.makeSprite(x, y, spriteId, myHealthStrategy.makeClone());
     }
 
     @Override
-    public int getX() {
+    public double getX() {
         return myXCenterCoordinate;
     }
 
     @Override
-    public int getY() {
+    public double getY() {
         return myYCenterCoordinate;
     }
 

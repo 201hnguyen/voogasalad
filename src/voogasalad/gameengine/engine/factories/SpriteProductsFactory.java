@@ -13,11 +13,11 @@ public class SpriteProductsFactory {
     private final static String CLASS_PATH = "voogasalad.gameengine.engine.sprites.";
     private final ResourceBundle SpriteFrontendSelection = ResourceBundle.getBundle(SPRITE_FRONTEND_RESOURCE_PATH);
 
-    public Sprite makeSprite(int xCoordinate, int yCoordinate, int spriteId, HealthStrategy healthStrategy) throws GameEngineException {
+    public Sprite makeSprite(double xCoordinate, double yCoordinate, int spriteId, HealthStrategy healthStrategy) throws GameEngineException {
         String spriteClassSelection = SpriteFrontendSelection.getString("Sprite");
         try {
             return (Sprite) Class.forName(CLASS_PATH + spriteClassSelection)
-                    .getConstructor(int.class, int.class, int.class, voogasalad.gameengine.engine.sprites.strategies.health.HealthStrategy.class)
+                    .getConstructor(double.class, double.class, int.class, voogasalad.gameengine.engine.sprites.strategies.health.HealthStrategy.class)
                     .newInstance(xCoordinate, yCoordinate, spriteId, healthStrategy);
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | ClassNotFoundException e) {
             e.printStackTrace(); //TODO: Delete; currently here so we can see what is going on.

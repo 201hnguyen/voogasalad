@@ -26,8 +26,8 @@ public class SpriteTests {
         HealthStrategy healthStrategy = strategiesFactory.makeHealth("Health", healthParameters);
         Sprite prototypeSprite = spriteProductsFactory.makeSprite(0, 0, 0, healthStrategy);
         Sprite clonedSprite = prototypeSprite.makeClone(450, 240, 1);
-        Assert.assertEquals(450, clonedSprite.getX());
-        Assert.assertEquals(240, clonedSprite.getY());
+        Assert.assertEquals(450, clonedSprite.getX(), 0.01);
+        Assert.assertEquals(240, clonedSprite.getY(), 0.01);
         Assert.assertEquals(1, clonedSprite.getId());
         Assert.assertEquals(10, clonedSprite.getHealth());
     }
