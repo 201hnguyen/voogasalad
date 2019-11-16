@@ -38,7 +38,7 @@ public class JavaFXSprite implements Sprite {
         return mySpriteId;
     }
 
-    public HealthStrategy getHealthStrategy() throws GameEngineException {
-        return myHealthStrategy.makeClone();
+    public int getHealth() {
+        return myHealthStrategy.getHealth();
     }
 }
