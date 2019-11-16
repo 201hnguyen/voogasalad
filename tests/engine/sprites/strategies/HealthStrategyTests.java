@@ -76,6 +76,7 @@ public class HealthStrategyTests {
         Assert.assertEquals(expectedValue, healthClone.getHealth());
     }
 
+    @Test
     public void testNoHealthMakeClone() throws GameEngineException {
         Integer expectedValue = null;
         HealthStrategy noHealth = strategiesFactory.makeHealth("NoHealth", new HashMap<>());

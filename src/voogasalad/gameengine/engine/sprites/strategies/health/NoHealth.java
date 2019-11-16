@@ -23,6 +23,6 @@ public class NoHealth implements HealthStrategy {
     @Override
     public HealthStrategy makeClone() throws GameEngineException {
         StrategiesFactory strategiesFactory = new StrategiesFactory();
-        return strategiesFactory.makeHealth(getClass().getName(), new HashMap<>());
+        return strategiesFactory.makeHealth("NoHealth", new HashMap<>());
     }
 }
