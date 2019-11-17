@@ -1,4 +1,4 @@
-package gae_Tower;
+package gae_gui.gae_Tower;
 
 import javafx.application.Application;
 import javafx.scene.Group;

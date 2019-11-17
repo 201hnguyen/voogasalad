@@ -1,16 +1,12 @@
-package gae_Tower;
+package gae_gui.gae_Tower;
 
-import javafx.application.Application;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
-import java.util.Enumeration;
 import java.util.List;
 import java.util.ResourceBundle;
 
