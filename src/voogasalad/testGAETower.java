@@ -1,7 +1,12 @@
+package voogasalad;
+
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
+
+import java.security.Signature;
 
 public class testGAETower extends Application {
     public static final String TITLE = "TestFX Example";
@@ -10,11 +15,22 @@ public class testGAETower extends Application {
 
     public void start (Stage primaryStage) {
         GAETowerView newTowerPage = new GAETowerView();
-        primaryStage.setTitle(TITLE);
-        primaryStage.setScene(newTowerPage.getScene());
-        primaryStage.show();
+        //primaryStage.setTitle(TITLE);
+        //primaryStage.setScene(new Scene(makeRoot(),SIZE,SIZE));
+        //primaryStage.show();
 
     }
+
+    private Group makeRoot ()  {
+        Group root = new Group();
+        Label appTitle = new Label("Testing GAE Tower");
+        appTitle.setLayoutX(150);
+        appTitle.setLayoutY(50);
+        root.getChildren().add(appTitle);
+        return root;
+    }
+
+
 
     public static void main(String[] args) {
         launch(args);
