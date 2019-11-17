@@ -17,9 +17,9 @@ public class Level {
     Set<LevelCondition> myLevelConditions;
     Set<LevelAction> myActionsInProgress;
 
-    public Level(SpriteManager spriteManager, Queue<Wave> spritesWaveQueue, Set<LevelCondition> levelConditions) throws GameEngineException {
+    public Level(SpriteManager spriteManager, Queue<Wave> spritesWavesQueue, Set<LevelCondition> levelConditions) {
         mySpriteManager = spriteManager;
-        mySpritesWavesQueue = spritesWaveQueue;
+        mySpritesWavesQueue = spritesWavesQueue;
         myTotalElapsedTime = 0;
         myLevelConditions = levelConditions;
         myActionsInProgress = new HashSet<>();

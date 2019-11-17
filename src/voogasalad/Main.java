@@ -6,7 +6,7 @@ import voogasalad.gameengine.engine.gamecontrol.Wave;
 import voogasalad.gameengine.engine.gamecontrol.action.LevelAction;
 import voogasalad.gameengine.engine.gamecontrol.action.SpawnWaveAction;
 import voogasalad.gameengine.engine.gamecontrol.condition.LevelCondition;
-import voogasalad.gameengine.engine.gamecontrol.condition.AbsoluteTemporalCondition;
+import voogasalad.gameengine.engine.gamecontrol.condition.TemporalCondition;
 import voogasalad.gameengine.engine.sprites.JavaFXSprite;
 import voogasalad.gameengine.engine.sprites.JavaFXSpriteManager;
 import voogasalad.gameengine.engine.sprites.Sprite;
@@ -49,8 +49,8 @@ public class Main {
                 put("action", spawnWaveAction2);
             }};
 
-            LevelCondition levelCondition = new AbsoluteTemporalCondition(temporalConditionParameter);
-            LevelCondition levelCondition2 = new AbsoluteTemporalCondition(temporalConditionParameter2);
+            LevelCondition levelCondition = new TemporalCondition(temporalConditionParameter);
+            LevelCondition levelCondition2 = new TemporalCondition(temporalConditionParameter2);
 
             Set<LevelCondition> levelConditionList = new HashSet<>() {{
                 add(levelCondition);

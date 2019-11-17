@@ -7,11 +7,11 @@ import voogasalad.gameengine.engine.utils.Verifier;
 
 import java.util.Map;
 
-public class AbsoluteTemporalCondition implements LevelCondition {
+public class TemporalCondition implements LevelCondition {
     private double myMarkedTime;
     private LevelAction myAction;
 
-    public AbsoluteTemporalCondition(Map<String, Object> parameters) throws GameEngineException {
+    public TemporalCondition(Map<String, Object> parameters) throws GameEngineException {
         myMarkedTime = (double) Verifier.verifyAndGetConditionParameter(parameters, "myMarkedTime");
         myAction = (LevelAction) Verifier.verifyAndGetConditionParameter(parameters, "myAction");
     }
