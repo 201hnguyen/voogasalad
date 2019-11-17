@@ -59,12 +59,15 @@ public class Main {
 
             Queue<Integer> spritesWaveQueue = new LinkedList<>() {{ add(0); add(1); add(0); }};
             Queue<Integer> spritesWaveQueue2 = new LinkedList<>() {{ add(0); add(1); add(0); }};
-            Wave wave = new Wave(spritesWaveQueue, spawnPoint);
-            Wave wave2 = new Wave(spritesWaveQueue2, spawnPoint2);
+
+            Queue<Integer> spritesEntryTimeQueue = new LinkedList<>() {{ add(2); add(4); }};
+            Queue<Integer> spritesEntryTimeQueue2 = new LinkedList<>() {{ add(2); add(5); }};
+            Wave wave = new Wave(spritesWaveQueue, spritesEntryTimeQueue, spawnPoint);
+            Wave wave2 = new Wave(spritesWaveQueue2, spritesEntryTimeQueue2, spawnPoint2);
             Queue<Wave> wavesQueue = new LinkedList<>() {{ add(wave); add(wave2); }};
             Level level = new Level(spriteManager, wavesQueue, levelConditionList);
 
-            for (int i=0; i<5; i++) {
+            for (int i=0; i<7; i++) {
                 System.out.println("new clock tick");
                 level.execute(1);
                 for (Sprite sprite : level.getSpriteManager().getOnScreenSprites()) {
