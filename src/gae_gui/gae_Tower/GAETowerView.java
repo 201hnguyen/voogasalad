@@ -4,6 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
@@ -19,10 +20,13 @@ public class GAETowerView {
     private Scene towerEditScene;
     private TextFlow myTextFlow;
     private Stage towerPreferencePage;
+    private ResourceBundle towerAtrributesLabel;
+    private String towerResourcesPath;
     private List<Double> towerAttributes;
 
 
    public GAETowerView(){
+       towerAtrributesLabel = ResourceBundle.getBundle("");
        towerPreferencePage = new Stage();
        root = new GridPane();
        addLabel();
@@ -35,19 +39,18 @@ public class GAETowerView {
    }
 
    private void addInputField(){
-       TextField attackPowerField = new TextField();
-       attackPowerField.setId("AttackPower");
-       TextField healthField = new TextField();
-       attackPowerField.setId("AttackPower");
-       TextField rangeField = new TextField();
-       attackPowerField.setId("AttackPower");
-       root.add(attackPowerField,2,3);
-       root.add(healthField,2,4);
-       root.add(rangeField,2,5);
+
+       for (int rowIndex = 3; rowIndex < 6; rowIndex++) {
+           TextField newTextField = createInputField("AttackPower");
+           root.add(newTextField,2,rowIndex);
+       }
    }
 
-   private void createInputField(String fieldName){
-
+   private TextField createInputField(String fieldName){
+       TextField newInputField = new TextField();
+       newInputField.setId("AttackPower");
+       //newInputField.setOnAction(e -> );
+       return newInputField;
 
    }
 
