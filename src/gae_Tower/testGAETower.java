@@ -1,12 +1,9 @@
-package voogasalad;
+package gae_Tower;
 
 import javafx.application.Application;
 import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-
-import java.security.Signature;
 
 public class testGAETower extends Application {
     public static final String TITLE = "TestFX Example";
