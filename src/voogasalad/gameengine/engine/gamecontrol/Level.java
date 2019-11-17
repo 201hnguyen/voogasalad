@@ -31,6 +31,7 @@ public class Level {
     public void execute(double elapsedTime) throws GameEngineException {
         myElapsedTimeSinceLastFrame = elapsedTime;
         myTotalElapsedTime += elapsedTime;
+        System.out.println("Level time: " + myTotalElapsedTime);
         checkLevelConditions();
         executeActions();
     }
@@ -63,7 +64,6 @@ public class Level {
     }
 
     public double getTotalElapsedTime() {
-        System.out.println("Level elapsed time:" + myTotalElapsedTime);
         return myTotalElapsedTime;
     }
 

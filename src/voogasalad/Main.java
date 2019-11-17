@@ -26,50 +26,45 @@ public class Main {
      */
     public static void main (String[] args) {
         try {
-            Map<String, Object> healthParameter = new HashMap<>() {{
-                put("health", 10);
-            }};
-            HealthStrategy healthStrategy = new Health(healthParameter);
-            Sprite spritePrototype = new JavaFXSprite(0, 0, 0, healthStrategy);
+            Map<String, Object> prototype0HealthParameter = new HashMap<>() {{ put("health", 10); }};
+            Map<String, Object> prototype1HealthParameter = new HashMap<>() {{ put("health", 15); }};
+
+            HealthStrategy prototype0HealthStrategy = new Health(prototype0HealthParameter);
+            HealthStrategy prototype1HealthStrategy = new Health(prototype1HealthParameter);
+
             SpriteManager spriteManager = new JavaFXSpriteManager();
-            spriteManager.addSpritePrototype(0, spritePrototype);
-            spriteManager.addSpritePrototype(1, spritePrototype);
+            Sprite prototype0 = new JavaFXSprite(0, 0, 0, prototype0HealthStrategy);
+            Sprite prototype1 = new JavaFXSprite(0, 0, 0, prototype1HealthStrategy);
+            spriteManager.addSpritePrototype(0, prototype0);
+            spriteManager.addSpritePrototype(1, prototype1);
 
-            Point spawnPoint = new Point(250, 300);
-            Point spawnPoint2 = new Point(400, 400);
-            LevelAction spawnWaveAction = new SpawnWaveAction();
-            LevelAction spawnWaveAction2 = new SpawnWaveAction();
-            Map<String, Object> temporalConditionParameter = new HashMap<>() {{
-                put("time", (double) 0);
-                put("action", spawnWaveAction);
-            }};
+            Point wave0SpawnPoint = new Point(250, 300);
+            Point wave1SpawnPoint = new Point(400, 400);
 
-            Map<String, Object> temporalConditionParameter2 = new HashMap<>() {{
-                put("time", (double) 3);
-                put("action", spawnWaveAction2);
-            }};
+            LevelAction wave0SpawnAction = new SpawnWaveAction();
+            LevelAction wave1SpawnAction = new SpawnWaveAction();
 
-            LevelCondition levelCondition = new TemporalCondition(temporalConditionParameter);
-            LevelCondition levelCondition2 = new TemporalCondition(temporalConditionParameter2);
+            Map<String, Object> condition0Parameter = new HashMap<>() {{ put("time", (double) 0); put("action", wave0SpawnAction); }};
+            Map<String, Object> condition1Parameter = new HashMap<>() {{ put("time", (double) 3); put("action", wave1SpawnAction); }};
+            LevelCondition condition0 = new TemporalCondition(condition0Parameter);
+            LevelCondition condition1 = new TemporalCondition(condition1Parameter);
 
-            Set<LevelCondition> levelConditionList = new HashSet<>() {{
-                add(levelCondition);
-                add(levelCondition2);
-            }};
+            Set<LevelCondition> levelConditionsSet = new HashSet<>() {{ add(condition0); add(condition1); }};
 
-            Queue<Integer> spritesWaveQueue = new LinkedList<>() {{ add(0); add(1); add(0); }};
-            Queue<Integer> spritesWaveQueue2 = new LinkedList<>() {{ add(0); add(1); add(0); }};
+            Queue<Integer> spritesWave0Queue = new LinkedList<>() {{ add(0); add(1); add(0); }};
+            Queue<Integer> spritesWave1Queue = new LinkedList<>() {{ add(1); add(0); add(1); }};
+            Queue<Double> entryTimeWave0Queue = new LinkedList<>() {{ add(1.5); add(4.0); }};
+            Queue<Double> entryTimeWave1Queue = new LinkedList<>() {{ add(1.0); add(5.0); }};
 
-            Queue<Integer> spritesEntryTimeQueue = new LinkedList<>() {{ add(2); add(4); }};
-            Queue<Integer> spritesEntryTimeQueue2 = new LinkedList<>() {{ add(2); add(5); }};
-            Wave wave = new Wave(spritesWaveQueue, spritesEntryTimeQueue, spawnPoint);
-            Wave wave2 = new Wave(spritesWaveQueue2, spritesEntryTimeQueue2, spawnPoint2);
-            Queue<Wave> wavesQueue = new LinkedList<>() {{ add(wave); add(wave2); }};
-            Level level = new Level(spriteManager, wavesQueue, levelConditionList);
+            Wave wave0 = new Wave(spritesWave0Queue, entryTimeWave0Queue, wave0SpawnPoint);
+            Wave wave1 = new Wave(spritesWave1Queue, entryTimeWave1Queue, wave1SpawnPoint);
+            Queue<Wave> wavesQueue = new LinkedList<>() {{ add(wave0); add(wave1); }};
 
-            for (int i=0; i<7; i++) {
+            Level level = new Level(spriteManager, wavesQueue, levelConditionsSet);
+
+            for (int i=0; i<20; i++) {
                 System.out.println("new clock tick");
-                level.execute(1);
+                level.execute(0.5);
                 for (Sprite sprite : level.getSpriteManager().getOnScreenSprites()) {
                     System.out.println("Sprite generated:" + " id: " + sprite.getId() + " health: " + sprite.getHealth() + " xPos: " + sprite.getX() + " yPos:" + sprite.getY());
                 }
