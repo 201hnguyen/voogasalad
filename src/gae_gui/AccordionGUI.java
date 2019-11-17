@@ -1,5 +1,6 @@
 package gae_gui;
 
+import gae_gui.gae_Tower.GAETowerView;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -11,44 +12,39 @@ import javafx.scene.layout.VBox;
 import java.lang.reflect.Method;
 
 public class AccordionGUI extends Accordion {
-
-    private Accordion accordion;
-    public static final double WIDTH = 100;
-    public static final double HEIGHT = 200;
+    String[] properties;
 
     public AccordionGUI (String gameObjectName, String gameObjectProperties, GUI_Controller target) {
-        //super(WIDTH, HEIGHT);
-        //accordion = new Accordion();
-        String[] properties = gameObjectProperties.split(",");
-        //accordion.getPanes().addAll(makeAccordion(gameObjectName, properties));
-        getPanes().addAll(makeAccordion(gameObjectName, properties));
+        properties = gameObjectProperties.split(",");
+        TitledPane titledPane = makeAccordion(properties);
+        BorderPane bPane = new BorderPane();
+        bPane.setPrefWidth(200);
+        bPane.setCenter(new Label(gameObjectName));
+        bPane.setRight(createAccordionAddButton());
+        titledPane.setGraphic(bPane);
+        getPanes().addAll(titledPane);
     }
 
-    private TitledPane makeAccordion(String gameObjectName, String[] gameObjectProperties) {
-        VBox root = new VBox();
+    private TitledPane makeAccordion(String[] gameObjectProperties) {
+        VBox vBox = new VBox();
+        TitledPane tPane = new TitledPane();
         for (int j = 0; j < gameObjectProperties.length; j++){
-            root.getChildren().add(new Label(gameObjectProperties[j]));
+            vBox.getChildren().add(new Label(gameObjectProperties[j]));
             //create appropriate text field based on what the input is ... dropdown for X, file selector for image, etc.
-            root.getChildren().add(new TextField());
+            vBox.getChildren().add(new TextField());
             //
         }
-        return new TitledPane(gameObjectName, root);
+        tPane.setContent(vBox);
+        return tPane;
     }
-    // make input field that calls Controller method using reflection as its action
-//    private Node makeInputAction (String methodName, GUI_Controller target) {
-//
-//        result.setOnAction(handler -> {
-//            try {
-//                // find method with given name that takes String as its only parameter
-//                Method m = target.getClass().getDeclaredMethod(methodName, String.class);
-//                m.invoke(target);
-//            }
-//            catch (Exception e) {
-//                // FIXME: typically make your own custom exception to throw
-//                throw new RuntimeException("Improper configuration", e);
-//            }
-//        });
-//        return result;
-//    }
+
+    //Has to create the right button for each category
+    private Button createAccordionAddButton(){
+        Button addButton = new Button("+");
+        addButton.setOnMouseClicked(event -> {
+            GAETowerView newTowerPage = new GAETowerView(properties);
+        });
+        return addButton;
+    }
 
 }

@@ -11,7 +11,7 @@ public class testGAETower extends Application {
     public static final boolean DEBUG = true;
 
     public void start (Stage primaryStage) {
-        GAETowerView newTowerPage = new GAETowerView();
+        GAETowerView newTowerPage = new GAETowerView(new String[]{});
         //primaryStage.setTitle(TITLE);
         //primaryStage.setScene(new Scene(makeRoot(),SIZE,SIZE));
         //primaryStage.show();
