@@ -1,19 +1,20 @@
 package gae_gui.gae_Tower;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class GAETowerView {
 
-    private static final int window_WIDTH = 300;
+    private static final int window_WIDTH = 700;
     private static final int window_HEIGHT = 300;
     private GridPane root;
     private ResourceBundle myHelpContents;
@@ -21,16 +22,23 @@ public class GAETowerView {
     private TextFlow myTextFlow;
     private Stage towerPreferencePage;
     private ResourceBundle towerAtrributesLabel;
-    private String towerResourcesPath;
-    private List<Double> towerAttributes;
+    private ResourceBundle towerTypeLabel;
+    private ResourceBundle towerLevelLabel;
+    private String towerResourcesPath = "gae_gui.gaeresource.";
+    private TowerAttributes towerAttributes;
+    private int rowIndex;
 
 
    public GAETowerView(){
-       towerAtrributesLabel = ResourceBundle.getBundle("");
+       towerAttributes = new TowerAttributes();
+       towerAtrributesLabel = ResourceBundle.getBundle(towerResourcesPath+"towerAttributes");
+       towerLevelLabel = ResourceBundle.getBundle(towerResourcesPath + "towerLevels");
+
        towerPreferencePage = new Stage();
        root = new GridPane();
        addLabel();
        addInputField();
+       addTowerTypeDropdown();
 
        towerEditScene = new Scene(root, window_WIDTH, window_HEIGHT);
        towerPreferencePage.setScene(towerEditScene);
@@ -39,34 +47,64 @@ public class GAETowerView {
    }
 
    private void addInputField(){
+       int rowIndex = 4;
+       int columnIndex = 2;
 
-       for (int rowIndex = 3; rowIndex < 6; rowIndex++) {
-           TextField newTextField = createInputField("AttackPower");
-           root.add(newTextField,2,rowIndex);
+       for (String levelKey : towerLevelLabel.keySet()){
+
+           Label newLabel = new Label(towerLevelLabel.getString(levelKey));
+           root.add(newLabel, columnIndex,rowIndex);
+           int innerRowIndex = rowIndex+1;
+           for (String key : towerAtrributesLabel.keySet()) {
+               TextField newTextField = createInputField(towerLevelLabel.getString(levelKey)+ " " + towerAtrributesLabel.getString(key));
+               root.add(newTextField,columnIndex,innerRowIndex);
+               innerRowIndex++;
+           }
+           columnIndex++;
+           //rowIndex++;
+
        }
+
+
    }
 
    private TextField createInputField(String fieldName){
        TextField newInputField = new TextField();
-       newInputField.setId("AttackPower");
+       newInputField.setId(fieldName);
        //newInputField.setOnAction(e -> );
        return newInputField;
 
    }
 
    private void addLabel(){
-       Label title = new Label("New Turret Preferences");
+       Label title = new Label("New Tower Attributes");
        Label towerTypeLabel = new Label("Turret Type");
-       Label towerAttackLabel = new Label("Attack Power");
-       Label towerHealthLabel = new Label("Turret Health");
-       Label towerRangeLabel = new Label("Turret Range");
 
-       root.add(title,1,1);
+       root.add(title,3,1);
        root.add(towerTypeLabel,1,2);
-       root.add(towerAttackLabel,1,3);
-       root.add(towerHealthLabel,1,4);
-       root.add(towerRangeLabel,1,5);
+        rowIndex=5;
+       for (String key : towerAtrributesLabel.keySet()) {
+           int columnIdx = 1;
+           String labelName = towerAtrributesLabel.getString(key);
+           Label newLabel = new Label(labelName);
+           root.add(newLabel,columnIdx,rowIndex);
+           rowIndex++;
+       }
 
+   }
+
+   private void addTowerTypeDropdown() {
+       ComboBox<String> combo = new ComboBox<>();
+       //ChoiceBox<String> combo = new ChoiceBox<>();
+       combo.setId("Tower Type");
+       towerTypeLabel = ResourceBundle.getBundle(towerResourcesPath+"towerTypes");
+       ObservableList<String> choices = FXCollections.observableArrayList();
+       for (String key : towerTypeLabel.keySet()){
+           choices.add(towerTypeLabel.getString(key));
+       }
+       combo.setItems(choices);
+       root.add(combo,2,2);
+       //combo.valueProperty().addListener((o, old, neww) -> updateLabel(label, neww));
    }
 
 
