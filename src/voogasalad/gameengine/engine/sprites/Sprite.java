@@ -6,6 +6,7 @@ public interface Sprite {
     Sprite makeClone(double x, double y, int spriteId) throws GameEngineException;
     double getX();
     double getY();
+
     int getId();
     int getHealth();
 }

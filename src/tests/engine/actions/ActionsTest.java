@@ -57,19 +57,18 @@ public class ActionsTest {
 
         Queue<Integer> spritesWave0Queue = new LinkedList<>() {{ add(0); add(1); add(0); }};
         Queue<Integer> spritesWave1Queue = new LinkedList<>() {{ add(1); add(0); add(1); }};
-        Queue<Double> entryTimeWave0Queue = new LinkedList<>() {{ add(1.5); add(4.0); }};
-        Queue<Double> entryTimeWave1Queue = new LinkedList<>() {{ add(1.0); add(5.0); }};
 
-        Wave wave0 = new Wave(spritesWave0Queue, (Double) 1.0, wave0SpawnPoint);
-        Wave wave1 = new Wave(spritesWave1Queue, (Double) 0.5, wave1SpawnPoint);
+        Wave wave0 = new Wave(spritesWave0Queue, 1.0, wave0SpawnPoint);
+        Wave wave1 = new Wave(spritesWave1Queue, 0.5, wave1SpawnPoint);
         Queue<Wave> wavesQueue = new LinkedList<>() {{ add(wave0); add(wave1); }};
 
         Level level = new Level(spriteManager, wavesQueue, levelConditionsSet);
+
         for (int i=0; i<20; i++) {
             level.execute(0.5);
-            if (level.getTotalElapsedTime() == 3) {
-                assertEquals(3, spriteManager.getOnScreenSprites().size());
-            } else if (level.getTotalElapsedTime() == 4.5) {
+            if (level.getTotalElapsedTime() == 2) {
+                assertEquals(2, spriteManager.getOnScreenSprites().size());
+            } else if (level.getTotalElapsedTime() == 3.5) {
                 assertEquals(5, spriteManager.getOnScreenSprites().size());
             }
         }
