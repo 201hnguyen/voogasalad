@@ -27,13 +27,13 @@ public class GAETowerView {
     private String[] properties;
 
 
-   public GAETowerView(String[] propertiesParam){
-       properties = propertiesParam;
-       towerPreferencePage = new Stage();
-       root = new BorderPane();
-       addInputFields();
+    public GAETowerView(String[] propertiesParam){
+        properties = propertiesParam;
+        towerPreferencePage = new Stage();
+        root = new BorderPane();
+        addInputFields();
 
-   }
+    }
 
     private void addInputFields() {
 
@@ -50,7 +50,7 @@ public class GAETowerView {
         towerPreferencePage.show();
     }
 
-   private void addInputField(){
+    private void addInputField(){
 
 //       TextField attackPowerField = new TextField();
 //       attackPowerField.setId("AttackPower");
@@ -61,12 +61,12 @@ public class GAETowerView {
 //       root.add(attackPowerField,2,3);
 //       root.add(healthField,2,4);
 //       root.add(rangeField,2,5);
-   }
+    }
 
-   private void createInputField(String fieldName){
+    private void createInputField(String fieldName){
 
 
-   }
+    }
 
 //   private void addLabel(){
 //       Label title = new Label("New Turret Preferences");

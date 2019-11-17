@@ -8,4 +8,5 @@ module voogasalad_WorksDontTouch {
     requires javafx.web;
 
     exports voogasalad;
+    exports gae_gui.gae_Tower;
 }
