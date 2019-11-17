@@ -8,12 +8,11 @@ import java.util.LinkedList;
 import java.util.Map;
 
 public class PathMovement implements MovementStrategy {
-    public static final double DIRECTION_CHANGE_THRESHOLD = 0.1;
-
     private LinkedList<Point> myPath;
     private Point currentPosition;
     private Point nextPosition;
-    private int positionIndex;
+    private int nextPositionIndex;
+    private boolean reachedEnd;
     private double mySpeed;
     private Point myDirection;
 
@@ -21,9 +20,15 @@ public class PathMovement implements MovementStrategy {
     public PathMovement(Map<String, Object> parameters) throws GameEngineException {
         mySpeed = (double) Verifier.verifyAndGetStrategyParameter(parameters, "mySpeed");
         myPath = (LinkedList<Point>) Verifier.verifyAndGetStrategyParameter(parameters, "myPath");
-        currentPosition = myPath.poll();
-        nextPosition = myPath.poll();
-        myDirection = calculateDirection();
+        nextPositionIndex = 1;
+        currentPosition = myPath.getFirst();
+        if(nextPositionIndex < myPath.size()) {
+            reachedEnd = false;
+            nextPosition = myPath.get(nextPositionIndex);
+            myDirection = calculateDirection();
+        } else {
+            reachedEnd = true;
+        }
     }
 
 
@@ -34,6 +39,9 @@ public class PathMovement implements MovementStrategy {
 
     @Override
     public void updatePosition(double elapsedTime) {
+        if(reachedEnd) {
+            return;
+        }
         double diffX = myDirection.getX() * elapsedTime;
         double diffY = myDirection.getY() * elapsedTime;
         double updatedX = currentPosition.getX() + diffX;
@@ -41,6 +49,7 @@ public class PathMovement implements MovementStrategy {
         Point updatedPosition = new Point();
         updatedPosition.setLocation(updatedX, updatedY);
         if(checkDirectionChange(updatedPosition)) {
+            System.out.println("hello");
             changeDirection();
         } else {
             currentPosition = updatedPosition;
@@ -60,20 +69,30 @@ public class PathMovement implements MovementStrategy {
     }
 
     private boolean checkDirectionChange(Point updatedPosition) {
-        double updatedX = updatedPosition.getX();
-        double updatedY = updatedPosition.getY();
-        double nextX = nextPosition.getX();
-        double nextY = nextPosition.getY();
-        double diffX = Math.abs(updatedX - nextX);
-        double diffY = Math.abs(updatedY - nextY);
-        double hypotenuse = Math.sqrt(Math.pow(diffX, 2) + Math.pow(diffY, 2));
-        return hypotenuse < DIRECTION_CHANGE_THRESHOLD;
+        boolean passedX;
+        boolean passedY;
+        if(myDirection.getX() < 0) {
+            passedX = currentPosition.getX() <= nextPosition.getX();
+        } else {
+            passedX = currentPosition.getX() >= nextPosition.getX();
+        }
+        if(myDirection.getY() < 0) {
+            passedY = currentPosition.getY() <= nextPosition.getY();
+        } else {
+            passedY = currentPosition.getY() >= nextPosition.getY();
+        }
+        return passedX && passedY;
     }
 
     private void changeDirection() {
-        currentPosition = nextPosition;
-        if(myPath.peek().equals(myPath.getLast()))
-        nextPosition = myPath.poll();
-        calculateDirection();
+        if(nextPositionIndex + 1 < myPath.size()) {
+            nextPositionIndex++;
+            currentPosition = nextPosition;
+            nextPosition = myPath.get(nextPositionIndex);
+            calculateDirection();
+        } else {
+            currentPosition = myPath.getLast();
+            reachedEnd = true;
+        }
     }
 }
