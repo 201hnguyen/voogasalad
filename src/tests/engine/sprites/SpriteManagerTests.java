@@ -1,9 +1,6 @@
-package engine.sprites;
+package tests.engine.sprites;
 
-import org.junit.Assert;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Test;
 import voogasalad.gameengine.engine.exceptions.GameEngineException;
 import voogasalad.gameengine.engine.factories.SpriteProductsFactory;
 import voogasalad.gameengine.engine.factories.StrategiesFactory;
@@ -14,12 +11,12 @@ import voogasalad.gameengine.engine.sprites.strategies.health.HealthStrategy;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class SpriteManagerTests {
     SpriteProductsFactory spriteProductsFactory = new SpriteProductsFactory();
     StrategiesFactory strategiesFactory = new StrategiesFactory();
 
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
 
     @Test
     public void testMakeSpriteFromPrototype() throws GameEngineException {
@@ -34,9 +31,9 @@ public class SpriteManagerTests {
         spriteManager.addSpritePrototype(6, spritePrototype2);
         spriteManager.makeSpriteFromPrototype(250, 100, 5);
         spriteManager.makeSpriteFromPrototype(100, 200, 6);
-        Assert.assertEquals(10, spriteManager.getOnScreenSprites().get(0).getHealth());
-        Assert.assertEquals(15, spriteManager.getOnScreenSprites().get(1).getHealth());
-        Assert.assertEquals(0, spriteManager.getOnScreenSprites().get(0).getId());
-        Assert.assertEquals(1, spriteManager.getOnScreenSprites().get(1).getId());
+        assertEquals(10, spriteManager.getOnScreenSprites().get(0).getHealth());
+        assertEquals(15, spriteManager.getOnScreenSprites().get(1).getHealth());
+        assertEquals(0, spriteManager.getOnScreenSprites().get(0).getId());
+        assertEquals(1, spriteManager.getOnScreenSprites().get(1).getId());
     }
 }

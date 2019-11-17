@@ -1,10 +1,8 @@
-package engine.actions;
+package tests.engine.actions;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import voogasalad.gameengine.engine.exceptions.GameEngineException;
 import voogasalad.gameengine.engine.gamecontrol.Level;
 import voogasalad.gameengine.engine.gamecontrol.Wave;
@@ -22,13 +20,13 @@ import voogasalad.gameengine.engine.sprites.strategies.health.HealthStrategy;
 import java.awt.*;
 import java.util.*;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class ActionsTest {
 
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
     SpriteManager spriteManager = new JavaFXSpriteManager();
 
-    @Before
+    @BeforeEach
     public void setup() throws GameEngineException {
         Map<String, Object> prototype0HealthParameter = new HashMap<>() {{ put("health", 10); }};
         Map<String, Object> prototype1HealthParameter = new HashMap<>() {{ put("health", 15); }};
@@ -70,12 +68,11 @@ public class ActionsTest {
         for (int i=0; i<20; i++) {
             level.execute(0.5);
             if (level.getTotalElapsedTime() == 3) {
-                Assert.assertEquals(3, spriteManager.getOnScreenSprites().size());
+                assertEquals(3, spriteManager.getOnScreenSprites().size());
             } else if (level.getTotalElapsedTime() == 4.5) {
-                Assert.assertEquals(5, spriteManager.getOnScreenSprites().size());
+                assertEquals(5, spriteManager.getOnScreenSprites().size());
             }
         }
-
-        Assert.assertEquals(6, spriteManager.getOnScreenSprites().size());
+        assertEquals(6, spriteManager.getOnScreenSprites().size());
     }
 }
