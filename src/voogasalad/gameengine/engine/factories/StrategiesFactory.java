@@ -1,12 +1,8 @@
 package voogasalad.gameengine.engine.factories;
 
 import voogasalad.gameengine.engine.exceptions.GameEngineException;
-<<<<<<< HEAD
-import voogasalad.gameengine.engine.spritestrategies.health.HealthStrategy;
-import voogasalad.gameengine.engine.spritestrategies.movement.MovementStrategy;
-=======
+import voogasalad.gameengine.engine.sprites.strategies.movement.MovementStrategy;
 import voogasalad.gameengine.engine.sprites.strategies.health.HealthStrategy;
->>>>>>> 697b3995706c5022cd262ae541ea99ec04322a9b
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
@@ -25,7 +21,6 @@ public class StrategiesFactory {
             throw new GameEngineException(e, "SpriteHealthInitializationFailed");
         }
     }
-<<<<<<< HEAD
 
     public MovementStrategy makeMovement(String movementStrategy, Map<String, Object> parameters) throws GameEngineException {
         try {
@@ -36,6 +31,3 @@ public class StrategiesFactory {
         }
     }
 }
-=======
-}
->>>>>>> 697b3995706c5022cd262ae541ea99ec04322a9b

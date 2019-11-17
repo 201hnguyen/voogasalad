@@ -3,7 +3,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import voogasalad.gameengine.engine.exceptions.GameEngineException;
 import voogasalad.gameengine.engine.factories.StrategiesFactory;
-import voogasalad.gameengine.engine.spritestrategies.movement.MovementStrategy;
+import voogasalad.gameengine.engine.sprites.strategies.movement.MovementStrategy;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -18,23 +18,58 @@ public class MovementStrategyTests {
 
     @BeforeEach
     public void setUp () throws GameEngineException {
-        LinkedList<Point> path1 = new LinkedList<>();
-        path1.add(new Point(0, 0));
-        path1.add(new Point(0, 100));
-        //double speed1 = 10;
-        Map<String, Object> parameters1 = new HashMap<>() {{
-            put("myPath", path1);
-            //put("mySpeed", speed1);
-        }};
-        movement1 = strategiesFactory.makeMovement("PathMovement", parameters1);
+
     }
 
     @Test
     public void testCurrentPosition () {
         Point expected = new Point(0, 0);
-        movement1.getCurrentPosition();
-        assertEquals(expected, movement1.getCurrentPosition());
+        LinkedList<Point> points = new LinkedList<>();
+        points.add(new Point(0, 0));
+        points.add(new Point(0, 100));
+        MovementStrategy toTest = makeMovementStrategy(points, 10);
+        assertEquals(expected, toTest.getCurrentPosition());
     }
 
+    @Test
+    public void testUpdatePosition () {
+        Point expected = new Point(0, 10);
+        LinkedList<Point> points = new LinkedList<>();
+        points.add(new Point(0, 0));
+        points.add(new Point(0, 100));
+        MovementStrategy toTest = makeMovementStrategy(points, 10);
+        toTest.updatePosition(1.00);
+        assertEquals(expected, toTest.getCurrentPosition());
+    }
 
+    @Test
+    public void testUpdatePositionComplex () {
+        Point expected = new Point(94, 92);
+        LinkedList<Point> points = new LinkedList<>();
+        points.add(new Point(100, 100));
+        points.add(new Point(70, 60));
+        MovementStrategy toTest = makeMovementStrategy(points, 10);
+        toTest.updatePosition(1.00);
+        assertEquals(expected, toTest.getCurrentPosition());
+    }
+
+    @Test
+    public void testNoNextPositionUpdatePosition () {
+        LinkedList<Point> points = new LinkedList<>();
+        points.add(new Point(0, 0));
+        MovementStrategy toTest = makeMovementStrategy(points, 10);
+        toTest.updatePosition(1.00);
+    }
+
+    private MovementStrategy makeMovementStrategy(LinkedList points, double speed) {
+        Map<String, Object> parameters = new HashMap<>() {{
+            put("path", points);
+            put("speed", speed);
+        }};
+        try {
+            return strategiesFactory.makeMovement("PathMovement", parameters);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

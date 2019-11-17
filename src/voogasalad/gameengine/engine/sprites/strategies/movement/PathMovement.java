@@ -1,4 +1,4 @@
-package voogasalad.gameengine.engine.spritestrategies.movement;
+package voogasalad.gameengine.engine.sprites.strategies.movement;
 
 import voogasalad.gameengine.engine.exceptions.GameEngineException;
 import voogasalad.gameengine.engine.utils.Verifier;
@@ -13,16 +13,17 @@ public class PathMovement implements MovementStrategy {
     private LinkedList<Point> myPath;
     private Point currentPosition;
     private Point nextPosition;
+    private int positionIndex;
     private double mySpeed;
     private Point myDirection;
 
 
     public PathMovement(Map<String, Object> parameters) throws GameEngineException {
-        //mySpeed = (double) Verifier.verifyAndGetStrategyParameter(parameters, "mySpeed");
+        mySpeed = (double) Verifier.verifyAndGetStrategyParameter(parameters, "mySpeed");
         myPath = (LinkedList<Point>) Verifier.verifyAndGetStrategyParameter(parameters, "myPath");
         currentPosition = myPath.poll();
         nextPosition = myPath.poll();
-        //myDirection = calculateDirection();
+        myDirection = calculateDirection();
     }
 
 
