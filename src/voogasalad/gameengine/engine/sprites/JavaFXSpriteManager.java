@@ -24,7 +24,7 @@ public class JavaFXSpriteManager implements SpriteManager {
     }
 
     @Override
-    public void makeSpriteFromPrototype(int xPos, int yPos, int prototypeId) throws GameEngineException {
+    public void makeSpriteFromPrototype(double xPos, double yPos, int prototypeId) throws GameEngineException {
         myOnScreenSprites.add(mySpritePrototypes.get(prototypeId).makeClone(xPos, yPos, mySpriteIDGenerator++));
     }
 
