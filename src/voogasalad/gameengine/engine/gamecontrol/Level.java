@@ -11,22 +11,27 @@ import java.util.Set;
 
 public class Level {
 
-    SpriteManager mySpriteManager;
-    Queue<Wave> mySpritesWavesQueue;
-    double myTotalElapsedTime;
-    Set<LevelCondition> myLevelConditions;
-    Set<LevelAction> myActionsInProgress;
+    //TODO: May need to break up this class; it's on the path to being pretty big and doing a lot of things.
+    private SpriteManager mySpriteManager;
+    private Queue<Wave> mySpritesWavesQueue;
+    private double myTotalElapsedTime;
+    private double myElapsedTimeSinceLastFrame;
+    private Set<LevelCondition> myLevelConditions;
+    private Set<LevelAction> myActionsInProgress;
 
     public Level(SpriteManager spriteManager, Queue<Wave> spritesWavesQueue, Set<LevelCondition> levelConditions) {
         mySpriteManager = spriteManager;
         mySpritesWavesQueue = spritesWavesQueue;
         myTotalElapsedTime = 0;
+        myElapsedTimeSinceLastFrame = 0;
         myLevelConditions = levelConditions;
         myActionsInProgress = new HashSet<>();
     }
 
     public void execute(double elapsedTime) throws GameEngineException {
+        myElapsedTimeSinceLastFrame = elapsedTime;
         myTotalElapsedTime += elapsedTime;
+        System.out.println("Level time: " + myTotalElapsedTime);
         checkLevelConditions();
         executeActions();
     }
@@ -58,11 +63,13 @@ public class Level {
         }
     }
 
-    public double getElapsedTime() {
-        System.out.println("Level elapsed time:" + myTotalElapsedTime);
+    public double getTotalElapsedTime() {
         return myTotalElapsedTime;
     }
 
+    public double getElapsedTimeSinceLastFrame() {
+        return myElapsedTimeSinceLastFrame;
+    }
     public SpriteManager getSpriteManager() {
         return mySpriteManager;
     }
