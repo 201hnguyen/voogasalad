@@ -36,19 +36,32 @@ public class Main {
             spriteManager.addSpritePrototype(1, spritePrototype);
 
             Point spawnPoint = new Point(250, 300);
+            Point spawnPoint2 = new Point(400, 400);
             LevelAction spawnWaveAction = new SpawnWaveAction();
+            LevelAction spawnWaveAction2 = new SpawnWaveAction();
             Map<String, Object> temporalConditionParameter = new HashMap<>() {{
                 put("time", (double) 0);
                 put("action", spawnWaveAction);
             }};
+
+            Map<String, Object> temporalConditionParameter2 = new HashMap<>() {{
+                put("time", (double) 3);
+                put("action", spawnWaveAction2);
+            }};
+
             LevelCondition levelCondition = new AbsoluteTemporalCondition(temporalConditionParameter);
+            LevelCondition levelCondition2 = new AbsoluteTemporalCondition(temporalConditionParameter2);
+
             Set<LevelCondition> levelConditionList = new HashSet<>() {{
                 add(levelCondition);
+                add(levelCondition2);
             }};
 
             Queue<Integer> spritesWaveQueue = new LinkedList<>() {{ add(0); add(1); add(0); }};
+            Queue<Integer> spritesWaveQueue2 = new LinkedList<>() {{ add(0); add(1); add(0); }};
             Wave wave = new Wave(spritesWaveQueue, spawnPoint);
-            Queue<Wave> wavesQueue = new LinkedList<>() {{ }};
+            Wave wave2 = new Wave(spritesWaveQueue2, spawnPoint2);
+            Queue<Wave> wavesQueue = new LinkedList<>() {{ add(wave); add(wave2); }};
             Level level = new Level(spriteManager, wavesQueue, levelConditionList);
 
             for (int i=0; i<5; i++) {
@@ -58,8 +71,6 @@ public class Main {
                     System.out.println("Sprite generated:" + " id: " + sprite.getId() + " health: " + sprite.getHealth() + " xPos: " + sprite.getX() + " yPos:" + sprite.getY());
                 }
             }
-
-
         } catch (GameEngineException e) {
 
         }

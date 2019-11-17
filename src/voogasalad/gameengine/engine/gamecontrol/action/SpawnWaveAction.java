@@ -7,28 +7,34 @@ import voogasalad.gameengine.engine.gamecontrol.Wave;
 public class SpawnWaveAction implements LevelAction {
 
     private Wave myWave;
-    private boolean isFinished = false;
-
+    private boolean isFinished;
 
     @Override
     public void execute(Level level) throws GameEngineException {
         if (myWave == null) {
-            if (level.hasNextWave()) {
-                myWave = level.getNextWave();
-            } else {
-                throw new GameEngineException("SpecifyWavesToExecuteAction");
-            }
+            setupWave(level);
         }
-
         level.getSpriteManager().makeSpriteFromPrototype(myWave.getSpawnPoint().getX(), myWave.getSpawnPoint().getY(), myWave.getNextSpriteToSpawn());
-
-        if (myWave.isEmpty()) {
-            isFinished = true;
-        }
+        checkActionFinished();
     }
 
     @Override
     public boolean isFinished() {
         return isFinished;
+    }
+
+    private void setupWave(Level level) throws GameEngineException {
+        if (level.hasNextWave()) {
+            myWave = level.getNextWave();
+            isFinished = false;
+        } else {
+            throw new GameEngineException("SpecifyWavesToExecuteAction");
+        }
+    }
+
+    private void checkActionFinished() {
+        if (myWave.isEmpty()) {
+            isFinished = true;
+        }
     }
 }

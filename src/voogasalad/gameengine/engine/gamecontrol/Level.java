@@ -5,38 +5,39 @@ import voogasalad.gameengine.engine.gamecontrol.action.LevelAction;
 import voogasalad.gameengine.engine.gamecontrol.condition.LevelCondition;
 import voogasalad.gameengine.engine.sprites.SpriteManager;
 
-import java.awt.Point;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Queue;
+import java.util.Set;
 
 public class Level {
 
     SpriteManager mySpriteManager;
     Queue<Wave> mySpritesWavesQueue;
-    double myElapsedTime;
+    double myTotalElapsedTime;
     Set<LevelCondition> myLevelConditions;
     Set<LevelAction> myActionsInProgress;
 
     public Level(SpriteManager spriteManager, Queue<Wave> spritesWaveQueue, Set<LevelCondition> levelConditions) throws GameEngineException {
         mySpriteManager = spriteManager;
         mySpritesWavesQueue = spritesWaveQueue;
-        myElapsedTime = 0;
+        myTotalElapsedTime = 0;
         myLevelConditions = levelConditions;
         myActionsInProgress = new HashSet<>();
     }
 
     public void execute(double elapsedTime) throws GameEngineException {
-        myElapsedTime += elapsedTime;
-        executeActionsInProgress();
+        myTotalElapsedTime += elapsedTime;
         checkLevelConditions();
+        executeActions();
     }
 
-    private void checkLevelConditions() throws GameEngineException {
-        List<LevelCondition> conditionsToRemove = new ArrayList<>();
+    private void checkLevelConditions(){
+        Set<LevelCondition> conditionsToRemove = new HashSet<>();
         for (LevelCondition condition : myLevelConditions) {
             if (condition.hasHappened(this)) {
                 conditionsToRemove.add(condition);
                 LevelAction action = condition.getAction();
-                executeAction(action);
+                myActionsInProgress.add(action);
             }
         }
         for (LevelCondition condition : conditionsToRemove){
@@ -44,17 +45,10 @@ public class Level {
         }
     }
 
-    private void executeAction(LevelAction action) throws GameEngineException{
-        action.execute(this);
-        if (!action.isFinished()) {
-            myActionsInProgress.add(action);
-        }
-    }
-
-    private void executeActionsInProgress() throws GameEngineException{
-        List<LevelAction> actionsToRemove = new ArrayList<>();
+    private void executeActions() throws GameEngineException{
+        Set<LevelAction> actionsToRemove = new HashSet<>();
         for (LevelAction action : myActionsInProgress) {
-            executeAction(action);
+            action.execute(this);
             if (action.isFinished()) {
                 actionsToRemove.add(action);
             }
@@ -65,7 +59,8 @@ public class Level {
     }
 
     public double getElapsedTime() {
-        return myElapsedTime;
+        System.out.println("Level elapsed time:" + myTotalElapsedTime);
+        return myTotalElapsedTime;
     }
 
     public SpriteManager getSpriteManager() {
