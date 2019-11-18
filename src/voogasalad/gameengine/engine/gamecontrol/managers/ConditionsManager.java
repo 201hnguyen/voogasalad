@@ -9,26 +9,19 @@ import java.util.Set;
 
 public class ConditionsManager {
     private Set<LevelCondition> myLevelConditions;
-    private Set<LevelCondition> myConditionsToRemove;
 
     public ConditionsManager(Set<LevelCondition> levelConditions) {
         myLevelConditions = levelConditions;
-        myConditionsToRemove = new HashSet<>();
     }
 
     public Set<LevelAction> getActionsToExecute(Level level){
+        Set<LevelCondition> conditionsToRemove = new HashSet<>();
         Set<LevelAction> actionsToExecute = new HashSet<>();
         myLevelConditions.stream()
                 .filter(condition -> condition.hasHappened(level))
-                .forEach(condition -> { myConditionsToRemove.add(condition); actionsToExecute.addAll(condition.getActions()); });
-        removePassedConditions();
+                .forEach(condition -> { conditionsToRemove.add(condition); actionsToExecute.addAll(condition.getActions()); });
+        conditionsToRemove.stream().
+                forEach(condition -> myLevelConditions.remove(condition));
         return actionsToExecute;
-    }
-
-    private void removePassedConditions() {
-        for (LevelCondition condition : myConditionsToRemove){
-            myLevelConditions.remove(condition);
-        }
-        myConditionsToRemove.clear();
     }
 }
