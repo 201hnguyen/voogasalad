@@ -7,19 +7,24 @@
         <height>50</height>
         <width>20</width>
         <xpos>100</xpos>
-        <ypos>100</ypos></Tower>
-    <Enemy><id>0</id>
+        <ypos>100</ypos>
+        <Health>10</Health>
+    </Tower>
+    <Enemy><id>1</id>
         <image>src/resources/player/WhiteCell.png</image>
         <height>30</height>
         <width>30</width>
         <xpos>40</xpos>
-        <ypos>50</ypos></Enemy>
+        <ypos>50</ypos>
+        <Health>20</Health>
+    </Enemy>
     <Enemy>
-        <id>1</id>
+        <id>2</id>
         <image>src/resources/player/BlackCell.png</image>
         <height>50</height>
         <width>50</width>
         <xpos>20</xpos>
         <ypos>30</ypos>
+        <Health>40</Health>
     </Enemy>
 </GameConfig>
