@@ -9,26 +9,21 @@ import java.util.Set;
 
 public class ActionsManager {
     private Set<LevelAction> myActionsInProgress;
-    private Set<LevelAction> myActionsToRemove;
 
     public ActionsManager() {
         myActionsInProgress = new HashSet<>();
-        myActionsToRemove = new HashSet<>();
     }
 
     public void executeActions(Level level) throws GameEngineException {
+        Set<LevelAction> actionsToRemove = new HashSet<>();
         for (LevelAction action : myActionsInProgress) {
             action.execute(level);
             if (action.isFinished()) {
-                myActionsToRemove.add(action);
+                actionsToRemove.add(action);
             }
         }
-        removeFinishedActions();
-    }
-
-    private void removeFinishedActions() {
-        myActionsToRemove.stream().forEach(action -> myActionsInProgress.remove(action));
-        myActionsToRemove.clear();
+        actionsToRemove.stream().
+                forEach(action -> myActionsInProgress.remove(action));
     }
 
     public void addNewActions(Set<LevelAction> levelActions) {
