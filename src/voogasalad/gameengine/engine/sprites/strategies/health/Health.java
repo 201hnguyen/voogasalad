@@ -4,7 +4,6 @@ import voogasalad.gameengine.engine.exceptions.GameEngineException;
 import voogasalad.gameengine.engine.factories.StrategiesFactory;
 import voogasalad.gameengine.engine.utils.Verifier;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class Health implements HealthStrategy {

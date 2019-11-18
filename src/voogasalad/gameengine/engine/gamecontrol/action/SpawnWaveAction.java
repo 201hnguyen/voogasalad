@@ -3,6 +3,8 @@ package voogasalad.gameengine.engine.gamecontrol.action;
 import voogasalad.gameengine.engine.exceptions.GameEngineException;
 import voogasalad.gameengine.engine.gamecontrol.Level;
 import voogasalad.gameengine.engine.gamecontrol.Wave;
+import voogasalad.gameengine.engine.gamecontrol.managers.WaveManager;
+import voogasalad.gameengine.engine.sprites.SpriteManager;
 
 public class SpawnWaveAction implements LevelAction {
 
@@ -11,15 +13,13 @@ public class SpawnWaveAction implements LevelAction {
 
     @Override
     public void execute(Level level) throws GameEngineException {
+        SpriteManager spriteManager = level.getSpriteManager();
+        WaveManager waveManager = level.getWaveManager();
+        double elapsedTime = level.getTimeManager().getElapsedTimeSinceLastFrame();
         if (myWave == null) {
-            setupWave(level);
+            setupWave(waveManager);
         }
-        Integer nextSpriteToSpawn = myWave.getNextSpriteToSpawn(level.getElapsedTimeSinceLastFrame());
-        if (nextSpriteToSpawn != null) {
-            level.getSpriteManager().makeSpriteFromPrototype(myWave.getSpawnPoint().getX(), myWave.getSpawnPoint().getY(), nextSpriteToSpawn);
-            myWave.setNextEntryTime();
-        }
-        checkActionFinished();
+        isFinished = myWave.spawnNextSprite(spriteManager, elapsedTime);
     }
 
     @Override
@@ -27,18 +27,12 @@ public class SpawnWaveAction implements LevelAction {
         return isFinished;
     }
 
-    private void setupWave(Level level) throws GameEngineException {
-        if (level.hasNextWave()) {
-            myWave = level.getNextWave();
+    private void setupWave(WaveManager waveManager) throws GameEngineException {
+        if (waveManager.hasNextWave()) {
             isFinished = false;
+            myWave = waveManager.getNextWave();
         } else {
             throw new GameEngineException("SpecifyWavesToExecuteAction");
-        }
-    }
-
-    private void checkActionFinished() {
-        if (myWave.isEmpty()) {
-            isFinished = true;
         }
     }
 }
