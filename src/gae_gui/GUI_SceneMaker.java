@@ -41,6 +41,4 @@ public class GUI_SceneMaker{
         return accordionVBox;
     }
 
-//    public void createSubmitButton(VBox root)
-
 }

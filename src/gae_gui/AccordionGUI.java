@@ -1,6 +1,5 @@
 package gae_gui;
 
-import gae_gui.gae_Tower.GAETowerView;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 
@@ -14,19 +13,20 @@ public class AccordionGUI extends Accordion {
     private TitledPane tPane;
     private String gameObjectName;
     private ResourceBundle paramFieldType;
+    private CreateObjectParameters newTowerPage;
 
 
     public AccordionGUI (String gameObjectNameParam, String gameObjectProperties, GUI_Controller target, ResourceBundle paramFieldTypeParam) {
         gameObjectName = gameObjectNameParam;
         properties = gameObjectProperties.split(",");
         setMaxWidth(WIDTH);
-        tPane = makeAccordion(properties);
+        tPane = makeAccordion();
         tPane.setGraphic(configureBP(gameObjectName));
         getPanes().addAll(tPane);
         paramFieldType = paramFieldTypeParam;
     }
 
-    private TitledPane makeAccordion(String[] gameObjectProperties) {
+    private TitledPane makeAccordion() {
         TitledPane tPane = new TitledPane();
         tPane.setContent(new TextArea());
         return tPane;
@@ -35,7 +35,7 @@ public class AccordionGUI extends Accordion {
     private Button createAccordionAddButton(){
         Button addButton = new Button("+");
         addButton.setOnMouseClicked(event -> {
-            GAETowerView newTowerPage = new GAETowerView(properties, gameObjectName, paramFieldType);
+            newTowerPage = new CreateObjectParameters(properties, paramFieldType);
         });
         return addButton;
     }
