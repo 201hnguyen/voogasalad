@@ -25,6 +25,14 @@ public class StatusManager {
         return myElapsedTimeSinceLastFrame;
     }
 
+    public int getResources() {
+        return myResources;
+    }
+
+    public int getLives() {
+        return myLives;
+    }
+
     public int alterResourcesByValue(int value) {
         myResources += value;
         return myResources;
