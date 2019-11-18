@@ -4,7 +4,6 @@ import voogasalad.gameengine.engine.gamecontrol.Level;
 import voogasalad.gameengine.engine.gamecontrol.action.LevelAction;
 import voogasalad.gameengine.engine.gamecontrol.condition.LevelCondition;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,8 +22,7 @@ public class ConditionsManager {
         for (LevelCondition condition : myLevelConditions) {
             if (condition.hasHappened(level)) {
                 myConditionsToRemove.add(condition);
-                LevelAction action = condition.getAction();
-                actionsToExecute.add(action);
+                actionsToExecute.addAll(condition.getActions());
             }
         }
         removePassedConditions();
