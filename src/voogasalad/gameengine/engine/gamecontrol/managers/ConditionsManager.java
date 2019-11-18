@@ -5,7 +5,6 @@ import voogasalad.gameengine.engine.gamecontrol.action.LevelAction;
 import voogasalad.gameengine.engine.gamecontrol.condition.LevelCondition;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class ConditionsManager {

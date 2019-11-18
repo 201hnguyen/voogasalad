@@ -10,11 +10,11 @@ import java.util.Set;
 
 public class TemporalCondition implements LevelCondition {
     private double myMarkedTime;
-    private Set<LevelAction> myAction;
+    private Set<LevelAction> myActions;
 
     public TemporalCondition(Map<String, Object> parameters) throws GameEngineException {
         myMarkedTime = (double) Verifier.verifyAndGetConditionParameter(parameters, "myMarkedTime");
-        myAction = (Set<LevelAction>) Verifier.verifyAndGetConditionParameter(parameters, "myAction");
+        myActions = (Set<LevelAction>) Verifier.verifyAndGetConditionParameter(parameters, "myActions");
     }
 
     @Override
@@ -24,6 +24,6 @@ public class TemporalCondition implements LevelCondition {
 
     @Override
     public Set<LevelAction> getActions() {
-        return myAction;
+        return myActions;
     }
 }
