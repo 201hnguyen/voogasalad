@@ -3,6 +3,7 @@ package voogasalad.gameengine.engine.gamecontrol.action;
 import voogasalad.gameengine.engine.exceptions.GameEngineException;
 import voogasalad.gameengine.engine.gamecontrol.Level;
 import voogasalad.gameengine.engine.gamecontrol.Wave;
+import voogasalad.gameengine.engine.gamecontrol.managers.WaveManager;
 import voogasalad.gameengine.engine.sprites.SpriteManager;
 
 public class SpawnWaveAction implements LevelAction {
@@ -12,11 +13,13 @@ public class SpawnWaveAction implements LevelAction {
 
     @Override
     public void execute(Level level) throws GameEngineException {
+        SpriteManager spriteManager = level.getSpriteManager();
+        WaveManager waveManager = level.getWaveManager();
+        double elapsedTime = level.getTimeManager().getElapsedTimeSinceLastFrame();
         if (myWave == null) {
-            setupWave(level);
+            setupWave(waveManager);
         }
-        spawnNextSprite(level.getSpriteManager(), level.getTimeManager().getElapsedTimeSinceLastFrame());
-        checkActionFinished();
+        isFinished = myWave.spawnNextSprite(spriteManager, elapsedTime);
     }
 
     @Override
@@ -24,25 +27,12 @@ public class SpawnWaveAction implements LevelAction {
         return isFinished;
     }
 
-    private void spawnNextSprite(SpriteManager spriteManager, double elapsedTime) throws GameEngineException {
-        Integer nextSpriteToSpawn = myWave.getNextSpriteToSpawn(elapsedTime);
-        if (nextSpriteToSpawn != null) {
-            spriteManager.makeSpriteFromPrototype(myWave.getSpawnPoint().getX(), myWave.getSpawnPoint().getY(), nextSpriteToSpawn);
-        }
-    }
-
-    private void setupWave(Level level) throws GameEngineException {
-        if (level.getWaveManager().hasNextWave()) {
-            myWave = level.getWaveManager().getNextWave();
+    private void setupWave(WaveManager waveManager) throws GameEngineException {
+        if (waveManager.hasNextWave()) {
             isFinished = false;
+            myWave = waveManager.getNextWave();
         } else {
             throw new GameEngineException("SpecifyWavesToExecuteAction");
-        }
-    }
-
-    private void checkActionFinished() {
-        if (myWave.isEmpty()) {
-            isFinished = true;
         }
     }
 }
