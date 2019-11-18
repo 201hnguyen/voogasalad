@@ -18,7 +18,7 @@ public class TemporalCondition implements LevelCondition {
 
     @Override
     public boolean hasHappened(Level level) {
-        return level.getTotalElapsedTime() >= myMarkedTime;
+        return level.getTimeManager().getTotalElapsedTime() >= myMarkedTime;
     }
 
     @Override

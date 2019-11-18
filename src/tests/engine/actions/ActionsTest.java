@@ -10,6 +10,10 @@ import voogasalad.gameengine.engine.gamecontrol.action.LevelAction;
 import voogasalad.gameengine.engine.gamecontrol.action.SpawnWaveAction;
 import voogasalad.gameengine.engine.gamecontrol.condition.LevelCondition;
 import voogasalad.gameengine.engine.gamecontrol.condition.TemporalCondition;
+import voogasalad.gameengine.engine.gamecontrol.managers.ActionsManager;
+import voogasalad.gameengine.engine.gamecontrol.managers.ConditionsManager;
+import voogasalad.gameengine.engine.gamecontrol.managers.TimeManager;
+import voogasalad.gameengine.engine.gamecontrol.managers.WaveManager;
 import voogasalad.gameengine.engine.sprites.JavaFXSprite;
 import voogasalad.gameengine.engine.sprites.JavaFXSpriteManager;
 import voogasalad.gameengine.engine.sprites.Sprite;
@@ -19,6 +23,7 @@ import voogasalad.gameengine.engine.sprites.strategies.health.HealthStrategy;
 
 import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -60,15 +65,19 @@ public class ActionsTest {
 
         Wave wave0 = new Wave(spritesWave0Queue, 1.0, wave0SpawnPoint);
         Wave wave1 = new Wave(spritesWave1Queue, 0.5, wave1SpawnPoint);
-        Queue<Wave> wavesQueue = new LinkedList<>() {{ add(wave0); add(wave1); }};
+        List<Wave> wavesList = new ArrayList<>() {{ add(wave0); add(wave1); }};
+        WaveManager waveManager = new WaveManager(wavesList);
+        TimeManager timeManager = new TimeManager();
+        ConditionsManager conditionsManager = new ConditionsManager(levelConditionsSet);
+        ActionsManager actionsManager = new ActionsManager();
 
-        Level level = new Level(spriteManager, wavesQueue, levelConditionsSet);
+        Level level = new Level(spriteManager, waveManager, timeManager, conditionsManager, actionsManager);
 
         for (int i=0; i<20; i++) {
             level.execute(0.5);
-            if (level.getTotalElapsedTime() == 2) {
+            if (level.getTimeManager().getTotalElapsedTime() == 2) {
                 assertEquals(2, spriteManager.getOnScreenSprites().size());
-            } else if (level.getTotalElapsedTime() == 3.5) {
+            } else if (level.getTimeManager().getTotalElapsedTime() == 3.5) {
                 assertEquals(5, spriteManager.getOnScreenSprites().size());
             }
         }

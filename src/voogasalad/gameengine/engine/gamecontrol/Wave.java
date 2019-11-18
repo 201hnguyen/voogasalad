@@ -1,6 +1,7 @@
 package voogasalad.gameengine.engine.gamecontrol;
 
 import voogasalad.gameengine.engine.exceptions.GameEngineException;
+import voogasalad.gameengine.engine.sprites.SpriteManager;
 
 import java.awt.Point;
 import java.util.Queue;
@@ -11,14 +12,22 @@ public class Wave {
     Point mySpawnPoint;
     double myElapsedTimeSinceLastEntry;
 
-    public Wave(Queue<Integer> spritesQueue, Double spriteInterval, Point spawnPoint) throws GameEngineException {
+    public Wave(Queue<Integer> spritesQueue, Double spriteInterval, Point spawnPoint){
         mySpritesInterval = spriteInterval;
         myElapsedTimeSinceLastEntry = mySpritesInterval;
         mySpritesQueue = spritesQueue;
         mySpawnPoint = spawnPoint;
     }
 
-    public Integer getNextSpriteToSpawn(double elapsedTime){
+    public boolean spawnNextSprite(SpriteManager spriteManager, double elapsedTime) throws GameEngineException {
+        Integer nextSpriteToSpawn = getNextSpriteToSpawn(elapsedTime);
+        if (nextSpriteToSpawn != null) {
+            spriteManager.makeSpriteFromPrototype(mySpawnPoint.getX(), mySpawnPoint.getY(), nextSpriteToSpawn);
+        }
+        return isEmpty();
+    }
+
+    private Integer getNextSpriteToSpawn(double elapsedTime){
         myElapsedTimeSinceLastEntry +=elapsedTime;
         System.out.println("Wave current time: " + myElapsedTimeSinceLastEntry);
         if (myElapsedTimeSinceLastEntry >= mySpritesInterval) {
@@ -28,11 +37,7 @@ public class Wave {
         return null;
     }
 
-    public Point getSpawnPoint() {
-        return mySpawnPoint;
-    }
-
-    public boolean isEmpty() {
+    private boolean isEmpty() {
         return mySpritesQueue.size() == 0;
     }
 }
