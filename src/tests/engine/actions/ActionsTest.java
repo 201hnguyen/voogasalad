@@ -53,8 +53,14 @@ public class ActionsTest {
         LevelAction wave0SpawnAction = new SpawnWaveAction();
         LevelAction wave1SpawnAction = new SpawnWaveAction();
 
-        Map<String, Object> condition0Parameter = new HashMap<>() {{ put("time", (double) 0); put("action", wave0SpawnAction); }};
-        Map<String, Object> condition1Parameter = new HashMap<>() {{ put("time", (double) 3); put("action", wave1SpawnAction); }};
+        Set<LevelAction> levelActions = new HashSet<>();
+        Set<LevelAction> levelActions1 = new HashSet<>();
+        levelActions.add(wave0SpawnAction);
+        levelActions1.add(wave1SpawnAction);
+        System.out.println(levelActions.getClass().getName());
+
+        Map<String, Object> condition0Parameter = new HashMap<>() {{ put("time", (double) 0); put("action", levelActions); }};
+        Map<String, Object> condition1Parameter = new HashMap<>() {{ put("time", (double) 3); put("action", levelActions1); }};
         LevelCondition condition0 = new TemporalCondition(condition0Parameter);
         LevelCondition condition1 = new TemporalCondition(condition1Parameter);
 

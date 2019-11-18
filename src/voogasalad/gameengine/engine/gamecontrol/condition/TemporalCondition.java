@@ -6,14 +6,15 @@ import voogasalad.gameengine.engine.gamecontrol.action.LevelAction;
 import voogasalad.gameengine.engine.utils.Verifier;
 
 import java.util.Map;
+import java.util.Set;
 
 public class TemporalCondition implements LevelCondition {
     private double myMarkedTime;
-    private LevelAction myAction;
+    private Set<LevelAction> myAction;
 
     public TemporalCondition(Map<String, Object> parameters) throws GameEngineException {
         myMarkedTime = (double) Verifier.verifyAndGetConditionParameter(parameters, "myMarkedTime");
-        myAction = (LevelAction) Verifier.verifyAndGetConditionParameter(parameters, "myAction");
+        myAction = (Set<LevelAction>) Verifier.verifyAndGetConditionParameter(parameters, "myAction");
     }
 
     @Override
@@ -22,7 +23,7 @@ public class TemporalCondition implements LevelCondition {
     }
 
     @Override
-    public LevelAction getAction() {
+    public Set<LevelAction> getActions() {
         return myAction;
     }
 }
