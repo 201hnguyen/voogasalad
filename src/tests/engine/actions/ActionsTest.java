@@ -12,7 +12,7 @@ import voogasalad.gameengine.engine.gamecontrol.condition.LevelCondition;
 import voogasalad.gameengine.engine.gamecontrol.condition.TemporalCondition;
 import voogasalad.gameengine.engine.gamecontrol.managers.ActionsManager;
 import voogasalad.gameengine.engine.gamecontrol.managers.ConditionsManager;
-import voogasalad.gameengine.engine.gamecontrol.managers.TimeManager;
+import voogasalad.gameengine.engine.gamecontrol.managers.StatusManager;
 import voogasalad.gameengine.engine.gamecontrol.managers.WaveManager;
 import voogasalad.gameengine.engine.sprites.JavaFXSprite;
 import voogasalad.gameengine.engine.sprites.JavaFXSpriteManager;
@@ -73,11 +73,11 @@ public class ActionsTest {
         Wave wave1 = new Wave(spritesWave1Queue, 0.5, wave1SpawnPoint);
         List<Wave> wavesList = new ArrayList<>() {{ add(wave0); add(wave1); }};
         WaveManager waveManager = new WaveManager(wavesList);
-        TimeManager timeManager = new TimeManager();
+        StatusManager statusManager = new StatusManager();
         ConditionsManager conditionsManager = new ConditionsManager(levelConditionsSet);
         ActionsManager actionsManager = new ActionsManager();
 
-        Level level = new Level(spriteManager, waveManager, timeManager, conditionsManager, actionsManager);
+        Level level = new Level(spriteManager, waveManager, statusManager, conditionsManager, actionsManager);
 
         for (int i=0; i<20; i++) {
             level.execute(0.5);
