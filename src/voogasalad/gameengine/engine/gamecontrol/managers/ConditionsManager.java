@@ -19,12 +19,9 @@ public class ConditionsManager {
 
     public Set<LevelAction> getActionsToExecute(Level level){
         Set<LevelAction> actionsToExecute = new HashSet<>();
-        for (LevelCondition condition : myLevelConditions) {
-            if (condition.hasHappened(level)) {
-                myConditionsToRemove.add(condition);
-                actionsToExecute.addAll(condition.getActions());
-            }
-        }
+        myLevelConditions.stream()
+                .filter(condition -> condition.hasHappened(level))
+                .forEach(condition -> { myConditionsToRemove.add(condition); actionsToExecute.addAll(condition.getActions()); });
         removePassedConditions();
         return actionsToExecute;
     }

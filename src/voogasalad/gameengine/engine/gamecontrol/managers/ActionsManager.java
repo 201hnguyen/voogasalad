@@ -27,9 +27,7 @@ public class ActionsManager {
     }
 
     private void removeFinishedActions() {
-        for (LevelAction action : myActionsToRemove) {
-            myActionsInProgress.remove(action);
-        }
+        myActionsToRemove.stream().forEach(action -> myActionsInProgress.remove(action));
         myActionsToRemove.clear();
     }
 
