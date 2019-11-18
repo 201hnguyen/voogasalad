@@ -1,11 +1,15 @@
 package voogasalad.gameplayer;
 import java.awt.*;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class Player {
@@ -16,7 +20,6 @@ public class Player {
     private XMLParser myXMLParser;
     private Stage myStage;
     private Group mapRoot;
-    private Map<ImageView, Point[]> components;
 
     //Player expects a javaFX Stage upon instantiation
     public Player(Stage primaryStage, String xmlPath){
@@ -31,21 +34,23 @@ public class Player {
     }
 
     private void displayMapFromXML(){
-        String win = myXMLParser.getTextValue("WindowSize");
-        String[] windowSize = win.split(" ");
-        Scene scene = new Scene(mapRoot, Double.parseDouble(windowSize[0]), Double.parseDouble(windowSize[1]));
+        Scene scene = new Scene(mapRoot, 1000, 800);
         myStage.setScene(scene);
-        String dim = myXMLParser.getTextValue("Dimensions");
-        String[] dimensions = dim.split(" ");
-
-        Double cell_size_x = Double.parseDouble(windowSize[0])/Double.parseDouble(dimensions[0]);
-        Double cell_size_y = Double.parseDouble(windowSize[1])/Double.parseDouble(dimensions[1]);
-
         myStage.show();
-
-
+        String[] componentTypes = {"Tower", "Enemy"};
+        for(String component: componentTypes) {
+            ArrayList<Map<String, String>> componentAttributeMap = myXMLParser.getAttributesByTagName(component);
+            for(Map<String, String> comp: componentAttributeMap){
+                for(String s: comp.keySet()){
+                    instantiateComponentAndAddToList(s);
+                }
+            }
+        }
     }
 
+    private void instantiateComponentAndAddToList(String component) {
+
+    }
 
 
     public void loadXML(String xmlPath){

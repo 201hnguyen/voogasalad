@@ -5,7 +5,11 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import javafx.scene.Node;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -26,6 +30,7 @@ public class XMLParser {
     private final String TYPE_ATTRIBUTE;
     // keep only one documentBuilder because it is expensive to make and can reset it before parsing
     private final DocumentBuilder DOCUMENT_BUILDER;
+    private Document document;
     private Element root;
 
 
@@ -43,30 +48,32 @@ public class XMLParser {
     private Element getRootElement (File xmlFile) {
         try {
             DOCUMENT_BUILDER.reset();
-            Document xmlDocument = DOCUMENT_BUILDER.parse(xmlFile);
-            return xmlDocument.getDocumentElement();
+            document = DOCUMENT_BUILDER.parse(xmlFile);
+            return document.getDocumentElement();
         }
         catch (SAXException | IOException e) {
             throw new XMLException(e);
         }
     }
 
-
-    // get value of Element's attribute
-    public String getAttribute (String attributeName) {
-        return root.getAttribute(attributeName);
-    }
-
     // get value of Element's text
-    public String getTextValue (String tagName) {
+    public ArrayList<Map<String, String>> getAttributesByTagName (String tagName) {
         NodeList nodeList = root.getElementsByTagName(tagName);
+        ArrayList<Map<String,String>> componentMap = new ArrayList<Map<String, String>>();
+        HashMap<String, String> attributeMap = new HashMap<String, String>();
         if (nodeList != null && nodeList.getLength() > 0) {
-            return nodeList.item(0).getTextContent();
+            for(int i = 0; i < nodeList.getLength(); i++){
+                NodeList attributes = nodeList.item(i).getChildNodes();
+                if(attributes != null && attributes.getLength() > 0){
+                    for(int j = 0; j < attributes.getLength(); j++){
+                        attributeMap.put(attributes.item(j).getNodeName(), attributes.item(j).getTextContent());
+                    }
+                    componentMap.add(attributeMap);
+                }
+            }
+            return componentMap;
         }
-        else {
-            // FIXME: empty string or exception? In some cases it may be an error to not find any text
-            return "";
-        }
+        return null;
     }
 
     // boilerplate code needed to make a documentBuilder

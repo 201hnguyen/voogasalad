@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<GameConfig>
+    <WindowSize screenWidth = "1000" screenHeight = "800"></WindowSize>
+    <Dimensions rows = "4" columns = "4"></Dimensions>
+    <Tower><id>0</id>
+        <image>src/resources/player/BlackCell.png</image>
+        <height>50</height>
+        <width>20</width>
+        <xpos>100</xpos>
+        <ypos>100</ypos></Tower>
+    <Enemy><id>0</id>
+        <image>src/resources/player/WhiteCell.png</image>
+        <height>30</height>
+        <width>30</width>
+        <xpos>40</xpos>
+        <ypos>50</ypos></Enemy>
+    <Enemy>
+        <id>1</id>
+        <image>src/resources/player/BlackCell.png</image>
+        <height>50</height>
+        <width>50</width>
+        <xpos>20</xpos>
+        <ypos>30</ypos>
+    </Enemy>
+</GameConfig>

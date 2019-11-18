@@ -1,5 +1,7 @@
 package voogasalad;
 
+import javafx.application.Application;
+import javafx.stage.Stage;
 import voogasalad.gameengine.engine.exceptions.GameEngineException;
 import voogasalad.gameengine.engine.gamecontrol.Level;
 import voogasalad.gameengine.engine.gamecontrol.Wave;
@@ -13,6 +15,7 @@ import voogasalad.gameengine.engine.sprites.Sprite;
 import voogasalad.gameengine.engine.sprites.SpriteManager;
 import voogasalad.gameengine.engine.sprites.strategies.health.Health;
 import voogasalad.gameengine.engine.sprites.strategies.health.HealthStrategy;
+import voogasalad.gameplayer.Player;
 
 import java.awt.Point;
 import java.util.*;
@@ -20,57 +23,16 @@ import java.util.*;
 /**
  * Feel free to completely change this code or delete it entirely. 
  */
-public class Main {
-    /**
-     * Start of the program.
-     */
-    public static void main (String[] args) {
-        try {
-            Map<String, Object> prototype0HealthParameter = new HashMap<>() {{ put("health", 10); }};
-            Map<String, Object> prototype1HealthParameter = new HashMap<>() {{ put("health", 15); }};
+public class Main extends Application {
+    public static final String XML = "src/resources/player/MockData.xml";
 
-            HealthStrategy prototype0HealthStrategy = new Health(prototype0HealthParameter);
-            HealthStrategy prototype1HealthStrategy = new Health(prototype1HealthParameter);
+    public static void main(String[] args){
+        launch(args);
+    }
 
-            SpriteManager spriteManager = new JavaFXSpriteManager();
-            Sprite prototype0 = new JavaFXSprite(0, 0, 0, prototype0HealthStrategy);
-            Sprite prototype1 = new JavaFXSprite(0, 0, 0, prototype1HealthStrategy);
-            spriteManager.addSpritePrototype(0, prototype0);
-            spriteManager.addSpritePrototype(1, prototype1);
-
-            Point wave0SpawnPoint = new Point(250, 300);
-            Point wave1SpawnPoint = new Point(400, 400);
-
-            LevelAction wave0SpawnAction = new SpawnWaveAction();
-            LevelAction wave1SpawnAction = new SpawnWaveAction();
-
-            Map<String, Object> condition0Parameter = new HashMap<>() {{ put("time", (double) 0); put("action", wave0SpawnAction); }};
-            Map<String, Object> condition1Parameter = new HashMap<>() {{ put("time", (double) 3); put("action", wave1SpawnAction); }};
-            LevelCondition condition0 = new TemporalCondition(condition0Parameter);
-            LevelCondition condition1 = new TemporalCondition(condition1Parameter);
-
-            Set<LevelCondition> levelConditionsSet = new HashSet<>() {{ add(condition0); add(condition1); }};
-
-            Queue<Integer> spritesWave0Queue = new LinkedList<>() {{ add(0); add(1); add(0); }};
-            Queue<Integer> spritesWave1Queue = new LinkedList<>() {{ add(1); add(0); add(1); }};
-            Queue<Double> entryTimeWave0Queue = new LinkedList<>() {{ add(1.5); add(4.0); }};
-            Queue<Double> entryTimeWave1Queue = new LinkedList<>() {{ add(1.0); add(5.0); }};
-
-            Wave wave0 = new Wave(spritesWave0Queue, entryTimeWave0Queue, wave0SpawnPoint);
-            Wave wave1 = new Wave(spritesWave1Queue, entryTimeWave1Queue, wave1SpawnPoint);
-            Queue<Wave> wavesQueue = new LinkedList<>() {{ add(wave0); add(wave1); }};
-
-            Level level = new Level(spriteManager, wavesQueue, levelConditionsSet);
-
-            for (int i=0; i<20; i++) {
-                System.out.println("new clock tick");
-                level.execute(0.5);
-                for (Sprite sprite : level.getSpriteManager().getOnScreenSprites()) {
-                    System.out.println("Sprite generated:" + " id: " + sprite.getId() + " health: " + sprite.getHealth() + " xPos: " + sprite.getX() + " yPos:" + sprite.getY());
-                }
-            }
-        } catch (GameEngineException e) {
-
-        }
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        Player player = new Player(primaryStage, XML);
+        player.startGame();
     }
 }
