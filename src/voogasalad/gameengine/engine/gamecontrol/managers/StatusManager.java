@@ -1,11 +1,13 @@
 package voogasalad.gameengine.engine.gamecontrol.managers;
 
-public class TimeManager {
+public class StatusManager {
 
     private double myTotalElapsedTime;
     private double myElapsedTimeSinceLastFrame;
+    private int myResources;
+    private int myLives;
 
-    public TimeManager() {
+    public StatusManager() {
         myTotalElapsedTime = 0;
         myElapsedTimeSinceLastFrame = 0;
     }
@@ -21,5 +23,15 @@ public class TimeManager {
 
     public double getElapsedTimeSinceLastFrame() {
         return myElapsedTimeSinceLastFrame;
+    }
+
+    public int alterResourcesByValue(int value) {
+        myResources += value;
+        return myResources;
+    }
+
+    public int alterLivesByValue(int value) {
+        myLives += value;
+        return myLives;
     }
 }

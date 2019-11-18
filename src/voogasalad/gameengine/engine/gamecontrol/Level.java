@@ -3,7 +3,7 @@ package voogasalad.gameengine.engine.gamecontrol;
 import voogasalad.gameengine.engine.exceptions.GameEngineException;
 import voogasalad.gameengine.engine.gamecontrol.managers.ActionsManager;
 import voogasalad.gameengine.engine.gamecontrol.managers.ConditionsManager;
-import voogasalad.gameengine.engine.gamecontrol.managers.TimeManager;
+import voogasalad.gameengine.engine.gamecontrol.managers.StatusManager;
 import voogasalad.gameengine.engine.gamecontrol.managers.WaveManager;
 import voogasalad.gameengine.engine.sprites.SpriteManager;
 
@@ -11,20 +11,20 @@ public class Level {
 
     private SpriteManager mySpriteManager;
     private WaveManager myWaveManager;
-    private TimeManager myTimeManager;
+    private StatusManager myStatusManager;
     private ConditionsManager myConditionsManager;
     private ActionsManager myActionsManager;
 
-    public Level(SpriteManager spriteManager, WaveManager waveManager, TimeManager timeManager, ConditionsManager conditionsManager, ActionsManager actionsManager) {
+    public Level(SpriteManager spriteManager, WaveManager waveManager, StatusManager statusManager, ConditionsManager conditionsManager, ActionsManager actionsManager) {
         mySpriteManager = spriteManager;
         myWaveManager = waveManager;
-        myTimeManager = timeManager;
+        myStatusManager = statusManager;
         myConditionsManager = conditionsManager;
         myActionsManager = actionsManager;
     }
 
     public void execute(double elapsedTime) throws GameEngineException {
-        myTimeManager.notifyNewCycle(elapsedTime);
+        myStatusManager.notifyNewCycle(elapsedTime);
         myActionsManager.addNewActions(myConditionsManager.getActionsToExecute(this));
         myActionsManager.executeActions(this);
     }
@@ -37,7 +37,7 @@ public class Level {
         return myWaveManager;
     }
 
-    public TimeManager getTimeManager() {
-        return myTimeManager;
+    public StatusManager getTimeManager() {
+        return myStatusManager;
     }
 }
