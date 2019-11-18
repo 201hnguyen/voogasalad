@@ -3,6 +3,7 @@ package voogasalad.gameengine.engine.gamecontrol.action;
 import voogasalad.gameengine.engine.exceptions.GameEngineException;
 import voogasalad.gameengine.engine.gamecontrol.Level;
 import voogasalad.gameengine.engine.gamecontrol.Wave;
+import voogasalad.gameengine.engine.sprites.SpriteManager;
 
 public class SpawnWaveAction implements LevelAction {
 
@@ -14,10 +15,7 @@ public class SpawnWaveAction implements LevelAction {
         if (myWave == null) {
             setupWave(level);
         }
-        Integer nextSpriteToSpawn = myWave.getNextSpriteToSpawn(level.getElapsedTimeSinceLastFrame());
-        if (nextSpriteToSpawn != null) {
-            level.getSpriteManager().makeSpriteFromPrototype(myWave.getSpawnPoint().getX(), myWave.getSpawnPoint().getY(), nextSpriteToSpawn);
-        }
+        spawnNextSprite(level.getSpriteManager(), level.getTimeManager().getElapsedTimeSinceLastFrame());
         checkActionFinished();
     }
 
@@ -26,9 +24,16 @@ public class SpawnWaveAction implements LevelAction {
         return isFinished;
     }
 
+    private void spawnNextSprite(SpriteManager spriteManager, double elapsedTime) throws GameEngineException {
+        Integer nextSpriteToSpawn = myWave.getNextSpriteToSpawn(elapsedTime);
+        if (nextSpriteToSpawn != null) {
+            spriteManager.makeSpriteFromPrototype(myWave.getSpawnPoint().getX(), myWave.getSpawnPoint().getY(), nextSpriteToSpawn);
+        }
+    }
+
     private void setupWave(Level level) throws GameEngineException {
-        if (level.hasNextWave()) {
-            myWave = level.getNextWave();
+        if (level.getWaveManager().hasNextWave()) {
+            myWave = level.getWaveManager().getNextWave();
             isFinished = false;
         } else {
             throw new GameEngineException("SpecifyWavesToExecuteAction");
