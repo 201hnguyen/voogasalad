@@ -11,17 +11,19 @@ import java.util.ResourceBundle;
 
 public class GUI_SceneMaker{
 
-    public static final String DEFAULT_RESOURCE_ACTIONS = "resources/SpriteOptions";
+    public static final String SPRITE_OPTIONS_RESOURCE = "resources/SpriteOptions";
+    public static final String PARAM_FIELD_TYPE_RESOURCE = "resources/ParamToInputType";
     private GUI_Controller myController;
-    private ResourceBundle myResources;
+    private ResourceBundle typeToParams;
+    private ResourceBundle paramFieldType;
     private int width;
     private int height;
     public GUI_SceneMaker(int widthParam, int heightParam){
         width = widthParam;
         height = heightParam;
         myController = new GUI_Controller();
-        myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_ACTIONS);
-
+        typeToParams = ResourceBundle.getBundle(SPRITE_OPTIONS_RESOURCE);
+        paramFieldType = ResourceBundle.getBundle(PARAM_FIELD_TYPE_RESOURCE);
     }
 
     public Scene createGAEScene(BorderPane root){
@@ -29,15 +31,12 @@ public class GUI_SceneMaker{
         VBox accordionVBox = createAccordion(new VBox());
         root.setRight(accordionVBox);
         root.setBottom(submitButton);
-//        root.getChildren().add
-//        root.getChildren().add(accordionVBox);
-//        root.getChildren().add(submitButton);
         return new Scene(root, width,  height);
     }
 
     public VBox createAccordion(VBox accordionVBox) {
-        myResources.getKeys().asIterator().forEachRemaining(key -> {
-            accordionVBox.getChildren().add(new AccordionGUI(key, myResources.getString(key), myController));
+        typeToParams.getKeys().asIterator().forEachRemaining(key -> {
+            accordionVBox.getChildren().add(new AccordionGUI(key, typeToParams.getString(key), myController, paramFieldType));
         });
         return accordionVBox;
     }

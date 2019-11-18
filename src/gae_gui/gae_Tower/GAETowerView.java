@@ -1,6 +1,7 @@
 package gae_gui.gae_Tower;
 
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -11,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -25,29 +27,51 @@ public class GAETowerView {
     private Stage towerPreferencePage;
     private List<Double> towerAttributes;
     private String[] properties;
+    private ResourceBundle paramFieldType;
+    private VBox vBox;
 
 
-    public GAETowerView(String[] propertiesParam){
+    public GAETowerView(String[] propertiesParam, String gameObjectName, ResourceBundle paramFieldTypeP){
         properties = propertiesParam;
         towerPreferencePage = new Stage();
         root = new BorderPane();
+        paramFieldType = paramFieldTypeP;
         addInputFields();
 
     }
 
     private void addInputFields() {
 
-        VBox vBox = new VBox();
+        vBox = new VBox();
         for (int j = 0; j < properties.length; j++) {
             vBox.getChildren().add(new Label(properties[j]));
-            //create appropriate text field based on what the input is ... dropdown for X, file selector for image, etc.
-            vBox.getChildren().add(new TextField());
-            //
+            addAppropriateFieldType(properties[j]);
         }
         root.setCenter(vBox);
         towerEditScene = new Scene(root, window_WIDTH, window_HEIGHT);
         towerPreferencePage.setScene(towerEditScene);
         towerPreferencePage.show();
+    }
+
+    private void addAppropriateFieldType(String type){
+        vBox.getChildren().add(createObject(paramFieldType.getString(type)));
+    }
+
+    private Node createObject(String type){
+        try{
+            Class cls = Class.forName(type);
+            return (Node) cls.getConstructor().newInstance();
+        } catch (IllegalAccessException e) {
+            throw new Error(e);
+        } catch (NoSuchMethodException e) {
+            throw new Error(e);
+        } catch (ClassNotFoundException e) {
+            throw new Error(e);
+        } catch (InstantiationException e) {
+            throw new Error(e);
+        } catch (InvocationTargetException e) {
+            throw new Error(e);
+        }
     }
 
     private void addInputField(){
