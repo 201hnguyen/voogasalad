@@ -4,7 +4,5 @@ import java.awt.Point;
 
 public interface MovementStrategy {
 
-    Point getCurrentPosition();
-
-    void updatePosition(double elapsedTime);
+    Point calculateNextPosition(double elapsedTime, Point currentPosition);
 }

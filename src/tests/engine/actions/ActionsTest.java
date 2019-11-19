@@ -81,14 +81,7 @@ public class ActionsTest {
 
         for (int i=0; i<20; i++) {
             level.execute(0.5);
-<<<<<<< HEAD
-            if (level.getTotalElapsedTime() == 3) {
-                assertEquals(3, spriteManager.getOnScreenSprites().size());
-            }
-            if (level.getTotalElapsedTime() == 2) {
-=======
             if (level.getTimeManager().getTotalElapsedTime() == 2) {
->>>>>>> 23ae57480ec5d539a925e058c9ec393c8a227c6c
                 assertEquals(2, spriteManager.getOnScreenSprites().size());
             } else if (level.getTimeManager().getTotalElapsedTime() == 3.5) {
                 assertEquals(5, spriteManager.getOnScreenSprites().size());
