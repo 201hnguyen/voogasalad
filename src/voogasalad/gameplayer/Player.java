@@ -75,7 +75,7 @@ public class Player {
                 instantiateEngineObject(component, componentList.get(i));
             }
         }
-        Queue<Integer> spritesWave0Queue = new LinkedList<>() {{ add(1); add(1); add(2); }};
+        Queue<Integer> spritesWave0Queue = new LinkedList<>() {{ add(2); add(2); add(0); }};
         engineDriverManager.addWave(createWave(new Point(250, 300), spritesWave0Queue, 1));
         engineDriverManager.instantiateEngineManagers();
         return engineDriverManager.getNewLevel();

@@ -36,6 +36,11 @@ public class JavaFXSprite implements Sprite {
         return spriteFactory.makeSprite(x, y, width, height, myImagePath, spriteId, myHealthStrategy.makeClone(), myMovementStrategy.makeClone());
     }
 
+    public void move(double elapsedTime) {
+        currentPosition = myMovementStrategy.calculateNextPosition(elapsedTime, currentPosition);
+        System.out.println("Sprite: " + mySpriteId + " current position: " + currentPosition);
+    }
+
     @Override
     public double getX() {
         return currentPosition.getX();
