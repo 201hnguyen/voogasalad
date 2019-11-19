@@ -73,7 +73,7 @@ public class ActionsTest {
         Wave wave1 = new Wave(spritesWave1Queue, 0.5, wave1SpawnPoint);
         List<Wave> wavesList = new ArrayList<>() {{ add(wave0); add(wave1); }};
         WaveManager waveManager = new WaveManager(wavesList);
-        StatusManager statusManager = new StatusManager();
+        StatusManager statusManager = new StatusManager(250, 20);
         ConditionsManager conditionsManager = new ConditionsManager(levelConditionsSet);
         ActionsManager actionsManager = new ActionsManager();
 

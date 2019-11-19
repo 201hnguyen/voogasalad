@@ -69,7 +69,7 @@ public class Main {
             List<Wave> wavesList = new ArrayList<>() {{ add(wave0); add(wave1); }};
 
             WaveManager waveManager = new WaveManager(wavesList);
-            StatusManager statusManager = new StatusManager();
+            StatusManager statusManager = new StatusManager(250, 20);
             ConditionsManager conditionsManager = new ConditionsManager(levelConditionsSet);
             ActionsManager actionsManager = new ActionsManager();
 

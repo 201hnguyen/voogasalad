@@ -7,9 +7,11 @@ public class StatusManager {
     private int myResources;
     private int myLives;
 
-    public StatusManager() {
+    public StatusManager(int resources, int lives) {
         myTotalElapsedTime = 0;
         myElapsedTimeSinceLastFrame = 0;
+        myResources = resources;
+        myLives = lives;
     }
 
     public void notifyNewCycle(double elapsedTime) {
