@@ -39,17 +39,12 @@ public class CreateObjectParameters {
         vBox = new VBox();
         for (int j = 0; j < properties.length; j++) {
             vBox.getChildren().add(new Label(properties[j]));
-            vBox.getChildren().add(addAppropriateFieldType(properties[j]));
-            //addAppropriateFieldType(properties[j]);
+            vBox.getChildren().add(createObjectFromString(paramFieldType.getString(properties[j])));
         }
         root.setCenter(vBox);
         towerEditScene = new Scene(root, window_WIDTH, window_HEIGHT);
         towerPreferencePage.setScene(towerEditScene);
         towerPreferencePage.show();
-    }
-
-    private Node addAppropriateFieldType(String type){
-        return createObjectFromString(paramFieldType.getString(type));
     }
 
     private Button createSubmitButton(){
