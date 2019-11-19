@@ -4,10 +4,12 @@ import voogasalad.gameengine.engine.exceptions.GameEngineException;
 import voogasalad.gameengine.engine.utils.Verifier;
 
 import java.awt.*;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
 public class PathMovement implements MovementStrategy {
+    private Map<String, Object> myOriginalParameters;
     private LinkedList<Point> myPath;
     private Point nextPosition;
     private int nextPositionIndex;
@@ -17,6 +19,7 @@ public class PathMovement implements MovementStrategy {
 
 
     public PathMovement(Map<String, Object> parameters) throws GameEngineException {
+        myOriginalParameters = parameters;
         mySpeed = (double) Verifier.verifyAndGetStrategyParameter(parameters, "mySpeed");
         myPath = (LinkedList<Point>) Verifier.verifyAndGetStrategyParameter(parameters, "myPath");
         nextPositionIndex = 0;
@@ -26,6 +29,11 @@ public class PathMovement implements MovementStrategy {
             reachedEnd = false;
             nextPosition = myPath.get(nextPositionIndex);
         }
+    }
+
+    @Override
+    public MovementStrategy makeClone() throws GameEngineException {
+        return new PathMovement(myOriginalParameters);
     }
 
     @Override
