@@ -20,6 +20,8 @@ import voogasalad.gameengine.engine.sprites.Sprite;
 import voogasalad.gameengine.engine.sprites.SpriteManager;
 import voogasalad.gameengine.engine.sprites.strategies.health.Health;
 import voogasalad.gameengine.engine.sprites.strategies.health.HealthStrategy;
+import voogasalad.gameengine.engine.sprites.strategies.movement.MovementStrategy;
+import voogasalad.gameengine.engine.sprites.strategies.movement.PathMovement;
 
 import java.awt.*;
 import java.util.*;
@@ -35,12 +37,17 @@ public class ActionsTest {
     public void setup() throws GameEngineException {
         Map<String, Object> prototype0HealthParameter = new HashMap<>() {{ put("health", 10); }};
         Map<String, Object> prototype1HealthParameter = new HashMap<>() {{ put("health", 15); }};
+        Map<String, Object> movementParameters = new HashMap<>() {{
+            put("path", new LinkedList<>());
+            put("speed", 10);
+        }};
 
         HealthStrategy prototype0HealthStrategy = new Health(prototype0HealthParameter);
         HealthStrategy prototype1HealthStrategy = new Health(prototype1HealthParameter);
+        MovementStrategy prototypeMovementStrategy = new PathMovement(movementParameters);
 
-        Sprite prototype0 = new JavaFXSprite(0, 0, 0, prototype0HealthStrategy);
-        Sprite prototype1 = new JavaFXSprite(0, 0, 0, prototype1HealthStrategy);
+        Sprite prototype0 = new JavaFXSprite(0, 0, 0, prototype0HealthStrategy, prototypeMovementStrategy);
+        Sprite prototype1 = new JavaFXSprite(0, 0, 0, prototype1HealthStrategy, prototypeMovementStrategy);
         spriteManager.addSpritePrototype(0, prototype0);
         spriteManager.addSpritePrototype(1, prototype1);
     }
