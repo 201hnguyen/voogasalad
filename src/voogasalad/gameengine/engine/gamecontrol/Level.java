@@ -28,6 +28,7 @@ public class Level {
         myStatusManager.notifyNewCycle(elapsedTime);
         myActionsManager.addNewActions(myConditionsManager.getActionsToExecute(this));
         myActionsManager.executeActions(this);
+        mySpriteManager.getOnScreenSprites().stream().forEach(e -> e.move(elapsedTime));
         return new GameSceneObject(myStatusManager.getResources(),  myStatusManager.getLives(), mySpriteManager.getOnScreenSprites());
     }
 
