@@ -8,6 +8,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class CreateObjectParameters {
@@ -22,6 +24,9 @@ public class CreateObjectParameters {
     private VBox vBox;
     private AddToXML xmlObject;
     private String gameObjectName;
+    private List<Node> allNodes = new ArrayList<>();
+    private List<String> fieldTypes= new ArrayList<>();
+    FieldTextReturnFactory fieldFactory = new FieldTextReturnFactory();
 
 
     public CreateObjectParameters(String gameObjectNameParam, String[] propertiesParam, ResourceBundle paramFieldTypeParam){
@@ -31,6 +36,7 @@ public class CreateObjectParameters {
         root.setBottom(createSubmitButton());
         paramFieldType = paramFieldTypeParam;
         gameObjectName = gameObjectNameParam;
+        storeAllFieldTypes();
         addInputFields();
     }
 
@@ -50,7 +56,15 @@ public class CreateObjectParameters {
     private Button createSubmitButton(){
         Button addButton = new Button("Submit");
         addButton.setOnMouseClicked(event -> {
-            xmlObject = new AddToXML(gameObjectName, properties);
+//            try {
+//                xmlObject = new AddToXML(gameObjectName, properties);
+//            } catch (ParserConfigurationException e) {
+//                throw new Error(e);
+//            }
+        allNodes
+                .stream()
+                .forEach(node -> System.out.println(fieldFactory.getAppropriateText(node)));
+
         });
         return addButton;
     }
@@ -58,7 +72,9 @@ public class CreateObjectParameters {
     private Node createObjectFromString(String type){
         try{
             Class cls = Class.forName(type);
-            return (Node) cls.getConstructor().newInstance();
+            Node myField = (Node) cls.getConstructor().newInstance();
+            allNodes.add(myField);
+            return myField;
         } catch (IllegalAccessException e) {
             throw new Error(e);
         } catch (NoSuchMethodException e) {
@@ -71,4 +87,15 @@ public class CreateObjectParameters {
             throw new Error(e);
         }
     }
+
+    private void storeAllFieldTypes(){
+        for(String key : paramFieldType.keySet()){
+            String typesOfFields = paramFieldType.getString(key);
+            if(!(fieldTypes.contains(typesOfFields))){
+                fieldTypes.add(typesOfFields);
+            }
+        }
+    }
+
+
 }

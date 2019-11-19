@@ -13,7 +13,8 @@ public class AccordionGUI extends Accordion {
     private TitledPane tPane;
     private String gameObjectName;
     private ResourceBundle paramFieldType;
-    private CreateObjectParameters newTowerPage;
+    private CreateObjectParameters newObjectPage;
+
 
 
     public AccordionGUI (String gameObjectNameParam, String gameObjectProperties, GUI_Controller target, ResourceBundle paramFieldTypeParam) {
@@ -35,7 +36,8 @@ public class AccordionGUI extends Accordion {
     private Button createAccordionAddButton(){
         Button addButton = new Button("+");
         addButton.setOnMouseClicked(event -> {
-            newTowerPage = new CreateObjectParameters(properties, paramFieldType);
+            newObjectPage = new CreateObjectParameters(gameObjectName, properties, paramFieldType);
+
         });
         return addButton;
     }
