@@ -34,6 +34,7 @@ import voogasalad.gameengine.engine.sprites.strategies.health.HealthStrategy;
 public class Player {
 
     public static final String TYPE = "GameConfig";
+    public static final String ACTION_PATH = "voogasalad.gameengine.engine.gamecontrol.action.";
     public static final int WINDOW_SIZE = 500;
     private String myXMLPath;
     private XMLParser myXMLParser;
@@ -41,8 +42,8 @@ public class Player {
     private Group mapRoot;
     private SpriteProductsFactory spriteFactory;
     private StrategiesFactory strategiesFactory;
-    private SpriteManager spriteManager;
     private EngineDriverManager engineDriverManager;
+
 
     //Player expects a javaFX Stage upon instantiation
     public Player(Stage primaryStage, String xmlPath){
@@ -73,8 +74,8 @@ public class Player {
                 instantiateEngineObject(component, componentList.get(i));
             }
         }
-        Queue<Integer> spritesWave0Queue = new LinkedList<>() {{ add(0); add(0); add(0); }};
-        engineDriverManager.addWave(createWave(new Point(250, 300), spritesWave0Queue, 0.5));
+        Queue<Integer> spritesWave0Queue = new LinkedList<>() {{ add(1); add(1); add(2); }};
+        engineDriverManager.addWave(createWave(new Point(250, 300), spritesWave0Queue, 1));
         engineDriverManager.instantiateEngineManagers();
         return engineDriverManager.getNewLevel();
     }
@@ -95,7 +96,7 @@ public class Player {
 
     private LevelAction addAction(String action) {
         try {
-            LevelAction levelAction = (LevelAction) Class.forName(action).getConstructor().newInstance();
+            LevelAction levelAction = (LevelAction) Class.forName(ACTION_PATH + action).getConstructor().newInstance();
             engineDriverManager.addLevelAction(levelAction);
             return levelAction;
 
@@ -111,10 +112,11 @@ public class Player {
         //Initialise default parameter values when none set
         int id = 0, health = 0;
         double xpos = 0, ypos = 0, width = 0, height = 0;
-        String healthstrategy = "NoHealth";
+        String healthstrategy = "NoHealth", imagePath = "";
 
         //Update values for parameters that have been specified
         for(String att : componentAttributeMap.keySet()){
+
             if(att.equalsIgnoreCase("id")){
                 id = Integer.parseInt(componentAttributeMap.get(att));
             }
@@ -128,10 +130,19 @@ public class Player {
             if(att.equalsIgnoreCase("ypos")){
                 ypos = Double.parseDouble(componentAttributeMap.get("ypos"));
             }
+            if(att.equalsIgnoreCase("Width")){
+                width = Double.parseDouble(componentAttributeMap.get("width"));
+            }
+            if(att.equalsIgnoreCase("Height")){
+                height = Double.parseDouble(componentAttributeMap.get("height"));
+            }
+            if(att.equalsIgnoreCase("ImagePath")){
+                imagePath = componentAttributeMap.get("imagepath");
+            }
         }
         int finalHealth = health;
         Map<String, Object> prototypeHealthParameter = new HashMap<>() {{ put("health", finalHealth); }};
-        spriteManager.addSpritePrototype(id, spriteFactory.makeSprite(xpos, ypos, width, height, id, strategiesFactory.makeHealth(healthstrategy, prototypeHealthParameter)));
+        engineDriverManager.addSpritePrototype(id, spriteFactory.makeSprite(xpos, ypos, width, height, imagePath, id, strategiesFactory.makeHealth(healthstrategy, prototypeHealthParameter)));
     }
 
     public void loadXML(String xmlPath){

@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <GameConfig>
-    <WindowSize screenWidth = "1000" screenHeight = "800"></WindowSize>
-    <Dimensions rows = "4" columns = "4"></Dimensions>
     <Tower><id>0</id>
-        <image>src/resources/player/BlackCell.png</image>
+        <imagepath>src/resources/player/BlackCell.png</imagepath>
         <height>50</height>
         <width>20</width>
         <xpos>100</xpos>
@@ -11,7 +9,7 @@
         <Health>10</Health>
     </Tower>
     <Enemy><id>1</id>
-        <image>src/resources/player/WhiteCell.png</image>
+        <imagepath>src/resources/player/WhiteCell.png</imagepath>
         <height>30</height>
         <width>30</width>
         <xpos>40</xpos>
@@ -20,7 +18,7 @@
     </Enemy>
     <Enemy>
         <id>2</id>
-        <image>src/resources/player/BlackCell.png</image>
+        <imagepath>src/resources/player/BlackCell.png</imagepath>
         <height>50</height>
         <width>50</width>
         <xpos>20</xpos>

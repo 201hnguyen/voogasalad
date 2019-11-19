@@ -16,12 +16,12 @@ public class JavaFXSprite implements Sprite {
         mySpriteId = spriteId;
         myHealthStrategy = healthStrategy;
         myImagePath = imagePath;
-        Image image = new Image(this.getClass().getClassLoader().getResourceAsStream(myImagePath));
-        myImageView = new ImageView(image);
-        myImageView.setX(xPos);
-        myImageView.setY(yPos);
-        myImageView.setFitWidth(width);
-        myImageView.setFitHeight(height);
+//        Image image = new Image(this.getClass().getClassLoader().getResourceAsStream(myImagePath));
+//        myImageView = new ImageView(image);
+//        myImageView.setX(xPos);
+//        myImageView.setY(yPos);
+//        myImageView.setFitWidth(width);
+//        myImageView.setFitHeight(height);
     }
 
     @Override
