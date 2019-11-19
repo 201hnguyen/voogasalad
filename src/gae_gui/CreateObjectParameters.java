@@ -2,6 +2,7 @@ package gae_gui;
 
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -19,13 +20,17 @@ public class CreateObjectParameters {
     private String[] properties;
     private ResourceBundle paramFieldType;
     private VBox vBox;
+    private AddToXML xmlObject;
+    private String gameObjectName;
 
 
-    public CreateObjectParameters(String[] propertiesParam, ResourceBundle paramFieldTypeP){
+    public CreateObjectParameters(String gameObjectNameParam, String[] propertiesParam, ResourceBundle paramFieldTypeParam){
         properties = propertiesParam;
         towerPreferencePage = new Stage();
         root = new BorderPane();
-        paramFieldType = paramFieldTypeP;
+        root.setBottom(new Button("Submit"));
+        paramFieldType = paramFieldTypeParam;
+        gameObjectName = gameObjectNameParam;
         addInputFields();
     }
 
@@ -34,7 +39,8 @@ public class CreateObjectParameters {
         vBox = new VBox();
         for (int j = 0; j < properties.length; j++) {
             vBox.getChildren().add(new Label(properties[j]));
-            addAppropriateFieldType(properties[j]);
+            vBox.getChildren().add(addAppropriateFieldType(properties[j]));
+            //addAppropriateFieldType(properties[j]);
         }
         root.setCenter(vBox);
         towerEditScene = new Scene(root, window_WIDTH, window_HEIGHT);
@@ -42,8 +48,16 @@ public class CreateObjectParameters {
         towerPreferencePage.show();
     }
 
-    private void addAppropriateFieldType(String type){
-        vBox.getChildren().add(createObjectFromString(paramFieldType.getString(type)));
+    private Node addAppropriateFieldType(String type){
+        return createObjectFromString(paramFieldType.getString(type));
+    }
+
+    private Button createSubmitButton(){
+        Button addButton = new Button("Submit");
+        addButton.setOnMouseClicked(event -> {
+            xmlObject = new AddToXML(gameObjectName, properties);
+        });
+        return addButton;
     }
 
     private Node createObjectFromString(String type){
