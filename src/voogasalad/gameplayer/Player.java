@@ -110,7 +110,7 @@ public class Player {
         SpriteProductsFactory spriteFactory = new SpriteProductsFactory();
         //Initialise default parameter values when none set
         int id = 0, health = 0;
-        double xpos = 0, ypos = 0;
+        double xpos = 0, ypos = 0, width = 0, height = 0;
         String healthstrategy = "NoHealth";
 
         //Update values for parameters that have been specified
@@ -131,7 +131,7 @@ public class Player {
         }
         int finalHealth = health;
         Map<String, Object> prototypeHealthParameter = new HashMap<>() {{ put("health", finalHealth); }};
-        spriteManager.addSpritePrototype(id, spriteFactory.makeSprite(xpos, ypos, id, strategiesFactory.makeHealth(healthstrategy, prototypeHealthParameter)));
+        spriteManager.addSpritePrototype(id, spriteFactory.makeSprite(xpos, ypos, width, height, id, strategiesFactory.makeHealth(healthstrategy, prototypeHealthParameter)));
     }
 
     public void loadXML(String xmlPath){
