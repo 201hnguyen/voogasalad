@@ -46,8 +46,9 @@ public class ActionsTest {
         HealthStrategy prototype1HealthStrategy = new Health(prototype1HealthParameter);
         MovementStrategy prototypeMovementStrategy = new PathMovement(movementParameters);
 
-        Sprite prototype0 = new JavaFXSprite(0, 0, 0, prototype0HealthStrategy, prototypeMovementStrategy);
-        Sprite prototype1 = new JavaFXSprite(0, 0, 0, prototype1HealthStrategy, prototypeMovementStrategy);
+        Sprite prototype0 = new JavaFXSprite(0, 0, 50, 50, "pandaslogo.png", 0, prototype0HealthStrategy, prototypeMovementStrategy);
+        Sprite prototype1 = new JavaFXSprite(0, 0, 50, 50, "pandaslogo.png", 0, prototype1HealthStrategy, prototypeMovementStrategy);
+
         spriteManager.addSpritePrototype(0, prototype0);
         spriteManager.addSpritePrototype(1, prototype1);
     }
@@ -80,7 +81,7 @@ public class ActionsTest {
         Wave wave1 = new Wave(spritesWave1Queue, 0.5, wave1SpawnPoint);
         List<Wave> wavesList = new ArrayList<>() {{ add(wave0); add(wave1); }};
         WaveManager waveManager = new WaveManager(wavesList);
-        StatusManager statusManager = new StatusManager();
+        StatusManager statusManager = new StatusManager(250, 20);
         ConditionsManager conditionsManager = new ConditionsManager(levelConditionsSet);
         ActionsManager actionsManager = new ActionsManager();
 

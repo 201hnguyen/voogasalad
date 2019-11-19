@@ -1,5 +1,6 @@
 package voogasalad.gameengine.engine.gamecontrol;
 
+import voogasalad.gameengine.api.GameSceneObject;
 import voogasalad.gameengine.engine.exceptions.GameEngineException;
 import voogasalad.gameengine.engine.gamecontrol.managers.ActionsManager;
 import voogasalad.gameengine.engine.gamecontrol.managers.ConditionsManager;
@@ -23,10 +24,11 @@ public class Level {
         myActionsManager = actionsManager;
     }
 
-    public void execute(double elapsedTime) throws GameEngineException {
+    public GameSceneObject execute(double elapsedTime) throws GameEngineException {
         myStatusManager.notifyNewCycle(elapsedTime);
         myActionsManager.addNewActions(myConditionsManager.getActionsToExecute(this));
         myActionsManager.executeActions(this);
+        return new GameSceneObject(myStatusManager.getResources(),  myStatusManager.getLives(), mySpriteManager.getOnScreenSprites());
     }
 
     public SpriteManager getSpriteManager() {

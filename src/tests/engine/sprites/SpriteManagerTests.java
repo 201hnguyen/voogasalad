@@ -32,8 +32,10 @@ public class SpriteManagerTests {
         HealthStrategy healthStrategy1 = strategiesFactory.makeHealth("Health", healthParameters1);
         HealthStrategy healthStrategy2 = strategiesFactory.makeHealth("Health", healthParameters2);
         MovementStrategy movementStrategy = strategiesFactory.makeMovement("PathMovement", movementParameters);
-        Sprite spritePrototype1 = spriteProductsFactory.makeSprite(0, 0, 0, healthStrategy1, movementStrategy);
-        Sprite spritePrototype2 = spriteProductsFactory.makeSprite(0, 0, 0, healthStrategy2, movementStrategy);
+
+        Sprite spritePrototype1 = spriteProductsFactory.makeSprite(0, 0, 50, 50, "pandaslogo.png", 0, healthStrategy1, movementStrategy);
+        Sprite spritePrototype2 = spriteProductsFactory.makeSprite(0, 0, 50, 50, "pandaslogo.png", 0, healthStrategy2, movementStrategy);
+
         spriteManager.addSpritePrototype(5, spritePrototype1);
         spriteManager.addSpritePrototype(6, spritePrototype2);
         spriteManager.makeSpriteFromPrototype(250, 100, 5);
