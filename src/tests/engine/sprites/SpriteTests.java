@@ -23,7 +23,7 @@ public class SpriteTests {
         Map<String, Object> healthParameters = new HashMap<>() {{ put("health", 10); }};
         Map<String, Object> movementParameters = new HashMap<>() {{
             put("path", new LinkedList<>());
-            put("speed", 10);
+            put("speed", 10.0);
         }};
         HealthStrategy healthStrategy = strategiesFactory.makeHealth("Health", healthParameters);
         MovementStrategy movementStrategy = strategiesFactory.makeMovement("PathMovement", movementParameters);

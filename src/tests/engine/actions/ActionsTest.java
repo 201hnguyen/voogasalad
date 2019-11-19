@@ -39,7 +39,7 @@ public class ActionsTest {
         Map<String, Object> prototype1HealthParameter = new HashMap<>() {{ put("health", 15); }};
         Map<String, Object> movementParameters = new HashMap<>() {{
             put("path", new LinkedList<>());
-            put("speed", 10);
+            put("speed", 10.0);
         }};
 
         HealthStrategy prototype0HealthStrategy = new Health(prototype0HealthParameter);
