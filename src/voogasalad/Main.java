@@ -37,8 +37,8 @@ public class Main {
             HealthStrategy prototype1HealthStrategy = new Health(prototype1HealthParameter);
 
             SpriteManager spriteManager = new JavaFXSpriteManager();
-            Sprite prototype0 = new JavaFXSprite(0, 0, 0, prototype0HealthStrategy);
-            Sprite prototype1 = new JavaFXSprite(0, 0, 0, prototype1HealthStrategy);
+            Sprite prototype0 = new JavaFXSprite(0, 0, 50, 50, "pandaslogo.png", 0,  prototype0HealthStrategy);
+            Sprite prototype1 = new JavaFXSprite(0, 0, 50, 50, "pandaslogo.png", 0,  prototype1HealthStrategy);
             spriteManager.addSpritePrototype(0, prototype0);
             spriteManager.addSpritePrototype(1, prototype1);
 

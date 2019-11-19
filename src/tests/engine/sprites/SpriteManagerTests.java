@@ -25,8 +25,8 @@ public class SpriteManagerTests {
         Map<String, Object> healthParameters2 = new HashMap<>() {{ put("health", 15); }};
         HealthStrategy healthStrategy1 = strategiesFactory.makeHealth("Health", healthParameters1);
         HealthStrategy healthStrategy2 = strategiesFactory.makeHealth("Health", healthParameters2);
-        Sprite spritePrototype1 = spriteProductsFactory.makeSprite(0, 0, 0, healthStrategy1);
-        Sprite spritePrototype2 = spriteProductsFactory.makeSprite(0, 0, 0, healthStrategy2);
+        Sprite spritePrototype1 = spriteProductsFactory.makeSprite(0, 0, 50, 50, "pandaslogo.png", 0, healthStrategy1);
+        Sprite spritePrototype2 = spriteProductsFactory.makeSprite(0, 0, 50, 50, "pandaslogo.png", 0, healthStrategy2);
         spriteManager.addSpritePrototype(5, spritePrototype1);
         spriteManager.addSpritePrototype(6, spritePrototype2);
         spriteManager.makeSpriteFromPrototype(250, 100, 5);

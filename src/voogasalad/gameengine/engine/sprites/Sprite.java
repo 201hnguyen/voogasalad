@@ -8,4 +8,5 @@ public interface Sprite {
     double getY();
     int getId();
     int getHealth();
+    Object getImage();
 }
