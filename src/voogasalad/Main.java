@@ -7,6 +7,10 @@ import voogasalad.gameengine.engine.gamecontrol.action.LevelAction;
 import voogasalad.gameengine.engine.gamecontrol.action.SpawnWaveAction;
 import voogasalad.gameengine.engine.gamecontrol.condition.LevelCondition;
 import voogasalad.gameengine.engine.gamecontrol.condition.TemporalCondition;
+import voogasalad.gameengine.engine.gamecontrol.managers.ActionsManager;
+import voogasalad.gameengine.engine.gamecontrol.managers.ConditionsManager;
+import voogasalad.gameengine.engine.gamecontrol.managers.StatusManager;
+import voogasalad.gameengine.engine.gamecontrol.managers.WaveManager;
 import voogasalad.gameengine.engine.sprites.JavaFXSprite;
 import voogasalad.gameengine.engine.sprites.JavaFXSpriteManager;
 import voogasalad.gameengine.engine.sprites.Sprite;
@@ -44,8 +48,14 @@ public class Main {
             LevelAction wave0SpawnAction = new SpawnWaveAction();
             LevelAction wave1SpawnAction = new SpawnWaveAction();
 
-            Map<String, Object> condition0Parameter = new HashMap<>() {{ put("time", (double) 0); put("action", wave0SpawnAction); }};
-            Map<String, Object> condition1Parameter = new HashMap<>() {{ put("time", (double) 3); put("action", wave1SpawnAction); }};
+            Set<LevelAction> levelActions = new HashSet<>();
+            Set<LevelAction> levelActions1 = new HashSet<>();
+            levelActions.add(wave0SpawnAction);
+            levelActions1.add(wave1SpawnAction);
+            System.out.println(levelActions.getClass().getName());
+
+            Map<String, Object> condition0Parameter = new HashMap<>() {{ put("time", (double) 0); put("action", levelActions); }};
+            Map<String, Object> condition1Parameter = new HashMap<>() {{ put("time", (double) 3); put("action", levelActions1); }};
             LevelCondition condition0 = new TemporalCondition(condition0Parameter);
             LevelCondition condition1 = new TemporalCondition(condition1Parameter);
 
@@ -56,9 +66,14 @@ public class Main {
 
             Wave wave0 = new Wave(spritesWave0Queue, 1.0, wave0SpawnPoint);
             Wave wave1 = new Wave(spritesWave1Queue, 0.5, wave1SpawnPoint);
-            Queue<Wave> wavesQueue = new LinkedList<>() {{ add(wave0); add(wave1); }};
+            List<Wave> wavesList = new ArrayList<>() {{ add(wave0); add(wave1); }};
 
-            Level level = new Level(spriteManager, wavesQueue, levelConditionsSet);
+            WaveManager waveManager = new WaveManager(wavesList);
+            StatusManager statusManager = new StatusManager();
+            ConditionsManager conditionsManager = new ConditionsManager(levelConditionsSet);
+            ActionsManager actionsManager = new ActionsManager();
+
+            Level level = new Level(spriteManager, waveManager, statusManager, conditionsManager, actionsManager);
 
             for (int i=0; i<20; i++) {
                 System.out.println("new clock tick");
