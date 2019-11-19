@@ -27,7 +27,7 @@ public class SpriteManagerTests {
         Map<String, Object> healthParameters2 = new HashMap<>() {{ put("health", 15); }};
         Map<String, Object> movementParameters = new HashMap<>() {{
             put("path", new LinkedList<>());
-            put("speed", 10);
+            put("speed", 10.0);
         }};
         HealthStrategy healthStrategy1 = strategiesFactory.makeHealth("Health", healthParameters1);
         HealthStrategy healthStrategy2 = strategiesFactory.makeHealth("Health", healthParameters2);
