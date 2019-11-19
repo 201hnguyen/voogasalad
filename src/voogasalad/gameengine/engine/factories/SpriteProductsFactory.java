@@ -18,7 +18,7 @@ public class SpriteProductsFactory {
         String spriteClassSelection = SpriteFrontendSelection.getString("Sprite");
         try {
             return (Sprite) Class.forName(CLASS_PATH + spriteClassSelection)
-                    .getConstructor(double.class, double.class, double.class, double.class, String.class, int.class, HealthStrategy.class, movementStrategy.class)
+                    .getConstructor(double.class, double.class, double.class, double.class, String.class, int.class, HealthStrategy.class, MovementStrategy.class)
                     .newInstance(xCoordinate, yCoordinate, width, height, imagePath, spriteId, healthStrategy);
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | ClassNotFoundException e) {
             e.printStackTrace(); //TODO: Delete; currently here so we can see what is going on.
