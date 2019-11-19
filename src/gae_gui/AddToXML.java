@@ -5,6 +5,9 @@ import org.w3c.dom.Element;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AddToXML {
 
@@ -14,61 +17,43 @@ public class AddToXML {
     private String GAME_CONFIG = "GameConfig";
     private String SCREEN_WIDTH = "ScreenWidth";
     private String ROWS = "Rows";
+    private String ID = "ID";
+    private static Map<String, Map<String,String>> sendToXML = new HashMap<>();
 
-    public AddToXML(String gameObjectNameParam, String[] propertiesParam) throws ParserConfigurationException {
-        gameObjectName = gameObjectNameParam;
-        properties = propertiesParam;
+
+    public Document createXML() throws ParserConfigurationException {
+        System.out.println(sendToXML);
         builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-        addToXml();
-    }
-
-
-    private Document addToXml(){
         Document doc = builder.newDocument();
         Element gameConfig = doc.createElement(GAME_CONFIG);
         doc.appendChild(gameConfig);
-        Element screenWidth = doc.createElement(SCREEN_WIDTH);
-        screenWidth.setNodeValue("400");
-        Element rows = doc.createElement(ROWS);
-        rows.setNodeValue("4");
-        gameConfig.appendChild(screenWidth);
-        gameConfig.appendChild(rows);
-
-
-        //Element screenWidth = doc.createElement("400");
-        //Element row = doc.createElement("4");
-//        doc.appendChild(gameConfig);
-//        doc.appendChild(windowSize);
-//        doc.appendChild(dimensions);
-       // doc.appendChild(screenWidth);
-        //doc.appendChild(row);
-        //windowSize.appendChild(screenWidth);
-        //dimensions.appendChild(row);
-
-//        Element testsuites = doc.createElement(gameObjectName);
-//        Element testsuite = doc.createElement("testsuite");
-//        testsuite.setAttribute("name", suiteName);
-//        testsuite.setAttribute("tests", "1");
-//        testsuite.setAttribute("failures", testResult.equals("FAIL") ? "1": "0");
-//        testsuite.setAttribute("pass", testResult.equals("PASS") ? "1": "0");
-//
-//        Element testcase = doc.createElement("testcase");
-//        testcase.setAttribute("name", testName);
-//        testcase.setAttribute("status", testResult);
-//
-//        if(testResult.equals("FAIL")){
-//            Element failure = doc.createElement("failure");
-//            testcase.appendChild(failure);
-//        }
-//
-//        doc.appendChild(testsuites);
-//        testsuites.appendChild(testsuite);
-//        testsuite.appendChild(testcase);
-//
-//        return doc;
-
-
+        for (String gameObj : sendToXML.keySet()){
+            String elementName = gameObj.split(",")[0];
+            Element myElement = doc.createElement(elementName);
+            gameConfig.appendChild(myElement);
+            String id = gameObj.split(",")[1];
+            Element myElementID = doc.createElement(ID);
+            myElementID.setNodeValue(id);
+            myElement.appendChild(myElementID);
+            for(String objProperties : sendToXML.get(gameObj).keySet()){
+                Element property = doc.createElement(objProperties);
+                property.setNodeValue(sendToXML.get(gameObj).get(objProperties));
+                myElement.appendChild(property);
+            }
+        }
         return doc;
+    }
+
+    public void addToSendToXMLMap(Map myMap, String gameObjectName){
+        int i = 0;
+        while(true){
+            String putInMap = String.join(",", gameObjectName, Integer.toString(i));
+            if(!(sendToXML.containsKey(putInMap))){
+                sendToXML.putIfAbsent(putInMap, myMap);
+                break;
+            }
+            i++;
+        }
     }
 
 

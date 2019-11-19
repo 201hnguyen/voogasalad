@@ -3,6 +3,7 @@ package gae_gui;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 
+import javax.xml.parsers.ParserConfigurationException;
 import java.util.ResourceBundle;
 
 
@@ -36,7 +37,11 @@ public class AccordionGUI extends Accordion {
     private Button createAccordionAddButton(){
         Button addButton = new Button("+");
         addButton.setOnMouseClicked(event -> {
-            newObjectPage = new CreateObjectParameters(gameObjectName, properties, paramFieldType);
+            try {
+                newObjectPage = new CreateObjectParameters(gameObjectName, properties, paramFieldType);
+            } catch (ParserConfigurationException e) {
+                e.printStackTrace();
+            }
 
         });
         return addButton;
