@@ -20,7 +20,7 @@ public class CreateObjectParameters {
     private String[] properties;
     private ResourceBundle paramFieldType;
     private VBox vBox;
-    private AddToXML xmlObject;
+    //private AddToXML xmlObject;
     private String gameObjectName;
 
 
