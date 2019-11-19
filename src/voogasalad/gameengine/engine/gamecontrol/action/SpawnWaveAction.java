@@ -17,7 +17,6 @@ public class SpawnWaveAction implements LevelAction {
         Integer nextSpriteToSpawn = myWave.getNextSpriteToSpawn(level.getElapsedTimeSinceLastFrame());
         if (nextSpriteToSpawn != null) {
             level.getSpriteManager().makeSpriteFromPrototype(myWave.getSpawnPoint().getX(), myWave.getSpawnPoint().getY(), nextSpriteToSpawn);
-            myWave.setNextEntryTime();
         }
         checkActionFinished();
     }
