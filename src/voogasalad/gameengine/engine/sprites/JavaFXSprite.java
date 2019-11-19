@@ -16,6 +16,8 @@ public class JavaFXSprite implements Sprite {
     private MovementStrategy myMovementStrategy;
     private String myImagePath;
     private ImageView myImageView;
+    private double width;
+    private double height;
 
     public JavaFXSprite(double xPos, double yPos, double width, double height, String imagePath, int spriteId, HealthStrategy healthStrategy, MovementStrategy movementStrategy) {
         mySpriteId = spriteId;
@@ -24,16 +26,14 @@ public class JavaFXSprite implements Sprite {
         myHealthStrategy = healthStrategy;
         myMovementStrategy = movementStrategy;
         myImagePath = imagePath;
-        Image image = new Image(this.getClass().getClassLoader().getResourceAsStream(myImagePath));
-        myImageView = new ImageView(image);
-        myImageView.setFitWidth(width);
-        myImageView.setFitHeight(height);
+        this.width = width;
+        this.height = height;
     }
 
     @Override
     public Sprite makeClone(double x, double y, int spriteId) throws GameEngineException {
         SpriteProductsFactory spriteFactory = new SpriteProductsFactory();
-        return spriteFactory.makeSprite(x, y, myImageView.getFitWidth(), myImageView.getFitHeight(), myImagePath, spriteId, myHealthStrategy.makeClone(), myMovementStrategy.makeClone());
+        return spriteFactory.makeSprite(x, y, width, height, myImagePath, spriteId, myHealthStrategy.makeClone(), myMovementStrategy.makeClone());
     }
 
     @Override

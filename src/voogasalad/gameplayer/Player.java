@@ -8,6 +8,7 @@ import java.util.List;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.effect.Light;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -82,12 +83,11 @@ public class Player {
 
     private Wave createWave(Point waveSpawnPoint, Queue<Integer> spritesWaveQueue, double spriteInterval) throws GameEngineException {
         LevelAction levelAction = addAction("SpawnWaveAction");
-        Map<String, Object> conditionParameter = new HashMap<>() {
-            {
-                put("time", (double) 0);
-                put("action", levelAction);
-            }
-        };
+        Set<LevelAction> levelActions = new HashSet<>();
+        levelActions.add(levelAction);
+        Map<String, Object> conditionParameter = new HashMap<>();
+        conditionParameter.put("time", (double) 0);
+        conditionParameter.put("action", levelActions);
         LevelCondition condition = new TemporalCondition(conditionParameter);
         engineDriverManager.addLevelCondition(condition);
         Wave wave = new Wave(spritesWaveQueue, spriteInterval, waveSpawnPoint);
@@ -142,7 +142,13 @@ public class Player {
         }
         int finalHealth = health;
         Map<String, Object> prototypeHealthParameter = new HashMap<>() {{ put("health", finalHealth); }};
-        engineDriverManager.addSpritePrototype(id, spriteFactory.makeSprite(xpos, ypos, width, height, imagePath, id, strategiesFactory.makeHealth(healthstrategy, prototypeHealthParameter)));
+        LinkedList<Point> path = new LinkedList<>();
+        path.add(new Point(0, 0));
+        path.add(new Point(10, 0));
+        Map<String, Object> prototypeMovementParameter = new HashMap<>();
+        prototypeMovementParameter.put("path", path);
+        prototypeMovementParameter.put("speed", 1.5);
+        engineDriverManager.addSpritePrototype(id, spriteFactory.makeSprite(xpos, ypos, width, height, imagePath, id, strategiesFactory.makeHealth(healthstrategy, prototypeHealthParameter), strategiesFactory.makeMovement("PathMovement", prototypeMovementParameter)));
     }
 
     public void loadXML(String xmlPath){
