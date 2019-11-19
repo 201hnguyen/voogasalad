@@ -75,7 +75,7 @@ public class Player {
                 instantiateEngineObject(component, componentList.get(i));
             }
         }
-        Queue<Integer> spritesWave0Queue = new LinkedList<>() {{ add(1); add(1); add(2); }};
+        Queue<Integer> spritesWave0Queue = new LinkedList<>() {{ add(0); add(1); add(1); }};
         engineDriverManager.addWave(createWave(new Point(250, 300), spritesWave0Queue, 1));
         engineDriverManager.instantiateEngineManagers();
         return engineDriverManager.getNewLevel();
@@ -118,7 +118,7 @@ public class Player {
         for(String att : componentAttributeMap.keySet()){
 
             if(att.equalsIgnoreCase("id")){
-                id = Integer.parseInt(componentAttributeMap.get(att));
+                id = Integer.parseInt(componentAttributeMap.get("id"));
             }
             if(att.equalsIgnoreCase("Health")){
                 healthstrategy = "Health";
@@ -143,11 +143,12 @@ public class Player {
         int finalHealth = health;
         Map<String, Object> prototypeHealthParameter = new HashMap<>() {{ put("health", finalHealth); }};
         LinkedList<Point> path = new LinkedList<>();
-        path.add(new Point(0, 0));
-        path.add(new Point(10, 0));
+        path.add(new Point(250, 300));
+        path.add(new Point(300, 300));
+        path.add(new Point(400, 300));
         Map<String, Object> prototypeMovementParameter = new HashMap<>();
         prototypeMovementParameter.put("path", path);
-        prototypeMovementParameter.put("speed", 1.5);
+        prototypeMovementParameter.put("speed", 50.0);
         engineDriverManager.addSpritePrototype(id, spriteFactory.makeSprite(xpos, ypos, width, height, imagePath, id, strategiesFactory.makeHealth(healthstrategy, prototypeHealthParameter), strategiesFactory.makeMovement("PathMovement", prototypeMovementParameter)));
     }
 

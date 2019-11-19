@@ -16,13 +16,4 @@
         <ypos>50</ypos>
         <Health>20</Health>
     </Enemy>
-    <Enemy>
-        <id>2</id>
-        <imagepath>src/resources/player/BlackCell.png</imagepath>
-        <height>50</height>
-        <width>50</width>
-        <xpos>20</xpos>
-        <ypos>30</ypos>
-        <Health>40</Health>
-    </Enemy>
 </GameConfig>

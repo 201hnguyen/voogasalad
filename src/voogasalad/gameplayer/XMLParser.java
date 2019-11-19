@@ -69,6 +69,7 @@ public class XMLParser {
                         attributeMap.put(attributes.item(j).getNodeName(), attributes.item(j).getTextContent());
                     }
                     componentMap.add(attributeMap);
+                    attributes = null;
                 }
             }
             return componentMap;
