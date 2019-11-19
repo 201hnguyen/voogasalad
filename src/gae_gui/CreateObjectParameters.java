@@ -28,7 +28,7 @@ public class CreateObjectParameters {
         properties = propertiesParam;
         towerPreferencePage = new Stage();
         root = new BorderPane();
-        root.setBottom(new Button("Submit"));
+        root.setBottom(createSubmitButton());
         paramFieldType = paramFieldTypeParam;
         gameObjectName = gameObjectNameParam;
         addInputFields();
