@@ -35,7 +35,7 @@ public class AccordionGUI extends Accordion {
     private Button createAccordionAddButton(){
         Button addButton = new Button("+");
         addButton.setOnMouseClicked(event -> {
-            newTowerPage = new CreateObjectParameters(properties, paramFieldType);
+            newTowerPage = new CreateObjectParameters(gameObjectName, properties, paramFieldType);
         });
         return addButton;
     }

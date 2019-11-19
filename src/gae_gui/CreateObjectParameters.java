@@ -8,7 +8,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class CreateObjectParameters {
 
@@ -22,35 +22,67 @@ public class CreateObjectParameters {
     private VBox vBox;
     //private AddToXML xmlObject;
     private String gameObjectName;
+    private List<Label> labelList = new ArrayList<Label>();
+
+    private List<String> labelText = new ArrayList<String>();
+    private List<String> labelValue = new ArrayList<String>();
+
 
 
     public CreateObjectParameters(String gameObjectNameParam, String[] propertiesParam, ResourceBundle paramFieldTypeParam){
         properties = propertiesParam;
         towerPreferencePage = new Stage();
         root = new BorderPane();
-        root.setBottom(createSubmitButton());
+        root.setBottom(createSubmitButton()); //put this in add input fields?
         paramFieldType = paramFieldTypeParam;
         gameObjectName = gameObjectNameParam;
         addInputFields();
     }
 
+
+    //not in use
+    //called in SaveGuiParameters
+    public String getTextFromInputFields() {
+        String value = "";
+        return value;
+    }
+
+
     private void addInputFields() {
 
         vBox = new VBox();
         for (int j = 0; j < properties.length; j++) {
-            vBox.getChildren().add(new Label(properties[j]));
+
+            Label label = new Label(properties[j]); //for SaveGuiParameters
+
+
+            labelList.add(label);
+            labelText.add(label.getText());
+            labelValue.add(label.getAccessibleText());
+
+            vBox.getChildren().add(label);
             vBox.getChildren().add(createObjectFromString(paramFieldType.getString(properties[j])));
         }
+
+        //System.out.println(labelText); //testing
+        //System.out.println(labelValue); //testing
+
         root.setCenter(vBox);
         towerEditScene = new Scene(root, window_WIDTH, window_HEIGHT);
         towerPreferencePage.setScene(towerEditScene);
         towerPreferencePage.show();
     }
 
+    //does not update, but creates map of labels and values
     private Button createSubmitButton(){
         Button addButton = new Button("Submit");
         addButton.setOnMouseClicked(event -> {
-            xmlObject = new AddToXML(gameObjectName, properties);
+            //labelValue.add(label.getAccessibleText());
+            SaveGUIParameters myGuiParameters = new SaveGUIParameters(labelText, labelValue);
+//            for (Label myLabel: labelList){
+//                System.out.println(myLabel.getAccessibleText());
+//            }
+//            //System.out.println(label);
         });
         return addButton;
     }
