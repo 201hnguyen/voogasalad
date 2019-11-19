@@ -22,6 +22,7 @@ public class JavaFXSprite implements Sprite {
         currentPosition = new Point();
         currentPosition.setLocation(xPos, yPos);
         myHealthStrategy = healthStrategy;
+        myMovementStrategy = movementStrategy;
         myImagePath = imagePath;
         Image image = new Image(this.getClass().getClassLoader().getResourceAsStream(myImagePath));
         myImageView = new ImageView(image);
