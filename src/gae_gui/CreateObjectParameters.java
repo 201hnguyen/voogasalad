@@ -48,13 +48,12 @@ public class CreateObjectParameters {
     }
 
 
+    //Creates a new
     private void addInputFields() {
-
         vBox = new VBox();
         for (int j = 0; j < properties.length; j++) {
 
             Label label = new Label(properties[j]); //for SaveGuiParameters
-
 
             labelList.add(label);
             labelText.add(label.getText());
