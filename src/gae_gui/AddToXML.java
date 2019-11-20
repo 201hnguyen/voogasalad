@@ -1,12 +1,15 @@
 package gae_gui;
 
+import javafx.util.Pair;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AddToXML {
@@ -19,6 +22,7 @@ public class AddToXML {
     private String ROWS = "Rows";
     private String ID = "ID";
     private static Map<String, Map<String,String>> sendToXML = new HashMap<>();
+    private ArrayList<Pair<Double, Double>> myPathList = new ArrayList<>();
 
 
     public Document createXML() throws ParserConfigurationException {
@@ -27,6 +31,9 @@ public class AddToXML {
         Document doc = builder.newDocument();
         Element gameConfig = doc.createElement(GAME_CONFIG);
         doc.appendChild(gameConfig);
+        Element path = doc.createElement("Path");
+        path.setNodeValue(myPathList.toString());
+        gameConfig.appendChild(path);
         for (String gameObj : sendToXML.keySet()){
             String elementName = gameObj.split(",")[0];
             Element myElement = doc.createElement(elementName);
@@ -54,6 +61,10 @@ public class AddToXML {
             }
             i++;
         }
+    }
+
+    public void submitPath(ArrayList<Pair<Double, Double>> myListOfPoints){
+        myPathList = myListOfPoints;
     }
 
 

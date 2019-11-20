@@ -1,5 +1,6 @@
 package gae_gui;
 
+import gae_gui.gae_levelcomponents.GAE_LevelConfigPage;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -41,10 +42,15 @@ public class AccordionGUI extends Accordion {
     private Button createAccordionAddButton(){
         Button addButton = new Button("+");
         addButton.setOnMouseClicked(event -> {
-            try {
-                newObjectPage = new CreateObjectParameters(gameObjectName, properties, paramFieldType, myAccordionVBox);
-            } catch (ParserConfigurationException e) {
-                e.printStackTrace();
+            if(gameObjectName.equals("MapConfig")){
+                GAE_LevelConfigPage newLevelPage = new GAE_LevelConfigPage();
+            }
+            else {
+                try {
+                    newObjectPage = new CreateObjectParameters(gameObjectName, properties, paramFieldType, myAccordionVBox);
+                } catch (ParserConfigurationException e) {
+                    e.printStackTrace();
+                }
             }
 
         });

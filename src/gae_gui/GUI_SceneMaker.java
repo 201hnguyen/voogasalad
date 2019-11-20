@@ -1,5 +1,6 @@
 package gae_gui;
 
+import bus.Bus;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -22,12 +23,14 @@ public class GUI_SceneMaker{
     private int height;
     private AddToXML sendToXML;
     public Document createdXML;
+    public Bus busInstance;
 
 
 
-    public GUI_SceneMaker(int widthParam, int heightParam){
+    public GUI_SceneMaker(int widthParam, int heightParam, Bus myBusInstance){
         sendToXML = new AddToXML();
         myController = new GUI_Controller();
+        busInstance = myBusInstance;
         width = widthParam;
         height = heightParam;
         typeToParams = ResourceBundle.getBundle(SPRITE_OPTIONS_RESOURCE);
@@ -54,6 +57,8 @@ public class GUI_SceneMaker{
         myButton.setOnMouseClicked(event -> {
             try {
                 createdXML = sendToXML.createXML();
+                busInstance.goToPlayer(createdXML);
+
             } catch (ParserConfigurationException e) {
                 e.printStackTrace();
             }
