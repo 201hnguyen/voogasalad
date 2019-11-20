@@ -87,6 +87,20 @@ public class MovementStrategyTests {
         assertEquals(expected, current);
     }
 
+    @Test
+    public void testDirectionChangeAfterLines () {
+        Point expected = new Point(100, 150);
+        Point current = new Point(0, 0);
+        LinkedList<Point> points = new LinkedList<>();
+        points.add(new Point(0, 100));
+        points.add(new Point(100, 150));
+        MovementStrategy toTest = makeMovementStrategy(points, 5);
+        for(int i = 0; i < 500; i++) {
+            current = toTest.calculateNextPosition(0.1, current);
+        }
+        assertEquals(expected, current);
+    }
+
     private MovementStrategy makeMovementStrategy(LinkedList points, double speed) {
         Map<String, Object> parameters = new HashMap<>() {{
             put("path", points);
