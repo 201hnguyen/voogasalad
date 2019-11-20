@@ -15,7 +15,6 @@ public class Bus {
     private int height;
     private BorderPane root;
     private Scene gaeScene;
-    private Scene gamePlayerScene;
     private GUI_Controller gaeGuiController;
     private GUI_SceneMaker gaeObject;
 
@@ -41,9 +40,9 @@ public class Bus {
         currentStage.setScene(gaeObject.createGAEScene(root));
     }
 
-    public void changeToGamePlayer(){
+    public void changeToGamePlayer(Scene scene){
         //myPlayer.loadXML(XML)
-        currentStage.setScene(gamePlayerScene);
+        currentStage.setScene(scene);
     }
 
 }
