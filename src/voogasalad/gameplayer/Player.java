@@ -75,7 +75,6 @@ public class Player {
         });
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.getKeyFrames().add(frame);
-        timeline.play();
     }
 
 
