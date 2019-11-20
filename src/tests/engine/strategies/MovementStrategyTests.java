@@ -89,16 +89,24 @@ public class MovementStrategyTests {
 
     @Test
     public void testDirectionChangeAfterLines () {
-        Point expected = new Point(100, 150);
+        Point expected1 = new Point(0, 10);
+        Point expected2 = new Point(5, 10);
+        Point expected3 = new Point(10, 10);
+        Point expected4 = new Point(100, 100);
         Point current = new Point(0, 0);
         LinkedList<Point> points = new LinkedList<>();
-        points.add(new Point(0, 100));
-        points.add(new Point(100, 150));
+        points.add(new Point(0, 10));
+        points.add(new Point(10, 10));
+        points.add(new Point(100, 100));
         MovementStrategy toTest = makeMovementStrategy(points, 5);
-        for(int i = 0; i < 500; i++) {
-            current = toTest.calculateNextPosition(0.1, current);
-        }
-        assertEquals(expected, current);
+        current = toTest.calculateNextPosition(2, current);
+        assertEquals(expected1, current);
+        current = toTest.calculateNextPosition(1, current);
+        assertEquals(expected2, current);
+        current = toTest.calculateNextPosition(1, current);
+        assertEquals(expected3, current);
+        current = toTest.calculateNextPosition(50, current);
+        assertEquals(expected4, current);
     }
 
     private MovementStrategy makeMovementStrategy(LinkedList points, double speed) {
