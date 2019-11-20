@@ -5,6 +5,7 @@ package voogasalad.gameplayer.GUI;
         import javafx.scene.image.ImageView;
         import javafx.scene.layout.HBox;
         import voogasalad.gameengine.engine.sprites.JavaFXSprite;
+        import voogasalad.gameengine.engine.sprites.Sprite;
 
         import java.util.List;
 
@@ -17,17 +18,17 @@ public class AccordionCreator extends Accordion {
     final String[] imageNames = new String[]{"bird", "pandaslogo"};
     final Image[] images = new Image[imageNames.length];
     final ImageView[] pics = new ImageView[imageNames.length];
-    private List<JavaFXSprite> sprites;
+    private List<Sprite> sprites;
 
-    public AccordionCreator(List<JavaFXSprite> sprites) {
+    public AccordionCreator(List<Sprite> sprites) {
         this.sprites = sprites;
         createAccordion();
     }
 
     private void createAccordion() {
         HBox hBox = new HBox();
-        for(JavaFXSprite sprite: sprites){
-            hBox.getChildren().add(sprite.getImageView());
+        for(Sprite sprite: sprites){
+            hBox.getChildren().add((ImageView)sprite.getImage());
         }
         TitledPane titledPane = new TitledPane("trial", hBox);
         getPanes().add(titledPane);

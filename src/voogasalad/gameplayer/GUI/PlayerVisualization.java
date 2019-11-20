@@ -7,8 +7,6 @@ import javafx.stage.Stage;
 import voogasalad.gameengine.engine.sprites.JavaFXSprite;
 import voogasalad.gameengine.engine.sprites.Sprite;
 import voogasalad.gameplayer.DisplayScreen;
-import voogasalad.gameplayer.GUI.AccordionCreator;
-import voogasalad.gameplayer.GUI.ButtonCreator;
 
 import java.util.List;
 
@@ -25,9 +23,9 @@ public class PlayerVisualization {
     private DisplayScreen displayScreen;
     private Pane root;
 
-    public PlayerVisualization(Stage stage) {
+    public PlayerVisualization(Stage stage, List<Sprite> sprites) {
         this.stage = stage;
-        initialize();
+        initialize(sprites);
     }
 
     public void showStage(List<Sprite> sprites) {
@@ -38,10 +36,10 @@ public class PlayerVisualization {
         stage.setTitle(TITLE);
     }
 
-    public void initialize() {
+    public void initialize(List<Sprite> sprites) {
         root = new Pane();
         ButtonCreator buttonCreator = new ButtonCreator();
-        AccordionCreator accordionCreator = new AccordionCreator();
+        AccordionCreator accordionCreator = new AccordionCreator(sprites);
         VBox panelBox = new VBox();
         panelBox.getChildren().add(buttonCreator);
         panelBox.getChildren().add(accordionCreator);

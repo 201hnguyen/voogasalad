@@ -22,6 +22,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Player player = new Player(primaryStage, XML);
         player.startGame();
+
     }
 }
 

@@ -70,7 +70,7 @@ public class Player {
 
     public void startGame() throws GameEngineException {
         level = instantiateEngineForGame();
-        playerVisualization = new PlayerVisualization(myStage);
+        playerVisualization = new PlayerVisualization(myStage, level.getSpriteManager().getOnScreenSprites());
         setGameLoop();
     }
 
@@ -105,7 +105,7 @@ public class Player {
         Queue<Integer> spritesWave0Queue = new LinkedList<>() {{ add(0); add(1); add(1); }};
         engineDriverManager.addWave(createWave(new Point(0, 0), spritesWave0Queue, 1));
         engineDriverManager.instantiateEngineManagers();
-        PlayerVisualization playerVisualization = new PlayerVisualization(myStage);
+        PlayerVisualization playerVisualization = new PlayerVisualization(myStage, level.getSpriteManager().getOnScreenSprites());
         return engineDriverManager.getNewLevel();
     }
 
