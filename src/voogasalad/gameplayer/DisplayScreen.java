@@ -25,19 +25,22 @@ public class DisplayScreen extends Pane {
 
     private String myImagePath = "pandaslogo.png";
     private JavaFXSpriteManager spriteManager; // TODO: will use this to access sprite list - check with team if we are doing this directly or through a controller
+    private List<Sprite> spriteList;
 
-    public DisplayScreen(Stage stage) {
-
+    public DisplayScreen() {
+//        setMinWidth(600);
+//        setMinHeight(600);
+        setBackground(new Background(new BackgroundFill(Color.GHOSTWHITE, CornerRadii.EMPTY, Insets.EMPTY)));
         Image image = new Image(this.getClass().getClassLoader().getResourceAsStream(myImagePath));
         ImageView sprite = new ImageView(image);
 
-        stage.setTitle("VoogaSalad");
-        stage.setScene(displayScene());
+//        stage.setTitle("VoogaSalad");
+//        stage.setScene(displayScene());
 
         addImageToScreen(sprite, 300, 200, 100, 100); //
 
-        stage.setResizable(false);
-        stage.show();
+//        stage.setResizable(false);
+//        stage.show();
     }
 
     public void loadInSprite(JavaFXSprite jfxSprite) {
@@ -59,15 +62,13 @@ public class DisplayScreen extends Pane {
         getChildren().add(image);
     }
 
-    private Scene displayScene() {
-        setMinWidth(600);
-        setMinHeight(600);
-        setBackground(new Background(new BackgroundFill(Color.GHOSTWHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-
-        return new Scene(this, 600, 600);
-    }
-
-    private void updateSpritePositions(List<Sprite> spriteList) {
+    /**
+     * removes all current sprites from list, sets spriteList to be newSpriteList, and loads them all in
+     * @param newSpriteList - updated list of Sprites
+     */
+    private void updateSpritePositions(List<Sprite> newSpriteList) {
+        getChildren().removeAll(spriteList);
+        spriteList = newSpriteList;
         spriteList.
                 forEach(sprite -> loadInSprite((JavaFXSprite) sprite));
     }
@@ -78,7 +79,6 @@ public class DisplayScreen extends Pane {
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(frame);
         animation.play();
-
     }
 
     private void step() {

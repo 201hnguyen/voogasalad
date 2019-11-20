@@ -4,6 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import voogasalad.gameplayer.DisplayScreen;
 import voogasalad.gameplayer.GUI.AccordionCreator;
 import voogasalad.gameplayer.GUI.ButtonCreator;
 
@@ -45,12 +46,12 @@ public class PlayerVisualization {
     }
 
     private Pane displayScreen() {
-        Pane displayScreen = new Pane();
+        Pane displayScreen = new DisplayScreen();
         displayScreen.setMinWidth(PANEL_POSITION);
         displayScreen.setMinHeight(SCENE_HEIGHT);
         displayScreen.setLayoutX(LAYOUT);
         displayScreen.setLayoutY(LAYOUT);
-        displayScreen.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+//        displayScreen.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         return displayScreen;
     }
 }
