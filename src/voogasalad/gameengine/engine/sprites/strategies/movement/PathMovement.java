@@ -73,16 +73,23 @@ public class PathMovement implements MovementStrategy {
     private boolean checkDirectionChange(Point updatedPosition) {
         boolean passedX;
         boolean passedY;
+
         if(myDirection.getX() < 0) {
             passedX = updatedPosition.getX() <= nextPosition.getX();
+        } else if(myDirection.getX() == 0) {
+            passedX = true;
         } else {
             passedX = updatedPosition.getX() >= nextPosition.getX();
         }
+
         if(myDirection.getY() < 0) {
             passedY = updatedPosition.getY() <= nextPosition.getY();
+        } else if(myDirection.getY() == 0) {
+            passedY = true;
         } else {
             passedY = updatedPosition.getY() >= nextPosition.getY();
         }
+
         return passedX && passedY;
     }
 
