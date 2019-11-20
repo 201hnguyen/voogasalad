@@ -1,10 +1,12 @@
 package voogasalad.gameengine.engine.sprites.strategies.movement;
 
+import voogasalad.gameengine.engine.exceptions.GameEngineException;
+
 import java.awt.Point;
 
 public interface MovementStrategy {
 
-    Point getCurrentPosition();
+    MovementStrategy makeClone() throws GameEngineException;
 
-    void updatePosition(double elapsedTime);
+    Point calculateNextPosition(double elapsedTime, Point currentPosition);
 }

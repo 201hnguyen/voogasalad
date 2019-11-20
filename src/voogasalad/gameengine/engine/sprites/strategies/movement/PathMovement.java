@@ -4,12 +4,13 @@ import voogasalad.gameengine.engine.exceptions.GameEngineException;
 import voogasalad.gameengine.engine.utils.Verifier;
 
 import java.awt.*;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
 public class PathMovement implements MovementStrategy {
+    private Map<String, Object> myOriginalParameters;
     private LinkedList<Point> myPath;
-    private Point currentPosition;
     private Point nextPosition;
     private int nextPositionIndex;
     private boolean reachedEnd;
@@ -18,29 +19,29 @@ public class PathMovement implements MovementStrategy {
 
 
     public PathMovement(Map<String, Object> parameters) throws GameEngineException {
+        myOriginalParameters = parameters;
         mySpeed = (double) Verifier.verifyAndGetStrategyParameter(parameters, "mySpeed");
         myPath = (LinkedList<Point>) Verifier.verifyAndGetStrategyParameter(parameters, "myPath");
-        nextPositionIndex = 1;
-        currentPosition = myPath.getFirst();
-        if(nextPositionIndex < myPath.size()) {
+        nextPositionIndex = 0;
+        if(myPath.size() < 1) {
+            reachedEnd = true;
+        } else {
             reachedEnd = false;
             nextPosition = myPath.get(nextPositionIndex);
-            myDirection = calculateDirection();
-        } else {
-            reachedEnd = true;
         }
     }
 
-
     @Override
-    public Point getCurrentPosition() {
-        return currentPosition;
+    public MovementStrategy makeClone() throws GameEngineException {
+        return new PathMovement(myOriginalParameters);
     }
 
     @Override
-    public void updatePosition(double elapsedTime) {
+    public Point calculateNextPosition(double elapsedTime, Point currentPosition) {
         if(reachedEnd) {
-            return;
+            return currentPosition;
+        } else if (myDirection == null){
+            myDirection = calculateDirection(currentPosition);
         }
         double diffX = myDirection.getX() * elapsedTime;
         double diffY = myDirection.getY() * elapsedTime;
@@ -49,14 +50,15 @@ public class PathMovement implements MovementStrategy {
         Point updatedPosition = new Point();
         updatedPosition.setLocation(updatedX, updatedY);
         if(checkDirectionChange(updatedPosition)) {
-            System.out.println("hello");
+            Point toReturn = nextPosition;
             changeDirection();
+            return toReturn;
         } else {
-            currentPosition = updatedPosition;
+            return updatedPosition;
         }
     }
 
-    private Point calculateDirection() {
+    private Point calculateDirection(Point currentPosition) {
         Point updatedDirection = new Point();
         double diffX = nextPosition.getX() - currentPosition.getX();
         double diffY = nextPosition.getY() - currentPosition.getY();
@@ -71,27 +73,33 @@ public class PathMovement implements MovementStrategy {
     private boolean checkDirectionChange(Point updatedPosition) {
         boolean passedX;
         boolean passedY;
+
         if(myDirection.getX() < 0) {
-            passedX = currentPosition.getX() <= nextPosition.getX();
+            passedX = updatedPosition.getX() <= nextPosition.getX();
+        } else if(myDirection.getX() == 0) {
+            passedX = true;
         } else {
-            passedX = currentPosition.getX() >= nextPosition.getX();
+            passedX = updatedPosition.getX() >= nextPosition.getX();
         }
+
         if(myDirection.getY() < 0) {
-            passedY = currentPosition.getY() <= nextPosition.getY();
+            passedY = updatedPosition.getY() <= nextPosition.getY();
+        } else if(myDirection.getY() == 0) {
+            passedY = true;
         } else {
-            passedY = currentPosition.getY() >= nextPosition.getY();
+            passedY = updatedPosition.getY() >= nextPosition.getY();
         }
+
         return passedX && passedY;
     }
 
     private void changeDirection() {
         if(nextPositionIndex + 1 < myPath.size()) {
             nextPositionIndex++;
-            currentPosition = nextPosition;
+            Point origin = nextPosition;
             nextPosition = myPath.get(nextPositionIndex);
-            calculateDirection();
+            calculateDirection(origin);
         } else {
-            currentPosition = myPath.getLast();
             reachedEnd = true;
         }
     }

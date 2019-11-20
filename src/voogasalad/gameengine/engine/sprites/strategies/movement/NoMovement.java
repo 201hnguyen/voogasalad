@@ -1,15 +1,22 @@
 package voogasalad.gameengine.engine.sprites.strategies.movement;
 
 import java.awt.Point;
+import java.util.HashMap;
+import java.util.Map;
 
 public class NoMovement implements MovementStrategy {
-    @Override
-    public Point getCurrentPosition() {
-        return null;
+
+    public NoMovement(Map<String, Object> parameters) {
+
     }
 
     @Override
-    public void updatePosition(double elapsedTime) {
+    public MovementStrategy makeClone() {
+        return new NoMovement(new HashMap<>());
+    }
 
+    @Override
+    public Point calculateNextPosition(double elapsedTime, Point currentPosition) {
+        return currentPosition;
     }
 }
