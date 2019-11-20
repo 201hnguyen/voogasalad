@@ -14,7 +14,7 @@ import java.util.List;
 
 public class PlayerVisualization {
 
-    private static final double SCENE_WIDTH = 830;
+    private static final double SCENE_WIDTH = 1000;
     private static final double SCENE_HEIGHT = 630;
     private static final double PANEL_POSITION = 700;
     private static final double LAYOUT = 0;
