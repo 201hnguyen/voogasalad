@@ -1,4 +1,4 @@
-package voogasalad.gameplayer;
+package voogasalad.gameplayer.GUI;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -50,9 +50,4 @@ public class DisplayScreen extends Pane {
         getChildren().add(image);
     }
 
-//    public void updateDisplaySprites(List<Sprite> sprites) {
-//        spriteList.forEach(sprite -> getChildren().remove(sprite));
-//        spriteList = sprites;
-//        spriteList.forEach(this::loadInSprite);
-//    }
 }

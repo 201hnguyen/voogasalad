@@ -1,14 +1,11 @@
 package voogasalad.gameplayer.GUI;
+import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import voogasalad.gameengine.engine.sprites.JavaFXSprite;
 import voogasalad.gameengine.engine.sprites.Sprite;
-import voogasalad.gameplayer.DisplayScreen;
-import voogasalad.gameplayer.GUI.AccordionCreator;
-import voogasalad.gameplayer.GUI.ButtonCreator;
 
 import java.util.List;
 
@@ -23,9 +20,11 @@ public class PlayerVisualization extends Pane {
     private Scene scene;
     private Stage stage;
     private DisplayScreen displayScreen;
+    private Timeline timeline;
 
-    public PlayerVisualization(Stage stage, List<Sprite> sprites) {
+    public PlayerVisualization(Stage stage, List<Sprite> sprites, Timeline timeline) {
         this.stage = stage;
+        this.timeline = timeline;
         initialize();
         displayScreen(sprites);
         showStage();
@@ -44,7 +43,7 @@ public class PlayerVisualization extends Pane {
     }
 
     public void initialize() {
-        ButtonCreator buttonCreator = new ButtonCreator();
+        ButtonCreator buttonCreator = new ButtonCreator(new ButtonController(this));
         AccordionCreator accordionCreator = new AccordionCreator();
         VBox panelBox = new VBox();
         panelBox.getChildren().add(buttonCreator);
@@ -53,6 +52,15 @@ public class PlayerVisualization extends Pane {
         this.getChildren().addAll(panelBox);
         scene = new Scene(this, SCENE_WIDTH, SCENE_HEIGHT);
         stage.show();
+    }
+
+    public void startButtonAction() {
+        timeline.play();
+    }
+
+    public void pauseButtonAction() {
+        System.out.println("bitch");
+        timeline.stop();
     }
 
     private void displayScreen(List<Sprite> sprites) {

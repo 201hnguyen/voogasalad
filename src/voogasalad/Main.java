@@ -1,13 +1,7 @@
 package voogasalad;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-import voogasalad.gameengine.engine.exceptions.GameEngineException;
-import voogasalad.gameengine.engine.gamecontrol.Level;
-import voogasalad.gameengine.engine.sprites.Sprite;
 import voogasalad.gameplayer.Player;
 
 

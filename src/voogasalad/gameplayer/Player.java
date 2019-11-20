@@ -36,6 +36,7 @@ public class Player {
     private EngineDriverManager engineDriverManager;
     private PlayerVisualization playerVisualization;
     private Level level;
+    private Timeline timeline;
 
 
     //Player expects a javaFX Stage upon instantiation
@@ -54,9 +55,9 @@ public class Player {
 
     public void startGame() throws GameEngineException {
         level = instantiateEngineForGame();
-        playerVisualization = new PlayerVisualization(myStage, level.getSpriteManager().getOnScreenSprites());
+        timeline = new Timeline();
+        playerVisualization = new PlayerVisualization(myStage, level.getSpriteManager().getOnScreenSprites(), timeline);
         setGameLoop();
-//        playerVisualization.showStage(level.getSpriteManager().getOnScreenSprites());
     }
 
     private void gameLoop() throws GameEngineException {
@@ -72,7 +73,6 @@ public class Player {
                 ex.printStackTrace();
             }
         });
-        var timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.getKeyFrames().add(frame);
         timeline.play();
@@ -90,7 +90,6 @@ public class Player {
         Queue<Integer> spritesWave0Queue = new LinkedList<>() {{ add(0); add(1); add(1); }};
         engineDriverManager.addWave(createWave(new Point(0, 0), spritesWave0Queue, 1));
         engineDriverManager.instantiateEngineManagers();
-//        PlayerVisualization playerVisualization = new PlayerVisualization(myStage);
         return engineDriverManager.getNewLevel();
     }
 
