@@ -4,8 +4,12 @@ import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import voogasalad.gameengine.engine.sprites.JavaFXSprite;
+import voogasalad.gameplayer.DisplayScreen;
 import voogasalad.gameplayer.GUI.AccordionCreator;
 import voogasalad.gameplayer.GUI.ButtonCreator;
+
+import java.util.List;
 
 public class PlayerVisualization {
 
@@ -17,13 +21,17 @@ public class PlayerVisualization {
 
     private Scene scene;
     private Stage stage;
+    private DisplayScreen displayScreen;
+    private Pane root;
 
     public PlayerVisualization(Stage stage) {
         this.stage = stage;
         initialize();
     }
 
-    private void startStage() {
+    public void showStage(List<JavaFXSprite> sprites) {
+        displayScreen = (DisplayScreen) displayScreen(sprites);
+        root.getChildren().addAll(displayScreen);
         stage.setScene(scene);
         stage.setResizable(false);
         stage.setTitle(TITLE);
@@ -31,21 +39,19 @@ public class PlayerVisualization {
     }
 
     public void initialize() {
-        Pane root = new Pane();
+        root = new Pane();
         ButtonCreator buttonCreator = new ButtonCreator();
         AccordionCreator accordionCreator = new AccordionCreator();
         VBox panelBox = new VBox();
         panelBox.getChildren().add(buttonCreator);
         panelBox.getChildren().add(accordionCreator);
         panelBox.setLayoutX(PANEL_POSITION);
-        Pane displayScreen = displayScreen();
-        root.getChildren().addAll(displayScreen, panelBox);
+        root.getChildren().addAll(panelBox);
         scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
-        startStage();
     }
 
-    private Pane displayScreen() {
-        Pane displayScreen = new Pane();
+    private Pane displayScreen(List<JavaFXSprite> sprites) {
+        DisplayScreen displayScreen = new DisplayScreen(sprites);
         displayScreen.setMinWidth(PANEL_POSITION);
         displayScreen.setMinHeight(SCENE_HEIGHT);
         displayScreen.setLayoutX(LAYOUT);

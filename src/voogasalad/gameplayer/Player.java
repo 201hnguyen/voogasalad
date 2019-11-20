@@ -5,6 +5,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.List;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -12,6 +14,7 @@ import javafx.scene.effect.Light;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import voogasalad.gameengine.engine.exceptions.GameEngineException;
 import voogasalad.gameengine.engine.factories.SpriteProductsFactory;
 import voogasalad.gameengine.engine.factories.StrategiesFactory;
@@ -33,11 +36,16 @@ import voogasalad.gameengine.engine.sprites.strategies.health.Health;
 import voogasalad.gameengine.engine.sprites.strategies.health.HealthStrategy;
 import voogasalad.gameplayer.GUI.PlayerVisualization;
 
+import javax.swing.text.PlainDocument;
+
 public class Player {
 
     public static final String TYPE = "GameConfig";
     public static final String ACTION_PATH = "voogasalad.gameengine.engine.gamecontrol.action.";
     public static final int WINDOW_SIZE = 500;
+    public static final int FRAMES_PER_SECOND = 40;
+    public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
+    public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     private String myXMLPath;
     private XMLParser myXMLParser;
     private Stage myStage;
@@ -45,6 +53,8 @@ public class Player {
     private SpriteProductsFactory spriteFactory;
     private StrategiesFactory strategiesFactory;
     private EngineDriverManager engineDriverManager;
+    private PlayerVisualization playerVisualization;
+    private Level level;
 
 
     //Player expects a javaFX Stage upon instantiation
@@ -61,11 +71,33 @@ public class Player {
         engineDriverManager = new EngineDriverManager();
     }
 
-    public Level startGame() throws GameEngineException {
-        return displayMapFromXML();
+    public void startGame() throws GameEngineException {
+        level = instantiateEngineForGame();
+        playerVisualization = new PlayerVisualization(myStage);
+        setGameLoop();
     }
 
-    private Level displayMapFromXML() throws GameEngineException {
+    private void gameLoop(double elapsed_time) throws GameEngineException {
+        playerVisualization.showStage(level.getSpriteManager().getOnScreenSprites());
+        level.execute(elapsed_time);
+    }
+
+    private void setGameLoop() {
+        var frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> {
+            try {
+                gameLoop(SECOND_DELAY);
+            } catch (GameEngineException ex) {
+                ex.printStackTrace();
+            }
+        });
+        var timeline = new Timeline();
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.getKeyFrames().add(frame);
+        timeline.play();
+    }
+
+
+    private Level instantiateEngineForGame() throws GameEngineException {
         String[] componentTypes = {"Tower", "Enemy"};
         for (String component : componentTypes) {
             ArrayList<Map<String, String>> componentList = myXMLParser.getAttributesByTagName(component);
@@ -142,9 +174,9 @@ public class Player {
         int finalHealth = health;
         Map<String, Object> prototypeHealthParameter = new HashMap<>() {{ put("health", finalHealth); }};
         LinkedList<Point> path = new LinkedList<>();
-        path.add(new Point(100, 0));
-        path.add(new Point(100, 300));
-        path.add(new Point(100, 100));
+        path.add(new Point(10, 0));
+        path.add(new Point(10, 200));
+        path.add(new Point(500, 200));
         Map<String, Object> prototypeMovementParameter = new HashMap<>();
         prototypeMovementParameter.put("path", path);
         prototypeMovementParameter.put("speed", 50.0);

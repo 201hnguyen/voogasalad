@@ -29,7 +29,11 @@ public class JavaFXSpriteManager implements SpriteManager {
     }
 
     @Override
-    public List<Sprite> getOnScreenSprites() {
-        return List.copyOf(myOnScreenSprites);
+    public List<JavaFXSprite> getOnScreenSprites() {
+        List<JavaFXSprite> listCopy = new ArrayList<JavaFXSprite>();
+        for(Sprite sprite: myOnScreenSprites){
+            listCopy.add((JavaFXSprite) sprite);
+        }
+        return listCopy;
     }
 }

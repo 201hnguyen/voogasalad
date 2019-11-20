@@ -52,7 +52,7 @@ public class JavaFXSprite implements Sprite {
     }
 
     @Override
-    public Object getImage() {
+    public String getImage() {
         return myImagePath;
     }
 
