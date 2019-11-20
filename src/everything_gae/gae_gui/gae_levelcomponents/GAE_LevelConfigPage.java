@@ -1,31 +1,21 @@
-package gae_gui.gae_levelcomponents;
+package everything_gae.gae_gui.gae_levelcomponents;
 
-import gae_gui.AddToXML;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import everything_gae.gae_gui.AddToXML;
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
-import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
-import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 
 public class GAE_LevelConfigPage {
 
@@ -37,7 +27,7 @@ public class GAE_LevelConfigPage {
     private SubScene playerField;
 
     private Stage levelConfigPage;
-    private String towerResourcesPath = "gae_gui.gaeresource.";
+    private String towerResourcesPath = "everything_gae.gae_gui.gaeresource.";
     private int numberOfPaths = 0;
     private boolean pathCreation = false;
     private boolean settingSpawnPoint = false;

@@ -1,4 +1,4 @@
-package gae_gui;
+package everything_gae.gae_gui;
 
 import javafx.util.Pair;
 import org.w3c.dom.Document;
@@ -6,10 +6,8 @@ import org.w3c.dom.Element;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class AddToXML {

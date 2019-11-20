@@ -1,9 +1,8 @@
-package gae_gui;
+package everything_gae.gae_gui;
 
-import gae_gui.gae_levelcomponents.GAE_LevelConfigPage;
+import everything_gae.gae_gui.gae_levelcomponents.GAE_LevelConfigPage;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import javax.xml.parsers.ParserConfigurationException;

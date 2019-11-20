@@ -1,10 +1,7 @@
-package gae_gui;
+package everything_gae.gae_gui;
 
-import bus.Bus;
-import javafx.geometry.Pos;
-import javafx.scene.Group;
+import everything_gae.bus.Bus;
 import javafx.scene.Scene;
-import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import org.w3c.dom.Document;
@@ -14,8 +11,8 @@ import java.util.ResourceBundle;
 
 public class GUI_SceneMaker{
 
-    public static final String SPRITE_OPTIONS_RESOURCE = "resources/SpriteOptions";
-    public static final String PARAM_FIELD_TYPE_RESOURCE = "resources/ParamToInputType";
+    public static final String SPRITE_OPTIONS_RESOURCE = "everything_gae/resources/SpriteOptions";
+    public static final String PARAM_FIELD_TYPE_RESOURCE = "everything_gae/resources/ParamToInputType";
     private GUI_Controller myController;
     private ResourceBundle typeToParams;
     private ResourceBundle paramFieldType;

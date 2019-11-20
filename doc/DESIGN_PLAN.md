@@ -25,7 +25,7 @@ Responsible for defining the functionality of the various Components implemented
 
 #### Module Interaction
 
-When main.java is run, it will instantiate the bus class.  This class contains methods to create a scene.  The scene will have tabs to select between the GAE and the game itself.  Depending on the tab selected by the user, the bus class will either instantiate the GAE or the game player environment. 
+When main.java is run, it will instantiate the everything_gae.bus class.  This class contains methods to create a scene.  The scene will have tabs to select between the GAE and the game itself.  Depending on the tab selected by the user, the everything_gae.bus class will either instantiate the GAE or the game player environment. 
 
 If the GAE is chosen, the user is prompted with fields to design a game.  Once they are ready to play their game, the GAE generates an XML file.
 
@@ -127,7 +127,7 @@ Extras not Visualied:
 
 
 ## Code Interfaces
-##### This section describes each module introduced in the Overview in detail (as well as any other sub-modules that may be needed but are not significant to include in a high-level description of the program). Describe how each module handles specific features given in the assignment specification, what resources it might use, how it collaborates with other modules, and how each could be extended to include additional requirements (from the assignment specification or discussed by your team). Look for opportunities to share APIs between your sub-teams (e.g., authoring and player front ends or authoring and engine back ends) that may themselves be separate modules (like Java and OpenJFX are composed of several modules). Note, each sub-team should have its own external and internal APIs. Finally, justify the decision to create each module with respect to the design's key goals, principles, and abstractions.
+##### This section describes each module introduced in the Overview in detail (as well as any other sub-modules that may be needed but are not significant to include in a high-level description of the program). Describe how each module handles specific features given in the assignment specification, what everything_gae.resources it might use, how it collaborates with other modules, and how each could be extended to include additional requirements (from the assignment specification or discussed by your team). Look for opportunities to share APIs between your sub-teams (e.g., authoring and player front ends or authoring and engine back ends) that may themselves be separate modules (like Java and OpenJFX are composed of several modules). Note, each sub-team should have its own external and internal APIs. Finally, justify the decision to create each module with respect to the design's key goals, principles, and abstractions.
 
 #### Game Authoring Environment:
     ## Display Class -- provide a scene for user to graphically edit aspects of the game, including towers, enemies, level.

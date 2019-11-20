@@ -1,7 +1,6 @@
-package gae_gui;
+package everything_gae.gae_gui;
 
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 
 public class TestButton extends Button {
 
