@@ -7,5 +7,6 @@ module voogasalad_WorksDontTouch {
     requires javafx.media;
     requires javafx.web;
 
+    exports gae_gui.gae_levelcomponents;
     exports voogasalad;
 }

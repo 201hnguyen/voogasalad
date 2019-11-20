@@ -1,4 +1,4 @@
-package gae_gui.gae_Tower;
+package gae_gui.gae_levelcomponents;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -78,6 +78,8 @@ public class GAETowerView {
 
    private void addLabel(){
        Label title = new Label("New Tower Attributes");
+       title.setLayoutX(400);
+       title.setLayoutY(50);
        Label towerTypeLabel = new Label("Turret Type");
 
        root.add(title,3,1);
@@ -124,4 +126,7 @@ public class GAETowerView {
         return top;
     }
 */
+    public GridPane getGridPane() {
+        return root;
+    }
 }
