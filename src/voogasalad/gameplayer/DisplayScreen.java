@@ -1,4 +1,4 @@
-package voogasalad.displayscreentest;
+package voogasalad.gameplayer;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -34,7 +34,7 @@ public class DisplayScreen extends Pane {
         stage.setTitle("VoogaSalad");
         stage.setScene(displayScene());
 
-        addImageToScreen(sprite, 500, 75, 60, 70); //
+        addImageToScreen(sprite, 300, 200, 100, 100); //
 
         stage.setResizable(false);
         stage.show();

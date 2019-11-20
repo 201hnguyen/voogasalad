@@ -9,5 +9,4 @@ public interface Sprite {
     int getId();
     int getHealth();
     Object getImage();
-    public void move(double elapsedTime);
     }

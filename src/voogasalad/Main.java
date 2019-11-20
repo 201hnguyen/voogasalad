@@ -19,6 +19,7 @@ import voogasalad.gameengine.engine.sprites.Sprite;
 import voogasalad.gameengine.engine.sprites.SpriteManager;
 import voogasalad.gameengine.engine.sprites.strategies.health.Health;
 import voogasalad.gameengine.engine.sprites.strategies.health.HealthStrategy;
+import voogasalad.gameplayer.DisplayScreen;
 import voogasalad.gameplayer.Player;
 
 import java.awt.Point;
@@ -34,6 +35,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        new DisplayScreen(primaryStage);
         try {
             Player player = new Player(primaryStage, XML);
             Level level = player.startGame();
