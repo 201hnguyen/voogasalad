@@ -99,9 +99,9 @@ public class ActionsTest {
 
         for (int i=0; i<20; i++) {
             level.execute(0.5);
-            if (level.getTimeManager().getTotalElapsedTime() == 2) {
+            if (level.getStatusManager().getTotalElapsedTime() == 2) {
                 assertEquals(2, spriteManager.getOnScreenSprites().size());
-            } else if (level.getTimeManager().getTotalElapsedTime() == 3.5) {
+            } else if (level.getStatusManager().getTotalElapsedTime() == 3.5) {
                 assertEquals(5, spriteManager.getOnScreenSprites().size());
             }
         }

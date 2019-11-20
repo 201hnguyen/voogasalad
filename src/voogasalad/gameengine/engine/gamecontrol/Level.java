@@ -40,7 +40,7 @@ public class Level {
         return myWaveManager;
     }
 
-    public StatusManager getTimeManager() {
+    public StatusManager getStatusManager() {
         return myStatusManager;
     }
 }
