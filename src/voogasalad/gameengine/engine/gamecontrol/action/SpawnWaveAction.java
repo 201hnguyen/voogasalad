@@ -15,7 +15,7 @@ public class SpawnWaveAction implements LevelAction {
     public void execute(Level level) throws GameEngineException {
         SpriteManager spriteManager = level.getSpriteManager();
         WaveManager waveManager = level.getWaveManager();
-        double elapsedTime = level.getTimeManager().getElapsedTimeSinceLastFrame();
+        double elapsedTime = level.getStatusManager().getElapsedTimeSinceLastFrame();
         if (myWave == null) {
             setupWave(waveManager);
         }

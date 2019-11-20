@@ -1,8 +1,16 @@
 package voogasalad.gameplayer.GUI;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import voogasalad.gameengine.engine.sprites.JavaFXSprite;
+import voogasalad.gameengine.engine.sprites.Sprite;
 import voogasalad.gameplayer.DisplayScreen;
+import voogasalad.gameplayer.GUI.AccordionCreator;
+import voogasalad.gameplayer.GUI.ButtonCreator;
+
+import java.util.List;
 
 public class PlayerVisualization {
 
@@ -14,39 +22,42 @@ public class PlayerVisualization {
 
     private Scene scene;
     private Stage stage;
+    private DisplayScreen displayScreen;
+    private Pane root;
 
     public PlayerVisualization(Stage stage) {
         this.stage = stage;
         initialize();
     }
 
-    private void startStage() {
+    public void showStage(List<Sprite> sprites) {
+        displayScreen = (DisplayScreen) displayScreen(sprites);
+        root.getChildren().addAll(displayScreen);
         stage.setScene(scene);
         stage.setResizable(false);
         stage.setTitle(TITLE);
-        stage.show();
     }
 
-    private void initialize() {
-        Pane root = new Pane();
+    public void initialize() {
+        root = new Pane();
         ButtonCreator buttonCreator = new ButtonCreator();
         AccordionCreator accordionCreator = new AccordionCreator();
         VBox panelBox = new VBox();
         panelBox.getChildren().add(buttonCreator);
         panelBox.getChildren().add(accordionCreator);
         panelBox.setLayoutX(PANEL_POSITION);
-        Pane displayScreen = displayScreen();
-        root.getChildren().addAll(displayScreen, panelBox);
+        root.getChildren().addAll(panelBox);
         scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
-        startStage();
+        stage.show();
     }
 
-    private Pane displayScreen() {
-        Pane displayScreen = new DisplayScreen();
+    private Pane displayScreen(List<Sprite> sprites) {
+        DisplayScreen displayScreen = new DisplayScreen(sprites);
         displayScreen.setMinWidth(PANEL_POSITION);
         displayScreen.setMinHeight(SCENE_HEIGHT);
         displayScreen.setLayoutX(LAYOUT);
         displayScreen.setLayoutY(LAYOUT);
+        displayScreen.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
         return displayScreen;
     }
 }
