@@ -25,20 +25,20 @@ public class DisplayScreen extends Pane {
 
     private String myImagePath = "pandaslogo.png";
     private JavaFXSpriteManager spriteManager; // TODO: will use this to access sprite list - check with team if we are doing this directly or through a controller
-    private List<JavaFXSprite> spriteList;
+    private List<Sprite> spriteList;
 
-    public DisplayScreen(List<JavaFXSprite> sprites) {
+    public DisplayScreen(List<Sprite> sprites) {
         setBackground(new Background(new BackgroundFill(Color.GHOSTWHITE, CornerRadii.EMPTY, Insets.EMPTY)));
         spriteList = sprites;
-        for(JavaFXSprite sprite: spriteList){
+        for(Sprite sprite: spriteList){
             loadInSprite(sprite);
         }
     }
 
-    private void loadInSprite(JavaFXSprite jfxSprite) {
-        ImageView image = (ImageView) new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream(jfxSprite.getImage())));
-        int xPos = (int) jfxSprite.getX();
-        int yPos = (int) jfxSprite.getY();
+    private void loadInSprite(Sprite sprite) {
+        ImageView image = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream(sprite.getImage())));
+        int xPos = (int) sprite.getX();
+        int yPos = (int) sprite.getY();
         int height = 40;
         int width = 40;
         addImageToScreen(image, xPos, yPos, height, width);

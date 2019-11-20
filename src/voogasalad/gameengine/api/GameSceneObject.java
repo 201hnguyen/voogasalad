@@ -8,9 +8,9 @@ import java.util.List;
 public class GameSceneObject {
     private final int myResources;
     private final int myLives;
-    private final List<JavaFXSprite> myOnScreenSprites;
+    private final List<Sprite> myOnScreenSprites;
 
-    public GameSceneObject(int resources, int lives, List<JavaFXSprite> sprites) {
+    public GameSceneObject(int resources, int lives, List<Sprite> sprites) {
         myResources = resources;
         myLives = lives;
         myOnScreenSprites = sprites;
@@ -24,7 +24,7 @@ public class GameSceneObject {
         return myLives;
     }
 
-    public List<JavaFXSprite> getMyOnScreenSprites() {
+    public List<Sprite> getMyOnScreenSprites() {
         return myOnScreenSprites;
     }
 

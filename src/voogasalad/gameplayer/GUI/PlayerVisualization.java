@@ -5,6 +5,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import voogasalad.gameengine.engine.sprites.JavaFXSprite;
+import voogasalad.gameengine.engine.sprites.Sprite;
 import voogasalad.gameplayer.DisplayScreen;
 import voogasalad.gameplayer.GUI.AccordionCreator;
 import voogasalad.gameplayer.GUI.ButtonCreator;
@@ -29,7 +30,7 @@ public class PlayerVisualization {
         initialize();
     }
 
-    public void showStage(List<JavaFXSprite> sprites) {
+    public void showStage(List<Sprite> sprites) {
         displayScreen = (DisplayScreen) displayScreen(sprites);
         root.getChildren().addAll(displayScreen);
         stage.setScene(scene);
@@ -50,7 +51,7 @@ public class PlayerVisualization {
         stage.show();
     }
 
-    private Pane displayScreen(List<JavaFXSprite> sprites) {
+    private Pane displayScreen(List<Sprite> sprites) {
         DisplayScreen displayScreen = new DisplayScreen(sprites);
         displayScreen.setMinWidth(PANEL_POSITION);
         displayScreen.setMinHeight(SCENE_HEIGHT);

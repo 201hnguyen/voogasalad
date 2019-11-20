@@ -29,10 +29,10 @@ public class JavaFXSprite implements Sprite {
     @Override
     public Sprite makeClone(double x, double y, int spriteId) throws GameEngineException {
         return new SpriteBuilder().setSpriteId(spriteId).setX(x).setY(y)
-                .setHealthStrategy(myOriginalBuilder.getHealthStrategy())
+                .setHealthStrategy(myOriginalBuilder.getHealthStrategy().makeClone())
                 .setHeight(myOriginalBuilder.getHeight())
                 .setImagePath(myOriginalBuilder.getImagePath())
-                .setMovementStrategy(myOriginalBuilder.getMovementStrategy())
+                .setMovementStrategy(myOriginalBuilder.getMovementStrategy().makeClone())
                 .setWidth(myOriginalBuilder.getWidth())
                 .build();
     }
