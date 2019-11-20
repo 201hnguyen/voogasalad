@@ -50,7 +50,8 @@ public class PathMovement implements MovementStrategy {
         Point updatedPosition = new Point();
         updatedPosition.setLocation(updatedX, updatedY);
         if(checkDirectionChange(updatedPosition)) {
-            Point toReturn = nextPosition;
+            Point toReturn = new Point();
+            toReturn.setLocation(nextPosition.getX(), nextPosition.getY());
             changeDirection();
             return toReturn;
         } else {
@@ -96,9 +97,10 @@ public class PathMovement implements MovementStrategy {
     private void changeDirection() {
         if(nextPositionIndex + 1 < myPath.size()) {
             nextPositionIndex++;
-            Point origin = nextPosition;
+            Point origin = new Point();
+            origin.setLocation(nextPosition.getX(), nextPosition.getY());
             nextPosition = myPath.get(nextPositionIndex);
-            calculateDirection(origin);
+            myDirection = calculateDirection(origin);
         } else {
             reachedEnd = true;
         }
