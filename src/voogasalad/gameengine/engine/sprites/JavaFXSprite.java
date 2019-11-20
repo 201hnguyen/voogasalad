@@ -1,6 +1,5 @@
 package voogasalad.gameengine.engine.sprites;
 
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import voogasalad.gameengine.engine.exceptions.GameEngineException;
 import voogasalad.gameengine.engine.sprites.strategies.health.HealthStrategy;
@@ -65,12 +64,4 @@ public class JavaFXSprite implements Sprite {
     public void updatePosition(double elapsedTime) {
         currentPosition = myMovementStrategy.calculateNextPosition(elapsedTime, currentPosition);
     }
-
-//    public double getHeight(){
-//        return height;
-//    }
-//
-//    public double getWidth(){
-//        return width;
-//    }
 }
