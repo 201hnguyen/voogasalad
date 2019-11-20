@@ -5,6 +5,7 @@ import voogasalad.gameengine.engine.exceptions.GameEngineException;
 import voogasalad.gameengine.engine.factories.SpriteProductsFactory;
 import voogasalad.gameengine.engine.factories.StrategiesFactory;
 import voogasalad.gameengine.engine.sprites.Sprite;
+import voogasalad.gameengine.engine.sprites.SpriteBuilder;
 import voogasalad.gameengine.engine.sprites.strategies.health.HealthStrategy;
 import voogasalad.gameengine.engine.sprites.strategies.movement.MovementStrategy;
 
@@ -28,7 +29,8 @@ public class SpriteTests {
         HealthStrategy healthStrategy = strategiesFactory.makeHealth("Health", healthParameters);
         MovementStrategy movementStrategy = strategiesFactory.makeMovement("PathMovement", movementParameters);
 
-        Sprite prototypeSprite = spriteProductsFactory.makeSprite(0, 0, 50, 50, "pandaslogo.png", 0,  healthStrategy, movementStrategy);
+        Sprite prototypeSprite = new SpriteBuilder().setWidth(50).setHeight(50).setImagePath("pandaslogo.png").setHealthStrategy(healthStrategy).setMovementStrategy(movementStrategy).build();
+
         Sprite clonedSprite = prototypeSprite.makeClone(450, 240, 1);
         assertEquals(450, clonedSprite.getX(), 0.01);
         assertEquals(240, clonedSprite.getY(), 0.01);

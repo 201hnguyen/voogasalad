@@ -1,6 +1,7 @@
 package voogasalad.gameengine.engine.factories;
 
 import voogasalad.gameengine.engine.exceptions.GameEngineException;
+import voogasalad.gameengine.engine.sprites.SpriteBuilder;
 import voogasalad.gameengine.engine.sprites.strategies.health.HealthStrategy;
 import voogasalad.gameengine.engine.sprites.Sprite;
 import voogasalad.gameengine.engine.sprites.SpriteManager;
@@ -14,18 +15,6 @@ public class SpriteProductsFactory {
     private final static String CLASS_PATH = "voogasalad.gameengine.engine.sprites.";
     private final ResourceBundle SpriteFrontendSelection = ResourceBundle.getBundle(SPRITE_FRONTEND_RESOURCE_PATH);
 
-    public Sprite makeSprite(double xCoordinate, double yCoordinate, double width, double height, String imagePath, int spriteId, HealthStrategy healthStrategy, MovementStrategy movementStrategy) throws GameEngineException {
-        String spriteClassSelection = SpriteFrontendSelection.getString("Sprite");
-        try {
-            return (Sprite) Class.forName(CLASS_PATH + spriteClassSelection)
-                    .getConstructor(double.class, double.class, double.class, double.class, String.class, int.class, HealthStrategy.class, MovementStrategy.class)
-                    .newInstance(xCoordinate, yCoordinate, width, height, imagePath, spriteId, healthStrategy, movementStrategy);
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | ClassNotFoundException e) {
-            e.printStackTrace(); //TODO: Delete; currently here so we can see what is going on.
-            throw new GameEngineException(e, "SpriteProductionFailed");
-        }
-    }
-
     public SpriteManager makeSpriteManager() throws GameEngineException {
         String spriteManagerClassSelection = SpriteFrontendSelection.getString("SpriteManager");
         try {
@@ -33,6 +22,18 @@ public class SpriteProductsFactory {
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | ClassNotFoundException e) {
             e.printStackTrace(); //TODO: Delete; currently here so we can see what is going on.
             throw new GameEngineException(e, "SpriteManagerProductionFailed");
+        }
+    }
+
+    public Sprite makeSprite(SpriteBuilder builder) throws GameEngineException {
+        String spriteClassSelection = SpriteFrontendSelection.getString("Sprite");
+        try {
+            return (Sprite) Class.forName(CLASS_PATH + spriteClassSelection)
+                    .getConstructor(SpriteBuilder.class)
+                    .newInstance(builder);
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | ClassNotFoundException e) {
+            e.printStackTrace(); //TODO: Delete; currently here so we can see what is going on.
+            throw new GameEngineException(e, "SpriteProductionFailed");
         }
     }
 }
