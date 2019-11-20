@@ -2,6 +2,7 @@ package voogasalad.gameplayer.GUI;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -25,19 +26,22 @@ public class PlayerVisualization extends Pane {
     public PlayerVisualization(Stage stage, List<Sprite> sprites, Timeline timeline) {
         this.stage = stage;
         this.timeline = timeline;
-        initialize(sprites);
         displayScreen(sprites);
+        initialize(sprites);
         showStage();
     }
 
     public void showStage() {
+        this.getChildren().addAll(displayScreen);
         stage.setScene(scene);
         stage.setResizable(false);
         stage.setTitle(TITLE);
+        stage.show();
+
     }
 
     public void update(List<Sprite> sprites) {
-        this.getChildren().remove(displayScreen);
+        this.getChildren().removeAll(displayScreen);
         displayScreen(sprites);
         this.getChildren().addAll(displayScreen);
     }
@@ -56,6 +60,7 @@ public class PlayerVisualization extends Pane {
 
     public void startButtonAction() {
         timeline.play();
+        System.out.println("hello");
     }
 
     public void pauseButtonAction() {

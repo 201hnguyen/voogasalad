@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import voogasalad.gameplayer.Player;
 
 /**
  * Feel free to completely change this code or delete it entirely. 

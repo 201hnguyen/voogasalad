@@ -7,6 +7,8 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.w3c.dom.Document;
+import voogasalad.gameengine.engine.exceptions.GameEngineException;
+import voogasalad.gameplayer.Player;
 
 public class Bus {
     private Stage currentStage;
@@ -64,9 +66,11 @@ public class Bus {
         currentStage.setScene(gamePlayerScene);
     }
 
-    public void goToPlayer(Document createdXML){
+    public void goToPlayer(Document createdXML) throws GameEngineException {
         //myPlayerObject.loadXML(createdXML);
-        currentStage.setScene(new Scene(new BorderPane(), width, height));
+        Player player = new Player(currentStage, createdXML);
+        player.startGame();
+        //currentStage.setScene(new Scene(new BorderPane(), width, height));
     }
 
 

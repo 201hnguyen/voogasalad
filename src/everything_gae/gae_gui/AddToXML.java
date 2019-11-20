@@ -29,20 +29,21 @@ public class AddToXML {
         Document doc = builder.newDocument();
         Element gameConfig = doc.createElement(GAME_CONFIG);
         doc.appendChild(gameConfig);
-        Element path = doc.createElement("Path");
-        path.setNodeValue(myPathList.toString());
-        gameConfig.appendChild(path);
+//        Element path = doc.createElement("Path");
+//        path.setNodeValue(myPathList.toString());
+//        gameConfig.appendChild(path);
         for (String gameObj : sendToXML.keySet()){
             String elementName = gameObj.split(",")[0];
             Element myElement = doc.createElement(elementName);
             gameConfig.appendChild(myElement);
             String id = gameObj.split(",")[1];
             Element myElementID = doc.createElement(ID);
-            myElementID.setNodeValue(id);
+            //myElementID.setNodeValue(id);
+            myElementID.setTextContent(id);
             myElement.appendChild(myElementID);
             for(String objProperties : sendToXML.get(gameObj).keySet()){
                 Element property = doc.createElement(objProperties);
-                property.setNodeValue(sendToXML.get(gameObj).get(objProperties));
+                property.setTextContent(sendToXML.get(gameObj).get(objProperties));
                 myElement.appendChild(property);
             }
         }

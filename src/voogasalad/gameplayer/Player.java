@@ -18,6 +18,7 @@ import voogasalad.gameengine.engine.gamecontrol.condition.LevelCondition;
 import voogasalad.gameengine.engine.gamecontrol.condition.TemporalCondition;
 import voogasalad.gameengine.engine.sprites.*;
 import voogasalad.gameplayer.GUI.PlayerVisualization;
+import org.w3c.dom.Document;
 
 public class Player {
 
@@ -27,7 +28,6 @@ public class Player {
     public static final int FRAMES_PER_SECOND = 40;
     public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
-    private String myXMLPath;
     private XMLParser myXMLParser;
     private Stage myStage;
     private Group mapRoot;
@@ -37,13 +37,14 @@ public class Player {
     private PlayerVisualization playerVisualization;
     private Level level;
     private Timeline timeline;
+    private Document xmlDoc;
 
 
     //Player expects a javaFX Stage upon instantiation
-    public Player(Stage primaryStage, String xmlPath){
+    public Player(Stage primaryStage, Document xmlDoc){
         myStage = primaryStage;
         mapRoot = new Group();
-        loadXML(xmlPath);
+        loadXML(xmlDoc);
         initialiseEngine();
     }
 
@@ -86,7 +87,7 @@ public class Player {
                 instantiateEngineObject(component, componentList.get(i));
             }
         }
-        Queue<Integer> spritesWave0Queue = new LinkedList<>() {{ add(0); add(1); add(1); }};
+        Queue<Integer> spritesWave0Queue = new LinkedList<>() {{ add(0); add(0); add(0); }};
         engineDriverManager.addWave(createWave(new Point(0, 0), spritesWave0Queue, 1));
         engineDriverManager.instantiateEngineManagers();
         return engineDriverManager.getNewLevel();
@@ -129,7 +130,7 @@ public class Player {
         for(String att : componentAttributeMap.keySet()){
 
             if(att.equalsIgnoreCase("id")){
-                id = Integer.parseInt(componentAttributeMap.get("id"));
+                id = Integer.parseInt(componentAttributeMap.get("ID"));
             }
             if(att.equalsIgnoreCase("Health")){
                 healthstrategy = "Health";
@@ -165,13 +166,12 @@ public class Player {
                 .setMovementStrategy(strategiesFactory.makeMovement("PathMovement", prototypeMovementParameter)).build());
     }
 
-    public void loadXML(String xmlPath){
-        myXMLPath = xmlPath;
-        myXMLParser = new XMLParser(TYPE, new File(xmlPath));
+    public void loadXML(Document xmlDoc){
+        myXMLParser = new XMLParser(TYPE, xmlDoc);
     }
 
-    public String getXML(){
-        return myXMLPath;
+    public Document getXML(){
+        return xmlDoc;
     }
 }
 

@@ -22,9 +22,6 @@ public class DisplayScreen extends Pane {
 
     public static final int FRAMES_PER_SECOND = 60;
     public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
-
-    private String myImagePath = "pandaslogo.png";
-    private JavaFXSpriteManager spriteManager; // TODO: will use this to access sprite list - check with team if we are doing this directly or through a controller
     private List<Sprite> spriteList;
 
     public DisplayScreen(List<Sprite> sprites) {
