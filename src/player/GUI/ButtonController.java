@@ -1,4 +1,4 @@
-package player;
+package player.GUI;
 
 public class ButtonController{
 }

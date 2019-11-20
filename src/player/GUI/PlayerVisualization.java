@@ -1,10 +1,9 @@
-package player;
+package player.GUI;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
 public class PlayerVisualization {
 
     private static final double SCENE_WIDTH = 830;

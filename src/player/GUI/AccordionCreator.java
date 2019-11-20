@@ -1,4 +1,4 @@
-package player;
+package player.GUI;
         import javafx.scene.control.Accordion;
         import javafx.scene.control.TitledPane;
         import javafx.scene.image.Image;
