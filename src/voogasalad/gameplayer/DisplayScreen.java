@@ -49,4 +49,10 @@ public class DisplayScreen extends Pane {
         image.setY(yPos - image.getFitHeight()/2);
         getChildren().add(image);
     }
+
+//    public void updateDisplaySprites(List<Sprite> sprites) {
+//        spriteList.forEach(sprite -> getChildren().remove(sprite));
+//        spriteList = sprites;
+//        spriteList.forEach(this::loadInSprite);
+//    }
 }
