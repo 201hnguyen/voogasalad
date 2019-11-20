@@ -76,7 +76,7 @@ public class Player {
             }
         }
         Queue<Integer> spritesWave0Queue = new LinkedList<>() {{ add(0); add(1); add(1); }};
-        engineDriverManager.addWave(createWave(new Point(250, 300), spritesWave0Queue, 1));
+        engineDriverManager.addWave(createWave(new Point(0, 0), spritesWave0Queue, 1));
         engineDriverManager.instantiateEngineManagers();
         return engineDriverManager.getNewLevel();
     }
@@ -143,9 +143,9 @@ public class Player {
         int finalHealth = health;
         Map<String, Object> prototypeHealthParameter = new HashMap<>() {{ put("health", finalHealth); }};
         LinkedList<Point> path = new LinkedList<>();
-        path.add(new Point(250, 300));
-        path.add(new Point(300, 300));
-        path.add(new Point(400, 300));
+        path.add(new Point(100, 0));
+        path.add(new Point(100, 300));
+        path.add(new Point(100, 100));
         Map<String, Object> prototypeMovementParameter = new HashMap<>();
         prototypeMovementParameter.put("path", path);
         prototypeMovementParameter.put("speed", 50.0);
