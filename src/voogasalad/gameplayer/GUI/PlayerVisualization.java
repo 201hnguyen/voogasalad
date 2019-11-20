@@ -50,7 +50,7 @@ public class PlayerVisualization {
         displayScreen.setMinHeight(SCENE_HEIGHT);
         displayScreen.setLayoutX(LAYOUT);
         displayScreen.setLayoutY(LAYOUT);
-        displayScreen.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+        displayScreen.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
         return displayScreen;
     }
 }

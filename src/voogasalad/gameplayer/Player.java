@@ -31,6 +31,7 @@ import voogasalad.gameengine.engine.sprites.Sprite;
 import voogasalad.gameengine.engine.sprites.SpriteManager;
 import voogasalad.gameengine.engine.sprites.strategies.health.Health;
 import voogasalad.gameengine.engine.sprites.strategies.health.HealthStrategy;
+import voogasalad.gameplayer.GUI.PlayerVisualization;
 
 public class Player {
 
@@ -65,9 +66,6 @@ public class Player {
     }
 
     private Level displayMapFromXML() throws GameEngineException {
-        Scene scene = new Scene(mapRoot, 1000, 800);
-        myStage.setScene(scene);
-        myStage.show();
         String[] componentTypes = {"Tower", "Enemy"};
         for (String component : componentTypes) {
             ArrayList<Map<String, String>> componentList = myXMLParser.getAttributesByTagName(component);
@@ -78,6 +76,7 @@ public class Player {
         Queue<Integer> spritesWave0Queue = new LinkedList<>() {{ add(0); add(1); add(1); }};
         engineDriverManager.addWave(createWave(new Point(0, 0), spritesWave0Queue, 1));
         engineDriverManager.instantiateEngineManagers();
+        PlayerVisualization playerVisualization = new PlayerVisualization(myStage);
         return engineDriverManager.getNewLevel();
     }
 

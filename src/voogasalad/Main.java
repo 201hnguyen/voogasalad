@@ -35,8 +35,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-//        PlayerVisualization playerVisualization = new PlayerVisualization(primaryStage);
-//        playerVisualization.initialize();
         try {
             Player player = new Player(primaryStage, XML);
             Level level = player.startGame();

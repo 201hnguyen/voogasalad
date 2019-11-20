@@ -53,7 +53,7 @@ public class JavaFXSprite implements Sprite {
 
     @Override
     public Object getImage() {
-        return myImageView;
+        return myImagePath;
     }
 
     public int getHealth() {
@@ -62,5 +62,13 @@ public class JavaFXSprite implements Sprite {
 
     public void updatePosition(double elapsedTime) {
         currentPosition = myMovementStrategy.calculateNextPosition(elapsedTime, currentPosition);
+    }
+
+    public double getHeight(){
+        return height;
+    }
+
+    public double getWidth(){
+        return width;
     }
 }
