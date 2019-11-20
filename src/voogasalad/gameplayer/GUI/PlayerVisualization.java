@@ -59,7 +59,6 @@ public class PlayerVisualization extends Pane {
     }
 
     public void pauseButtonAction() {
-        System.out.println("bitch");
         timeline.stop();
     }
 
