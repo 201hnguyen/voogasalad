@@ -1,9 +1,12 @@
-package player.GUI;
+package voogasalad.gameplayer.GUI;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import voogasalad.gameplayer.GUI.AccordionCreator;
+import voogasalad.gameplayer.GUI.ButtonCreator;
+
 public class PlayerVisualization {
 
     private static final double SCENE_WIDTH = 830;

@@ -19,6 +19,7 @@ import voogasalad.gameengine.engine.sprites.Sprite;
 import voogasalad.gameengine.engine.sprites.SpriteManager;
 import voogasalad.gameengine.engine.sprites.strategies.health.Health;
 import voogasalad.gameengine.engine.sprites.strategies.health.HealthStrategy;
+import voogasalad.gameplayer.GUI.PlayerVisualization;
 import voogasalad.gameplayer.Player;
 
 import java.awt.Point;
@@ -34,18 +35,20 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        try {
-            Player player = new Player(primaryStage, XML);
-            Level level = player.startGame();
-            for (int i=0; i<20; i++) {
-                System.out.println("new clock tick");
-                level.execute(0.5);
-                for (Sprite sprite : level.getSpriteManager().getOnScreenSprites()) {
-                    System.out.println("Sprite generated:" + " id: " + sprite.getId() + " health: " + sprite.getHealth() + " xPos: " + sprite.getX() + " yPos:" + sprite.getY());
-                }
-            }
-        } catch (GameEngineException e) {
-
-        }
+        PlayerVisualization playerVisualization = new PlayerVisualization(primaryStage);
+        playerVisualization.initialize();
+//        try {
+//            Player player = new Player(primaryStage, XML);
+//            Level level = player.startGame();
+//            for (int i=0; i<20; i++) {
+//                System.out.println("new clock tick");
+//                level.execute(0.5);
+//                for (Sprite sprite : level.getSpriteManager().getOnScreenSprites()) {
+//                    System.out.println("Sprite generated:" + " id: " + sprite.getId() + " health: " + sprite.getHealth() + " xPos: " + sprite.getX() + " yPos:" + sprite.getY());
+//                }
+//            }
+//        } catch (GameEngineException e) {
+//
+//        }
     }
 }
