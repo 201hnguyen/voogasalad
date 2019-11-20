@@ -1,4 +1,4 @@
-package voogasalad.gameplayer;
+package voogasalad.gameplayer.GUI;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -49,4 +49,5 @@ public class DisplayScreen extends Pane {
         image.setY(yPos - image.getFitHeight()/2);
         getChildren().add(image);
     }
+
 }

@@ -1,18 +1,11 @@
 package voogasalad.gameplayer;
 import java.awt.*;
 import java.io.*;
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
-import java.util.List;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.effect.Light;
-import javafx.scene.image.ImageView;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import voogasalad.gameengine.engine.exceptions.GameEngineException;
@@ -21,19 +14,10 @@ import voogasalad.gameengine.engine.factories.StrategiesFactory;
 import voogasalad.gameengine.engine.gamecontrol.Level;
 import voogasalad.gameengine.engine.gamecontrol.Wave;
 import voogasalad.gameengine.engine.gamecontrol.action.LevelAction;
-import voogasalad.gameengine.engine.gamecontrol.action.SpawnWaveAction;
 import voogasalad.gameengine.engine.gamecontrol.condition.LevelCondition;
 import voogasalad.gameengine.engine.gamecontrol.condition.TemporalCondition;
-import voogasalad.gameengine.engine.gamecontrol.managers.ActionsManager;
-import voogasalad.gameengine.engine.gamecontrol.managers.ConditionsManager;
-import voogasalad.gameengine.engine.gamecontrol.managers.StatusManager;
-import voogasalad.gameengine.engine.gamecontrol.managers.WaveManager;
 import voogasalad.gameengine.engine.sprites.*;
-import voogasalad.gameengine.engine.sprites.strategies.health.Health;
-import voogasalad.gameengine.engine.sprites.strategies.health.HealthStrategy;
 import voogasalad.gameplayer.GUI.PlayerVisualization;
-
-import javax.swing.text.PlainDocument;
 
 public class Player {
 
@@ -52,7 +36,8 @@ public class Player {
     private EngineDriverManager engineDriverManager;
     private PlayerVisualization playerVisualization;
     private Level level;
-    private static int counter = 0;
+    private Timeline timeline;
+
 
     //Player expects a javaFX Stage upon instantiation
     public Player(Stage primaryStage, String xmlPath){
@@ -70,28 +55,26 @@ public class Player {
 
     public void startGame() throws GameEngineException {
         level = instantiateEngineForGame();
+        timeline = new Timeline();
+        playerVisualization = new PlayerVisualization(myStage, level.getSpriteManager().getOnScreenSprites(), timeline);
         setGameLoop();
     }
 
-    private void gameLoop(double elapsed_time) throws GameEngineException {
-        playerVisualization.showStage(level.getSpriteManager().getOnScreenSprites());
-        level.execute(elapsed_time);
+    private void gameLoop() throws GameEngineException {
+        playerVisualization.update(level.getSpriteManager().getOnScreenSprites());
+        level.execute(Player.SECOND_DELAY);
     }
 
-    private void setGameLoop() throws GameEngineException {
-        level.execute(0);
-        playerVisualization = new PlayerVisualization(myStage, level.getSpriteManager().getSpritePrototypes());
+    private void setGameLoop() {
         var frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> {
             try {
-                gameLoop(SECOND_DELAY);
+                gameLoop();
             } catch (GameEngineException ex) {
                 ex.printStackTrace();
             }
         });
-        var timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.getKeyFrames().add(frame);
-        timeline.play();
     }
 
 
