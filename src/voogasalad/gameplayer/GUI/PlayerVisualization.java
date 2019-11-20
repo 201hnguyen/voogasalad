@@ -36,7 +36,6 @@ public class PlayerVisualization {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.setTitle(TITLE);
-        stage.show();
     }
 
     public void initialize() {
@@ -49,6 +48,7 @@ public class PlayerVisualization {
         panelBox.setLayoutX(PANEL_POSITION);
         root.getChildren().addAll(panelBox);
         scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
+        stage.show();
     }
 
     private Pane displayScreen(List<Sprite> sprites) {
