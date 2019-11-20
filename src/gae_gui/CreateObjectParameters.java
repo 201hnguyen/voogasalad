@@ -22,13 +22,15 @@ public class CreateObjectParameters {
     private String[] properties;
     private ResourceBundle paramFieldType;
     private VBox vBox;
-    //private AddToXML xmlObject;
     private String gameObjectName;
-    private List<Label> labelList = new ArrayList<Label>();
-
-    private List<String> labelText = new ArrayList<String>();
-    private List<String> labelValue = new ArrayList<String>();
-
+    private List<Node> allNodes = new ArrayList<>();
+    private List<String> fieldTypes= new ArrayList<>();
+    private FieldTextReturnFactory fieldFactory = new FieldTextReturnFactory();
+    private List<Label> labelList;
+    private List<String> labelText;
+    private List<String> labelValue;
+    private AddToXML xmlObject;
+    //private static Map<String, Map<String,String>> sendToXML;
 
 
 
@@ -39,40 +41,25 @@ public class CreateObjectParameters {
         //sendToXML = new HashMap<>();
         towerPreferencePage = new Stage();
         root = new BorderPane();
-        root.setBottom(createSubmitButton()); //put this in add input fields?
+        xmlObject = new AddToXML();
+        properties = propertiesParam;
         paramFieldType = paramFieldTypeParam;
         gameObjectName = gameObjectNameParam;
         storeAllFieldTypes();
         addInputFields();
     }
 
-
-    //not in use
-    //called in SaveGuiParameters
-    public String getTextFromInputFields() {
-        String value = "";
-        return value;
-    }
-
-
-    //Creates a new
     private void addInputFields() {
+
+
         vBox = new VBox();
         for (int j = 0; j < properties.length; j++) {
-
             Label label = new Label(properties[j]); //for SaveGuiParameters
-
             labelList.add(label);
             labelText.add(label.getText());
-            labelValue.add(label.getAccessibleText());
-
             vBox.getChildren().add(label);
             vBox.getChildren().add(createObjectFromString(paramFieldType.getString(properties[j])));
         }
-
-        //System.out.println(labelText); //testing
-        //System.out.println(labelValue); //testing
-
         root.setCenter(vBox);
         root.setBottom(createSubmitButton());
         towerEditScene = new Scene(root, window_WIDTH, window_HEIGHT);
@@ -80,16 +67,15 @@ public class CreateObjectParameters {
         towerPreferencePage.show();
     }
 
-    //does not update, but creates map of labels and values
     private Button createSubmitButton(){
         Button addButton = new Button("Submit");
         addButton.setOnMouseClicked(event -> {
-            //labelValue.add(label.getAccessibleText());
-            SaveGUIParameters myGuiParameters = new SaveGUIParameters(labelText, labelValue);
-//            for (Label myLabel: labelList){
-//                System.out.println(myLabel.getAccessibleText());
-//            }
-//            //System.out.println(label);
+        allNodes
+                .stream()
+                .forEach(node -> labelValue.add(fieldFactory.getAppropriateText(node)));
+
+        SaveGUIParameters myGuiParameters = new SaveGUIParameters(labelText, labelValue);
+        xmlObject.addToSendToXMLMap(myGuiParameters.getMap(), gameObjectName);
         });
 
         return addButton;
