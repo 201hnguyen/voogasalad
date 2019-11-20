@@ -2,6 +2,8 @@ package gae_gui;
 
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.util.ResourceBundle;
@@ -15,6 +17,7 @@ public class AccordionGUI extends Accordion {
     private String gameObjectName;
     private ResourceBundle paramFieldType;
     private CreateObjectParameters newObjectPage;
+    private VBox myAccordionVBox;
 
 
 
@@ -29,8 +32,9 @@ public class AccordionGUI extends Accordion {
     }
 
     private TitledPane makeAccordion() {
+        myAccordionVBox = new VBox();
         TitledPane tPane = new TitledPane();
-        tPane.setContent(new TextArea());
+        tPane.setContent(myAccordionVBox);
         return tPane;
     }
 
@@ -38,7 +42,7 @@ public class AccordionGUI extends Accordion {
         Button addButton = new Button("+");
         addButton.setOnMouseClicked(event -> {
             try {
-                newObjectPage = new CreateObjectParameters(gameObjectName, properties, paramFieldType);
+                newObjectPage = new CreateObjectParameters(gameObjectName, properties, paramFieldType, myAccordionVBox);
             } catch (ParserConfigurationException e) {
                 e.printStackTrace();
             }

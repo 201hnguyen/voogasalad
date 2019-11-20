@@ -8,6 +8,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import org.w3c.dom.Document;
 
 public class Bus {
     private Stage currentStage;
@@ -18,6 +19,7 @@ public class Bus {
     private Scene gamePlayerScene;
     private GUI_Controller gaeGuiController;
     private GUI_SceneMaker gaeObject;
+    private Document createdXML;
 
     public Bus(Stage currentStageParam, BorderPane rootParam, int widthParam, int heightParam){
         currentStage = currentStageParam;
@@ -42,6 +44,7 @@ public class Bus {
     }
 
     public void changeToGamePlayer(){
+        createdXML = gaeObject.getCreatedXML();
         //myPlayer.loadXML(XML)
         currentStage.setScene(gamePlayerScene);
     }

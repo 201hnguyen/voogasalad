@@ -44,13 +44,13 @@ public class AddToXML {
         return doc;
     }
 
-    public void addToSendToXMLMap(Map myMap, String gameObjectName){
+    public String addToSendToXMLMap(Map myMap, String gameObjectName){
         int i = 0;
         while(true){
             String putInMap = String.join(",", gameObjectName, Integer.toString(i));
             if(!(sendToXML.containsKey(putInMap))){
                 sendToXML.putIfAbsent(putInMap, myMap);
-                break;
+                return putInMap;
             }
             i++;
         }

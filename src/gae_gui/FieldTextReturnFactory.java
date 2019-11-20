@@ -1,5 +1,6 @@
 package gae_gui;
 
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
@@ -13,6 +14,10 @@ public class FieldTextReturnFactory {
         if(node instanceof ComboBox){
             return (String) ((ComboBox) node).getValue();
         }
+//        if(node instanceof CheckBox){
+//            ((TestButton)node).handleClick();
+//            return null;
+//        }
         return "Field Type not recognized";
     }
 }

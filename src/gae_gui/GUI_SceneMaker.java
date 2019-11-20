@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
+import org.w3c.dom.Document;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.util.ResourceBundle;
@@ -20,6 +21,7 @@ public class GUI_SceneMaker{
     private int width;
     private int height;
     private AddToXML sendToXML;
+    public Document createdXML;
 
 
 
@@ -51,12 +53,16 @@ public class GUI_SceneMaker{
         Button myButton = new Button("Submit");
         myButton.setOnMouseClicked(event -> {
             try {
-                sendToXML.createXML();
+                createdXML = sendToXML.createXML();
             } catch (ParserConfigurationException e) {
                 e.printStackTrace();
             }
         });
         return myButton;
+    }
+
+    public Document getCreatedXML(){
+        return createdXML;
     }
 
 }
