@@ -14,10 +14,7 @@ import voogasalad.gameengine.engine.gamecontrol.managers.ActionsManager;
 import voogasalad.gameengine.engine.gamecontrol.managers.ConditionsManager;
 import voogasalad.gameengine.engine.gamecontrol.managers.StatusManager;
 import voogasalad.gameengine.engine.gamecontrol.managers.WaveManager;
-import voogasalad.gameengine.engine.sprites.JavaFXSprite;
-import voogasalad.gameengine.engine.sprites.JavaFXSpriteManager;
-import voogasalad.gameengine.engine.sprites.Sprite;
-import voogasalad.gameengine.engine.sprites.SpriteManager;
+import voogasalad.gameengine.engine.sprites.*;
 import voogasalad.gameengine.engine.sprites.strategies.health.Health;
 import voogasalad.gameengine.engine.sprites.strategies.health.HealthStrategy;
 import voogasalad.gameengine.engine.sprites.strategies.movement.MovementStrategy;
@@ -46,8 +43,21 @@ public class ActionsTest {
         HealthStrategy prototype1HealthStrategy = new Health(prototype1HealthParameter);
         MovementStrategy prototypeMovementStrategy = new PathMovement(movementParameters);
 
-        Sprite prototype0 = new JavaFXSprite(0, 0, 50, 50, "pandaslogo.png", 0, prototype0HealthStrategy, prototypeMovementStrategy);
-        Sprite prototype1 = new JavaFXSprite(0, 0, 50, 50, "pandaslogo.png", 0, prototype1HealthStrategy, prototypeMovementStrategy);
+        Sprite prototype0 = new SpriteBuilder()
+                .setWidth(50)
+                .setHeight(50)
+                .setImagePath("pandaslogo.png")
+                .setHealthStrategy(prototype0HealthStrategy)
+                .setMovementStrategy(prototypeMovementStrategy)
+                .build();
+
+        Sprite prototype1 = new SpriteBuilder()
+                .setWidth(50)
+                .setHeight(50)
+                .setImagePath("pandaslogo.png")
+                .setHealthStrategy(prototype1HealthStrategy)
+                .setMovementStrategy(prototypeMovementStrategy)
+                .build();
 
         spriteManager.addSpritePrototype(0, prototype0);
         spriteManager.addSpritePrototype(1, prototype1);

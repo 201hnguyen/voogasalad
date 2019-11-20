@@ -25,10 +25,7 @@ import voogasalad.gameengine.engine.gamecontrol.managers.ActionsManager;
 import voogasalad.gameengine.engine.gamecontrol.managers.ConditionsManager;
 import voogasalad.gameengine.engine.gamecontrol.managers.StatusManager;
 import voogasalad.gameengine.engine.gamecontrol.managers.WaveManager;
-import voogasalad.gameengine.engine.sprites.JavaFXSprite;
-import voogasalad.gameengine.engine.sprites.JavaFXSpriteManager;
-import voogasalad.gameengine.engine.sprites.Sprite;
-import voogasalad.gameengine.engine.sprites.SpriteManager;
+import voogasalad.gameengine.engine.sprites.*;
 import voogasalad.gameengine.engine.sprites.strategies.health.Health;
 import voogasalad.gameengine.engine.sprites.strategies.health.HealthStrategy;
 
@@ -149,7 +146,9 @@ public class Player {
         Map<String, Object> prototypeMovementParameter = new HashMap<>();
         prototypeMovementParameter.put("path", path);
         prototypeMovementParameter.put("speed", 50.0);
-        engineDriverManager.addSpritePrototype(id, spriteFactory.makeSprite(xpos, ypos, width, height, imagePath, id, strategiesFactory.makeHealth(healthstrategy, prototypeHealthParameter), strategiesFactory.makeMovement("PathMovement", prototypeMovementParameter)));
+        engineDriverManager.addSpritePrototype(id, new SpriteBuilder().setX(xpos).setY(ypos).setWidth(width).setHeight(height)
+                .setImagePath(imagePath).setSpriteId(id).setHealthStrategy(strategiesFactory.makeHealth(healthstrategy, prototypeHealthParameter))
+                .setMovementStrategy(strategiesFactory.makeMovement("PathMovement", prototypeMovementParameter)).build());
     }
 
     public void loadXML(String xmlPath){
