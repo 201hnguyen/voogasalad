@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<GameConfig>
+    <Tower><id>0</id>
+        <imagepath>src/resources/player/BlackCell.png</imagepath>
+        <height>50</height>
+        <width>20</width>
+        <xpos>100</xpos>
+        <ypos>100</ypos>
+        <Health>10</Health>
+    </Tower>
+    <Enemy><id>1</id>
+        <imagepath>src/resources/player/WhiteCell.png</imagepath>
+        <height>30</height>
+        <width>30</width>
+        <xpos>40</xpos>
+        <ypos>50</ypos>
+        <Health>20</Health>
+    </Enemy>
+</GameConfig>

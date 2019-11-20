@@ -9,4 +9,4 @@ public interface Sprite {
     int getId();
     int getHealth();
     Object getImage();
-}
+    }

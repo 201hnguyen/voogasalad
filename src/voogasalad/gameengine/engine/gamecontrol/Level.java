@@ -6,6 +6,7 @@ import voogasalad.gameengine.engine.gamecontrol.managers.ActionsManager;
 import voogasalad.gameengine.engine.gamecontrol.managers.ConditionsManager;
 import voogasalad.gameengine.engine.gamecontrol.managers.StatusManager;
 import voogasalad.gameengine.engine.gamecontrol.managers.WaveManager;
+import voogasalad.gameengine.engine.sprites.JavaFXSprite;
 import voogasalad.gameengine.engine.sprites.SpriteManager;
 
 public class Level {
@@ -28,6 +29,7 @@ public class Level {
         myStatusManager.notifyNewCycle(elapsedTime);
         myActionsManager.addNewActions(myConditionsManager.getActionsToExecute(this));
         myActionsManager.executeActions(this);
+        mySpriteManager.getOnScreenSprites().stream().forEach((e -> ((JavaFXSprite) e).updatePosition(elapsedTime)));
         return new GameSceneObject(myStatusManager.getResources(),  myStatusManager.getLives(), mySpriteManager.getOnScreenSprites());
     }
 
