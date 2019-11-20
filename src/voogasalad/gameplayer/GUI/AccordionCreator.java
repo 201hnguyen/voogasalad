@@ -23,10 +23,10 @@ public class AccordionCreator extends Accordion {
 
     public AccordionCreator(List<Sprite> sprites) {
         this.sprites = sprites;
-        createAccordion();
+        createAccordion(sprites);
     }
 
-    private void createAccordion() {
+    private void createAccordion(List<Sprite> sprites) {
         HBox hBox = new HBox();
         for(Sprite sprite: sprites){
             ImageView image = (ImageView) new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(sprite.getImagePath())));

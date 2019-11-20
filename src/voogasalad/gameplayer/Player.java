@@ -56,7 +56,7 @@ public class Player {
     public void startGame() throws GameEngineException {
         level = instantiateEngineForGame();
         timeline = new Timeline();
-        playerVisualization = new PlayerVisualization(myStage, level.getSpriteManager().getOnScreenSprites(), timeline);
+        playerVisualization = new PlayerVisualization(myStage, level.getSpriteManager().getSpritePrototypes(), timeline);
         setGameLoop();
     }
 
