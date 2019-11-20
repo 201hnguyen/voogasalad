@@ -33,10 +33,10 @@ public class JavaFXSpriteManager implements SpriteManager {
     }
 
     @Override
-    public List<JavaFXSprite> getOnScreenSprites() {
-        List<JavaFXSprite> listCopy = new ArrayList<JavaFXSprite>();
+    public List<Sprite> getOnScreenSprites() {
+        List<Sprite> listCopy = new ArrayList<>();
         for(Sprite sprite: myOnScreenSprites){
-            listCopy.add((JavaFXSprite) sprite);
+            listCopy.add(sprite);
         }
         return listCopy;
     }
