@@ -1,5 +1,6 @@
 package voogasalad.gameengine.engine.sprites;
 
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import voogasalad.gameengine.engine.exceptions.GameEngineException;
 import voogasalad.gameengine.engine.sprites.strategies.health.HealthStrategy;
@@ -24,6 +25,7 @@ public class JavaFXSprite implements Sprite {
         myHealthStrategy = builder.getHealthStrategy();
         myMovementStrategy = builder.getMovementStrategy();
         myImagePath = builder.getImagePath();
+        configureImageView(builder.getHeight(), builder.getWidth());
     }
 
     @Override
@@ -53,7 +55,12 @@ public class JavaFXSprite implements Sprite {
     }
 
     @Override
-    public String getImage() {
+    public Object getImage() {
+        return myImageView;
+    }
+
+    @Override
+    public String getImagePath(){
         return myImagePath;
     }
 
@@ -64,4 +71,12 @@ public class JavaFXSprite implements Sprite {
     public void updatePosition(double elapsedTime) {
         currentPosition = myMovementStrategy.calculateNextPosition(elapsedTime, currentPosition);
     }
+
+    public void configureImageView(double height, double width) {
+        myImageView = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream(myImagePath)));
+        myImageView.setFitHeight(height);
+        myImageView.setFitWidth(width);
+        myImageView.setPreserveRatio(true);
+    }
+
 }

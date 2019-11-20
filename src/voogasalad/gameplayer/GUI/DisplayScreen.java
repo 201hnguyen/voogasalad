@@ -1,4 +1,4 @@
-package voogasalad.gameplayer;
+package voogasalad.gameplayer.GUI;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -22,9 +22,6 @@ public class DisplayScreen extends Pane {
 
     public static final int FRAMES_PER_SECOND = 60;
     public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
-
-    private String myImagePath = "pandaslogo.png";
-    private JavaFXSpriteManager spriteManager; // TODO: will use this to access sprite list - check with team if we are doing this directly or through a controller
     private List<Sprite> spriteList;
 
     public DisplayScreen(List<Sprite> sprites) {
@@ -36,21 +33,18 @@ public class DisplayScreen extends Pane {
     }
 
     private void loadInSprite(Sprite sprite) {
-        ImageView image = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream(sprite.getImage())));
+        JavaFXSprite toLoad = (JavaFXSprite) sprite;
+        ImageView toDisplay = (ImageView) toLoad.getImage();
         int xPos = (int) sprite.getX();
         int yPos = (int) sprite.getY();
-        int height = 40;
-        int width = 40;
-        addImageToScreen(image, xPos, yPos, height, width);
+        addImageToScreen(toDisplay, xPos, yPos);
         // TODO: figure out how we will pass in the height and width
     }
 
-    private void addImageToScreen(ImageView image, int xPos, int yPos, int height, int width) {
-        image.setFitWidth(width);
-        image.setFitHeight(height);
-        image.setX(xPos - width/2);
-        image.setY(yPos - height/2);
-        image.setPreserveRatio(true);
+    private void addImageToScreen(ImageView image, int xPos, int yPos) {
+        image.setX(xPos - image.getFitWidth()/2);
+        image.setY(yPos - image.getFitHeight()/2);
         getChildren().add(image);
     }
+
 }

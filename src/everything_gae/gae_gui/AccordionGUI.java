@@ -1,7 +1,9 @@
-package gae_gui;
+package everything_gae.gae_gui;
 
+import everything_gae.gae_gui.gae_levelcomponents.GAE_LevelConfigPage;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.util.ResourceBundle;
@@ -15,6 +17,7 @@ public class AccordionGUI extends Accordion {
     private String gameObjectName;
     private ResourceBundle paramFieldType;
     private CreateObjectParameters newObjectPage;
+    private VBox myAccordionVBox;
 
 
 
@@ -29,18 +32,24 @@ public class AccordionGUI extends Accordion {
     }
 
     private TitledPane makeAccordion() {
+        myAccordionVBox = new VBox();
         TitledPane tPane = new TitledPane();
-        tPane.setContent(new TextArea());
+        tPane.setContent(myAccordionVBox);
         return tPane;
     }
 
     private Button createAccordionAddButton(){
         Button addButton = new Button("+");
         addButton.setOnMouseClicked(event -> {
-            try {
-                newObjectPage = new CreateObjectParameters(gameObjectName, properties, paramFieldType);
-            } catch (ParserConfigurationException e) {
-                e.printStackTrace();
+            if(gameObjectName.equals("MapConfig")){
+                GAE_LevelConfigPage newLevelPage = new GAE_LevelConfigPage();
+            }
+            else {
+                try {
+                    newObjectPage = new CreateObjectParameters(gameObjectName, properties, paramFieldType, myAccordionVBox);
+                } catch (ParserConfigurationException e) {
+                    e.printStackTrace();
+                }
             }
 
         });

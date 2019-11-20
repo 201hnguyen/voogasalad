@@ -1,9 +1,10 @@
-package gae_gui;
+package everything_gae.gae_gui;
 
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -17,8 +18,10 @@ public class CreateObjectParameters {
     private static final int window_WIDTH = 300;
     private static final int window_HEIGHT = 300;
     private BorderPane root;
+    private BorderPane testRoot;
     private Scene towerEditScene;
     private Stage towerPreferencePage;
+    private Stage newStage;
     private String[] properties;
     private ResourceBundle paramFieldType;
     private VBox vBox;
@@ -30,18 +33,21 @@ public class CreateObjectParameters {
     private List<String> labelText;
     private List<String> labelValue;
     private AddToXML xmlObject;
+    private VBox vBoxFromAccordion;
     //private static Map<String, Map<String,String>> sendToXML;
 
 
 
-    public CreateObjectParameters(String gameObjectNameParam, String[] propertiesParam, ResourceBundle paramFieldTypeParam) throws ParserConfigurationException {
+    public CreateObjectParameters(String gameObjectNameParam, String[] propertiesParam, ResourceBundle paramFieldTypeParam, VBox accordionVBox) throws ParserConfigurationException {
         labelList = new ArrayList<>();
         labelText = new ArrayList<>();
         labelValue = new ArrayList<>();
         //sendToXML = new HashMap<>();
         towerPreferencePage = new Stage();
         root = new BorderPane();
+        testRoot = new BorderPane();
         xmlObject = new AddToXML();
+        vBoxFromAccordion = accordionVBox;
         properties = propertiesParam;
         paramFieldType = paramFieldTypeParam;
         gameObjectName = gameObjectNameParam;
@@ -50,7 +56,6 @@ public class CreateObjectParameters {
     }
 
     private void addInputFields() {
-
 
         vBox = new VBox();
         for (int j = 0; j < properties.length; j++) {
@@ -75,7 +80,8 @@ public class CreateObjectParameters {
                 .forEach(node -> labelValue.add(fieldFactory.getAppropriateText(node)));
 
         SaveGUIParameters myGuiParameters = new SaveGUIParameters(labelText, labelValue);
-        xmlObject.addToSendToXMLMap(myGuiParameters.getMap(), gameObjectName);
+        String myLabel = xmlObject.addToSendToXMLMap(myGuiParameters.getMap(), gameObjectName);
+        addToAccordion(createObjectIcon(myGuiParameters.getMap(), myLabel),vBoxFromAccordion);
         });
 
         return addButton;
@@ -86,6 +92,7 @@ public class CreateObjectParameters {
             Class cls = Class.forName(type);
             Node myField = (Node) cls.getConstructor().newInstance();
             allNodes.add(myField);
+
             return myField;
         } catch (IllegalAccessException e) {
             throw new Error(e);
@@ -107,6 +114,22 @@ public class CreateObjectParameters {
                 fieldTypes.add(typesOfFields);
             }
         }
+    }
+
+    private Button createObjectIcon(Map myMap, String objectName){
+        Button icon = new Button(objectName);
+        icon.setOnMouseClicked(event -> {
+            newStage = new Stage();
+            testRoot.setCenter(new TextArea(myMap.toString()));
+            Scene newScene = new Scene(testRoot, window_WIDTH, window_HEIGHT);
+            newStage.setScene(newScene);
+            newStage.show();
+        });
+        return icon;
+    }
+
+    private void addToAccordion(Button myButton, VBox myVbox){
+        myVbox.getChildren().add(myButton);
     }
 
 //    private void addToSendToXMLMap(Map myMap){

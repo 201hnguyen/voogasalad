@@ -37,10 +37,10 @@ public class XMLParser {
     /**
      * Create parser for XML files of given type.
      */
-    public XMLParser (String type, File xmlFile) {
+    public XMLParser (String type, Document xmlDoc) {
         DOCUMENT_BUILDER = getDocumentBuilder();
         TYPE_ATTRIBUTE = type;
-        root = getRootElement(xmlFile);
+        root = xmlDoc.getDocumentElement();
     }
 
 

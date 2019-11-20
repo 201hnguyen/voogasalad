@@ -1,20 +1,18 @@
 package voogasalad.gameplayer.GUI;
+import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import voogasalad.gameengine.engine.sprites.JavaFXSprite;
 import voogasalad.gameengine.engine.sprites.Sprite;
-import voogasalad.gameplayer.DisplayScreen;
-import voogasalad.gameplayer.GUI.AccordionCreator;
-import voogasalad.gameplayer.GUI.ButtonCreator;
 
 import java.util.List;
 
-public class PlayerVisualization {
+public class PlayerVisualization extends Pane {
 
-    private static final double SCENE_WIDTH = 830;
+    private static final double SCENE_WIDTH = 1000;
     private static final double SCENE_HEIGHT = 630;
     private static final double PANEL_POSITION = 700;
     private static final double LAYOUT = 0;
@@ -23,41 +21,58 @@ public class PlayerVisualization {
     private Scene scene;
     private Stage stage;
     private DisplayScreen displayScreen;
-    private Pane root;
+    private Timeline timeline;
 
-    public PlayerVisualization(Stage stage) {
+    public PlayerVisualization(Stage stage, List<Sprite> sprites, Timeline timeline) {
         this.stage = stage;
-        initialize();
+        this.timeline = timeline;
+        displayScreen(sprites);
+        initialize(sprites);
+        showStage();
     }
 
-    public void showStage(List<Sprite> sprites) {
-        displayScreen = (DisplayScreen) displayScreen(sprites);
-        root.getChildren().addAll(displayScreen);
+    public void showStage() {
+        this.getChildren().addAll(displayScreen);
         stage.setScene(scene);
         stage.setResizable(false);
         stage.setTitle(TITLE);
+        stage.show();
+
     }
 
-    public void initialize() {
-        root = new Pane();
-        ButtonCreator buttonCreator = new ButtonCreator();
-        AccordionCreator accordionCreator = new AccordionCreator();
+    public void update(List<Sprite> sprites) {
+        this.getChildren().removeAll(displayScreen);
+        displayScreen(sprites);
+        this.getChildren().addAll(displayScreen);
+    }
+
+    public void initialize(List<Sprite> sprites) {
+        ButtonCreator buttonCreator = new ButtonCreator(new ButtonController(this));
+        AccordionCreator accordionCreator = new AccordionCreator(sprites);
         VBox panelBox = new VBox();
         panelBox.getChildren().add(buttonCreator);
         panelBox.getChildren().add(accordionCreator);
         panelBox.setLayoutX(PANEL_POSITION);
-        root.getChildren().addAll(panelBox);
-        scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
+        this.getChildren().addAll(panelBox);
+        scene = new Scene(this, SCENE_WIDTH, SCENE_HEIGHT);
         stage.show();
     }
 
-    private Pane displayScreen(List<Sprite> sprites) {
-        DisplayScreen displayScreen = new DisplayScreen(sprites);
+    public void startButtonAction() {
+        timeline.play();
+        System.out.println("hello");
+    }
+
+    public void pauseButtonAction() {
+        timeline.stop();
+    }
+
+    private void displayScreen(List<Sprite> sprites) {
+        displayScreen = new DisplayScreen(sprites);
         displayScreen.setMinWidth(PANEL_POSITION);
         displayScreen.setMinHeight(SCENE_HEIGHT);
         displayScreen.setLayoutX(LAYOUT);
         displayScreen.setLayoutY(LAYOUT);
         displayScreen.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-        return displayScreen;
     }
 }

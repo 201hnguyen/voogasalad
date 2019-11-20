@@ -1,26 +1,53 @@
 package voogasalad.gameplayer.GUI;
         import javafx.scene.control.Accordion;
+        import javafx.scene.control.Label;
         import javafx.scene.control.TitledPane;
         import javafx.scene.image.Image;
         import javafx.scene.image.ImageView;
-        import java.util.Collections;
-        import java.util.ResourceBundle;
+        import javafx.scene.layout.HBox;
+        import voogasalad.gameengine.engine.sprites.JavaFXSprite;
+        import voogasalad.gameengine.engine.sprites.Sprite;
+
+        import java.util.List;
 
 public class AccordionCreator extends Accordion {
-    private static final String RESOURCE_PATH = "resources.player.AccordionResource";
-    private ResourceBundle resourceBundle;
+//    private static final String RESOURCE_PATH = "resources.player.AccordionResource";
+//    private ResourceBundle resourceBundle;
 
-    public AccordionCreator() {
+    private JavaFXSprite javaFXSprite;
+
+    final String[] imageNames = new String[]{"bird", "pandaslogo"};
+    final Image[] images = new Image[imageNames.length];
+    final ImageView[] pics = new ImageView[imageNames.length];
+    private List<Sprite> sprites;
+
+    public AccordionCreator(List<Sprite> sprites) {
+        this.sprites = sprites;
+        createAccordion(sprites);
+    }
+
+    private void createAccordion(List<Sprite> sprites) {
+        HBox hBox = new HBox();
+        for(Sprite sprite: sprites){
+            ImageView image = (ImageView) new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(sprite.getImagePath())));
+            hBox.getChildren().add(image);
+        }
+        TitledPane titledPane = new TitledPane("trial", hBox);
+        getPanes().add(titledPane);
+    }
+
+   /* public AccordionCreator() {
         resourceBundle = ResourceBundle.getBundle(RESOURCE_PATH);
         createAccordion();
     }
 
     private void createAccordion() {
-        getChildren().clear();
+        HBox hBox = new HBox();
         for (String key : Collections.list(resourceBundle.getKeys())) {
             ImageView imageView = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream(resourceBundle.getString(key))));
-            TitledPane pane = new TitledPane(key, imageView);
+            hBox.getChildren().add(imageView);
+            TitledPane pane = new TitledPane(key, hBox);
             getPanes().add(pane);
         }
-    }
+    }*/
 }

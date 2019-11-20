@@ -23,6 +23,15 @@ public class JavaFXSpriteManager implements SpriteManager {
         mySpritePrototypes.put(prototypeID, sprite);
     }
 
+
+    public List<Sprite> getSpritePrototypes(){
+        ArrayList<Sprite> spritePrototypes = new ArrayList<>();
+        for(Integer prot :mySpritePrototypes.keySet() ){
+            spritePrototypes.add(mySpritePrototypes.get(prot));
+        }
+        return spritePrototypes;
+    }
+
     @Override
     public void makeSpriteFromPrototype(double xPos, double yPos, int prototypeId) throws GameEngineException {
         myOnScreenSprites.add(mySpritePrototypes.get(prototypeId).makeClone(xPos, yPos, mySpritePrototypeIndexGenerator++));

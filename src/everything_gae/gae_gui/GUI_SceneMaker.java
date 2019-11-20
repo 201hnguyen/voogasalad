@@ -1,31 +1,34 @@
-package gae_gui;
+package everything_gae.gae_gui;
 
-import javafx.geometry.Pos;
-import javafx.scene.Group;
+import everything_gae.bus.Bus;
 import javafx.scene.Scene;
-import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
+import org.w3c.dom.Document;
+import voogasalad.gameengine.engine.exceptions.GameEngineException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.util.ResourceBundle;
 
 public class GUI_SceneMaker{
 
-    public static final String SPRITE_OPTIONS_RESOURCE = "resources/SpriteOptions";
-    public static final String PARAM_FIELD_TYPE_RESOURCE = "resources/ParamToInputType";
+    public static final String SPRITE_OPTIONS_RESOURCE = "everything_gae/resources/SpriteOptions";
+    public static final String PARAM_FIELD_TYPE_RESOURCE = "everything_gae/resources/ParamToInputType";
     private GUI_Controller myController;
     private ResourceBundle typeToParams;
     private ResourceBundle paramFieldType;
     private int width;
     private int height;
     private AddToXML sendToXML;
+    public Document createdXML;
+    public Bus busInstance;
 
 
 
-    public GUI_SceneMaker(int widthParam, int heightParam){
+    public GUI_SceneMaker(int widthParam, int heightParam, Bus myBusInstance){
         sendToXML = new AddToXML();
         myController = new GUI_Controller();
+        busInstance = myBusInstance;
         width = widthParam;
         height = heightParam;
         typeToParams = ResourceBundle.getBundle(SPRITE_OPTIONS_RESOURCE);
@@ -51,12 +54,18 @@ public class GUI_SceneMaker{
         Button myButton = new Button("Submit");
         myButton.setOnMouseClicked(event -> {
             try {
-                sendToXML.createXML();
-            } catch (ParserConfigurationException e) {
+                createdXML = sendToXML.createXML();
+                busInstance.goToPlayer(createdXML);
+
+            } catch (ParserConfigurationException | GameEngineException e) {
                 e.printStackTrace();
             }
         });
         return myButton;
+    }
+
+    public Document getCreatedXML(){
+        return createdXML;
     }
 
 }
