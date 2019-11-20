@@ -10,12 +10,12 @@ import java.util.Map;
 public class JavaFXSpriteManager implements SpriteManager {
     private List<Sprite> myOnScreenSprites;
     private Map<Integer, Sprite> mySpritePrototypes;
-    private int mySpriteIDGenerator;
+    private int mySpritePrototypeIndexGenerator;
 
     public JavaFXSpriteManager() {
         myOnScreenSprites = new ArrayList<>();
         mySpritePrototypes = new HashMap<>();
-        mySpriteIDGenerator = 0;
+        mySpritePrototypeIndexGenerator = 0;
     }
 
     @Override
@@ -25,7 +25,11 @@ public class JavaFXSpriteManager implements SpriteManager {
 
     @Override
     public void makeSpriteFromPrototype(double xPos, double yPos, int prototypeId) throws GameEngineException {
-        myOnScreenSprites.add(mySpritePrototypes.get(prototypeId).makeClone(xPos, yPos, mySpriteIDGenerator++));
+        myOnScreenSprites.add(mySpritePrototypes.get(prototypeId).makeClone(xPos, yPos, mySpritePrototypeIndexGenerator++));
+    }
+
+    public void removeSpriteById(int spriteId) {
+        myOnScreenSprites.stream().filter(sprite -> sprite.getId() == spriteId).forEach(sprite -> myOnScreenSprites.remove(sprite));
     }
 
     @Override
