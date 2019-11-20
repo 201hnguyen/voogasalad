@@ -20,8 +20,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
         Player player = new Player(primaryStage, XML);
-        player.startGame();
     }
 }
 

@@ -55,11 +55,12 @@ public class Player {
 
 
     //Player expects a javaFX Stage upon instantiation
-    public Player(Stage primaryStage, String xmlPath){
+    public Player(Stage primaryStage, String xmlPath) throws GameEngineException {
         myStage = primaryStage;
         mapRoot = new Group();
         loadXML(xmlPath);
         initialiseEngine();
+        startGame();
     }
 
     private void initialiseEngine(){
