@@ -1,12 +1,8 @@
 package voogasalad.gameplayer.GUI;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import voogasalad.gameplayer.DisplayScreen;
-import voogasalad.gameplayer.GUI.AccordionCreator;
-import voogasalad.gameplayer.GUI.ButtonCreator;
 
 public class PlayerVisualization {
 
@@ -31,7 +27,7 @@ public class PlayerVisualization {
         stage.show();
     }
 
-    public void initialize() {
+    private void initialize() {
         Pane root = new Pane();
         ButtonCreator buttonCreator = new ButtonCreator();
         AccordionCreator accordionCreator = new AccordionCreator();
@@ -51,7 +47,6 @@ public class PlayerVisualization {
         displayScreen.setMinHeight(SCENE_HEIGHT);
         displayScreen.setLayoutX(LAYOUT);
         displayScreen.setLayoutY(LAYOUT);
-//        displayScreen.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         return displayScreen;
     }
 }
