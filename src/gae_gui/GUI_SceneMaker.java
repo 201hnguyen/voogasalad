@@ -7,41 +7,56 @@ import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 
+import javax.xml.parsers.ParserConfigurationException;
 import java.util.ResourceBundle;
 
 public class GUI_SceneMaker{
 
-    public static final String DEFAULT_RESOURCE_ACTIONS = "resources/SpriteOptions";
+    public static final String SPRITE_OPTIONS_RESOURCE = "resources/SpriteOptions";
+    public static final String PARAM_FIELD_TYPE_RESOURCE = "resources/ParamToInputType";
     private GUI_Controller myController;
-    private ResourceBundle myResources;
+    private ResourceBundle typeToParams;
+    private ResourceBundle paramFieldType;
     private int width;
     private int height;
+    private AddToXML sendToXML;
+
+
+
     public GUI_SceneMaker(int widthParam, int heightParam){
+        sendToXML = new AddToXML();
+        myController = new GUI_Controller();
         width = widthParam;
         height = heightParam;
-        myController = new GUI_Controller();
-        myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_ACTIONS);
-
+        typeToParams = ResourceBundle.getBundle(SPRITE_OPTIONS_RESOURCE);
+        paramFieldType = ResourceBundle.getBundle(PARAM_FIELD_TYPE_RESOURCE);
     }
 
     public Scene createGAEScene(BorderPane root){
-        Button submitButton = new Button("Submit");
+        Button submitButton = buttonToCreateXML();
         VBox accordionVBox = createAccordion(new VBox());
         root.setRight(accordionVBox);
         root.setBottom(submitButton);
-//        root.getChildren().add
-//        root.getChildren().add(accordionVBox);
-//        root.getChildren().add(submitButton);
         return new Scene(root, width,  height);
     }
 
     public VBox createAccordion(VBox accordionVBox) {
-        myResources.getKeys().asIterator().forEachRemaining(key -> {
-            accordionVBox.getChildren().add(new AccordionGUI(key, myResources.getString(key), myController));
+        typeToParams.getKeys().asIterator().forEachRemaining(key -> {
+            accordionVBox.getChildren().add(new AccordionGUI(key, typeToParams.getString(key), myController, paramFieldType));
         });
         return accordionVBox;
     }
 
-//    public void createSubmitButton(VBox root)
+    private Button buttonToCreateXML(){
+        Button myButton = new Button("Submit");
+        myButton.setOnMouseClicked(event -> {
+            try {
+                sendToXML.createXML();
+            } catch (ParserConfigurationException e) {
+                e.printStackTrace();
+            }
+        });
+        return myButton;
+    }
 
 }
