@@ -1,5 +1,6 @@
 package voogasalad.gameplayer.GUI;
         import javafx.scene.control.Accordion;
+        import javafx.scene.control.Label;
         import javafx.scene.control.TitledPane;
         import javafx.scene.image.Image;
         import javafx.scene.image.ImageView;
@@ -28,7 +29,8 @@ public class AccordionCreator extends Accordion {
     private void createAccordion() {
         HBox hBox = new HBox();
         for(Sprite sprite: sprites){
-            hBox.getChildren().add((ImageView)sprite.getImage());
+            ImageView image = (ImageView) new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(sprite.getImagePath())));
+            hBox.getChildren().add(image);
         }
         TitledPane titledPane = new TitledPane("trial", hBox);
         getPanes().add(titledPane);

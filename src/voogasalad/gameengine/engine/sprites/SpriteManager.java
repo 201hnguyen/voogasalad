@@ -8,5 +8,6 @@ public interface SpriteManager {
     void addSpritePrototype(int prototypeId, Sprite sprite);
     void makeSpriteFromPrototype(double xPos, double yPos, int prototypeId) throws GameEngineException;
     List<Sprite> getOnScreenSprites();
+    List<Sprite> getSpritePrototypes();
     void removeSpriteById(int spriteId);
     }

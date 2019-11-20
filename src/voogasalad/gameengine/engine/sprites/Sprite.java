@@ -8,6 +8,7 @@ public interface Sprite {
     double getY();
     int getId();
     int getHealth();
-    String getImage();
+    Object getImage();
     void updatePosition(double elapsedTime);
+    String getImagePath();
     }

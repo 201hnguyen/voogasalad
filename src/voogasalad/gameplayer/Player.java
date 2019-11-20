@@ -52,7 +52,7 @@ public class Player {
     private EngineDriverManager engineDriverManager;
     private PlayerVisualization playerVisualization;
     private Level level;
-
+    private static int counter = 0;
 
     //Player expects a javaFX Stage upon instantiation
     public Player(Stage primaryStage, String xmlPath){
@@ -70,7 +70,6 @@ public class Player {
 
     public void startGame() throws GameEngineException {
         level = instantiateEngineForGame();
-        playerVisualization = new PlayerVisualization(myStage, level.getSpriteManager().getOnScreenSprites());
         setGameLoop();
     }
 
@@ -79,7 +78,9 @@ public class Player {
         level.execute(elapsed_time);
     }
 
-    private void setGameLoop() {
+    private void setGameLoop() throws GameEngineException {
+        level.execute(0);
+        playerVisualization = new PlayerVisualization(myStage, level.getSpriteManager().getSpritePrototypes());
         var frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> {
             try {
                 gameLoop(SECOND_DELAY);
@@ -105,7 +106,6 @@ public class Player {
         Queue<Integer> spritesWave0Queue = new LinkedList<>() {{ add(0); add(1); add(1); }};
         engineDriverManager.addWave(createWave(new Point(0, 0), spritesWave0Queue, 1));
         engineDriverManager.instantiateEngineManagers();
-        PlayerVisualization playerVisualization = new PlayerVisualization(myStage, level.getSpriteManager().getOnScreenSprites());
         return engineDriverManager.getNewLevel();
     }
 

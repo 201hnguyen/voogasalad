@@ -55,7 +55,12 @@ public class JavaFXSprite implements Sprite {
     }
 
     @Override
-    public String getImage() {
+    public Object getImage() {
+        return myImageView;
+    }
+
+    @Override
+    public String getImagePath(){
         return myImagePath;
     }
 
@@ -74,7 +79,4 @@ public class JavaFXSprite implements Sprite {
         myImageView.setPreserveRatio(true);
     }
 
-    public ImageView getImageView() {
-        return myImageView;
-    }
 }
