@@ -5,6 +5,7 @@ import voogasalad.gameengine.engine.exceptions.GameEngineException;
 import voogasalad.gameengine.engine.factories.SpriteProductsFactory;
 import voogasalad.gameengine.engine.factories.StrategiesFactory;
 import voogasalad.gameengine.engine.sprites.Sprite;
+import voogasalad.gameengine.engine.sprites.SpriteBuilder;
 import voogasalad.gameengine.engine.sprites.SpriteManager;
 import voogasalad.gameengine.engine.sprites.strategies.health.HealthStrategy;
 import voogasalad.gameengine.engine.sprites.strategies.movement.MovementStrategy;
@@ -33,8 +34,8 @@ public class SpriteManagerTests {
         HealthStrategy healthStrategy2 = strategiesFactory.makeHealth("Health", healthParameters2);
         MovementStrategy movementStrategy = strategiesFactory.makeMovement("PathMovement", movementParameters);
 
-        Sprite spritePrototype1 = spriteProductsFactory.makeSprite(0, 0, 50, 50, "pandaslogo.png", 0, healthStrategy1, movementStrategy);
-        Sprite spritePrototype2 = spriteProductsFactory.makeSprite(0, 0, 50, 50, "pandaslogo.png", 0, healthStrategy2, movementStrategy);
+        Sprite spritePrototype1 = new SpriteBuilder().setWidth(50).setHeight(50).setImagePath("pandaslogo.png").setHealthStrategy(healthStrategy1).setMovementStrategy(movementStrategy).build();
+        Sprite spritePrototype2 = new SpriteBuilder().setWidth(50).setHeight(50).setImagePath("pandaslogo.png").setHealthStrategy(healthStrategy2).setMovementStrategy(movementStrategy).build();
 
         spriteManager.addSpritePrototype(5, spritePrototype1);
         spriteManager.addSpritePrototype(6, spritePrototype2);
