@@ -1,5 +1,6 @@
 package voogasalad.gameengine.api;
 
+import voogasalad.gameengine.engine.sprites.JavaFXSprite;
 import voogasalad.gameengine.engine.sprites.Sprite;
 
 import java.util.List;
@@ -7,9 +8,9 @@ import java.util.List;
 public class GameSceneObject {
     private final int myResources;
     private final int myLives;
-    private final List<Sprite> myOnScreenSprites;
+    private final List<JavaFXSprite> myOnScreenSprites;
 
-    public GameSceneObject(int resources, int lives, List<Sprite> sprites) {
+    public GameSceneObject(int resources, int lives, List<JavaFXSprite> sprites) {
         myResources = resources;
         myLives = lives;
         myOnScreenSprites = sprites;
@@ -23,7 +24,7 @@ public class GameSceneObject {
         return myLives;
     }
 
-    public List<Sprite> getMyOnScreenSprites() {
+    public List<JavaFXSprite> getMyOnScreenSprites() {
         return myOnScreenSprites;
     }
 
