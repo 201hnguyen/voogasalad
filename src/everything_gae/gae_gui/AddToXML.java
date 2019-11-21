@@ -21,6 +21,7 @@ public class AddToXML {
     private String ID = "ID";
     private static Map<String, Map<String,String>> sendToXML = new HashMap<>();
     private ArrayList<Pair<Double, Double>> myPathList = new ArrayList<>();
+    private static int countOfElements;
 
 
     public Document createXML() throws ParserConfigurationException {
@@ -51,15 +52,10 @@ public class AddToXML {
     }
 
     public String addToSendToXMLMap(Map myMap, String gameObjectName){
-        int i = 0;
-        while(true){
-            String putInMap = String.join(",", gameObjectName, Integer.toString(i));
-            if(!(sendToXML.containsKey(putInMap))){
-                sendToXML.putIfAbsent(putInMap, myMap);
-                return putInMap;
-            }
-            i++;
-        }
+        String putInMap = String.join(",", gameObjectName, Integer.toString(countOfElements));
+        sendToXML.putIfAbsent(putInMap, myMap);
+        countOfElements++;
+        return putInMap;
     }
 
     public void submitPath(ArrayList<Pair<Double, Double>> myListOfPoints){
