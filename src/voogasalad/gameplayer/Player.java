@@ -74,6 +74,7 @@ public class Player {
 
     public void startGame() throws GameEngineException {
         level = instantiateEngineForGame();
+        timeline = new Timeline();
         playerVisualization = new PlayerVisualization(myStage, level.getSpriteManager().getSpritePrototypes(), timeline);
         setGameLoop();
     }
@@ -91,10 +92,8 @@ public class Player {
                 ex.printStackTrace();
             }
         });
-        timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.getKeyFrames().add(frame);
-        timeline.play();
     }
 
 
