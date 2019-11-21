@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.w3c.dom.Document;
 import voogasalad.gameengine.engine.exceptions.GameEngineException;
 import voogasalad.gameengine.engine.factories.SpriteProductsFactory;
 import voogasalad.gameengine.engine.factories.StrategiesFactory;
@@ -52,13 +53,15 @@ public class Player {
     private EngineDriverManager engineDriverManager;
     private PlayerVisualization playerVisualization;
     private Level level;
+    private Document document;
+    private Timeline timeline;
 
 
     //Player expects a javaFX Stage upon instantiation
-    public Player(Stage primaryStage, String xmlPath) throws GameEngineException {
+    public Player(Stage primaryStage, Document doc) throws GameEngineException {
         myStage = primaryStage;
         mapRoot = new Group();
-        loadXML(xmlPath);
+        loadXML(doc);
         initialiseEngine();
         startGame();
     }
@@ -71,12 +74,12 @@ public class Player {
 
     public void startGame() throws GameEngineException {
         level = instantiateEngineForGame();
-        playerVisualization = new PlayerVisualization(myStage);
+        playerVisualization = new PlayerVisualization(myStage, level.getSpriteManager().getSpritePrototypes(), timeline);
         setGameLoop();
     }
 
     private void gameLoop(double elapsed_time) throws GameEngineException {
-        playerVisualization.showStage(level.getSpriteManager().getOnScreenSprites());
+        playerVisualization.update(level.getSpriteManager().getOnScreenSprites());
         level.execute(elapsed_time);
     }
 
@@ -88,7 +91,7 @@ public class Player {
                 ex.printStackTrace();
             }
         });
-        var timeline = new Timeline();
+        timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.getKeyFrames().add(frame);
         timeline.play();
@@ -96,18 +99,16 @@ public class Player {
 
 
     private Level instantiateEngineForGame() throws GameEngineException {
-        String[] componentTypes = {"Tower", "Enemy"};
-        for (String component : componentTypes) {
-            ArrayList<Map<String, String>> componentList = myXMLParser.getAttributesByTagName(component);
-            for (int i = 0; i < componentList.size(); i++) {
-                instantiateEngineObject(component, componentList.get(i));
+            ArrayList<Map<String, String>> componentList = myXMLParser.getListOfAttributeMaps();
+            if(componentList != null && componentList.size() > 0) {
+                for (int i = 0; i < componentList.size(); i++) {
+                    instantiateEngineObject(componentList.get(i));
+                }
             }
-        }
-        Queue<Integer> spritesWave0Queue = new LinkedList<>() {{ add(0); add(1); add(1); }};
-        engineDriverManager.addWave(createWave(new Point(0, 0), spritesWave0Queue, 1));
-        engineDriverManager.instantiateEngineManagers();
-        PlayerVisualization playerVisualization = new PlayerVisualization(myStage);
-        return engineDriverManager.getNewLevel();
+            Queue<Integer> spritesWave0Queue = new LinkedList<>() {{ add(0); add(0); add(0);}};
+            engineDriverManager.addWave(createWave(new Point(0, 0), spritesWave0Queue, 1));
+            engineDriverManager.instantiateEngineManagers();
+            return engineDriverManager.getNewLevel();
     }
 
     private Wave createWave(Point waveSpawnPoint, Queue<Integer> spritesWaveQueue, double spriteInterval) throws GameEngineException {
@@ -136,7 +137,7 @@ public class Player {
     }
 
     //Instantiates sprite and adds it to Sprite manager
-    private void instantiateEngineObject(String component, Map<String, String> componentAttributeMap ) throws GameEngineException {
+    private void instantiateEngineObject(Map<String, String> componentAttributeMap ) throws GameEngineException {
         SpriteProductsFactory spriteFactory = new SpriteProductsFactory();
         //Initialise default parameter values when none set
         int id = 0, health = 0;
@@ -147,7 +148,7 @@ public class Player {
         for(String att : componentAttributeMap.keySet()){
 
             if(att.equalsIgnoreCase("id")){
-                id = Integer.parseInt(componentAttributeMap.get("id"));
+                id = Integer.parseInt(componentAttributeMap.get("ID"));
             }
             if(att.equalsIgnoreCase("Health")){
                 healthstrategy = "Health";
@@ -165,16 +166,16 @@ public class Player {
             if(att.equalsIgnoreCase("Height")){
                 height = Double.parseDouble(componentAttributeMap.get("height"));
             }
-            if(att.equalsIgnoreCase("ImagePath")){
-                imagePath = componentAttributeMap.get("imagepath");
+            if(att.equalsIgnoreCase("Image")){
+                imagePath = componentAttributeMap.get("Image");
             }
         }
         int finalHealth = health;
         Map<String, Object> prototypeHealthParameter = new HashMap<>() {{ put("health", finalHealth); }};
         LinkedList<Point> path = new LinkedList<>();
-        path.add(new Point(10, 0));
-        path.add(new Point(10, 200));
-        path.add(new Point(500, 200));
+        path.add(new Point(0, 300));
+        path.add(new Point(50, 300));
+        path.add(new Point(50, 0));
         Map<String, Object> prototypeMovementParameter = new HashMap<>();
         prototypeMovementParameter.put("path", path);
         prototypeMovementParameter.put("speed", 50.0);
@@ -183,9 +184,9 @@ public class Player {
                 .setMovementStrategy(strategiesFactory.makeMovement("PathMovement", prototypeMovementParameter)).build());
     }
 
-    public void loadXML(String xmlPath){
-        myXMLPath = xmlPath;
-        myXMLParser = new XMLParser(TYPE, new File(xmlPath));
+    public void loadXML(Document doc){
+        document = doc;
+        myXMLParser = new XMLParser(TYPE, document);
     }
 
     public String getXML(){

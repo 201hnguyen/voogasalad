@@ -1,16 +1,10 @@
 package voogasalad;
 
-import bus.Bus;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import everything_gae.bus.Bus;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-import voogasalad.gameengine.engine.exceptions.GameEngineException;
-import voogasalad.gameengine.engine.gamecontrol.Level;
-import voogasalad.gameengine.engine.sprites.Sprite;
 import voogasalad.gameplayer.Player;
 
 
@@ -26,18 +20,17 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-//        BorderPane root = new BorderPane();
-//        primaryStage.setTitle(TITLE);
-//        primaryStage.setScene(setBusScene(primaryStage, root));
-//        primaryStage.show();
-//        myBus.changeToGamePlayer(primaryStage);
-        Player player = new Player(primaryStage, XML);
+        BorderPane root = new BorderPane();
+        primaryStage.setTitle(TITLE);
+        primaryStage.setScene(setBusScene(primaryStage, root));
+        primaryStage.show();
+        //Player player = new Player(primaryStage, );
     }
 
-//    private Scene setBusScene(Stage currentStage, BorderPane root){
-//        myBus = new Bus(currentStage, root, 500, 500);
-//        return myBus.getBusScene();
-//    }
+    private Scene setBusScene(Stage currentStage, BorderPane root){
+        myBus = new Bus(currentStage, root, 500, 500);
+        return myBus.getBusScene();
+    }
 }
 
 
