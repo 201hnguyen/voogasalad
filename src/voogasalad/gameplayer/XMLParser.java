@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import javafx.scene.Node;
+import org.w3c.dom.Node;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -57,24 +57,24 @@ public class XMLParser {
     }
 
     // get value of Element's text
-    public ArrayList<Map<String, String>> getAttributesByTagName (String tagName) {
-        NodeList nodeList = root.getElementsByTagName(tagName);
+    public ArrayList<Map<String, String>> getListOfAttributeMaps () {
         ArrayList<Map<String,String>> componentMap = new ArrayList<Map<String, String>>();
-        HashMap<String, String> attributeMap = new HashMap<String, String>();
-        if (nodeList != null && nodeList.getLength() > 0) {
-            for(int i = 0; i < nodeList.getLength(); i++){
-                NodeList attributes = nodeList.item(i).getChildNodes();
-                if(attributes != null && attributes.getLength() > 0){
-                    for(int j = 0; j < attributes.getLength(); j++){
-                        attributeMap.put(attributes.item(j).getNodeName(), attributes.item(j).getTextContent());
+        NodeList nodeList = root.getChildNodes();
+        if(nodeList != null && nodeList.getLength() > 0) {
+            for (int i = 0; i < nodeList.getLength(); i++) {
+                Node current_node = (Node) nodeList.item(i);
+                String current_component_name = current_node.getNodeName();
+                NodeList current_attributes = current_node.getChildNodes();
+                HashMap<String, String> attributeMap = new HashMap<String, String>();
+                if(current_attributes != null && current_attributes.getLength() > 0) {
+                    for (int j = 0; j < current_attributes.getLength(); j++) {
+                        attributeMap.put(current_attributes.item(j).getNodeName(), current_attributes.item(j).getTextContent());
                     }
-                    componentMap.add(attributeMap);
-                    attributes = null;
                 }
+                componentMap.add(attributeMap);
             }
-            return componentMap;
         }
-        return null;
+        return componentMap;
     }
 
     // boilerplate code needed to make a documentBuilder

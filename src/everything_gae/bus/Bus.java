@@ -60,17 +60,9 @@ public class Bus {
         currentStage.setScene(gaeObject.createGAEScene(root));
     }
 
-    public void changeToGamePlayer(){
-        createdXML = gaeObject.getCreatedXML();
-        //myPlayer.loadXML(XML)
-        currentStage.setScene(gamePlayerScene);
-    }
 
     public void goToPlayer(Document createdXML) throws GameEngineException {
-        //myPlayerObject.loadXML(createdXML);
         Player player = new Player(currentStage, createdXML);
-        player.startGame();
-        //currentStage.setScene(new Scene(new BorderPane(), width, height));
     }
 
 
