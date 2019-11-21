@@ -11,43 +11,25 @@ package voogasalad.gameplayer.GUI;
         import java.util.List;
 
 public class AccordionCreator extends Accordion {
-//    private static final String RESOURCE_PATH = "resources.player.AccordionResource";
-//    private ResourceBundle resourceBundle;
-
-    private JavaFXSprite javaFXSprite;
-
-    final String[] imageNames = new String[]{"bird", "pandaslogo"};
-    final Image[] images = new Image[imageNames.length];
-    final ImageView[] pics = new ImageView[imageNames.length];
-    private List<Sprite> sprites;
+    public static final int ITEM_HEIGHT = 50;
+    public static final int ITEM_WIDTH = 50;
 
     public AccordionCreator(List<Sprite> sprites) {
-        this.sprites = sprites;
         createAccordion(sprites);
     }
 
     private void createAccordion(List<Sprite> sprites) {
         HBox hBox = new HBox();
         for(Sprite sprite: sprites){
-            ImageView image = (ImageView) new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(sprite.getImagePath())));
+            ImageView image = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(sprite.getImagePath())));
             hBox.getChildren().add(image);
+            image.setFitHeight(ITEM_HEIGHT);
+            image.setFitWidth(ITEM_WIDTH);
         }
-        TitledPane titledPane = new TitledPane("trial", hBox);
+        TitledPane titledPane = new TitledPane("Towers & Enemies", hBox);
+       // TitledPane enemyPane = new TitledPane("Enemies", hBox);
+        //getPanes().add(towersPane);
         getPanes().add(titledPane);
     }
 
-   /* public AccordionCreator() {
-        resourceBundle = ResourceBundle.getBundle(RESOURCE_PATH);
-        createAccordion();
-    }
-
-    private void createAccordion() {
-        HBox hBox = new HBox();
-        for (String key : Collections.list(resourceBundle.getKeys())) {
-            ImageView imageView = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream(resourceBundle.getString(key))));
-            hBox.getChildren().add(imageView);
-            TitledPane pane = new TitledPane(key, hBox);
-            getPanes().add(pane);
-        }
-    }*/
 }
