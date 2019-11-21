@@ -74,6 +74,7 @@ public class Player {
 
     public void startGame() throws GameEngineException {
         level = instantiateEngineForGame();
+        timeline = new Timeline();
         playerVisualization = new PlayerVisualization(myStage, level.getSpriteManager().getSpritePrototypes(), timeline);
         setGameLoop();
     }
@@ -91,10 +92,8 @@ public class Player {
                 ex.printStackTrace();
             }
         });
-        timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.getKeyFrames().add(frame);
-        timeline.play();
     }
 
 
@@ -173,9 +172,9 @@ public class Player {
         int finalHealth = health;
         Map<String, Object> prototypeHealthParameter = new HashMap<>() {{ put("health", finalHealth); }};
         LinkedList<Point> path = new LinkedList<>();
-        path.add(new Point(0, 300));
-        path.add(new Point(50, 300));
-        path.add(new Point(50, 0));
+        path.add(new Point(0, WINDOW_SIZE/2));
+        path.add(new Point(WINDOW_SIZE/2, WINDOW_SIZE/2));
+        path.add(new Point(WINDOW_SIZE, WINDOW_SIZE/2));
         Map<String, Object> prototypeMovementParameter = new HashMap<>();
         prototypeMovementParameter.put("path", path);
         prototypeMovementParameter.put("speed", 50.0);
