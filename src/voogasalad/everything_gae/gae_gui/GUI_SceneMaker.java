@@ -5,7 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import org.w3c.dom.Document;
-import voogasalad.gameengine.engine.exceptions.GameEngineException;
+import voogasalad.gameengine.executors.exceptions.GameEngineException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.util.ResourceBundle;

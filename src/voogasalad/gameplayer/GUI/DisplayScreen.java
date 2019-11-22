@@ -1,22 +1,12 @@
 package voogasalad.gameplayer.GUI;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
-import javafx.util.Duration;
-import voogasalad.gameengine.engine.sprites.JavaFXSprite;
-import voogasalad.gameengine.engine.sprites.JavaFXSpriteManager;
-import voogasalad.gameengine.engine.sprites.Sprite;
+import voogasalad.gameengine.executors.sprites.Sprite;
 
-import javax.swing.plaf.BorderUIResource;
 import java.util.List;
-import java.util.ResourceBundle;
 
 public class DisplayScreen extends Pane {
 

@@ -1,9 +1,9 @@
 package tests.engine.strategies;
 
 import org.junit.jupiter.api.Test;
-import voogasalad.gameengine.engine.exceptions.GameEngineException;
-import voogasalad.gameengine.engine.factories.StrategiesFactory;
-import voogasalad.gameengine.engine.sprites.strategies.health.HealthStrategy;
+import voogasalad.gameengine.executors.exceptions.GameEngineException;
+import voogasalad.gameengine.executors.objectcreators.StrategiesFactory;
+import voogasalad.gameengine.executors.sprites.strategies.health.HealthStrategy;
 
 import java.util.ArrayList;
 import java.util.HashMap;

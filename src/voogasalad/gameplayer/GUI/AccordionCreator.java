@@ -1,12 +1,10 @@
 package voogasalad.gameplayer.GUI;
-        import javafx.scene.control.Accordion;
-        import javafx.scene.control.Label;
-        import javafx.scene.control.TitledPane;
-        import javafx.scene.image.Image;
-        import javafx.scene.image.ImageView;
-        import javafx.scene.layout.HBox;
-        import voogasalad.gameengine.engine.sprites.JavaFXSprite;
-        import voogasalad.gameengine.engine.sprites.Sprite;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.TitledPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import voogasalad.gameengine.executors.sprites.Sprite;
 
         import java.util.List;
 
