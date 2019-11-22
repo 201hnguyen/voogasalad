@@ -1,4 +1,4 @@
-package voogasalad.gameplayer;
+package voogasalad.gameengine.engineconfig;
 
 import voogasalad.gameengine.engine.gamecontrol.Level;
 import voogasalad.gameengine.engine.gamecontrol.Wave;
@@ -35,9 +35,9 @@ public class EngineDriverManager {
     public EngineDriverManager(){
         spriteManager = new JavaFXSpriteManager();
         actionsManager = new ActionsManager();
-        waveList = new ArrayList<Wave>();
-        levelConditions = new HashSet<LevelCondition>();
-        levelActions = new ArrayList<LevelAction>();
+        waveList = new ArrayList<>();
+        levelConditions = new HashSet<>();
+        levelActions = new ArrayList<>();
         resources = 0;
         lives = 0;
     }

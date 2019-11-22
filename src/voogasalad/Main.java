@@ -1,11 +1,10 @@
 package voogasalad;
 
-import everything_gae.bus.Bus;
+import voogasalad.everything_gae.bus.Bus;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import voogasalad.gameplayer.Player;
 
 
 public class Main extends Application {

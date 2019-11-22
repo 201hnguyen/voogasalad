@@ -1,4 +1,4 @@
-package everything_gae.gae_gui;
+package voogasalad.everything_gae.gae_gui;
 
 import javafx.scene.Node;
 import javafx.scene.Scene;

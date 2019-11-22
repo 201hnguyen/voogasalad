@@ -1,18 +1,10 @@
 package voogasalad.gameplayer;
 import java.awt.*;
-import java.io.*;
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
-import java.util.List;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.effect.Light;
-import javafx.scene.image.ImageView;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.w3c.dom.Document;
@@ -22,19 +14,12 @@ import voogasalad.gameengine.engine.factories.StrategiesFactory;
 import voogasalad.gameengine.engine.gamecontrol.Level;
 import voogasalad.gameengine.engine.gamecontrol.Wave;
 import voogasalad.gameengine.engine.gamecontrol.action.LevelAction;
-import voogasalad.gameengine.engine.gamecontrol.action.SpawnWaveAction;
 import voogasalad.gameengine.engine.gamecontrol.condition.LevelCondition;
 import voogasalad.gameengine.engine.gamecontrol.condition.TemporalCondition;
-import voogasalad.gameengine.engine.gamecontrol.managers.ActionsManager;
-import voogasalad.gameengine.engine.gamecontrol.managers.ConditionsManager;
-import voogasalad.gameengine.engine.gamecontrol.managers.StatusManager;
-import voogasalad.gameengine.engine.gamecontrol.managers.WaveManager;
 import voogasalad.gameengine.engine.sprites.*;
-import voogasalad.gameengine.engine.sprites.strategies.health.Health;
-import voogasalad.gameengine.engine.sprites.strategies.health.HealthStrategy;
+import voogasalad.gameengine.engineconfig.EngineDriverManager;
+import voogasalad.gameengine.engineconfig.XMLParser;
 import voogasalad.gameplayer.GUI.PlayerVisualization;
-
-import javax.swing.text.PlainDocument;
 
 public class Player {
 
