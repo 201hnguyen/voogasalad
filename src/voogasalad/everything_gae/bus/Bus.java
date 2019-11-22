@@ -7,7 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.w3c.dom.Document;
-import voogasalad.gameengine.engine.exceptions.GameEngineException;
+import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameplayer.Player;
 
 public class Bus {

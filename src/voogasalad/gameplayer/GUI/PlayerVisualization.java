@@ -2,11 +2,10 @@ package voogasalad.gameplayer.GUI;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import voogasalad.gameengine.engine.sprites.Sprite;
+import voogasalad.gameengine.executors.sprites.Sprite;
 
 import java.util.List;
 

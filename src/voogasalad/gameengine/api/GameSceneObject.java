@@ -1,7 +1,6 @@
 package voogasalad.gameengine.api;
 
-import voogasalad.gameengine.engine.sprites.JavaFXSprite;
-import voogasalad.gameengine.engine.sprites.Sprite;
+import voogasalad.gameengine.executors.sprites.Sprite;
 
 import java.util.List;
 

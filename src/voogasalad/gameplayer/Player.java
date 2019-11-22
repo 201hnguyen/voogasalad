@@ -7,8 +7,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.w3c.dom.Document;
 import voogasalad.gameengine.api.GameSceneObject;
-import voogasalad.gameengine.engine.exceptions.GameEngineException;
-import voogasalad.gameengine.engine.gamecontrol.Engine;
+import voogasalad.gameengine.executors.exceptions.GameEngineException;
+import voogasalad.gameengine.Engine;
 import voogasalad.gameplayer.GUI.PlayerVisualization;
 
 /**
@@ -16,8 +16,8 @@ import voogasalad.gameplayer.GUI.PlayerVisualization;
  * DO NOT INSTANTIATE OR ACCESS ANY ENGINE OBJECT BESIDES THE ENGINE ITSELF WHEN TRYING TO DISPLAY IN THE PLAYER.
  * We currently do not have modules, but if/when we do, all other classes will be locked from outside access
  * to maintain API consistency.
- * The engine is essentially the input API for the game, and the GameSceneObject (with a list of Sprites and resources/lives/stats/etc.
- * is the output API that is outputted by the engine at every execute level.
+ * The engine is essentially the input API for the game, and the GameSceneObject (with a list of Sprites and resources/
+ * lives/stats/etc.) is the output API that is outputted by the engine at every execute level.
  * If you need something that we don't provide (e.g., a list of current tower prototypes), please Facebook message
  * someone from the engine team (Ha, Chris, and Emily) and we will make a getter method for you.
  */
@@ -38,8 +38,7 @@ public class Player {
     public Player(Stage primaryStage, Document doc) throws GameEngineException {
         myStage = primaryStage;
         myMapRoot = new Group();
-        myEngine = new Engine();
-        myEngine.configureGame(doc);
+        myEngine = new Engine(doc);
         startGame();
     }
 
