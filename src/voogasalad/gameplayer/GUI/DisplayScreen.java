@@ -33,7 +33,7 @@ public class DisplayScreen extends Pane {
     }
 
     private void loadInSprite(Sprite sprite) {
-        JavaFXSprite toLoad = (JavaFXSprite) sprite;
+        Sprite toLoad = sprite;
         ImageView toDisplay = (ImageView) toLoad.getImage();
         int xPos = (int) sprite.getX();
         int yPos = (int) sprite.getY();
