@@ -33,7 +33,7 @@ public class Level {
         myActionsManager.addNewActions(myConditionsManager.getActionsToExecute(this));
         myActionsManager.executeActions(this);
         mySpriteManager.getOnScreenSprites().stream().forEach((e -> e.updatePosition(elapsedTime)));
-        return new GameSceneObject(myStatusManager.getResources(),  myStatusManager.getLives(), mySpriteManager.getOnScreenSprites());
+        return new GameSceneObject(myStatusManager.getResources(),  myStatusManager.getLives(), mySpriteManager);
     }
 
     public SpriteManager getSpriteManager() {

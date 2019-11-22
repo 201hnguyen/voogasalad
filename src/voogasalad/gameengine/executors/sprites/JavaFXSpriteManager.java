@@ -1,6 +1,7 @@
 package voogasalad.gameengine.executors.sprites;
 
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
+import voogasalad.gameengine.executors.utils.SpriteArchetype;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,5 +49,16 @@ public class JavaFXSpriteManager implements SpriteManager {
             listCopy.add(sprite);
         }
         return listCopy;
+    }
+
+    @Override
+    public List<Sprite> getSpritesByArchetype(SpriteArchetype archetype) {
+        List<Sprite> archetypeList = new ArrayList<>();
+        for (Sprite sprite : myOnScreenSprites) {
+            if (sprite.getSpriteArchetype() == archetype) {
+                archetypeList.add(sprite);
+            }
+        }
+        return archetypeList;
     }
 }

@@ -5,14 +5,8 @@ import voogasalad.gameengine.executors.gamecontrol.Level;
 import voogasalad.gameengine.executors.gamecontrol.Wave;
 import voogasalad.gameengine.executors.gamecontrol.action.LevelAction;
 import voogasalad.gameengine.executors.gamecontrol.condition.LevelCondition;
-import voogasalad.gameengine.executors.gamecontrol.managers.ActionsManager;
-import voogasalad.gameengine.executors.gamecontrol.managers.ConditionsManager;
-import voogasalad.gameengine.executors.gamecontrol.managers.StatusManager;
-import voogasalad.gameengine.executors.gamecontrol.managers.WaveManager;
 import voogasalad.gameengine.executors.objectcreators.LevelBuilder;
-import voogasalad.gameengine.executors.sprites.JavaFXSpriteManager;
 import voogasalad.gameengine.executors.sprites.Sprite;
-import voogasalad.gameengine.executors.sprites.SpriteManager;
 
 import java.util.*;
 
