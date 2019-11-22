@@ -52,10 +52,7 @@ public class EngineConfigurator {
         LevelAction levelAction = addAction("SpawnWaveAction");
         Set<LevelAction> levelActions = new HashSet<>();
         levelActions.add(levelAction);
-        Map<String, Object> conditionParameter = new HashMap<>();
-        conditionParameter.put("time", (double) 0);
-        conditionParameter.put("action", levelActions);
-        LevelCondition condition = new TemporalCondition(conditionParameter);
+        LevelCondition condition = new TemporalCondition(0, levelActions);
         myEngineDriverManager.addLevelCondition(condition);
         Wave wave = new Wave(spritesWaveQueue, spriteInterval, waveSpawnPoint);
         return wave;
