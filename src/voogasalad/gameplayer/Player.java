@@ -11,6 +11,16 @@ import voogasalad.gameengine.engine.exceptions.GameEngineException;
 import voogasalad.gameengine.engine.gamecontrol.Engine;
 import voogasalad.gameplayer.GUI.PlayerVisualization;
 
+/**
+ * PLEASE READ BEFORE MAKING CHANGES TO THE PLAYER PACKAGE:
+ * DO NOT INSTANTIATE OR ACCESS ANY ENGINE OBJECT BESIDES THE ENGINE ITSELF WHEN TRYING TO DISPLAY IN THE PLAYER.
+ * We currently do not have modules, but if/when we do, all other classes will be locked from outside access
+ * to maintain API consistency.
+ * The engine is essentially the input API for the game, and the GameSceneObject (with a list of Sprites and resources/lives/stats/etc.
+ * is the output API that is outputted by the engine at every execute level.
+ * If you need something that we don't provide (e.g., a list of current tower prototypes), please Facebook message
+ * someone from the engine team (Ha, Chris, and Emily) and we will make a getter method for you.
+ */
 public class Player {
 
     public static final int WINDOW_SIZE = 500;
@@ -39,8 +49,8 @@ public class Player {
         setGameLoop();
     }
 
-    private void gameLoop(double elapsed_time) throws GameEngineException {
-        myCurrentGameSceneObject = myEngine.execute(elapsed_time);
+    private void gameLoop(double elapsedTime) throws GameEngineException {
+        myCurrentGameSceneObject = myEngine.execute(elapsedTime);
         myPlayerVisualization.update(myCurrentGameSceneObject.getOnScreenSprites());
     }
 
@@ -49,7 +59,7 @@ public class Player {
             try {
                 gameLoop(SECOND_DELAY);
             } catch (GameEngineException ex) {
-                ex.printStackTrace();
+                ex.printStackTrace(); //TODO: Fix
             }
         });
         myTimeline.setCycleCount(Timeline.INDEFINITE);
