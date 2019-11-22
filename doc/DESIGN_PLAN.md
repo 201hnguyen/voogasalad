@@ -152,22 +152,23 @@ Extras not Visualied:
 #### Game Engine
 ```
 #### GameEngine
-    public GameStateObject getGameStateObject();
-    public void updateSprite(int spriteId);
+    public GameSceneObject execute();
+    public void ConfigureGame();
+    public void processActionRequest(Request request);
     public void createSprite();
     public void updateSound();
     
 ### GameStateObject
-    public Level getCurrentLevel();
+    public List<Sprite> getCurrentOnScreenEnemies();
+    public List<Sprite> getCurrentOnScreenTowers(); 
+    public List<Sprite> getCurrentOnScreenSprites;
     public int getCurrentScore();
     public int getCurrentWealth();
     
 ### Sprite
     public String getImagePath();
     public Point getPosition();
-    
-#### Level
-    public Grid getGrid();
+    public Object getImage();
     
 ```
       
