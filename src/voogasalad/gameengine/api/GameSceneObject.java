@@ -24,7 +24,7 @@ public class GameSceneObject {
         return myLives;
     }
 
-    public List<Sprite> getMyOnScreenSprites() {
+    public List<Sprite> getOnScreenSprites() {
         return myOnScreenSprites;
     }
 

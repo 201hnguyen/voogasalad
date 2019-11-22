@@ -1,5 +1,6 @@
 package voogasalad.gameengine.engine.gamecontrol;
 
+import org.w3c.dom.Document;
 import voogasalad.gameengine.api.GameSceneObject;
 import voogasalad.gameengine.engine.exceptions.GameEngineException;
 import voogasalad.gameengine.engine.gamecontrol.managers.ActionsManager;
@@ -7,6 +8,7 @@ import voogasalad.gameengine.engine.gamecontrol.managers.ConditionsManager;
 import voogasalad.gameengine.engine.gamecontrol.managers.StatusManager;
 import voogasalad.gameengine.engine.gamecontrol.managers.WaveManager;
 import voogasalad.gameengine.engine.sprites.SpriteManager;
+import voogasalad.gameengine.engineconfig.EngineConfigurator;
 
 public class Level {
 
@@ -15,6 +17,7 @@ public class Level {
     private StatusManager myStatusManager;
     private ConditionsManager myConditionsManager;
     private ActionsManager myActionsManager;
+    private EngineConfigurator myEngineConfigurator;
 
     public Level(SpriteManager spriteManager, WaveManager waveManager, StatusManager statusManager, ConditionsManager conditionsManager, ActionsManager actionsManager) {
         mySpriteManager = spriteManager;
@@ -22,6 +25,7 @@ public class Level {
         myStatusManager = statusManager;
         myConditionsManager = conditionsManager;
         myActionsManager = actionsManager;
+        myEngineConfigurator = new EngineConfigurator();
     }
 
     public GameSceneObject execute(double elapsedTime) throws GameEngineException {
