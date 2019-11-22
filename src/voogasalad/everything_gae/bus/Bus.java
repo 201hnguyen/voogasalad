@@ -1,6 +1,6 @@
-package everything_gae.bus;
+package voogasalad.everything_gae.bus;
 
-import everything_gae.gae_gui.*;
+import voogasalad.everything_gae.gae_gui.*;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

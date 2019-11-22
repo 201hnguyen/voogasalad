@@ -1,6 +1,6 @@
-package everything_gae.gae_gui.gae_levelcomponents;
+package voogasalad.everything_gae.gae_gui.gae_levelcomponents;
 
-import everything_gae.gae_gui.AddToXML;
+import voogasalad.everything_gae.gae_gui.AddToXML;
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -27,7 +27,7 @@ public class GAE_LevelConfigPage {
     private SubScene playerField;
 
     private Stage levelConfigPage;
-    private String towerResourcesPath = "everything_gae.gae_gui.gaeresource.";
+    private String towerResourcesPath = "voogasalad.everything_gae.gae_gui.gaeresource.";
     private int numberOfPaths = 0;
     private boolean pathCreation = false;
     private boolean settingSpawnPoint = false;

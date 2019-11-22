@@ -1,6 +1,6 @@
-package everything_gae.gae_gui;
+package voogasalad.everything_gae.gae_gui;
 
-import everything_gae.bus.Bus;
+import voogasalad.everything_gae.bus.Bus;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
@@ -12,8 +12,8 @@ import java.util.ResourceBundle;
 
 public class GUI_SceneMaker{
 
-    public static final String SPRITE_OPTIONS_RESOURCE = "everything_gae/resources/SpriteOptions";
-    public static final String PARAM_FIELD_TYPE_RESOURCE = "everything_gae/resources/ParamToInputType";
+    public static final String SPRITE_OPTIONS_RESOURCE = "voogasalad/everything_gae/resources/SpriteOptions";
+    public static final String PARAM_FIELD_TYPE_RESOURCE = "voogasalad/everything_gae/resources/ParamToInputType";
     private GUI_Controller myController;
     private ResourceBundle typeToParams;
     private ResourceBundle paramFieldType;

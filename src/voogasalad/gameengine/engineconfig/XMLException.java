@@ -1,4 +1,4 @@
-package voogasalad.gameplayer;
+package voogasalad.gameengine.engineconfig;
 
 /**
  * This class represents what might go wrong when using XML files.
