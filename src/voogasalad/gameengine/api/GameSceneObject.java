@@ -1,18 +1,20 @@
 package voogasalad.gameengine.api;
 
 import voogasalad.gameengine.executors.sprites.Sprite;
+import voogasalad.gameengine.executors.sprites.SpriteManager;
+import voogasalad.gameengine.executors.utils.SpriteArchetype;
 
 import java.util.List;
 
 public class GameSceneObject {
     private final int myResources;
     private final int myLives;
-    private final List<Sprite> myOnScreenSprites;
+    private final SpriteManager mySpriteManager;
 
-    public GameSceneObject(int resources, int lives, List<Sprite> sprites) {
+    public GameSceneObject(int resources, int lives, SpriteManager spriteManager) {
         myResources = resources;
         myLives = lives;
-        myOnScreenSprites = sprites;
+        mySpriteManager = spriteManager;
     }
 
     public int getResources() {
@@ -24,7 +26,8 @@ public class GameSceneObject {
     }
 
     public List<Sprite> getOnScreenSprites() {
-        return myOnScreenSprites;
+        return mySpriteManager.getOnScreenSprites() ;
     }
 
+    public List<Sprite> getSpritesByArchetype(SpriteArchetype archetype) { return mySpriteManager.getSpritesByArchetype(archetype); }
 }

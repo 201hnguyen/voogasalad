@@ -22,7 +22,6 @@ public class EngineConfigurator {
 
     private Document myDocument;
     private XMLParser myXMLParser;
-    private SpriteProductsFactory mySpriteFactory;
     private StrategiesFactory myStrategiesFactory;
     private EngineDriverManager myEngineDriverManager;
 
@@ -33,7 +32,6 @@ public class EngineConfigurator {
     }
 
     public void initializeGame() {
-        mySpriteFactory = new SpriteProductsFactory();
         myStrategiesFactory = new StrategiesFactory();
         myEngineDriverManager = new EngineDriverManager();
     }

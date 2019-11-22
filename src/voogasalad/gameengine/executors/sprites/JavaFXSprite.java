@@ -6,6 +6,7 @@ import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.objectcreators.SpriteBuilder;
 import voogasalad.gameengine.executors.sprites.strategies.health.HealthStrategy;
 import voogasalad.gameengine.executors.sprites.strategies.movement.MovementStrategy;
+import voogasalad.gameengine.executors.utils.SpriteArchetype;
 
 import java.awt.*;
 
@@ -17,8 +18,10 @@ public class JavaFXSprite implements Sprite {
     private String myImagePath;
     private ImageView myImageView;
     private SpriteBuilder myOriginalBuilder;
+    private SpriteArchetype myArchetype;
 
     public JavaFXSprite(SpriteBuilder builder) {
+        myArchetype = builder.getSpriteArchetype();
         myOriginalBuilder = builder;
         mySpriteId = builder.getSpriteId();
         currentPosition = new Point();
@@ -37,6 +40,7 @@ public class JavaFXSprite implements Sprite {
                 .setImagePath(myOriginalBuilder.getImagePath())
                 .setMovementStrategy(myOriginalBuilder.getMovementStrategy().makeClone())
                 .setWidth(myOriginalBuilder.getWidth())
+                .setArchetype(myOriginalBuilder.getSpriteArchetype())
                 .build();
     }
 
@@ -65,15 +69,22 @@ public class JavaFXSprite implements Sprite {
         return myImagePath;
     }
 
+    @Override
     public int getHealth() {
         return myHealthStrategy.getHealth();
     }
 
+    @Override
+    public SpriteArchetype getSpriteArchetype() {
+        return myArchetype;
+    }
+
+    @Override
     public void updatePosition(double elapsedTime) {
         currentPosition = myMovementStrategy.calculateNextPosition(elapsedTime, currentPosition);
     }
 
-    public void configureImageView(double height, double width) {
+    private void configureImageView(double height, double width) {
         myImageView = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream(myImagePath)));
         myImageView.setFitHeight(height);
         myImageView.setFitWidth(width);

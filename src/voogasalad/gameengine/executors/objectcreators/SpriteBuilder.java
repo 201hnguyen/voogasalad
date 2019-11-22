@@ -2,6 +2,7 @@ package voogasalad.gameengine.executors.objectcreators;
 
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.sprites.Sprite;
+import voogasalad.gameengine.executors.utils.SpriteArchetype;
 import voogasalad.gameengine.executors.sprites.strategies.health.HealthStrategy;
 import voogasalad.gameengine.executors.sprites.strategies.movement.MovementStrategy;
 
@@ -17,6 +18,7 @@ public class SpriteBuilder {
     private HealthStrategy myHealthStrategy;
     private MovementStrategy myMovementStrategy;
     private String myImagePath;
+    private SpriteArchetype myArchetype;
 
     public SpriteBuilder setX(double xPos) {
         myXPos = xPos;
@@ -90,6 +92,15 @@ public class SpriteBuilder {
         return myHeight;
     }
 
+    public SpriteArchetype getSpriteArchetype() {
+        return myArchetype;
+    }
+
+    public SpriteBuilder setArchetype(SpriteArchetype archetype) {
+        myArchetype = archetype;
+        return this;
+    }
+
     public Sprite build() throws GameEngineException {
         checkParametersAndAssignDefault();
         SpriteProductsFactory spriteProductsFactory = new SpriteProductsFactory();
@@ -102,6 +113,7 @@ public class SpriteBuilder {
         if (myMovementStrategy == null) myMovementStrategy = strategiesFactory.makeMovement("NoMovement", new HashMap<>());
         if (myHealthStrategy == null) myHealthStrategy = strategiesFactory.makeHealth("NoHealth", new HashMap<>());
         if (myImagePath == null) myImagePath = "pandaslogo.png";
+        if (myArchetype == null) myArchetype = SpriteArchetype.TOWER;
     }
 
 }
