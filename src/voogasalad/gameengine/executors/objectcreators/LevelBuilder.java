@@ -12,6 +12,7 @@ import voogasalad.gameengine.executors.sprites.Sprite;
 import voogasalad.gameengine.executors.sprites.SpriteManager;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 public class LevelBuilder {
@@ -72,9 +73,9 @@ public class LevelBuilder {
         return this;
     }
 
-    public LevelBuilder setSpritePrototypes(Map<Integer, Sprite> spritePrototypes) {
-        for (Integer key : spritePrototypes.keySet()) {
-            mySpriteManager.addSpritePrototype(key, spritePrototypes.get(key));
+    public LevelBuilder setSpritePrototypes(List<Sprite> spritePrototypes) {
+        for (Sprite sprite : spritePrototypes) {
+            mySpriteManager.addSpritePrototype(sprite);
         }
         return this;
     }

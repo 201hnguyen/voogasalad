@@ -20,8 +20,8 @@ public class JavaFXSpriteManager implements SpriteManager {
     }
 
     @Override
-    public void addSpritePrototype(int prototypeID, Sprite sprite) {
-        mySpritePrototypes.put(prototypeID, sprite);
+    public void addSpritePrototype(Sprite sprite) {
+        mySpritePrototypes.put(sprite.getPrototypeId(), sprite);
     }
 
 
@@ -63,11 +63,11 @@ public class JavaFXSpriteManager implements SpriteManager {
     }
 
     @Override
-    public Map<Integer, Sprite> getPrototypesForArchetype(SpriteArchetype archetype) throws GameEngineException {
-        Map<Integer, Sprite> spritePrototypesOfArchetype = new HashMap<>();
+    public List<Sprite> getPrototypesForArchetype(SpriteArchetype archetype) throws GameEngineException {
+        List<Sprite> spritePrototypesOfArchetype = new ArrayList<>();
         for (Integer key : mySpritePrototypes.keySet()) {
             if (mySpritePrototypes.get(key).getSpriteArchetype()==archetype) {
-                spritePrototypesOfArchetype.put(key, mySpritePrototypes.get(key).makeClone(0, 0, 0));
+                spritePrototypesOfArchetype.add(mySpritePrototypes.get(key).makeClone(0, 0, 0));
             }
         }
         return spritePrototypesOfArchetype;

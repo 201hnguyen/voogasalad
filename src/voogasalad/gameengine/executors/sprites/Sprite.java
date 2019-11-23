@@ -13,4 +13,5 @@ public interface Sprite {
     Object getImage();
     void updatePosition(double elapsedTime);
     String getImagePath();
+    int getPrototypeId();
     }

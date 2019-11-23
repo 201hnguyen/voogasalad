@@ -113,8 +113,8 @@ public class EngineConfigurator {
         Map<String, Object> prototypeMovementParameter = new HashMap<>();
         prototypeMovementParameter.put("path", path);
         prototypeMovementParameter.put("speed", 50.0);
-        myEngineDriverManager.addSpritePrototype(id, new SpriteBuilder().setX(xpos).setY(ypos).setWidth(width).setHeight(height)
-                .setImagePath(imagePath).setSpriteId(id).setHealthStrategy(myStrategiesFactory.makeHealth(healthstrategy, prototypeHealthParameter))
+        myEngineDriverManager.addSpritePrototype(new SpriteBuilder().setX(xpos).setY(ypos).setWidth(width).setHeight(height)
+                .setImagePath(imagePath).setPrototypeId(id).setHealthStrategy(myStrategiesFactory.makeHealth(healthstrategy, prototypeHealthParameter))
                 .setMovementStrategy(myStrategiesFactory.makeMovement("PathMovement", prototypeMovementParameter)).build());
     }
 }

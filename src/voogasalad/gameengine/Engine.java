@@ -38,7 +38,7 @@ public class Engine {
         return myCurrentLevel.getSpriteManager().getSpritePrototypes();
     }
 
-    public Map<Integer, Sprite> getSpritePrototypesByArchetype(SpriteArchetype spriteArchetype) throws GameEngineException {
+    public List<Sprite> getSpritePrototypesByArchetype(SpriteArchetype spriteArchetype) throws GameEngineException {
         return myCurrentLevel.getSpriteManager().getPrototypesForArchetype(spriteArchetype);
     }
 }

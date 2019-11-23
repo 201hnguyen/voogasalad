@@ -37,8 +37,8 @@ public class SpriteManagerTests {
         Sprite spritePrototype1 = new SpriteBuilder().setWidth(50).setHeight(50).setImagePath("pandaslogo.png").setHealthStrategy(healthStrategy1).setMovementStrategy(movementStrategy).build();
         Sprite spritePrototype2 = new SpriteBuilder().setWidth(50).setHeight(50).setImagePath("pandaslogo.png").setHealthStrategy(healthStrategy2).setMovementStrategy(movementStrategy).build();
 
-        spriteManager.addSpritePrototype(5, spritePrototype1);
-        spriteManager.addSpritePrototype(6, spritePrototype2);
+        spriteManager.addSpritePrototype(spritePrototype1);
+        spriteManager.addSpritePrototype(spritePrototype2);
         spriteManager.makeSpriteFromPrototype(250, 100, 5);
         spriteManager.makeSpriteFromPrototype(100, 200, 6);
         assertEquals(10, spriteManager.getOnScreenSprites().get(0).getHealth());

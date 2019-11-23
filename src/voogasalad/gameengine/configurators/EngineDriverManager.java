@@ -18,11 +18,11 @@ public class EngineDriverManager {
     private List<LevelAction> levelActions;
     private int resources;
     private int lives;
-    private Map<Integer, Sprite> mySpritePrototypes;
+    private List<Sprite> mySpritePrototypes;
 
 
     public EngineDriverManager(){
-        mySpritePrototypes = new HashMap<>();
+        mySpritePrototypes = new ArrayList<>();
         waveList = new ArrayList<>();
         levelConditions = new HashSet<>();
         levelActions = new ArrayList<>();
@@ -52,7 +52,7 @@ public class EngineDriverManager {
                 setConditions(levelConditions).setLives(lives).setResources(resources).setWaves(waveList).setSpritePrototypes(mySpritePrototypes).build();
     }
 
-    public void addSpritePrototype(int prototypeId, Sprite sprite) {
-        mySpritePrototypes.put(prototypeId, sprite);
+    public void addSpritePrototype(Sprite sprite) {
+        mySpritePrototypes.add(sprite);
     }
 }

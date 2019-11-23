@@ -19,6 +19,7 @@ public class JavaFXSprite implements Sprite {
     private ImageView myImageView;
     private SpriteBuilder myOriginalBuilder;
     private SpriteArchetype myArchetype;
+    private int myPrototypeId;
 
     public JavaFXSprite(SpriteBuilder builder) {
         myArchetype = builder.getSpriteArchetype();
@@ -29,6 +30,7 @@ public class JavaFXSprite implements Sprite {
         myHealthStrategy = builder.getHealthStrategy();
         myMovementStrategy = builder.getMovementStrategy();
         myImagePath = builder.getImagePath();
+        myPrototypeId = builder.getPrototypeId();
         configureImageView(builder.getHeight(), builder.getWidth());
     }
 
@@ -41,6 +43,7 @@ public class JavaFXSprite implements Sprite {
                 .setMovementStrategy(myOriginalBuilder.getMovementStrategy().makeClone())
                 .setWidth(myOriginalBuilder.getWidth())
                 .setArchetype(myOriginalBuilder.getSpriteArchetype())
+                .setPrototypeId(myPrototypeId)
                 .build();
     }
 
@@ -67,6 +70,11 @@ public class JavaFXSprite implements Sprite {
     @Override
     public String getImagePath(){
         return myImagePath;
+    }
+
+    @Override
+    public int getPrototypeId() {
+        return myPrototypeId;
     }
 
     @Override

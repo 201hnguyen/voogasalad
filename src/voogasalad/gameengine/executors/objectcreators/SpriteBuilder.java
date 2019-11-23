@@ -19,6 +19,7 @@ public class SpriteBuilder {
     private MovementStrategy myMovementStrategy;
     private String myImagePath;
     private SpriteArchetype myArchetype;
+    private int myPrototypeId;
 
     public SpriteBuilder setX(double xPos) {
         myXPos = xPos;
@@ -27,6 +28,15 @@ public class SpriteBuilder {
 
     public double getX() {
         return myXPos;
+    }
+
+    public SpriteBuilder setPrototypeId(int prototypeId) {
+        myPrototypeId = prototypeId;
+        return this;
+    }
+
+    public int getPrototypeId() {
+        return myPrototypeId;
     }
 
     public SpriteBuilder setY(double yPos) {

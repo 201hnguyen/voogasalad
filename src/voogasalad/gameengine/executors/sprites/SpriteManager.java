@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface SpriteManager {
-    void addSpritePrototype(int prototypeId, Sprite sprite);
+    void addSpritePrototype(Sprite sprite);
 
     void makeSpriteFromPrototype(double xPos, double yPos, int prototypeId) throws GameEngineException;
 
@@ -19,5 +19,5 @@ public interface SpriteManager {
 
     void removeSpriteById(int spriteId);
 
-    Map<Integer, Sprite> getPrototypesForArchetype(SpriteArchetype archetype) throws GameEngineException;
+    public List<Sprite> getPrototypesForArchetype(SpriteArchetype archetype) throws GameEngineException;
 }
