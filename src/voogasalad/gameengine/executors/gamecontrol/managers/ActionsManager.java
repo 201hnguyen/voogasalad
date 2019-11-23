@@ -26,8 +26,13 @@ public class ActionsManager {
                 forEach(action -> myActionsInProgress.remove(action));
     }
 
-    public void addNewActions(Set<LevelAction> levelActions) {
+    public void addActionsAsCollection(Set<LevelAction> levelActions) {
         myActionsInProgress.addAll(levelActions);
     }
+    
+    public void addAction(LevelAction action) {
+        myActionsInProgress.add(action);
+    }
+        
 }
 

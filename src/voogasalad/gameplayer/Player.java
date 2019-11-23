@@ -14,9 +14,10 @@ import voogasalad.gameplayer.GUI.PlayerVisualization;
 /**
  * PLEASE READ BEFORE MAKING CHANGES TO THE PLAYER PACKAGE:
  * DO NOT INSTANTIATE OR ACCESS ANY ENGINE OBJECT BESIDES THE ENGINE ITSELF WHEN TRYING TO DISPLAY IN THE PLAYER.
- * We currently do not have modules, but if/when we do, all other classes will be locked from outside access
- * to maintain API consistency.
- * The engine is essentially the input API for the game, and the GameSceneObject (with a list of Sprites and resources/
+ * We currently do not have modules in the engine, but if/when we do, all other classes will be locked from outside access
+ * to maintain API consistency. Currently, the classes you will have access to are: Engine, UIActionsProcessor
+ * (retrieve with a getter method once you have the engine), Sprite, and GameSceneObject. The engine and the UIActionProcessor
+ * are essentially the input API for the game, and the GameSceneObject (with a list of Sprites and resources/
  * lives/stats/etc.) is the output API that is outputted by the engine at every execute level.
  * If you need something that we don't provide (e.g., a list of current tower prototypes), please Facebook message
  * someone from the engine team (Ha, Chris, and Emily) and we will make a getter method for you.

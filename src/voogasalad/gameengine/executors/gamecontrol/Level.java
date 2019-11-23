@@ -2,6 +2,7 @@ package voogasalad.gameengine.executors.gamecontrol;
 
 import voogasalad.gameengine.api.GameSceneObject;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
+import voogasalad.gameengine.executors.gamecontrol.action.LevelAction;
 import voogasalad.gameengine.executors.gamecontrol.managers.ActionsManager;
 import voogasalad.gameengine.executors.gamecontrol.managers.ConditionsManager;
 import voogasalad.gameengine.executors.gamecontrol.managers.StatusManager;
@@ -17,7 +18,6 @@ public class Level {
     private StatusManager myStatusManager;
     private ConditionsManager myConditionsManager;
     private ActionsManager myActionsManager;
-    private EngineConfigurator myEngineConfigurator;
 
     public Level(LevelBuilder levelBuilder) {
         mySpriteManager = levelBuilder.getSpriteManager();
@@ -25,14 +25,13 @@ public class Level {
         myStatusManager = levelBuilder.getStatusManager();
         myConditionsManager = levelBuilder.getConditionsManager();
         myActionsManager = levelBuilder.getActionsManager();
-        myEngineConfigurator = new EngineConfigurator();
     }
 
     public GameSceneObject execute(double elapsedTime) throws GameEngineException {
         myStatusManager.notifyNewCycle(elapsedTime);
-        myActionsManager.addNewActions(myConditionsManager.getActionsToExecute(this));
+        myActionsManager.addActionsAsCollection(myConditionsManager.getActionsToExecute(this));
         myActionsManager.executeActions(this);
-        mySpriteManager.getOnScreenSprites().stream().forEach((e -> e.updatePosition(elapsedTime)));
+        mySpriteManager.getOnScreenSprites().stream().forEach((sprite -> sprite.updatePosition(elapsedTime)));
         return new GameSceneObject(myStatusManager.getResources(),  myStatusManager.getLives(), mySpriteManager);
     }
 
@@ -46,5 +45,9 @@ public class Level {
 
     public StatusManager getStatusManager() {
         return myStatusManager;
+    }
+
+    public void addAction(LevelAction action) {
+        myActionsManager.addAction(action);
     }
 }
