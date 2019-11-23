@@ -8,18 +8,11 @@ import java.util.ResourceBundle;
 public class Verifier {
     //TODO: I'm not completely satisfied with how we're doing verification right now; let's rework how this process works later.
     public static final String STRATEGY_PARAMETERS_IDENTIFIER_RESOURCE_PATH = "resources.engine.StrategyParameters";
-    public static final String CONDITION_PARAMETERS_IDENTIFIER_RESOURCE_PATH = "resources.engine.ConditionParameters";
 
     public static Object verifyAndGetStrategyParameter(Map<String, Object> parameterMap, String key) throws GameEngineException {
         ResourceBundle resourceBundle = ResourceBundle.getBundle(STRATEGY_PARAMETERS_IDENTIFIER_RESOURCE_PATH);
         String[] keyValuePair = resourceBundle.getString(key).split(",");
        return verifyAndGetHelper(parameterMap, keyValuePair);
-    }
-
-    public static Object verifyAndGetConditionParameter(Map<String, Object> parameterMap, String key) throws GameEngineException {
-        ResourceBundle resourceBundle = ResourceBundle.getBundle(CONDITION_PARAMETERS_IDENTIFIER_RESOURCE_PATH);
-        String[] keyValuePair = resourceBundle.getString(key).split(",");
-        return verifyAndGetHelper(parameterMap, keyValuePair);
     }
 
     public static Object verifyValidKey(Object object, Class<?> expectedType) throws GameEngineException {
