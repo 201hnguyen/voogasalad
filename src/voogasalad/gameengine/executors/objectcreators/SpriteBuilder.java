@@ -123,7 +123,7 @@ public class SpriteBuilder {
         if (myMovementStrategy == null) myMovementStrategy = strategiesFactory.makeMovement("NoMovement", new HashMap<>());
         if (myHealthStrategy == null) myHealthStrategy = strategiesFactory.makeHealth("NoHealth", new HashMap<>());
         if (myImagePath == null) myImagePath = "pandaslogo.png";
-        if (myArchetype == null) myArchetype = SpriteArchetype.TOWER;
+        if (myArchetype == null) myArchetype = SpriteArchetype.OTHER;
     }
 
 }

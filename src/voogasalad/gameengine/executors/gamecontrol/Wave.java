@@ -29,7 +29,6 @@ public class Wave {
 
     private Integer getNextSpriteToSpawn(double elapsedTime){
         myElapsedTimeSinceLastEntry +=elapsedTime;
-        System.out.println("Wave current time: " + myElapsedTimeSinceLastEntry);
         if (myElapsedTimeSinceLastEntry >= mySpritesInterval) {
             myElapsedTimeSinceLastEntry = 0;
             return mySpritesQueue.remove();
