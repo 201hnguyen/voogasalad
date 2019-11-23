@@ -2,7 +2,6 @@ package voogasalad.gameengine.api;
 
 import voogasalad.gameengine.executors.sprites.Sprite;
 import voogasalad.gameengine.executors.sprites.SpriteManager;
-import voogasalad.gameengine.executors.utils.SpriteArchetype;
 
 import java.util.List;
 
@@ -28,6 +27,4 @@ public class GameSceneObject {
     public List<Sprite> getOnScreenSprites() {
         return mySpriteManager.getOnScreenSprites() ;
     }
-
-    public List<Sprite> getSpritesByArchetype(SpriteArchetype archetype) { return mySpriteManager.getSpritesByArchetype(archetype); }
 }

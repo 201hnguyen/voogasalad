@@ -25,13 +25,24 @@ public class JavaFXSpriteManager implements SpriteManager {
     }
 
 
+    @Override
     public List<Sprite> getSpritePrototypes(){
         ArrayList<Sprite> spritePrototypes = new ArrayList<>();
-        for(Integer prot :mySpritePrototypes.keySet() ){
+        for(Integer prot : mySpritePrototypes.keySet() ){
             spritePrototypes.add(mySpritePrototypes.get(prot));
         }
         return spritePrototypes;
     }
+
+    @Override
+    public List<Sprite> getSpritesByArchetype(SpriteArchetype archetype) {
+        List<Sprite> archetypeList = new ArrayList<>();
+        for (Sprite sprite : myOnScreenSprites) {
+            if (sprite.getSpriteArchetype() == archetype) {
+                archetypeList.add(sprite);
+            }
+        }
+        return archetypeList;    }
 
     @Override
     public void makeSpriteFromPrototype(double xPos, double yPos, int prototypeId) throws GameEngineException {
@@ -52,13 +63,13 @@ public class JavaFXSpriteManager implements SpriteManager {
     }
 
     @Override
-    public List<Sprite> getSpritesByArchetype(SpriteArchetype archetype) {
-        List<Sprite> archetypeList = new ArrayList<>();
-        for (Sprite sprite : myOnScreenSprites) {
-            if (sprite.getSpriteArchetype() == archetype) {
-                archetypeList.add(sprite);
+    public Map<Integer, Sprite> getPrototypesForArchetype(SpriteArchetype archetype) throws GameEngineException {
+        Map<Integer, Sprite> spritePrototypesOfArchetype = new HashMap<>();
+        for (Integer key : mySpritePrototypes.keySet()) {
+            if (mySpritePrototypes.get(key).getSpriteArchetype()==archetype) {
+                spritePrototypesOfArchetype.put(key, mySpritePrototypes.get(key).makeClone(0, 0, 0));
             }
         }
-        return archetypeList;
+        return spritePrototypesOfArchetype;
     }
 }

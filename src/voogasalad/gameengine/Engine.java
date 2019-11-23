@@ -7,8 +7,10 @@ import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.gamecontrol.Level;
 import voogasalad.gameengine.executors.sprites.Sprite;
 import voogasalad.gameengine.configurators.EngineConfigurator;
+import voogasalad.gameengine.executors.utils.SpriteArchetype;
 
 import java.util.List;
+import java.util.Map;
 
 public class Engine {
 
@@ -34,5 +36,9 @@ public class Engine {
 
     public List<Sprite> getSpritePrototypes() {
         return myCurrentLevel.getSpriteManager().getSpritePrototypes();
+    }
+
+    public Map<Integer, Sprite> getSpritePrototypesByArchetype(SpriteArchetype spriteArchetype) throws GameEngineException {
+        return myCurrentLevel.getSpriteManager().getPrototypesForArchetype(spriteArchetype);
     }
 }
