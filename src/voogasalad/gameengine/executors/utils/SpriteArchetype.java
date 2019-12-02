@@ -5,5 +5,5 @@ public enum SpriteArchetype {
     ENEMY,
     OBSTACLE,
     PROJECTILE,
-    OTHER;
+    UNCLASSIFIED;
 }

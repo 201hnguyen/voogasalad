@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Level>
+
+    <SpritePrototype>
+        <Properties>
+            <prototypeid>0</prototypeid>
+            <width>20</width>
+            <height>10</height>
+            <imagepath>bird.png</imagepath>
+            <archetype>ENEMY</archetype>
+        </Properties>
+        <Strategies>
+            <HealthStrategy>
+                <type>Health</type>
+                <parameters>
+                    <health>10</health>
+                </parameters>
+            </HealthStrategy>
+            <MovementStrategy>
+                <type>PathMovement</type>
+                <parameters>
+                    <path></path>
+                </parameters>
+            </MovementStrategy>
+        </Strategies>
+    </SpritePrototype>
+
+    <SpritePrototype>
+        <Properties>
+            <prototypeid>1</prototypeid>
+            <width>40</width>
+            <height>30</height>
+            <imagepath>pandaslogo.png</imagepath>
+            <archetype>ENEMY</archetype>
+        </Properties>
+        <Strategies>
+            <HealthStrategy>
+                <type>Health</type>
+                <parameters>
+                    <health>20</health>
+                </parameters>
+            </HealthStrategy>
+            <MovementStrategy>
+                <type>NoMovement</type>
+                <parameters></parameters>
+            </MovementStrategy>
+        </Strategies>
+    </SpritePrototype>
+
+    <Waves>
+        <Wave>0 1 0 0 1</Wave>
+    </Waves>
+
+</Level>
