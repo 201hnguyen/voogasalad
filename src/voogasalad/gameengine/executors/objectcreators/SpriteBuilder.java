@@ -35,6 +35,13 @@ public class SpriteBuilder {
         return this;
     }
 
+    public SpriteBuilder setPrototypeId(String prototypeId) {
+        Integer id = Integer.parseInt(prototypeId);
+        myPrototypeId = id;
+        System.out.println("prototype id set in builder with value: " + myPrototypeId);
+        return this;
+    }
+
     public int getPrototypeId() {
         return myPrototypeId;
     }
@@ -77,6 +84,7 @@ public class SpriteBuilder {
 
     public SpriteBuilder setImagePath(String imagePath) {
         myImagePath = imagePath;
+        System.out.println("image path set in builder with value: " + myImagePath);
         return this;
     }
 
@@ -89,12 +97,26 @@ public class SpriteBuilder {
         return this;
     }
 
+    public SpriteBuilder setWidth(String width) {
+        Double widthDouble = Double.parseDouble(width);
+        myWidth = widthDouble;
+        System.out.println("width set in builder with value: " + myWidth);
+        return this;
+    }
+
     public double getWidth() {
         return myWidth;
     }
 
     public SpriteBuilder setHeight(double height) {
         myHeight = height;
+        return this;
+    }
+
+    public SpriteBuilder setHeight(String height) {
+        Double heightDouble = Double.parseDouble(height);
+        myHeight = heightDouble;
+        System.out.println("height set in builder with value: " + myHeight);
         return this;
     }
 
@@ -111,6 +133,13 @@ public class SpriteBuilder {
         return this;
     }
 
+    public SpriteBuilder setArchetype(String archetypeString) {
+        SpriteArchetype archetype = SpriteArchetype.valueOf(archetypeString);
+        myArchetype = archetype;
+        System.out.println("archetype set in builder with value: " + myArchetype);
+        return this;
+    }
+
     public Sprite build() throws GameEngineException {
         checkParametersAndAssignDefault();
         SpriteProductsFactory spriteProductsFactory = new SpriteProductsFactory();
@@ -123,9 +152,8 @@ public class SpriteBuilder {
         if (myMovementStrategy == null) myMovementStrategy = strategiesFactory.makeMovement("NoMovement", new HashMap<>());
         if (myHealthStrategy == null) myHealthStrategy = strategiesFactory.makeHealth("NoHealth", new HashMap<>());
         if (myImagePath == null) myImagePath = "pandaslogo.png";
-        if (myArchetype == null) myArchetype = SpriteArchetype.OTHER;
+        if (myArchetype == null) myArchetype = SpriteArchetype.UNCLASSIFIED;
     }
-
 }
 
 

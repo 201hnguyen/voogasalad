@@ -2,7 +2,6 @@ package voogasalad.gameengine.configurators;
 
 import org.w3c.dom.Document;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
-import voogasalad.gameengine.executors.objectcreators.SpriteProductsFactory;
 import voogasalad.gameengine.executors.objectcreators.StrategiesFactory;
 import voogasalad.gameengine.executors.gamecontrol.Level;
 import voogasalad.gameengine.executors.gamecontrol.Wave;
@@ -72,7 +71,6 @@ public class EngineConfigurator {
 
     //Instantiates sprite and adds it to Sprite manager
     private void instantiateEngineObject(Map<String, String> componentAttributeMap ) throws GameEngineException {
-        SpriteProductsFactory spriteFactory = new SpriteProductsFactory();
         //Initialise default parameter values when none set
         int id = 0, health = 0;
         double xpos = 0, ypos = 0, width = 0, height = 0;
