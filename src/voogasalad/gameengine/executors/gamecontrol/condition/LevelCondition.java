@@ -8,6 +8,9 @@ import java.util.Set;
 
 public abstract class LevelCondition {
 
+    public static final String CONDITION_CLASSIFICATION_MAP_KEY = "classification";
+    public static final ConditionClassification DEFAULT_CONDITION_CLASSIFICATION = ConditionClassification.ONETIME;
+
     private Set<LevelAction> myActions;
     private ConditionClassification myConditionClassification;
 
@@ -17,7 +20,11 @@ public abstract class LevelCondition {
     }
 
     public LevelCondition(Map<String, String> parameters, Set<LevelAction> actions) {
-        myConditionClassification = ConditionClassification.valueOf(parameters.get("classification"));
+        try {
+            myConditionClassification = ConditionClassification.valueOf(parameters.get(CONDITION_CLASSIFICATION_MAP_KEY));
+        } catch (NullPointerException | IllegalArgumentException e) {
+            myConditionClassification = DEFAULT_CONDITION_CLASSIFICATION;
+        }
         myActions = actions;
     }
 

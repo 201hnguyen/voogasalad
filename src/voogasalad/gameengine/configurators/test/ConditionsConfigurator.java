@@ -18,8 +18,6 @@ public class ConditionsConfigurator {
     public static final String CONDITION_ACTIONS_ROOT_TAG = "Actions";
     public static final String CONDITION_TYPE_ROOT_TAG = "Type";
     public static final String ASSOCIATED_ACTION_TYPE_TAG = "type";
-    public static final String CONDITION_CLASSIFICATION_MAP_KEY = "classification";
-    public static final String CONDITION_CLASSIFICATION_DEFAULT_VALUE = "ONETIME";
 
     private NodeList myConditionsNodeList;
 
@@ -52,9 +50,6 @@ public class ConditionsConfigurator {
             if (parameter != null) {
                 parameters.put(parameter.getNodeName(), parameter.getTextContent());
             }
-        }
-        if (! parameters.keySet().contains(CONDITION_CLASSIFICATION_MAP_KEY)) {
-            parameters.put(CONDITION_CLASSIFICATION_MAP_KEY, CONDITION_CLASSIFICATION_DEFAULT_VALUE);
         }
         return parameters;
     }

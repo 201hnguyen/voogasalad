@@ -8,6 +8,9 @@ import java.util.Set;
 
 public class LivesCountCondition extends LevelCondition {
 
+    public static final int DEFAULT_MARKED_COUNT = 0;
+    public static final String MARKED_COUNT_MAP_KEY = "markedcount";
+
     private int myMarkedCount;
 
     public LivesCountCondition(int markedCount, ConditionClassification conditionClassification, Set<LevelAction> actions) {
@@ -17,7 +20,11 @@ public class LivesCountCondition extends LevelCondition {
 
     public LivesCountCondition(Map<String, String> parameters, Set<LevelAction> actions) {
         super(parameters, actions);
-        myMarkedCount = Integer.parseInt(parameters.get("markedcount")); //FIXME: have to do some null checks and not hard code string here
+        try {
+            myMarkedCount = Integer.parseInt(parameters.get(MARKED_COUNT_MAP_KEY));
+        } catch (NullPointerException | NumberFormatException e) {
+            myMarkedCount = DEFAULT_MARKED_COUNT;
+        }
     }
 
     @Override

@@ -7,9 +7,11 @@ import java.util.Map;
 import java.util.Set;
 
 public class TemporalCondition extends LevelCondition {
+
+    public static final String MARKED_TIME_MAP_KEY = "markedtime";
+    public static final int DEFAULT_MARKED_TIME = 0;
+
     private double myMarkedTime;
-    private Set<LevelAction> myActions;
-    private ConditionClassification myConditionClassification;
 
     public TemporalCondition(double markedTime, ConditionClassification conditionClassification, Set<LevelAction> actions) {
         super(conditionClassification, actions);
@@ -18,7 +20,11 @@ public class TemporalCondition extends LevelCondition {
 
     public TemporalCondition(Map<String, String> parameters, Set<LevelAction> actions) {
         super(parameters, actions);
-        myMarkedTime = Integer.parseInt(parameters.get("markedtime")); //FIXME: have to do some null checks and not hard code string here
+        try {
+            myMarkedTime = Integer.parseInt(parameters.get(MARKED_TIME_MAP_KEY));
+        } catch (NullPointerException | NumberFormatException e) {
+            myMarkedTime = DEFAULT_MARKED_TIME;
+        }
     }
 
     @Override

@@ -9,10 +9,13 @@ import java.util.Set;
 
 public class OnscreenArchetypeCountCondition extends LevelCondition {
 
+    public static final String ARCHETYPE_MAP_KEY = "archetype";
+    public static final SpriteArchetype DEFAULT_ARCHETYPE = SpriteArchetype.UNCLASSIFIED;
+    public static final String MARKED_COUNT_MAP_KEY = "markedcount";
+    public static final int DEFAULT_MARKED_COUNT=0;
+
     private int myMarkedCount;
-    private Set<LevelAction> myActions;
     private SpriteArchetype myArchetype;
-    private ConditionClassification myConditionClassification;
 
     public OnscreenArchetypeCountCondition(SpriteArchetype archetype, int markedCount, ConditionClassification conditionClassification, Set<LevelAction> actions) {
         super(conditionClassification, actions);
@@ -22,8 +25,16 @@ public class OnscreenArchetypeCountCondition extends LevelCondition {
 
     public OnscreenArchetypeCountCondition(Map<String, String> parameters, Set<LevelAction> actions) {
         super(parameters, actions);
-        myArchetype = SpriteArchetype.valueOf(parameters.get("archetype")); //FIXME: have to do some null checks and not hard code string here;
-        myMarkedCount = Integer.parseInt(parameters.get("markedcount")); //FIXME: have to do some null checks and not hard code string here
+        try {
+            myArchetype = SpriteArchetype.valueOf(parameters.get(ARCHETYPE_MAP_KEY));
+        } catch (NullPointerException | IllegalArgumentException e) {
+            myArchetype = DEFAULT_ARCHETYPE;
+        }
+        try {
+            myMarkedCount = Integer.parseInt(parameters.get(MARKED_COUNT_MAP_KEY));
+        } catch (NullPointerException | NumberFormatException e) {
+            myMarkedCount = DEFAULT_MARKED_COUNT;
+        }
     }
 
     @Override

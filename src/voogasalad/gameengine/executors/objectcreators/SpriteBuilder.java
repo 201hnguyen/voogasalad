@@ -134,7 +134,12 @@ public class SpriteBuilder {
     }
 
     public SpriteBuilder setArchetype(String archetypeString) {
-        SpriteArchetype archetype = SpriteArchetype.valueOf(archetypeString);
+        SpriteArchetype archetype;
+        try {
+            archetype = SpriteArchetype.valueOf(archetypeString);
+        } catch (IllegalArgumentException e) {
+            archetype = SpriteArchetype.UNCLASSIFIED;
+        }
         myArchetype = archetype;
         System.out.println("archetype set in builder with value: " + myArchetype);
         return this;
