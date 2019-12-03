@@ -13,6 +13,12 @@ public class ConditionsConfigurator {
 
     public static final String CONDITIONS_PACKAGE_PATH = "voogasalad.gameengine.executors.gamecontrol.condition.";
     public static final String ACTIONS_PACKAGE_PATH = "voogasalad.gameengine.executors.gamecontrol.action.";
+    public static final String CONDITION_PARAMETERS_ROOT_TAG = "Parameters";
+    public static final String CONDITION_ACTIONS_ROOT_TAG = "Actions";
+    public static final String CONDITION_TYPE_ROOT_TAG = "Type";
+    public static final String ASSOCIATED_ACTION_TYPE_TAG = "type";
+    public static final String CONDITION_CLASSIFICATION_MAP_KEY = "classification";
+    public static final String CONDITION_CLASSIFICATION_DEFAULT_VALUE = "ONETIME";
 
     private NodeList myConditionsNodeList;
 
@@ -22,9 +28,9 @@ public class ConditionsConfigurator {
         for (int i=0; i< myConditionsNodeList.getLength(); i++) {
             if (conditionNodeList.item(i).getNodeType()== Node.ELEMENT_NODE) {
                 Element definedCondition = convertNodeToElement(conditionNodeList.item(i));
-                Element parametersRoot = convertNodeToElement(definedCondition.getElementsByTagName("Parameters").item(0));
-                Element actionsRoot = convertNodeToElement(definedCondition.getElementsByTagName("Actions").item(0));
-                String conditionName = definedCondition.getElementsByTagName("Type").item(0).getTextContent();
+                Element parametersRoot = convertNodeToElement(definedCondition.getElementsByTagName(CONDITION_PARAMETERS_ROOT_TAG).item(0));
+                Element actionsRoot = convertNodeToElement(definedCondition.getElementsByTagName(CONDITION_ACTIONS_ROOT_TAG).item(0));
+                String conditionName = definedCondition.getElementsByTagName(CONDITION_TYPE_ROOT_TAG).item(0).getTextContent();
                 try {
                     Map<String, String> parameters = setParameters(parametersRoot);
                     Set<LevelAction> actions = setActions(actionsRoot);
@@ -40,7 +46,6 @@ public class ConditionsConfigurator {
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace(); //FIXME
                 }
-                System.out.println(conditionName);
             }
         }
         return levelConditions;
@@ -55,8 +60,8 @@ public class ConditionsConfigurator {
                 parameters.put(parameter.getNodeName(), parameter.getTextContent());
             }
         }
-        if (! parameters.keySet().contains("classification")) {
-            parameters.put("classification", "ONETIME");
+        if (! parameters.keySet().contains(CONDITION_CLASSIFICATION_MAP_KEY)) {
+            parameters.put(CONDITION_CLASSIFICATION_MAP_KEY, CONDITION_CLASSIFICATION_DEFAULT_VALUE);
         }
         return parameters;
     }
@@ -67,7 +72,7 @@ public class ConditionsConfigurator {
         for (int j=0; j<childNodes.getLength(); j++) {
             Element action = convertNodeToElement(childNodes.item(j)); //filter to elements nodes only.
             if (action != null) {
-                String actionName = action.getElementsByTagName("type").item(0).getTextContent();
+                String actionName = action.getElementsByTagName(ASSOCIATED_ACTION_TYPE_TAG).item(0).getTextContent();
                 actions.add((LevelAction) Class.forName(ACTIONS_PACKAGE_PATH + actionName).getConstructor().newInstance());
             }
         }

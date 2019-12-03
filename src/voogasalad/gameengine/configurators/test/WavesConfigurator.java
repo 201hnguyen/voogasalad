@@ -10,6 +10,11 @@ import java.util.List;
 
 public class WavesConfigurator {
 
+    public static final String WAVE_QUEUE_TAG = "Queue";
+    public static final String WAVE_INTERVAL_TAG = "Interval";
+    public static final String WAVE_SPAWN_POINT_X_TAG = "SpawnPointX";
+    public static final String WAVE_SPAWN_POINT_Y_TAG = "SpawnPointY";
+
     public Collection<Wave> buildWavesCollection(NodeList waveNodesList) {
         List<Wave> wavesCollection = new ArrayList<>();
         for (int i=0; i<waveNodesList.getLength(); i++) {
@@ -24,7 +29,7 @@ public class WavesConfigurator {
     }
 
     private Queue<Integer> parseQueue(Element definedWave) {
-        String[] spriteQueueAsStrings = definedWave.getElementsByTagName("Queue").item(0).getTextContent().split(" ");
+        String[] spriteQueueAsStrings = definedWave.getElementsByTagName(WAVE_QUEUE_TAG).item(0).getTextContent().split(" ");
         Queue<Integer> spriteQueue = new LinkedList<>();
         for (String s : spriteQueueAsStrings) {
             spriteQueue.add(Integer.parseInt(s));
@@ -33,12 +38,12 @@ public class WavesConfigurator {
     }
 
     private Double parseInterval(Element definedWave) {
-        return Double.parseDouble(definedWave.getElementsByTagName("Interval").item(0).getTextContent());
+        return Double.parseDouble(definedWave.getElementsByTagName(WAVE_INTERVAL_TAG).item(0).getTextContent());
     }
 
     private Point parseSpawnPoint(Element definedWave) {
-        Integer x = Integer.parseInt(definedWave.getElementsByTagName("SpawnPointX").item(0).getTextContent());
-        Integer y = Integer.parseInt(definedWave.getElementsByTagName("SpawnPointY").item(0).getTextContent());
+        Integer x = Integer.parseInt(definedWave.getElementsByTagName(WAVE_SPAWN_POINT_X_TAG).item(0).getTextContent());
+        Integer y = Integer.parseInt(definedWave.getElementsByTagName(WAVE_SPAWN_POINT_Y_TAG).item(0).getTextContent());
         return new Point(x, y);
     }
 }
