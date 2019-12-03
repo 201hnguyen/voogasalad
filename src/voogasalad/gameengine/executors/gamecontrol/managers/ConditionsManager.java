@@ -23,9 +23,15 @@ public class ConditionsManager {
     public Set<LevelAction> getActionsToExecute(Level level){
         Set<LevelCondition> conditionsToRemove = new HashSet<>();
         Set<LevelAction> actionsToExecute = new HashSet<>();
-        myLevelConditions.stream()
-                .filter(condition -> condition.hasHappened(level) && condition.getClassification()==ConditionClassification.ONETIME)
-                .forEach(condition -> { conditionsToRemove.add(condition); actionsToExecute.addAll(condition.getActions()); });
+        for (LevelCondition condition : myLevelConditions) {
+            if (condition.hasHappened(level)) {
+                actionsToExecute.addAll(condition.getActions());
+            }
+            if (condition.getClassification()==ConditionClassification.ONETIME) {
+                conditionsToRemove.add(condition);
+            }
+        }
+
         conditionsToRemove.stream().
                 forEach(condition -> myLevelConditions.remove(condition));
         return actionsToExecute;
