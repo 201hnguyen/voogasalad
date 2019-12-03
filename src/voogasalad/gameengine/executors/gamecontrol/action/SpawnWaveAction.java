@@ -32,7 +32,7 @@ public class SpawnWaveAction implements LevelAction {
             isFinished = false;
             myWave = waveManager.getNextWave();
         } else {
-            throw new GameEngineException("SpecifyWavesToExecuteAction");
+            throw new GameEngineException("SpecifyWavesToExecuteAction"); //TODO: This exception is thrown incorrectly for case where you don't have next wave but continuous condition checking
         }
     }
 }

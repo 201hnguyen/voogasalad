@@ -7,6 +7,7 @@ import voogasalad.gameengine.api.UIActionsProcessor;
 import voogasalad.gameengine.configurators.test.GameConfigurator;
 import voogasalad.gameengine.configurators.test.LevelConfigurator;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
+import voogasalad.gameengine.executors.gamecontrol.GameSceneStatus;
 import voogasalad.gameengine.executors.gamecontrol.Level;
 import voogasalad.gameengine.executors.objectcreators.LevelBuilder;
 import voogasalad.gameengine.executors.sprites.Sprite;
@@ -25,15 +26,19 @@ public class Engine {
     private EngineConfigurator myEngineConfigurator;
     private Level myCurrentLevel;
     private UIActionsProcessor myCurrentUIActionsProcessor;
+    private List<Level> myLevels;
 
     public Engine(Document doc) throws GameEngineException {
-        myCurrentLevel = new LevelBuilder().build(); //DEFAULT LEVEL
+        myCurrentLevel = new LevelBuilder().build();
         //        configureWithRealDocument(doc);
         configureWithTestDocument();
         myCurrentUIActionsProcessor = new UIActionsProcessor(myCurrentLevel);
     }
 
     public GameSceneObject execute(double elapsedTime) throws GameEngineException {
+        if (myCurrentLevel.getStatusManager().getGameSceneStatus() == GameSceneStatus.WON) {
+            myCurrentLevel = myLevels.get(1);
+        }
         return myCurrentLevel.execute(elapsedTime);
     }
 
@@ -52,7 +57,9 @@ public class Engine {
         try {
             builder = factory.newDocumentBuilder();
             Document doc = builder.parse(testFile);
-            myCurrentLevel = gameConfigurator.loadLevelsFromXML(doc).get(0);
+            myLevels = gameConfigurator.loadLevelsFromXML(doc);
+            myCurrentLevel = myLevels.get(0);
+            myCurrentLevel.getStatusManager().setGameSceneStatus(GameSceneStatus.ONGOING);
         } catch (ParserConfigurationException | SAXException | IOException | GameEngineException e) {
             e.printStackTrace(); //FIXME
         }

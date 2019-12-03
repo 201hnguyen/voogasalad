@@ -17,7 +17,7 @@ public class GameConfigurator {
         myRoot = doc.getDocumentElement();
         myLevels = new ArrayList<>();
         LevelConfigurator levelConfigurator = new LevelConfigurator();
-        myLevels.add(levelConfigurator.configureLevel(myRoot)); //TODO: Later this will be list of levels so level root is not myRoot
+        myLevels = levelConfigurator.configureLevels(myRoot.getElementsByTagName("Level"));
         return myLevels;
     }
 }

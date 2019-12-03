@@ -9,9 +9,8 @@ import voogasalad.gameengine.executors.gamecontrol.managers.StatusManager;
 import voogasalad.gameengine.executors.gamecontrol.managers.WaveManager;
 import voogasalad.gameengine.executors.objectcreators.LevelBuilder;
 import voogasalad.gameengine.executors.sprites.SpriteManager;
-import voogasalad.gameengine.configurators.EngineConfigurator;
 
-public class Level {
+public class Level implements GameScene {
 
     private SpriteManager mySpriteManager;
     private WaveManager myWaveManager;

@@ -26,9 +26,9 @@ public class ConditionsManager {
         for (LevelCondition condition : myLevelConditions) {
             if (condition.hasHappened(level)) {
                 actionsToExecute.addAll(condition.getActions());
-            }
-            if (condition.getClassification()==ConditionClassification.ONETIME) {
-                conditionsToRemove.add(condition);
+                if (condition.getClassification()==ConditionClassification.ONETIME) {
+                    conditionsToRemove.add(condition);
+                }
             }
         }
 
