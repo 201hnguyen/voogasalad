@@ -79,7 +79,7 @@
     <Condition>
         <Type>OnscreenArchetypeCountCondition</Type>
         <Parameters>
-            <markedcount>0</markedcount>
+            <markedcount>1</markedcount>
             <archetype>ENEMY</archetype>
             <classification>CONTINUOUS</classification>
         </Parameters>

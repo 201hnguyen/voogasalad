@@ -22,7 +22,7 @@ public class OnscreenArchetypeCountCondition implements LevelCondition {
     }
 
     public OnscreenArchetypeCountCondition(Map<String, String> parameters, Set<LevelAction> actions) {
-        myArchetype = SpriteArchetype.valueOf(parameters.get("archetype")); //FIXME: have to do some null checks and not hard code string here
+        myArchetype = SpriteArchetype.valueOf(parameters.get("archetype")); //FIXME: have to do some null checks and not hard code string here;
         myMarkedCount = Integer.parseInt(parameters.get("markedcount")); //FIXME: have to do some null checks and not hard code string here
         myConditionClassification = ConditionClassification.valueOf(parameters.get("classification")); //FIXME: have to do some null checks and not hard code string here
         myActions = actions;
