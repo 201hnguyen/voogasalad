@@ -14,6 +14,12 @@ import java.util.List;
 
 public class LevelConfigurator {
 
+    public static final String SPRITE_PROTOTYPE_NODES_TAG = "SpritePrototype";
+    public static final String WAVE_NODES_TAG = "Wave";
+    public static final String RESOURCES_NODE_TAG = "Resources";
+    public static final String LIVES_NODE_TAG = "Lives";
+    public static final String CONDITION_NODES_TAG = "Condition";
+
     private Element myRoot;
     private List<Sprite> myPrototypesList;
     private Collection<Wave> myWavesCollection;
@@ -33,27 +39,27 @@ public class LevelConfigurator {
 
     private List<Sprite> configurePrototypes() throws GameEngineException {
         PrototypesConfigurator prototypesConfigurator = new PrototypesConfigurator();
-        NodeList prototypeNodes = myRoot.getElementsByTagName("SpritePrototype");
+        NodeList prototypeNodes = myRoot.getElementsByTagName(SPRITE_PROTOTYPE_NODES_TAG);
         return prototypesConfigurator.buildPrototypesList(prototypeNodes);
     }
 
     private Collection<Wave> configureWaves() {
         WavesConfigurator wavesConfigurator = new WavesConfigurator();
-        NodeList waveNodes = myRoot.getElementsByTagName("Wave");
+        NodeList waveNodes = myRoot.getElementsByTagName(WAVE_NODES_TAG);
         return wavesConfigurator.buildWavesCollection(waveNodes);
     }
 
     private int configureResources() {
-        return Integer.parseInt(myRoot.getElementsByTagName("Resources").item(0).getTextContent());
+        return Integer.parseInt(myRoot.getElementsByTagName(RESOURCES_NODE_TAG).item(0).getTextContent());
     }
 
     private int configureLives() {
-        return Integer.parseInt(myRoot.getElementsByTagName("Lives").item(0).getTextContent());
+        return Integer.parseInt(myRoot.getElementsByTagName(LIVES_NODE_TAG).item(0).getTextContent());
     }
 
     private Collection<LevelCondition> configureLevelConditions() {
         ConditionsConfigurator conditionsConfigurator = new ConditionsConfigurator();
-        NodeList conditionNodes = myRoot.getElementsByTagName("Condition");
+        NodeList conditionNodes = myRoot.getElementsByTagName(CONDITION_NODES_TAG);
         return conditionsConfigurator.buildConditionsCollection(conditionNodes);
     }
 

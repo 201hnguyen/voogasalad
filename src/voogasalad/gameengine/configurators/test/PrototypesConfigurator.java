@@ -14,6 +14,8 @@ public class PrototypesConfigurator {
 
     public static final String PROTOTYPE_CONFIG_METHOD_CALLS_PATH = "resources/engine/PrototypeConfiguratorMethodCalls";
     public static final ResourceBundle PROTOTYPE_CONFIG_BUNDLE = ResourceBundle.getBundle(PROTOTYPE_CONFIG_METHOD_CALLS_PATH);
+    public static final String SPRITE_PROPERTIES_NODE_TAG = "Properties";
+    public static final String SPRITE_STRATEGIES_NODE_TAG = "Strategies";
 
     private NodeList myPrototypesNodesList;
 
@@ -24,8 +26,8 @@ public class PrototypesConfigurator {
             SpriteBuilder spriteBuilder = new SpriteBuilder();
             Element definedPrototype = convertNodeToElement(myPrototypesNodesList.item(i));
 
-            Element propertiesRoot = convertNodeToElement(definedPrototype.getElementsByTagName("Properties").item(0));
-            Element strategiesRoot = convertNodeToElement(definedPrototype.getElementsByTagName("Strategies").item(0));
+            Element propertiesRoot = convertNodeToElement(definedPrototype.getElementsByTagName(SPRITE_PROPERTIES_NODE_TAG).item(0));
+            Element strategiesRoot = convertNodeToElement(definedPrototype.getElementsByTagName(SPRITE_STRATEGIES_NODE_TAG).item(0));
 
             setPropertiesForSpriteBuilder(spriteBuilder, propertiesRoot);
             setStrategiesForSpriteBuilder(spriteBuilder, strategiesRoot);
