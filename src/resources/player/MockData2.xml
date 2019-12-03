@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Level>
-
     <SpritePrototype>
         <Properties>
             <prototypeid>0</prototypeid>
@@ -47,8 +46,70 @@
         </Strategies>
     </SpritePrototype>
 
-    <Waves>
-        <Wave>0 1 0 0 1</Wave>
-    </Waves>
+    <Wave>
+        <Queue>0 1 0 0 1</Queue>
+        <Interval>0.5</Interval>
+        <SpawnPointX>100</SpawnPointX>
+        <SpawnPointY>100</SpawnPointY>
+    </Wave>
+
+    <Wave>
+        <Queue>0 1</Queue>
+        <Interval>1</Interval>
+        <SpawnPointX>100</SpawnPointX>
+        <SpawnPointY>100</SpawnPointY>
+    </Wave>
+
+    <Resources>250</Resources>
+
+    <Lives>20</Lives>
+
+    <Condition>
+        <Type>TemporalCondition</Type>
+        <Parameters>
+            <markedtime>0</markedtime>
+        </Parameters>
+        <Actions>
+            <Action>
+                <type>SpawnWaveAction</type>
+            </Action>
+        </Actions>
+    </Condition>
+
+    <Condition>
+        <Type>OnscreenArchetypeCountCondition</Type>
+        <Parameters>
+            <markedcount>0</markedcount>
+            <archetype>ENEMY</archetype>
+            <classification>CONTINUOUS</classification>
+        </Parameters>
+        <Actions>
+            <Action>
+                <type>SpawnWaveAction</type>
+            </Action>
+        </Actions>
+    </Condition>
+
+    <Condition>
+        <Type>EnemiesClearedCondition</Type>
+        <Parameters></Parameters>
+        <Actions>
+            <Action>
+                <type>WinLevelAction</type>
+            </Action>
+        </Actions>
+    </Condition>
+
+    <Condition>
+        <Type>LivesCountCondition</Type>
+        <Parameters>
+            <markedcount>0</markedcount>
+        </Parameters>
+        <Actions>
+            <Action>
+                <type>LoseLevelAction</type>
+            </Action>
+        </Actions>
+    </Condition>
 
 </Level>

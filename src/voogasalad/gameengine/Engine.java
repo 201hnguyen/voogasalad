@@ -4,6 +4,7 @@ import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 import voogasalad.gameengine.api.GameSceneObject;
 import voogasalad.gameengine.api.UIActionsProcessor;
+import voogasalad.gameengine.configurators.test.GameConfigurator;
 import voogasalad.gameengine.configurators.test.LevelConfigurator;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.gamecontrol.Level;
@@ -22,10 +23,8 @@ import java.util.List;
 public class Engine {
 
     private EngineConfigurator myEngineConfigurator;
-    private LevelConfigurator myLevelConfigurator;
     private Level myCurrentLevel;
     private UIActionsProcessor myCurrentUIActionsProcessor;
-
 
     public Engine(Document doc) throws GameEngineException {
         myCurrentLevel = new LevelBuilder().build(); //DEFAULT LEVEL
@@ -46,14 +45,14 @@ public class Engine {
     }
 
     private void configureWithTestDocument() {
-        myLevelConfigurator = new LevelConfigurator();
+        GameConfigurator gameConfigurator = new GameConfigurator();
         File testFile = new File("src/resources/player/MockData2.xml");
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder ;
         try {
             builder = factory.newDocumentBuilder();
             Document doc = builder.parse(testFile);
-            myLevelConfigurator.loadXML(doc);
+            myCurrentLevel = gameConfigurator.loadLevelsFromXML(doc).get(0);
         } catch (ParserConfigurationException | SAXException | IOException | GameEngineException e) {
             e.printStackTrace(); //FIXME
         }

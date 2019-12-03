@@ -2,6 +2,7 @@ package voogasalad.gameengine.executors.gamecontrol.managers;
 
 import voogasalad.gameengine.executors.gamecontrol.Level;
 import voogasalad.gameengine.executors.gamecontrol.action.LevelAction;
+import voogasalad.gameengine.executors.gamecontrol.condition.ConditionClassification;
 import voogasalad.gameengine.executors.gamecontrol.condition.LevelCondition;
 
 import java.util.Collection;
@@ -23,7 +24,7 @@ public class ConditionsManager {
         Set<LevelCondition> conditionsToRemove = new HashSet<>();
         Set<LevelAction> actionsToExecute = new HashSet<>();
         myLevelConditions.stream()
-                .filter(condition -> condition.hasHappened(level))
+                .filter(condition -> condition.hasHappened(level) && condition.getClassification()==ConditionClassification.ONETIME)
                 .forEach(condition -> { conditionsToRemove.add(condition); actionsToExecute.addAll(condition.getActions()); });
         conditionsToRemove.stream().
                 forEach(condition -> myLevelConditions.remove(condition));
