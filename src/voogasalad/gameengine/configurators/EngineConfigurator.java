@@ -2,6 +2,7 @@ package voogasalad.gameengine.configurators;
 
 import org.w3c.dom.Document;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
+import voogasalad.gameengine.executors.gamecontrol.condition.ConditionClassification;
 import voogasalad.gameengine.executors.objectcreators.StrategiesFactory;
 import voogasalad.gameengine.executors.gamecontrol.Level;
 import voogasalad.gameengine.executors.gamecontrol.Wave;
@@ -51,7 +52,7 @@ public class EngineConfigurator {
         LevelAction levelAction = addAction("SpawnWaveAction");
         Set<LevelAction> levelActions = new HashSet<>();
         levelActions.add(levelAction);
-        LevelCondition condition = new TemporalCondition(0, levelActions);
+        LevelCondition condition = new TemporalCondition(0, ConditionClassification.ONETIME, levelActions);
         myEngineDriverManager.addLevelCondition(condition);
         Wave wave = new Wave(spritesWaveQueue, spriteInterval, waveSpawnPoint);
         return wave;

@@ -35,7 +35,7 @@ public class JavaFXSpriteManager implements SpriteManager {
     }
 
     @Override
-    public List<Sprite> getSpritesByArchetype(SpriteArchetype archetype) {
+    public List<Sprite> getOnsScreenSpritesByArchetype(SpriteArchetype archetype) {
         List<Sprite> archetypeList = new ArrayList<>();
         for (Sprite sprite : myOnScreenSprites) {
             if (sprite.getSpriteArchetype() == archetype) {

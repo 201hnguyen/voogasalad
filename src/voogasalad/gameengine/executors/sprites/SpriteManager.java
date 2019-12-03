@@ -15,7 +15,7 @@ public interface SpriteManager {
 
     List<Sprite> getSpritePrototypes();
 
-    List<Sprite> getSpritesByArchetype(SpriteArchetype archetype);
+    List<Sprite> getOnsScreenSpritesByArchetype(SpriteArchetype archetype);
 
     void removeSpriteById(int spriteId);
 
