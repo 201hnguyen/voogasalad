@@ -25,9 +25,9 @@ public class ConditionsConfigurator {
                 Element parametersRoot = convertNodeToElement(definedCondition.getElementsByTagName("Parameters").item(0));
                 Element actionsRoot = convertNodeToElement(definedCondition.getElementsByTagName("Actions").item(0));
                 String conditionName = definedCondition.getElementsByTagName("Type").item(0).getTextContent();
-                Map<String, String> parameters = setParameters(parametersRoot);
-                Set<LevelAction> actions = setActions(actionsRoot);
                 try {
+                    Map<String, String> parameters = setParameters(parametersRoot);
+                    Set<LevelAction> actions = setActions(actionsRoot);
                     levelConditions.add((LevelCondition) Class.forName(CONDITIONS_PACKAGE_PATH + conditionName).getConstructor(Map.class, Set.class).newInstance(parameters, actions));
                 } catch (InstantiationException e) {
                     e.printStackTrace(); //FIXME
@@ -61,26 +61,14 @@ public class ConditionsConfigurator {
         return parameters;
     }
 
-    private Set<LevelAction> setActions(Element actionsRoot) {
+    private Set<LevelAction> setActions(Element actionsRoot) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         Set<LevelAction> actions = new HashSet<>();
         NodeList childNodes = actionsRoot.getChildNodes();
         for (int j=0; j<childNodes.getLength(); j++) {
             Element action = convertNodeToElement(childNodes.item(j)); //filter to elements nodes only.
             if (action != null) {
                 String actionName = action.getElementsByTagName("type").item(0).getTextContent();
-                try {
-                    actions.add((LevelAction) Class.forName(ACTIONS_PACKAGE_PATH + actionName).getConstructor().newInstance());
-                } catch (InstantiationException e) {
-                    e.printStackTrace(); //FIXME
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace(); //FIXME
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace(); //FIXME
-                } catch (NoSuchMethodException e) {
-                    e.printStackTrace(); //FIXME
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace(); //FIXME
-                }
+                actions.add((LevelAction) Class.forName(ACTIONS_PACKAGE_PATH + actionName).getConstructor().newInstance());
             }
         }
         return actions;
