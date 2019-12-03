@@ -6,6 +6,7 @@ import org.w3c.dom.NodeList;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.objectcreators.SpriteBuilder;
 import voogasalad.gameengine.executors.sprites.Sprite;
+import voogasalad.gameengine.executors.utils.ConfigurationTool;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
@@ -24,10 +25,10 @@ public class PrototypesConfigurator {
         List<Sprite> prototypesForLevel = new ArrayList<>();
         for (int i = 0; i< myPrototypesNodesList.getLength(); i++) {
             SpriteBuilder spriteBuilder = new SpriteBuilder();
-            Element definedPrototype = convertNodeToElement(myPrototypesNodesList.item(i));
+            Element definedPrototype = ConfigurationTool.convertNodeToElement(myPrototypesNodesList.item(i));
 
-            Element propertiesRoot = convertNodeToElement(definedPrototype.getElementsByTagName(SPRITE_PROPERTIES_NODE_TAG).item(0));
-            Element strategiesRoot = convertNodeToElement(definedPrototype.getElementsByTagName(SPRITE_STRATEGIES_NODE_TAG).item(0));
+            Element propertiesRoot = ConfigurationTool.convertNodeToElement(definedPrototype.getElementsByTagName(SPRITE_PROPERTIES_NODE_TAG).item(0));
+            Element strategiesRoot = ConfigurationTool.convertNodeToElement(definedPrototype.getElementsByTagName(SPRITE_STRATEGIES_NODE_TAG).item(0));
 
             setPropertiesForSpriteBuilder(spriteBuilder, propertiesRoot);
             setStrategiesForSpriteBuilder(spriteBuilder, strategiesRoot);
@@ -40,7 +41,7 @@ public class PrototypesConfigurator {
     private void setPropertiesForSpriteBuilder(SpriteBuilder spriteBuilder, Element root) {
         NodeList listOfSpriteProperties = root.getChildNodes(); // this will return both element nodes and text nodes; we don't care about text nodes.
         for (int j=0; j<listOfSpriteProperties.getLength(); j++) {
-            Element property = convertNodeToElement(listOfSpriteProperties.item(j)); //filter to elements nodes only.
+            Element property = ConfigurationTool.convertNodeToElement(listOfSpriteProperties.item(j)); //filter to elements nodes only.
             if (property != null) {
                 setSinglePropertyInBuilder(spriteBuilder, property);
             }
@@ -59,13 +60,5 @@ public class PrototypesConfigurator {
 
     private void setStrategiesForSpriteBuilder(SpriteBuilder builder, Element root) {
 
-    }
-
-    private Element convertNodeToElement(Node node) {
-        Element element = null;
-        if (node.getNodeType()==Node.ELEMENT_NODE) {
-            element = (Element) node;
-        }
-        return element;
     }
 }
