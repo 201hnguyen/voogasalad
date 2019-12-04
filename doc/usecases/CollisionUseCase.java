@@ -1,3 +1,7 @@
+package usecases;
+
+import java.util.List;
+
 public class GameManager {
     private LevelManager myCurrentLevelManager;
     private List<LevelManager> myLevelManagers;
