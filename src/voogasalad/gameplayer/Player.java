@@ -8,7 +8,7 @@ import javafx.util.Duration;
 import org.w3c.dom.Document;
 import voogasalad.gameengine.api.GameSceneObject;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
-import voogasalad.gameengine.Engine;
+import voogasalad.gameengine.api.Engine;
 import voogasalad.gameplayer.GUI.PlayerVisualization;
 
 /**

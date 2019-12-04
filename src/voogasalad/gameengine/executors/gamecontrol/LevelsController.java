@@ -1,4 +1,4 @@
-package voogasalad.gameengine;
+package voogasalad.gameengine.executors.gamecontrol;
 
 import voogasalad.gameengine.executors.gamecontrol.Level;
 
