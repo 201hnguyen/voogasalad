@@ -6,56 +6,56 @@
     <GameCondition>
         <Type>CurrentLevelWonCondition</Type>
         <Parameters>
-            <classification>CONTINUOUS</classification>
+            <Classification>CONTINUOUS</Classification>
         </Parameters>
         <Actions>
             <Action>
-                <type>AdvanceToNextLevelAction</type>
+                <Type>AdvanceToNextLevelAction</Type>
             </Action>
         </Actions>
     </GameCondition>
 
     <SpritePrototype>
         <Properties>
-            <prototypeid>0</prototypeid>
-            <width>20</width>
-            <height>10</height>
-            <imagepath>bird.png</imagepath>
-            <archetype>ENEMY</archetype>
+            <PrototypeId>0</PrototypeId>
+            <Width>20</Width>
+            <Height>10</Height>
+            <ImagePath>bird.png</ImagePath>
+            <Archetype>ENEMY</Archetype>
         </Properties>
         <Strategies>
             <HealthStrategy>
-                <type>Health</type>
-                <parameters>
-                    <health>10</health>
-                </parameters>
+                <Type>Health</Type>
+                <Parameters>
+                    <Health>10</Health>
+                </Parameters>
             </HealthStrategy>
             <MovementStrategy>
-                <type>PathMovement</type>
-                <parameters>
-                    <path></path>
-                </parameters>
+                <Type>PathMovement</Type>
+                <Parameters>
+                    <Path></Path>
+                </Parameters>
             </MovementStrategy>
         </Strategies>
     </SpritePrototype>
     <SpritePrototype>
         <Properties>
-            <prototypeid>1</prototypeid>
-            <width>40</width>
-            <height>30</height>
-            <imagepath>pandaslogo.png</imagepath>
-            <archetype>ENEMY</archetype>
+            <PrototypeId>1</PrototypeId>
+            <Width>40</Width>
+            <Height>30</Height>
+            <ImagePath>pandaslogo.png</ImagePath>
+            <Archetype>ENEMY</Archetype>
         </Properties>
         <Strategies>
             <HealthStrategy>
-                <type>Health</type>
-                <parameters>
-                    <health>20</health>
-                </parameters>
+                <Type>Health</Type>
+                <Parameters>
+                    <Health>20</Health>
+                </Parameters>
             </HealthStrategy>
             <MovementStrategy>
-                <type>NoMovement</type>
-                <parameters></parameters>
+                <Type>NoMovement</Type>
+                <Parameters></Parameters>
             </MovementStrategy>
         </Strategies>
     </SpritePrototype>
@@ -83,47 +83,47 @@
         <Condition>
             <Type>TemporalCondition</Type>
             <Parameters>
-                <markedtime>0</markedtime>
+                <MarkedTime>0</MarkedTime>
             </Parameters>
             <Actions>
                 <Action>
-                    <type>SpawnWaveAction</type>
+                    <Type>SpawnWaveAction</Type>
                 </Action>
             </Actions>
         </Condition>
         <Condition>
             <Type>OnscreenArchetypeCountCondition</Type>
             <Parameters>
-                <markedcount>0</markedcount>
-                <archetype>ENEMY</archetype>
-                <classification>CONTINUOUS</classification>
+                <MarkedCount>0</MarkedCount>
+                <Archetype>ENEMY</Archetype>
+                <Classification>CONTINUOUS</Classification>
             </Parameters>
             <Actions>
                 <Action>
-                    <type>SpawnWaveAction</type>
+                    <Type>SpawnWaveAction</Type>
                 </Action>
             </Actions>
         </Condition>
         <Condition>
             <Type>OnscreenArchetypeCountCondition</Type>
             <Parameters>
-                <markedcount>7</markedcount>
-                <archetype>ENEMY</archetype>
+                <MarkedCount>7</MarkedCount>
+                <Archetype>ENEMY</Archetype>
             </Parameters>
             <Actions>
                 <Action>
-                    <type>WinLevelAction</type>
+                    <Type>WinLevelAction</Type>
                 </Action>
             </Actions>
         </Condition>
         <Condition>
             <Type>LivesCountCondition</Type>
             <Parameters>
-                <markedcount>0</markedcount>
+                <MarkedCount>0</MarkedCount>
             </Parameters>
             <Actions>
                 <Action>
-                    <type>LoseLevelAction</type>
+                    <Type>LoseLevelAction</Type>
                 </Action>
             </Actions>
         </Condition>
@@ -152,24 +152,24 @@
         <Condition>
             <Type>TemporalCondition</Type>
             <Parameters>
-                <markedtime>0</markedtime>
+                <Markedtime>0</Markedtime>
             </Parameters>
             <Actions>
                 <Action>
-                    <type>SpawnWaveAction</type>
+                    <Type>SpawnWaveAction</Type>
                 </Action>
             </Actions>
         </Condition>
         <Condition>
             <Type>OnscreenArchetypeCountCondition</Type>
             <Parameters>
-                <markedcount>1</markedcount>
-                <archetype>ENEMY</archetype>
-                <classification>CONTINUOUS</classification>
+                <MarkedCount>1</MarkedCount>
+                <Archetype>ENEMY</Archetype>
+                <Classification>CONTINUOUS</Classification>
             </Parameters>
             <Actions>
                 <Action>
-                    <type>SpawnWaveAction</type>
+                    <Type>SpawnWaveAction</Type>
                 </Action>
             </Actions>
         </Condition>
@@ -178,18 +178,18 @@
             <Parameters></Parameters>
             <Actions>
                 <Action>
-                    <type>WinLevelAction</type>
+                    <Type>WinLevelAction</Type>
                 </Action>
             </Actions>
         </Condition>
         <Condition>
             <Type>LivesCountCondition</Type>
             <Parameters>
-                <markedcount>0</markedcount>
+                <MarkedCount>0</MarkedCount>
             </Parameters>
             <Actions>
                 <Action>
-                    <type>LoseLevelAction</type>
+                    <Type>LoseLevelAction</Type>
                 </Action>
             </Actions>
         </Condition>
