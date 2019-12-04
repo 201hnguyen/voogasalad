@@ -53,4 +53,8 @@ public class Level implements GameScene {
     public void addAction(LevelAction action) {
         myActionsManager.addAction(action);
     }
+
+    public int getLevelId() {
+        return myLevelId;
+    }
 }
