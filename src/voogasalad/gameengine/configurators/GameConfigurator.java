@@ -3,7 +3,7 @@ package voogasalad.gameengine.configurators;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import voogasalad.gameengine.LevelsController;
+import voogasalad.gameengine.executors.gamecontrol.LevelsController;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.gamecontrol.Level;
 import voogasalad.gameengine.executors.sprites.Sprite;

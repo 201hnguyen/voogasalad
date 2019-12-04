@@ -1,6 +1,6 @@
 package voogasalad.gameengine.executors.gamecontrol.condition.game;
 
-import voogasalad.gameengine.Engine;
+import voogasalad.gameengine.executors.gamecontrol.Game;
 import voogasalad.gameengine.executors.gamecontrol.action.level.LevelAction;
 import voogasalad.gameengine.executors.gamecontrol.condition.Condition;
 import voogasalad.gameengine.executors.gamecontrol.condition.ConditionClassification;
@@ -17,6 +17,6 @@ public abstract class GameCondition extends Condition {
         super(parameters, actions);
     }
 
-    public abstract boolean hasHappened(Engine gameEngine);
+    public abstract boolean hasHappened(Game game);
 
 }

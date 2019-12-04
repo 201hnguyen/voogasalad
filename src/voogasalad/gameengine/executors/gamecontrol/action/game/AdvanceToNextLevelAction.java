@@ -1,11 +1,11 @@
 package voogasalad.gameengine.executors.gamecontrol.action.game;
 
-import voogasalad.gameengine.Engine;
+import voogasalad.gameengine.executors.gamecontrol.Game;
 
 public class AdvanceToNextLevelAction implements GameAction{
     @Override
-    public void execute(Engine engine) {
-        engine.loadNextLevel();
+    public void execute(Game game) {
+        game.loadNextLevel();
     }
 
     @Override
