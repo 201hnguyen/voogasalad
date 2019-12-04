@@ -22,6 +22,6 @@ public class GameEngineException extends Exception {
     }
 
     public String getMessage() {
-        return EXCEPTION_MESSAGES_BUNDLE.getString(myMessageKey);
+        return EXCEPTION_MESSAGES_BUNDLE.getString(myMessageKey) + myThrowableEx.getMessage();
     }
 }

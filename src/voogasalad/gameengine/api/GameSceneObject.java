@@ -9,11 +9,13 @@ public class GameSceneObject {
     private final int myResources;
     private final int myLives;
     private final SpriteManager mySpriteManager;
+    private final String myBackgroundPath;
 
-    public GameSceneObject(int resources, int lives, SpriteManager spriteManager) {
+    public GameSceneObject(String backgroundPath, int resources, int lives, SpriteManager spriteManager) {
         myResources = resources;
         myLives = lives;
         mySpriteManager = spriteManager;
+        myBackgroundPath = backgroundPath;
     }
 
     public int getResources() {
@@ -26,5 +28,9 @@ public class GameSceneObject {
 
     public List<Sprite> getOnScreenSprites() {
         return mySpriteManager.getOnScreenSprites() ;
+    }
+
+    public String getBackgroundPath() {
+        return myBackgroundPath;
     }
 }

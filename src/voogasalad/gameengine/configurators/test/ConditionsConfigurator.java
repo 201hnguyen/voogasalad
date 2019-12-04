@@ -3,6 +3,7 @@ package voogasalad.gameengine.configurators.test;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.gamecontrol.action.LevelAction;
 import voogasalad.gameengine.executors.gamecontrol.condition.LevelCondition;
 import voogasalad.gameengine.executors.utils.ConfigurationTool;
@@ -21,7 +22,7 @@ public class ConditionsConfigurator {
 
     private NodeList myConditionsNodeList;
 
-    public Collection<LevelCondition> buildConditionsCollection(NodeList conditionNodeList) {
+    public Collection<LevelCondition> buildConditionsCollection(NodeList conditionNodeList) throws GameEngineException {
         Set<LevelCondition> levelConditions = new HashSet<>();
         myConditionsNodeList = conditionNodeList;
         for (int i=0; i< myConditionsNodeList.getLength(); i++) {
@@ -35,7 +36,7 @@ public class ConditionsConfigurator {
                     Set<LevelAction> actions = setActions(actionsRoot);
                     levelConditions.add((LevelCondition) Class.forName(CONDITIONS_PACKAGE_PATH + conditionName).getConstructor(Map.class, Set.class).newInstance(parameters, actions));
                 } catch (InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException | ClassNotFoundException e) {
-                    e.printStackTrace(); //FIXME
+                    throw new GameEngineException(e, "ConditionsInitializationFailed");
                 }
             }
         }

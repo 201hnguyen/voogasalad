@@ -37,7 +37,7 @@ public class Level implements GameScene {
         myActionsManager.addActionsAsCollection(myConditionsManager.getActionsToExecute(this));
         myActionsManager.executeActions(this);
         mySpriteManager.executeSpriteNextState(elapsedTime);
-        return new GameSceneObject(myStatusManager.getResources(),  myStatusManager.getLives(), mySpriteManager);
+        return new GameSceneObject(myBackgroundPath, myStatusManager.getResources(),  myStatusManager.getLives(), mySpriteManager);
     }
 
     public LevelActionsRequester getActionsRequester() {

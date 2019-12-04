@@ -10,11 +10,14 @@ import java.util.HashMap;
 
 public class SpriteBuilder {
 
+    public static final int DEFAULT_SIZE = 20;
+    public static final SpriteArchetype DEFAULT_ARCHETYPE = SpriteArchetype.UNCLASSIFIED;
+
     private int mySpriteId;
     private double myWidth;
     private double myHeight;
     private double myXPos;
-    public double myYPos;
+    private double myYPos;
     private HealthStrategy myHealthStrategy;
     private MovementStrategy myMovementStrategy;
     private String myImagePath;
@@ -35,11 +38,15 @@ public class SpriteBuilder {
         return this;
     }
 
-    public SpriteBuilder setPrototypeId(String prototypeId) {
-        Integer id = Integer.parseInt(prototypeId);
-        myPrototypeId = id;
-        System.out.println("prototype id set in builder with value: " + myPrototypeId);
-        return this;
+    public SpriteBuilder setPrototypeId(String prototypeId) throws GameEngineException {
+        try {
+            Integer id = Integer.parseInt(prototypeId);
+            myPrototypeId = id;
+            System.out.println("prototype id set in builder with value: " + myPrototypeId);
+            return this;
+        } catch (NumberFormatException e) {
+            throw new GameEngineException(e, "AttemptedToCreateSpriteWithInvalidPrototypeId");
+        }
     }
 
     public int getPrototypeId() {
@@ -98,9 +105,13 @@ public class SpriteBuilder {
     }
 
     public SpriteBuilder setWidth(String width) {
-        Double widthDouble = Double.parseDouble(width);
-        myWidth = widthDouble;
-        System.out.println("width set in builder with value: " + myWidth);
+        try {
+            Double widthDouble = Double.parseDouble(width);
+            myWidth = widthDouble;
+            System.out.println("width set in builder with value: " + myWidth);
+        } catch (NumberFormatException e) {
+            myWidth = DEFAULT_SIZE;
+        }
         return this;
     }
 
@@ -113,10 +124,14 @@ public class SpriteBuilder {
         return this;
     }
 
-    public SpriteBuilder setHeight(String height) {
-        Double heightDouble = Double.parseDouble(height);
-        myHeight = heightDouble;
-        System.out.println("height set in builder with value: " + myHeight);
+    public SpriteBuilder setHeight(String height) throws GameEngineException {
+        try {
+            Double heightDouble = Double.parseDouble(height);
+            myHeight = heightDouble;
+            System.out.println("height set in builder with value: " + myHeight);
+        } catch (NumberFormatException e) {
+            myHeight = DEFAULT_SIZE;
+        }
         return this;
     }
 
@@ -138,7 +153,7 @@ public class SpriteBuilder {
         try {
             archetype = SpriteArchetype.valueOf(archetypeString);
         } catch (IllegalArgumentException e) {
-            archetype = SpriteArchetype.UNCLASSIFIED;
+            archetype = DEFAULT_ARCHETYPE;
         }
         myArchetype = archetype;
         System.out.println("archetype set in builder with value: " + myArchetype);

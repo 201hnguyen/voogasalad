@@ -2,7 +2,7 @@
 <!--TODO: Refactor prototype definitions to Game-level instead of Level-level scale and have levels just specify id numbers for prototypes-->
 <GameConfiguration>
 
-    <LevelSequence>1 0</LevelSequence>
+    <LevelSequence>1</LevelSequence>
     <LevelWinAction>AdvanceToNextLevel</LevelWinAction>
 
     <Level>
