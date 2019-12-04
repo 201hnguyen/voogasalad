@@ -2,7 +2,9 @@ package voogasalad.gameengine.configurators;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.gamecontrol.Wave;
+import voogasalad.gameengine.executors.sprites.Sprite;
 
 import java.awt.*;
 import java.util.*;
@@ -15,8 +17,11 @@ public class WavesConfigurator {
     public static final String WAVE_SPAWN_POINT_X_TAG = "SpawnPointX";
     public static final String WAVE_SPAWN_POINT_Y_TAG = "SpawnPointY";
 
-    public Collection<Wave> buildWavesCollection(NodeList waveNodesList) {
+    private List<Integer> myAvailablePrototypeIds;
+
+    public Collection<Wave> buildWavesCollection(NodeList waveNodesList, List<Sprite> availablePrototypesList) throws GameEngineException {
         List<Wave> wavesCollection = new ArrayList<>();
+        myAvailablePrototypeIds = calculateAvailablePrototypeIds(availablePrototypesList);
         for (int i=0; i<waveNodesList.getLength(); i++) {
             Element definedWave = (Element) waveNodesList.item(i);
             Queue<Integer> waveQueue = parseQueue(definedWave);
@@ -28,11 +33,23 @@ public class WavesConfigurator {
         return wavesCollection;
     }
 
-    private Queue<Integer> parseQueue(Element definedWave) {
+    private List<Integer> calculateAvailablePrototypeIds(List<Sprite> availableSpritePrototypes) {
+        List<Integer> spriteIds = new ArrayList<>();
+        for (Sprite prototype : availableSpritePrototypes) {
+            spriteIds.add(prototype.getPrototypeId());
+        }
+        return spriteIds;
+    }
+
+    private Queue<Integer> parseQueue(Element definedWave) throws GameEngineException {
         String[] spriteQueueAsStrings = definedWave.getElementsByTagName(WAVE_QUEUE_TAG).item(0).getTextContent().split(" ");
         Queue<Integer> spriteQueue = new LinkedList<>();
         for (String s : spriteQueueAsStrings) {
-            spriteQueue.add(Integer.parseInt(s));
+            if (myAvailablePrototypeIds.contains(Integer.parseInt(s))) {
+                spriteQueue.add(Integer.parseInt(s));
+            } else {
+                throw new GameEngineException("InvalidPrototypeInWave");
+            }
         }
         return spriteQueue;
     }

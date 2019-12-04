@@ -16,23 +16,24 @@ import java.util.List;
 
 public class LevelConfigurator {
 
-    public static final String SPRITE_PROTOTYPE_NODES_TAG = "SpritePrototype";
     public static final String WAVE_NODES_TAG = "Wave";
     public static final String RESOURCES_NODE_TAG = "Resources";
     public static final String LIVES_NODE_TAG = "Lives";
     public static final String CONDITION_NODES_TAG = "Condition";
     public static final String LEVEL_ID_NODE_TAG = "LevelId";
     public static final String BACKGROUND_PATH_TAG = "BackgroundImage";
+    public static final String PROTOTYPE_SPECIFIED_FOR_LEVEL_NODE_TAG = "AvailablePrototypes";
     public static final String DEFAULT_BACKGROUND_PATH = "whitebackground.jpg";
 
     private Element myCurrentLevelRoot;
+    private List<Sprite> myAvailablePrototypesList;
 
-    public List<Level> configureLevels(NodeList levelNodes) throws GameEngineException {
+    public List<Level> configureLevels(NodeList levelNodes, List<Sprite> gamePrototypes) throws GameEngineException {
         List<Level> levels = new ArrayList<>();
         for (int i=0; i<levelNodes.getLength(); i++) {
             Element levelRoot = ConfigurationTool.convertNodeToElement(levelNodes.item(i));
             myCurrentLevelRoot = levelRoot;
-            List<Sprite> prototypesList = configurePrototypes();
+            myAvailablePrototypesList = configureLevelPrototypes(gamePrototypes);
             Collection<Wave> wavesCollection = configureWaves();
             int resources = configureIntProperties(RESOURCES_NODE_TAG);
             int lives = configureIntProperties(LIVES_NODE_TAG);
@@ -40,22 +41,16 @@ public class LevelConfigurator {
             Collection<LevelCondition> levelConditions = configureLevelConditions();
             String backgroundPath = configureBackgroundPath();
             levels.add(new LevelBuilder(levelId).setConditions(levelConditions)
-                    .setLives(lives).setResources(resources).setSpritePrototypes(prototypesList)
+                    .setLives(lives).setResources(resources).setSpritePrototypes(myAvailablePrototypesList)
                     .setWaves(wavesCollection).setBackgroundPath(backgroundPath).build());
         }
         return levels;
     }
 
-    private List<Sprite> configurePrototypes() throws GameEngineException {
-        PrototypesConfigurator prototypesConfigurator = new PrototypesConfigurator();
-        NodeList prototypeNodes = myCurrentLevelRoot.getElementsByTagName(SPRITE_PROTOTYPE_NODES_TAG);
-        return prototypesConfigurator.buildPrototypesList(prototypeNodes);
-    }
-
-    private Collection<Wave> configureWaves() {
+    private Collection<Wave> configureWaves() throws GameEngineException {
         WavesConfigurator wavesConfigurator = new WavesConfigurator();
         NodeList waveNodes = myCurrentLevelRoot.getElementsByTagName(WAVE_NODES_TAG);
-        return wavesConfigurator.buildWavesCollection(waveNodes);
+        return wavesConfigurator.buildWavesCollection(waveNodes, myAvailablePrototypesList);
     }
 
     private int configureIntProperties(String propertyNodeTagName) {
@@ -78,6 +73,23 @@ public class LevelConfigurator {
         } catch (NullPointerException e) {
             return DEFAULT_BACKGROUND_PATH;
         }
+    }
+
+    private List<Sprite> configureLevelPrototypes(List<Sprite> gamePrototypes) {
+        List<Sprite> prototypesSpecifiedForLevel = new ArrayList<>();
+        try {
+            String[] prototypesSpecifiedForLevelAsStrings = myCurrentLevelRoot.getElementsByTagName(PROTOTYPE_SPECIFIED_FOR_LEVEL_NODE_TAG).item(0).getTextContent().split(" ");
+            for (String prototypeString : prototypesSpecifiedForLevelAsStrings) {
+                for (Sprite prototype : gamePrototypes) {
+                    if (prototype.getPrototypeId() == Integer.parseInt(prototypeString)) {
+                        prototypesSpecifiedForLevel.add(prototype);
+                    }
+                }
+            }
+        } catch (NullPointerException | NumberFormatException e) {
+            return gamePrototypes;
+        }
+        return prototypesSpecifiedForLevel;
     }
 
 }
