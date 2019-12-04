@@ -3,7 +3,7 @@ package voogasalad.gameengine.configurators;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
-import voogasalad.gameengine.executors.gamecontrol.Wave;
+import voogasalad.gameengine.executors.control.levelcontrol.Wave;
 import voogasalad.gameengine.executors.sprites.Sprite;
 
 import java.awt.*;

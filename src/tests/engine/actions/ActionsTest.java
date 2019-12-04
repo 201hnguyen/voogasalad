@@ -4,16 +4,16 @@
 //import org.junit.jupiter.api.BeforeEach;
 //import org.junit.jupiter.api.Test;
 //import voogasalad.gameengine.executors.exceptions.GameEngineException;
-//import voogasalad.gameengine.executors.gamecontrol.Level;
+//import voogasalad.gameengine.executors.gamecontrol.level.Level;
 //import voogasalad.gameengine.executors.gamecontrol.Wave;
 //import voogasalad.gameengine.executors.gamecontrol.action.level.LevelAction;
 //import voogasalad.gameengine.executors.gamecontrol.action.level.SpawnWaveAction;
 //import voogasalad.gameengine.executors.gamecontrol.condition.level.LevelCondition;
 //import voogasalad.gameengine.executors.gamecontrol.condition.level.TemporalCondition;
-//import voogasalad.gameengine.executors.gamecontrol.managers.ActionsManager;
-//import voogasalad.gameengine.executors.gamecontrol.managers.ConditionsManager;
-//import voogasalad.gameengine.executors.gamecontrol.managers.StatusManager;
-//import voogasalad.gameengine.executors.gamecontrol.managers.WaveManager;
+//import voogasalad.gameengine.executors.gamecontrol.levelcontrol.managers.LevelActionsManager;
+//import voogasalad.gameengine.executors.gamecontrol.levelcontrol.managers.LevelConditionsManager;
+//import voogasalad.gameengine.executors.gamecontrol.levelcontrol.managers.LevelStatusManager;
+//import voogasalad.gameengine.executors.gamecontrol.levelcontrol.managers.LevelWaveManager;
 //import voogasalad.gameengine.executors.objectcreators.LevelBuilder;
 //import voogasalad.gameengine.executors.objectcreators.SpriteBuilder;
 //import voogasalad.gameengine.executors.sprites.*;
@@ -92,12 +92,12 @@
 //        Wave wave0 = new Wave(spritesWave0Queue, 1.0, wave0SpawnPoint);
 //        Wave wave1 = new Wave(spritesWave1Queue, 0.5, wave1SpawnPoint);
 //        List<Wave> wavesList = new ArrayList<>() {{ add(wave0); add(wave1); }};
-//        WaveManager waveManager = new WaveManager();
+//        LevelWaveManager waveManager = new LevelWaveManager();
 //        waveManager.addWavesCollection(wavesList);
-//        StatusManager statusManager = new StatusManager();
+//        LevelStatusManager statusManager = new LevelStatusManager();
 //        statusManager.setResources(250);
 //        statusManager.setLives(20);
-//        ActionsManager actionsManager = new ActionsManager();
+//        LevelActionsManager actionsManager = new LevelActionsManager();
 //
 //        Level level = new LevelBuilder().setConditions(levelConditionsSet).setLives(20).setResources(250).setSpritePrototypes();
 //

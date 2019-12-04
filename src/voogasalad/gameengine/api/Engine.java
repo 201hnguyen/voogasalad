@@ -1,10 +1,8 @@
 package voogasalad.gameengine.api;
 
 import org.w3c.dom.Document;
-import voogasalad.gameengine.api.GameSceneObject;
-import voogasalad.gameengine.api.UIActionsProcessor;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
-import voogasalad.gameengine.executors.gamecontrol.Game;
+import voogasalad.gameengine.executors.control.gamecontrol.Game;
 import voogasalad.gameengine.executors.sprites.Sprite;
 import voogasalad.gameengine.executors.utils.SpriteArchetype;
 

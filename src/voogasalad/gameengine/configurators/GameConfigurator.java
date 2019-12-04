@@ -3,13 +3,15 @@ package voogasalad.gameengine.configurators;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import voogasalad.gameengine.executors.gamecontrol.LevelsController;
+import voogasalad.gameengine.executors.control.gamecontrol.controllers.GameLevelsController;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
-import voogasalad.gameengine.executors.gamecontrol.Level;
+import voogasalad.gameengine.executors.control.levelcontrol.Level;
+import voogasalad.gameengine.executors.control.condition.game.GameCondition;
 import voogasalad.gameengine.executors.sprites.Sprite;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 public class GameConfigurator {
@@ -17,6 +19,7 @@ public class GameConfigurator {
     public static final String LEVELS_NODES_TAG = "Level";
     public static final String LEVELS_SEQUENCE_NODE_TAG = "LevelSequence";
     public static final String PROTOTYPES_NODES_TAG = "SpritePrototype";
+    public static final String GAME_CONDITIONS_NODES_TAG = "GameCondition";
 
     private Element myRoot;
     private Document myDocument;
@@ -28,10 +31,10 @@ public class GameConfigurator {
         myGamePrototypes = configurePrototypes();
     }
 
-    public LevelsController loadLevelsFromXML() throws GameEngineException {
+    public GameLevelsController loadLevelsFromXML() throws GameEngineException {
         List<Level> levels = loadLevels();
         List<Integer> levelsSequence = loadLevelsSequence();
-        return new LevelsController(levels, levelsSequence);
+        return new GameLevelsController(levels, levelsSequence);
     }
 
     private List<Level> loadLevels() throws GameEngineException {
@@ -63,5 +66,11 @@ public class GameConfigurator {
         PrototypesConfigurator prototypesConfigurator = new PrototypesConfigurator();
         NodeList prototypeNodes = myRoot.getElementsByTagName(PROTOTYPES_NODES_TAG);
         return prototypesConfigurator.buildPrototypesList(prototypeNodes);
+    }
+
+    public Collection<GameCondition> configureGameConditions() throws GameEngineException {
+        ConditionsConfigurator conditionsConfigurator = new ConditionsConfigurator();
+        NodeList conditionNodes = myRoot.getElementsByTagName(GAME_CONDITIONS_NODES_TAG);
+        return conditionsConfigurator.buildGameConditionsCollection(conditionNodes);
     }
 }

@@ -4,7 +4,7 @@
 //import voogasalad.gameengine.executors.exceptions.GameEngineException;
 //import voogasalad.gameengine.executors.gamecontrol.condition.ConditionClassification;
 //import voogasalad.gameengine.executors.objectcreators.StrategiesFactory;
-//import voogasalad.gameengine.executors.gamecontrol.Level;
+//import voogasalad.gameengine.executors.gamecontrol.level.Level;
 //import voogasalad.gameengine.executors.gamecontrol.Wave;
 //import voogasalad.gameengine.executors.gamecontrol.action.level.LevelAction;
 //import voogasalad.gameengine.executors.gamecontrol.condition.level.LevelCondition;
