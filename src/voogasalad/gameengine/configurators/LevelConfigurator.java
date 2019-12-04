@@ -78,18 +78,22 @@ public class LevelConfigurator {
     private List<Sprite> configureLevelPrototypes(List<Sprite> gamePrototypes) {
         List<Sprite> prototypesSpecifiedForLevel = new ArrayList<>();
         try {
-            String[] prototypesSpecifiedForLevelAsStrings = myCurrentLevelRoot.getElementsByTagName(PROTOTYPE_SPECIFIED_FOR_LEVEL_NODE_TAG).item(0).getTextContent().split(" ");
-            for (String prototypeString : prototypesSpecifiedForLevelAsStrings) {
-                for (Sprite prototype : gamePrototypes) {
-                    if (prototype.getPrototypeId() == Integer.parseInt(prototypeString)) {
-                        prototypesSpecifiedForLevel.add(prototype);
-                    }
-                }
-            }
+            configureLevelPrototypesHelper(gamePrototypes, prototypesSpecifiedForLevel);
         } catch (NullPointerException | NumberFormatException e) {
             return gamePrototypes;
         }
         return prototypesSpecifiedForLevel;
+    }
+
+    private void configureLevelPrototypesHelper(List<Sprite> gamePrototypes, List<Sprite> prototypesSpecifiedForLevel) {
+        String[] prototypesSpecifiedForLevelAsStrings = myCurrentLevelRoot.getElementsByTagName(PROTOTYPE_SPECIFIED_FOR_LEVEL_NODE_TAG).item(0).getTextContent().split(" ");
+        for (String prototypeString : prototypesSpecifiedForLevelAsStrings) {
+            for (Sprite prototype : gamePrototypes) {
+                if (prototype.getPrototypeId() == Integer.parseInt(prototypeString)) {
+                    prototypesSpecifiedForLevel.add(prototype);
+                }
+            }
+        }
     }
 
 }
