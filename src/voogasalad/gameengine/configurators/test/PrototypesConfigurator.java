@@ -38,23 +38,23 @@ public class PrototypesConfigurator {
         return prototypesForLevel;
     }
 
-    private void setPropertiesForSpriteBuilder(SpriteBuilder spriteBuilder, Element root) {
-        NodeList listOfSpriteProperties = root.getChildNodes(); // this will return both element nodes and text nodes; we don't care about text nodes.
+    private void setPropertiesForSpriteBuilder(SpriteBuilder spriteBuilder, Element root) throws GameEngineException {
+        NodeList listOfSpriteProperties = root.getChildNodes();
         for (int j=0; j<listOfSpriteProperties.getLength(); j++) {
-            Element property = ConfigurationTool.convertNodeToElement(listOfSpriteProperties.item(j)); //filter to elements nodes only.
+            Element property = ConfigurationTool.convertNodeToElement(listOfSpriteProperties.item(j));
             if (property != null) {
                 setSinglePropertyInBuilder(spriteBuilder, property);
             }
         }
     }
 
-    private void setSinglePropertyInBuilder(SpriteBuilder builder, Node property) {
+    private void setSinglePropertyInBuilder(SpriteBuilder builder, Node property) throws GameEngineException {
         String value = property.getTextContent();
         try {
             String methodName = PROTOTYPE_CONFIG_BUNDLE.getString(property.getNodeName());
             builder.getClass().getMethod(methodName, String.class).invoke(builder, value);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace(); //FIXME
+            throw new GameEngineException(e, "SpriteProductionFailed");
         }
     }
 

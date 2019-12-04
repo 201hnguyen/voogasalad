@@ -32,7 +32,6 @@ public class Verifier {
         try {
             return verifyValidKey(parameterMap.get(keyValuePair[0]), Class.forName(keyValuePair[1]));
         } catch (ClassNotFoundException | NullPointerException | GameEngineException e) {
-            e.printStackTrace(); //TODO: Delete; currently here so we can see what is going on.
             throw new GameEngineException("InvalidValueInStrategyInitialization");
         }
     }

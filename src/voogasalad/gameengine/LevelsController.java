@@ -15,13 +15,23 @@ public class LevelsController {
         myNextLevelIndex = 0;
     }
 
-    public Level getNextLevel() {
-        for (Level level : myLevels) {
-            if (level.getLevelId() == myLevelsSequence.get(myNextLevelIndex)) {
-                myNextLevelIndex++;
-                return level;
+    public Level getNextLevel(Level currentLevel) {
+        if (hasNextLevel()) {
+            for (Level level : myLevels) {
+                if (level.getLevelId() == myLevelsSequence.get(myNextLevelIndex)) {
+                    myNextLevelIndex++;
+                    return level;
+                }
             }
         }
-        return null;
+        return currentLevel;
+    }
+
+    private boolean hasNextLevel() {
+        if (myLevelsSequence == null) {
+            return false;
+        } else {
+            return myNextLevelIndex < myLevelsSequence.size();
+        }
     }
 }

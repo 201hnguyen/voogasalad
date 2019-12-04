@@ -8,8 +8,9 @@ import voogasalad.gameengine.configurators.test.GameConfigurator;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.gamecontrol.GameSceneStatus;
 import voogasalad.gameengine.executors.gamecontrol.Level;
+import voogasalad.gameengine.executors.objectcreators.LevelBuilder;
 import voogasalad.gameengine.executors.sprites.Sprite;
-import voogasalad.gameengine.configurators.EngineConfigurator;
+//import voogasalad.gameengine.configurators.EngineConfigurator;
 import voogasalad.gameengine.executors.utils.SpriteArchetype;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -21,7 +22,7 @@ import java.util.List;
 
 public class Engine {
 
-    private EngineConfigurator myEngineConfigurator;
+//    private EngineConfigurator myEngineConfigurator;
     private Level myCurrentLevel;
     private UIActionsProcessor myCurrentUIActionsProcessor;
     private LevelsController myLevelsController;
@@ -40,13 +41,13 @@ public class Engine {
     }
 
     private void configureWithRealDocument(Document doc) throws GameEngineException {
-        myEngineConfigurator = new EngineConfigurator();
-        myEngineConfigurator.loadXML(doc);
-        myEngineConfigurator.initializeGame();
-        myCurrentLevel = myEngineConfigurator.initializeEngineForGame();
+//        myEngineConfigurator = new EngineConfigurator();
+//        myEngineConfigurator.loadXML(doc);
+//        myEngineConfigurator.initializeGame();
+//        myCurrentLevel = myEngineConfigurator.initializeEngineForGame();
     }
 
-    private void configureWithTestDocument() {
+    private void configureWithTestDocument() throws GameEngineException {
         File testFile = new File("src/resources/player/MockData2.xml");
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder ;
@@ -55,14 +56,16 @@ public class Engine {
             Document doc = builder.parse(testFile);
             GameConfigurator gameConfigurator = new GameConfigurator(doc);
             myLevelsController = gameConfigurator.loadLevelsFromXML();
+            Level baseDefaultLevel = new LevelBuilder(-1).build();
+            myCurrentLevel = baseDefaultLevel;
             loadNewLevel();
-        } catch (ParserConfigurationException | SAXException | IOException | GameEngineException e) {
-            e.printStackTrace(); //FIXME
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            throw new GameEngineException(e, "ConfigurationFailedXML");
         }
     }
 
-    private void loadNewLevel() {
-        myCurrentLevel = myLevelsController.getNextLevel();
+    private void loadNewLevel() throws GameEngineException {
+        myCurrentLevel = myLevelsController.getNextLevel(myCurrentLevel);
         myCurrentLevel.getStatusManager().setGameSceneStatus(GameSceneStatus.ONGOING);
         myCurrentUIActionsProcessor.updateLevel(myCurrentLevel);
     }

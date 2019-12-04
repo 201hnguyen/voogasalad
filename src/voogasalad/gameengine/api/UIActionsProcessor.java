@@ -7,7 +7,6 @@ import voogasalad.gameengine.executors.gamecontrol.action.LevelAction;
 import voogasalad.gameengine.executors.gamecontrol.action.RemoveSpriteAction;
 
 public class UIActionsProcessor {
-    private Level myLevel;
     private LevelActionsRequester myLevelActionsRequester;
 
     public void processAddSpriteAction(int prototypeId, double xPos, double yPos) {
@@ -21,7 +20,6 @@ public class UIActionsProcessor {
     }
 
     public void updateLevel(Level level) {
-        myLevel = level;
         myLevelActionsRequester = level.getActionsRequester();
     }
 }

@@ -19,7 +19,9 @@ public class SpawnWaveAction implements LevelAction {
         if (myWave == null) {
             setupWave(waveManager);
         }
-        isFinished = myWave.spawnNextSprite(spriteManager, elapsedTime);
+        if (! isFinished) {
+            isFinished = myWave.spawnNextSprite(spriteManager, elapsedTime);
+        }
     }
 
     @Override
@@ -27,12 +29,12 @@ public class SpawnWaveAction implements LevelAction {
         return isFinished;
     }
 
-    private void setupWave(WaveManager waveManager) throws GameEngineException {
+    private void setupWave(WaveManager waveManager) {
         if (waveManager.hasNextWave()) {
             isFinished = false;
             myWave = waveManager.getNextWave();
         } else {
-            throw new GameEngineException("SpecifyWavesToExecuteAction"); //TODO: This exception is thrown incorrectly for case where you don't have next wave but continuous condition checking
+            isFinished = true;
         }
     }
 }

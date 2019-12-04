@@ -23,6 +23,7 @@ public class LevelConfigurator {
     public static final String CONDITION_NODES_TAG = "Condition";
     public static final String LEVEL_ID_NODE_TAG = "LevelId";
     public static final String BACKGROUND_PATH_TAG = "BackgroundImage";
+    public static final String DEFAULT_BACKGROUND_PATH = "whitebackground.jpg";
 
     private Element myCurrentLevelRoot;
 
@@ -65,7 +66,7 @@ public class LevelConfigurator {
         }
     }
 
-    private Collection<LevelCondition> configureLevelConditions() {
+    private Collection<LevelCondition> configureLevelConditions() throws GameEngineException {
         ConditionsConfigurator conditionsConfigurator = new ConditionsConfigurator();
         NodeList conditionNodes = myCurrentLevelRoot.getElementsByTagName(CONDITION_NODES_TAG);
         return conditionsConfigurator.buildConditionsCollection(conditionNodes);
@@ -75,7 +76,7 @@ public class LevelConfigurator {
         try {
             return myCurrentLevelRoot.getElementsByTagName(BACKGROUND_PATH_TAG).item(0).getTextContent();
         } catch (NullPointerException e) {
-            return null;
+            return DEFAULT_BACKGROUND_PATH;
         }
     }
 
