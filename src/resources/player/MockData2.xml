@@ -2,11 +2,11 @@
 <!--TODO: Refactor prototype definitions to Game-level instead of Level-level scale and have levels just specify id numbers for prototypes-->
 <GameConfiguration>
 
-    <LevelSequence>0 1</LevelSequence>
+    <LevelSequence>1 0</LevelSequence>
     <LevelWinAction>AdvanceToNextLevel</LevelWinAction>
 
     <Level>
-        <LevelId>0</LevelId>
+        <LevelId>1</LevelId>
         <Resources>250</Resources>
         <Lives>20</Lives>
         <BackgroundImage>bird.png</BackgroundImage>
@@ -39,7 +39,7 @@
                 <prototypeid>1</prototypeid>
                 <width>40</width>
                 <height>30</height>
-                <imagepath>pandaslogo.png</imagepath>
+                <imagepath>bird.png</imagepath>
                 <archetype>ENEMY</archetype>
             </Properties>
             <Strategies>
@@ -119,7 +119,7 @@
     </Level>
 
     <Level>
-        <LevelId>1</LevelId>
+        <LevelId>0</LevelId>
         <Resources>250</Resources>
         <Lives>20</Lives>
         <BackgroundImage>bird.png</BackgroundImage>
@@ -129,7 +129,7 @@
                 <prototypeid>0</prototypeid>
                 <width>20</width>
                 <height>10</height>
-                <imagepath>bird.png</imagepath>
+                <imagepath>pandaslogo.png</imagepath>
                 <archetype>ENEMY</archetype>
             </Properties>
             <Strategies>

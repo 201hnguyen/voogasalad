@@ -8,7 +8,6 @@ import voogasalad.gameengine.configurators.test.GameConfigurator;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.gamecontrol.GameSceneStatus;
 import voogasalad.gameengine.executors.gamecontrol.Level;
-import voogasalad.gameengine.executors.objectcreators.LevelBuilder;
 import voogasalad.gameengine.executors.sprites.Sprite;
 import voogasalad.gameengine.configurators.EngineConfigurator;
 import voogasalad.gameengine.executors.utils.SpriteArchetype;
@@ -25,18 +24,17 @@ public class Engine {
     private EngineConfigurator myEngineConfigurator;
     private Level myCurrentLevel;
     private UIActionsProcessor myCurrentUIActionsProcessor;
-    private List<Level> myLevels;
+    private LevelsController myLevelsController;
 
     public Engine(Document doc) throws GameEngineException {
-        myCurrentLevel = new LevelBuilder(-1).build();
         //        configureWithRealDocument(doc);
+        myCurrentUIActionsProcessor = new UIActionsProcessor();
         configureWithTestDocument();
-        myCurrentUIActionsProcessor = new UIActionsProcessor(myCurrentLevel);
     }
 
     public GameSceneObject execute(double elapsedTime) throws GameEngineException {
         if (myCurrentLevel.getStatusManager().getGameSceneStatus() == GameSceneStatus.WON) {
-            myCurrentLevel = myLevels.get(1);
+            advanceToNextLevel();
         }
         return myCurrentLevel.execute(elapsedTime);
     }
@@ -49,19 +47,24 @@ public class Engine {
     }
 
     private void configureWithTestDocument() {
-        GameConfigurator gameConfigurator = new GameConfigurator();
         File testFile = new File("src/resources/player/MockData2.xml");
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder ;
         try {
             builder = factory.newDocumentBuilder();
             Document doc = builder.parse(testFile);
-            myLevels = gameConfigurator.loadLevelsFromXML(doc);
-            myCurrentLevel = myLevels.get(0);
-            myCurrentLevel.getStatusManager().setGameSceneStatus(GameSceneStatus.ONGOING);
+            GameConfigurator gameConfigurator = new GameConfigurator(doc);
+            myLevelsController = gameConfigurator.loadLevelsFromXML();
+            advanceToNextLevel();
         } catch (ParserConfigurationException | SAXException | IOException | GameEngineException e) {
             e.printStackTrace(); //FIXME
         }
+    }
+
+    private void advanceToNextLevel() {
+        myCurrentLevel = myLevelsController.getNextLevel();
+        myCurrentLevel.getStatusManager().setGameSceneStatus(GameSceneStatus.ONGOING);
+        myCurrentUIActionsProcessor.updateLevel(myCurrentLevel);
     }
 
     public UIActionsProcessor getUIActionProcessor() {
