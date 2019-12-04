@@ -2,7 +2,6 @@ package voogasalad.gameengine.executors.gamecontrol;
 
 import voogasalad.gameengine.api.GameSceneObject;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
-import voogasalad.gameengine.executors.gamecontrol.action.LevelAction;
 import voogasalad.gameengine.executors.gamecontrol.managers.ActionsManager;
 import voogasalad.gameengine.executors.gamecontrol.managers.ConditionsManager;
 import voogasalad.gameengine.executors.gamecontrol.managers.StatusManager;
@@ -19,6 +18,7 @@ public class Level implements GameScene {
     private ActionsManager myActionsManager;
     private int myLevelId;
     private String myBackgroundPath;
+    private LevelActionsRequester myActionsRequester;
 
     public Level(LevelBuilder levelBuilder) {
         myLevelId = levelBuilder.getLevelId();
@@ -28,14 +28,20 @@ public class Level implements GameScene {
         myConditionsManager = levelBuilder.getConditionsManager();
         myActionsManager = levelBuilder.getActionsManager();
         myBackgroundPath = levelBuilder.getBackgroundPath();
+        myActionsRequester = levelBuilder.getLevelActionsRequester();
     }
 
     public GameSceneObject execute(double elapsedTime) throws GameEngineException {
         myStatusManager.notifyNewCycle(elapsedTime);
+        myActionsManager.addActionsAsCollection(myActionsRequester.getRequestedActions());
         myActionsManager.addActionsAsCollection(myConditionsManager.getActionsToExecute(this));
         myActionsManager.executeActions(this);
-        mySpriteManager.getOnScreenSprites().stream().forEach((sprite -> sprite.updatePosition(elapsedTime)));
+        mySpriteManager.executeSpriteNextState(elapsedTime);
         return new GameSceneObject(myStatusManager.getResources(),  myStatusManager.getLives(), mySpriteManager);
+    }
+
+    public LevelActionsRequester getActionsRequester() {
+        return myActionsRequester;
     }
 
     public SpriteManager getSpriteManager() {
@@ -48,10 +54,6 @@ public class Level implements GameScene {
 
     public StatusManager getStatusManager() {
         return myStatusManager;
-    }
-
-    public void addAction(LevelAction action) {
-        myActionsManager.addAction(action);
     }
 
     public int getLevelId() {

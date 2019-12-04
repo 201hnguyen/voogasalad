@@ -2,6 +2,7 @@ package voogasalad.gameengine.executors.objectcreators;
 
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.gamecontrol.Level;
+import voogasalad.gameengine.executors.gamecontrol.LevelActionsRequester;
 import voogasalad.gameengine.executors.gamecontrol.Wave;
 import voogasalad.gameengine.executors.gamecontrol.condition.LevelCondition;
 import voogasalad.gameengine.executors.gamecontrol.managers.ActionsManager;
@@ -24,19 +25,25 @@ public class LevelBuilder {
     private SpriteProductsFactory mySpriteProductsFactory;
     private int myLevelId;
     private String myBackgroundPath;
+    private LevelActionsRequester myLevelActionsRequester;
 
     public LevelBuilder(int id) throws GameEngineException {
         myLevelId = id;
         mySpriteProductsFactory = new SpriteProductsFactory();
+        myLevelActionsRequester = new LevelActionsRequester();
         myStatusManager = new StatusManager();
         myWaveManager = new WaveManager();
         myActionsManager = new ActionsManager();
         myConditionsManager = new ConditionsManager();
-        mySpriteManager = mySpriteProductsFactory.makeSpriteManager();
+        mySpriteManager = mySpriteProductsFactory.makeSpriteManager(myLevelActionsRequester);
     }
 
     public String getBackgroundPath() {
         return myBackgroundPath;
+    }
+
+    public LevelActionsRequester getLevelActionsRequester() {
+        return myLevelActionsRequester;
     }
 
     public StatusManager getStatusManager() {

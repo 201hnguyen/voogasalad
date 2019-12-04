@@ -1,6 +1,7 @@
 package voogasalad.gameengine.executors.sprites;
 
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
+import voogasalad.gameengine.executors.gamecontrol.LevelActionsRequester;
 import voogasalad.gameengine.executors.utils.SpriteArchetype;
 
 import java.util.ArrayList;
@@ -12,11 +13,13 @@ public class JavaFXSpriteManager implements SpriteManager {
     private List<Sprite> myOnScreenSprites;
     private Map<Integer, Sprite> mySpritePrototypes;
     private int mySpriteIdGenerator;
+    private LevelActionsRequester myLevelActionsRequester;
 
-    public JavaFXSpriteManager() {
+    public JavaFXSpriteManager(LevelActionsRequester levelActionsRequester) {
         myOnScreenSprites = new ArrayList<>();
         mySpritePrototypes = new HashMap<>();
         mySpriteIdGenerator = 0;
+        myLevelActionsRequester = levelActionsRequester;
     }
 
     @Override
@@ -71,5 +74,10 @@ public class JavaFXSpriteManager implements SpriteManager {
             }
         }
         return spritePrototypesOfArchetype;
+    }
+
+    @Override
+    public void executeSpriteNextState(double elapsedTime) {
+        myOnScreenSprites.stream().forEach((sprite -> sprite.updatePosition(elapsedTime)));
     }
 }

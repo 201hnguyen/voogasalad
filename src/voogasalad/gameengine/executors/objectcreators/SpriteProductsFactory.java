@@ -1,6 +1,7 @@
 package voogasalad.gameengine.executors.objectcreators;
 
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
+import voogasalad.gameengine.executors.gamecontrol.LevelActionsRequester;
 import voogasalad.gameengine.executors.sprites.Sprite;
 import voogasalad.gameengine.executors.sprites.SpriteManager;
 
@@ -12,10 +13,10 @@ public class SpriteProductsFactory {
     private final static String CLASS_PATH = "voogasalad.gameengine.executors.sprites.";
     private final ResourceBundle SpriteFrontendSelection = ResourceBundle.getBundle(SPRITE_FRONTEND_RESOURCE_PATH);
 
-    public SpriteManager makeSpriteManager() throws GameEngineException {
+    public SpriteManager makeSpriteManager(LevelActionsRequester levelActionsRequester) throws GameEngineException {
         String spriteManagerClassSelection = SpriteFrontendSelection.getString("SpriteManager");
         try {
-            return (SpriteManager) Class.forName(CLASS_PATH + spriteManagerClassSelection).getConstructor().newInstance();
+            return (SpriteManager) Class.forName(CLASS_PATH + spriteManagerClassSelection).getConstructor(LevelActionsRequester.class).newInstance(levelActionsRequester);
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | ClassNotFoundException e) {
             e.printStackTrace(); //TODO: Delete; currently here so we can see what is going on.
             throw new GameEngineException(e, "SpriteManagerProductionFailed");

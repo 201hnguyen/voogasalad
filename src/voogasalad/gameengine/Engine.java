@@ -34,7 +34,7 @@ public class Engine {
 
     public GameSceneObject execute(double elapsedTime) throws GameEngineException {
         if (myCurrentLevel.getStatusManager().getGameSceneStatus() == GameSceneStatus.WON) {
-            advanceToNextLevel();
+            loadNewLevel();
         }
         return myCurrentLevel.execute(elapsedTime);
     }
@@ -55,13 +55,13 @@ public class Engine {
             Document doc = builder.parse(testFile);
             GameConfigurator gameConfigurator = new GameConfigurator(doc);
             myLevelsController = gameConfigurator.loadLevelsFromXML();
-            advanceToNextLevel();
+            loadNewLevel();
         } catch (ParserConfigurationException | SAXException | IOException | GameEngineException e) {
             e.printStackTrace(); //FIXME
         }
     }
 
-    private void advanceToNextLevel() {
+    private void loadNewLevel() {
         myCurrentLevel = myLevelsController.getNextLevel();
         myCurrentLevel.getStatusManager().setGameSceneStatus(GameSceneStatus.ONGOING);
         myCurrentUIActionsProcessor.updateLevel(myCurrentLevel);
