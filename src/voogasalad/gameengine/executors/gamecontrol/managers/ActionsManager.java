@@ -2,7 +2,7 @@ package voogasalad.gameengine.executors.gamecontrol.managers;
 
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.gamecontrol.Level;
-import voogasalad.gameengine.executors.gamecontrol.action.LevelAction;
+import voogasalad.gameengine.executors.gamecontrol.action.level.LevelAction;
 
 import java.util.Collection;
 import java.util.HashSet;

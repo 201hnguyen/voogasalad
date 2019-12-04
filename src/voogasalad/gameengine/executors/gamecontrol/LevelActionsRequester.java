@@ -1,6 +1,6 @@
 package voogasalad.gameengine.executors.gamecontrol;
 
-import voogasalad.gameengine.executors.gamecontrol.action.LevelAction;
+import voogasalad.gameengine.executors.gamecontrol.action.level.LevelAction;
 
 import java.util.HashSet;
 import java.util.Set;

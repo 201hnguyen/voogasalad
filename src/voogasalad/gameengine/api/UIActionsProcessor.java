@@ -2,9 +2,9 @@ package voogasalad.gameengine.api;
 
 import voogasalad.gameengine.executors.gamecontrol.Level;
 import voogasalad.gameengine.executors.gamecontrol.LevelActionsRequester;
-import voogasalad.gameengine.executors.gamecontrol.action.AddSpriteAction;
-import voogasalad.gameengine.executors.gamecontrol.action.LevelAction;
-import voogasalad.gameengine.executors.gamecontrol.action.RemoveSpriteAction;
+import voogasalad.gameengine.executors.gamecontrol.action.level.AddSpriteAction;
+import voogasalad.gameengine.executors.gamecontrol.action.level.LevelAction;
+import voogasalad.gameengine.executors.gamecontrol.action.level.RemoveSpriteAction;
 
 public class UIActionsProcessor {
     private LevelActionsRequester myLevelActionsRequester;

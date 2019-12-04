@@ -6,10 +6,10 @@
 //import voogasalad.gameengine.executors.exceptions.GameEngineException;
 //import voogasalad.gameengine.executors.gamecontrol.Level;
 //import voogasalad.gameengine.executors.gamecontrol.Wave;
-//import voogasalad.gameengine.executors.gamecontrol.action.LevelAction;
-//import voogasalad.gameengine.executors.gamecontrol.action.SpawnWaveAction;
-//import voogasalad.gameengine.executors.gamecontrol.condition.LevelCondition;
-//import voogasalad.gameengine.executors.gamecontrol.condition.TemporalCondition;
+//import voogasalad.gameengine.executors.gamecontrol.action.level.LevelAction;
+//import voogasalad.gameengine.executors.gamecontrol.action.level.SpawnWaveAction;
+//import voogasalad.gameengine.executors.gamecontrol.condition.level.LevelCondition;
+//import voogasalad.gameengine.executors.gamecontrol.condition.level.TemporalCondition;
 //import voogasalad.gameengine.executors.gamecontrol.managers.ActionsManager;
 //import voogasalad.gameengine.executors.gamecontrol.managers.ConditionsManager;
 //import voogasalad.gameengine.executors.gamecontrol.managers.StatusManager;

@@ -1,9 +1,9 @@
 package voogasalad.gameengine.executors.gamecontrol.managers;
 
 import voogasalad.gameengine.executors.gamecontrol.Level;
-import voogasalad.gameengine.executors.gamecontrol.action.LevelAction;
+import voogasalad.gameengine.executors.gamecontrol.action.level.LevelAction;
 import voogasalad.gameengine.executors.gamecontrol.condition.ConditionClassification;
-import voogasalad.gameengine.executors.gamecontrol.condition.LevelCondition;
+import voogasalad.gameengine.executors.gamecontrol.condition.level.LevelCondition;
 
 import java.util.Collection;
 import java.util.HashSet;

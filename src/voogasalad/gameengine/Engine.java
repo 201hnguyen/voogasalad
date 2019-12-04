@@ -36,12 +36,12 @@ public class Engine {
         myLevelsController = gameConfigurator.loadLevelsFromXML();
         Level baseDefaultLevel = new LevelBuilder(-1).build();
         myCurrentLevel = baseDefaultLevel;
-        loadNewLevel();
+        loadNextLevel();
     }
 
     public GameSceneObject execute(double elapsedTime) throws GameEngineException {
         if (myCurrentLevel.getStatusManager().getGameSceneStatus() == GameSceneStatus.WON) {
-            loadNewLevel();
+            loadNextLevel();
         }
         return myCurrentLevel.execute(elapsedTime);
     }
@@ -67,7 +67,7 @@ public class Engine {
         }
     }
 
-    private void loadNewLevel() {
+    public void loadNextLevel() {
         myCurrentLevel = myLevelsController.getNextLevel(myCurrentLevel);
         myCurrentLevel.getStatusManager().setGameSceneStatus(GameSceneStatus.ONGOING);
         myCurrentUIActionsProcessor.updateLevel(myCurrentLevel);
@@ -84,4 +84,9 @@ public class Engine {
     public List<Sprite> getSpritePrototypesByArchetype(SpriteArchetype spriteArchetype) throws GameEngineException {
         return myCurrentLevel.getSpriteManager().getPrototypesForArchetype(spriteArchetype);
     }
+
+    public GameSceneStatus getCurrentLevelStatus() {
+        return myCurrentLevel.getStatusManager().getGameSceneStatus();
+    }
+
 }
