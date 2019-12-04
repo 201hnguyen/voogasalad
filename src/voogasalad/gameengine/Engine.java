@@ -4,7 +4,7 @@ import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 import voogasalad.gameengine.api.GameSceneObject;
 import voogasalad.gameengine.api.UIActionsProcessor;
-import voogasalad.gameengine.configurators.test.GameConfigurator;
+import voogasalad.gameengine.configurators.GameConfigurator;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.gamecontrol.GameSceneStatus;
 import voogasalad.gameengine.executors.gamecontrol.Level;
@@ -26,11 +26,17 @@ public class Engine {
     private Level myCurrentLevel;
     private UIActionsProcessor myCurrentUIActionsProcessor;
     private LevelsController myLevelsController;
+    private Document myGameConfigDocument;
 
     public Engine(Document doc) throws GameEngineException {
-        //        configureWithRealDocument(doc);
         myCurrentUIActionsProcessor = new UIActionsProcessor();
+        //        configureWithRealDocument(doc);
         configureWithTestDocument();
+        GameConfigurator gameConfigurator = new GameConfigurator(myGameConfigDocument);
+        myLevelsController = gameConfigurator.loadLevelsFromXML();
+        Level baseDefaultLevel = new LevelBuilder(-1).build();
+        myCurrentLevel = baseDefaultLevel;
+        loadNewLevel();
     }
 
     public GameSceneObject execute(double elapsedTime) throws GameEngineException {
@@ -45,6 +51,7 @@ public class Engine {
 //        myEngineConfigurator.loadXML(doc);
 //        myEngineConfigurator.initializeGame();
 //        myCurrentLevel = myEngineConfigurator.initializeEngineForGame();
+        myGameConfigDocument = doc;
     }
 
     private void configureWithTestDocument() throws GameEngineException {
@@ -54,17 +61,13 @@ public class Engine {
         try {
             builder = factory.newDocumentBuilder();
             Document doc = builder.parse(testFile);
-            GameConfigurator gameConfigurator = new GameConfigurator(doc);
-            myLevelsController = gameConfigurator.loadLevelsFromXML();
-            Level baseDefaultLevel = new LevelBuilder(-1).build();
-            myCurrentLevel = baseDefaultLevel;
-            loadNewLevel();
+            myGameConfigDocument = doc;
         } catch (ParserConfigurationException | SAXException | IOException e) {
             throw new GameEngineException(e, "ConfigurationFailedXML");
         }
     }
 
-    private void loadNewLevel() throws GameEngineException {
+    private void loadNewLevel() {
         myCurrentLevel = myLevelsController.getNextLevel(myCurrentLevel);
         myCurrentLevel.getStatusManager().setGameSceneStatus(GameSceneStatus.ONGOING);
         myCurrentUIActionsProcessor.updateLevel(myCurrentLevel);

@@ -1,4 +1,4 @@
-package voogasalad.gameengine.configurators.test;
+package voogasalad.gameengine.configurators;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
