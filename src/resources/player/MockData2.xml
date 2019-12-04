@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<GameConfiguration>
+
+    <LevelSequence>1 0</LevelSequence>
+
+    <GameCondition>
+        <Type>CurrentLevelWonCondition</Type>
+        <Parameters>
+            <classification>CONTINUOUS</classification>
+        </Parameters>
+        <Actions>
+            <Action>
+                <type>AdvanceToNextLevelAction</type>
+            </Action>
+        </Actions>
+    </GameCondition>
+
+    <SpritePrototype>
+        <Properties>
+            <prototypeid>0</prototypeid>
+            <width>20</width>
+            <height>10</height>
+            <imagepath>bird.png</imagepath>
+            <archetype>ENEMY</archetype>
+        </Properties>
+        <Strategies>
+            <HealthStrategy>
+                <type>Health</type>
+                <parameters>
+                    <health>10</health>
+                </parameters>
+            </HealthStrategy>
+            <MovementStrategy>
+                <type>PathMovement</type>
+                <parameters>
+                    <path></path>
+                </parameters>
+            </MovementStrategy>
+        </Strategies>
+    </SpritePrototype>
+    <SpritePrototype>
+        <Properties>
+            <prototypeid>1</prototypeid>
+            <width>40</width>
+            <height>30</height>
+            <imagepath>pandaslogo.png</imagepath>
+            <archetype>ENEMY</archetype>
+        </Properties>
+        <Strategies>
+            <HealthStrategy>
+                <type>Health</type>
+                <parameters>
+                    <health>20</health>
+                </parameters>
+            </HealthStrategy>
+            <MovementStrategy>
+                <type>NoMovement</type>
+                <parameters></parameters>
+            </MovementStrategy>
+        </Strategies>
+    </SpritePrototype>
+
+    <Level>
+        <LevelId>1</LevelId>
+        <Resources>250</Resources>
+        <Lives>20</Lives>
+        <BackgroundImage>bird.png</BackgroundImage>
+        <AvailablePrototypes>0</AvailablePrototypes>
+
+        <Wave>
+            <Queue>0 0 0 0 0</Queue>
+            <Interval>0.5</Interval>
+            <SpawnPointX>100</SpawnPointX>
+            <SpawnPointY>100</SpawnPointY>
+        </Wave>
+        <Wave>
+            <Queue>0 0</Queue>
+            <Interval>1</Interval>
+            <SpawnPointX>100</SpawnPointX>
+            <SpawnPointY>100</SpawnPointY>
+        </Wave>
+
+        <Condition>
+            <Type>TemporalCondition</Type>
+            <Parameters>
+                <markedtime>0</markedtime>
+            </Parameters>
+            <Actions>
+                <Action>
+                    <type>SpawnWaveAction</type>
+                </Action>
+            </Actions>
+        </Condition>
+        <Condition>
+            <Type>OnscreenArchetypeCountCondition</Type>
+            <Parameters>
+                <markedcount>0</markedcount>
+                <archetype>ENEMY</archetype>
+                <classification>CONTINUOUS</classification>
+            </Parameters>
+            <Actions>
+                <Action>
+                    <type>SpawnWaveAction</type>
+                </Action>
+            </Actions>
+        </Condition>
+        <Condition>
+            <Type>OnscreenArchetypeCountCondition</Type>
+            <Parameters>
+                <markedcount>7</markedcount>
+                <archetype>ENEMY</archetype>
+            </Parameters>
+            <Actions>
+                <Action>
+                    <type>WinLevelAction</type>
+                </Action>
+            </Actions>
+        </Condition>
+        <Condition>
+            <Type>LivesCountCondition</Type>
+            <Parameters>
+                <markedcount>0</markedcount>
+            </Parameters>
+            <Actions>
+                <Action>
+                    <type>LoseLevelAction</type>
+                </Action>
+            </Actions>
+        </Condition>
+    </Level>
+
+    <Level>
+        <LevelId>0</LevelId>
+        <Resources>250</Resources>
+        <Lives>20</Lives>
+        <BackgroundImage>bird.png</BackgroundImage>
+        <AvailablePrototypes>0 1</AvailablePrototypes>
+
+        <Wave>
+            <Queue>0 1 0 0 1</Queue>
+            <Interval>0.5</Interval>
+            <SpawnPointX>100</SpawnPointX>
+            <SpawnPointY>100</SpawnPointY>
+        </Wave>
+        <Wave>
+            <Queue>0 1</Queue>
+            <Interval>1</Interval>
+            <SpawnPointX>100</SpawnPointX>
+            <SpawnPointY>100</SpawnPointY>
+        </Wave>
+
+        <Condition>
+            <Type>TemporalCondition</Type>
+            <Parameters>
+                <markedtime>0</markedtime>
+            </Parameters>
+            <Actions>
+                <Action>
+                    <type>SpawnWaveAction</type>
+                </Action>
+            </Actions>
+        </Condition>
+        <Condition>
+            <Type>OnscreenArchetypeCountCondition</Type>
+            <Parameters>
+                <markedcount>1</markedcount>
+                <archetype>ENEMY</archetype>
+                <classification>CONTINUOUS</classification>
+            </Parameters>
+            <Actions>
+                <Action>
+                    <type>SpawnWaveAction</type>
+                </Action>
+            </Actions>
+        </Condition>
+        <Condition>
+            <Type>EnemiesClearedCondition</Type>
+            <Parameters></Parameters>
+            <Actions>
+                <Action>
+                    <type>WinLevelAction</type>
+                </Action>
+            </Actions>
+        </Condition>
+        <Condition>
+            <Type>LivesCountCondition</Type>
+            <Parameters>
+                <markedcount>0</markedcount>
+            </Parameters>
+            <Actions>
+                <Action>
+                    <type>LoseLevelAction</type>
+                </Action>
+            </Actions>
+        </Condition>
+    </Level>
+</GameConfiguration>
