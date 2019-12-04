@@ -1,7 +1,7 @@
 package voogasalad.gameengine.executors.sprites;
 
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
-import voogasalad.gameengine.executors.gamecontrol.LevelActionsRequester;
+import voogasalad.gameengine.executors.control.levelcontrol.LevelActionsRequester;
 import voogasalad.gameengine.executors.utils.SpriteArchetype;
 
 import java.util.ArrayList;

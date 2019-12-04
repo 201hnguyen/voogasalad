@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!--TODO: Refactor prototype definitions to Game-level instead of Level-level scale and have levels just specify id numbers for prototypes-->
 <GameConfiguration>
 
     <LevelSequence>1 0</LevelSequence>
-    <LevelWinAction>AdvanceToNextLevel</LevelWinAction>
+
+    <GameCondition>
+        <Type>CurrentLevelWonCondition</Type>
+        <Parameters>
+            <classification>CONTINUOUS</classification>
+        </Parameters>
+        <Actions>
+            <Action>
+                <type>AdvanceToNextLevelAction</type>
+            </Action>
+        </Actions>
+    </GameCondition>
 
     <SpritePrototype>
         <Properties>

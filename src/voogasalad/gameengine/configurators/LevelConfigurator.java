@@ -3,9 +3,9 @@ package voogasalad.gameengine.configurators;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
-import voogasalad.gameengine.executors.gamecontrol.Level;
-import voogasalad.gameengine.executors.gamecontrol.Wave;
-import voogasalad.gameengine.executors.gamecontrol.condition.level.LevelCondition;
+import voogasalad.gameengine.executors.control.levelcontrol.Level;
+import voogasalad.gameengine.executors.control.levelcontrol.Wave;
+import voogasalad.gameengine.executors.control.condition.level.LevelCondition;
 import voogasalad.gameengine.executors.objectcreators.LevelBuilder;
 import voogasalad.gameengine.executors.sprites.Sprite;
 import voogasalad.gameengine.executors.utils.ConfigurationTool;
@@ -64,7 +64,7 @@ public class LevelConfigurator {
     private Collection<LevelCondition> configureLevelConditions() throws GameEngineException {
         ConditionsConfigurator conditionsConfigurator = new ConditionsConfigurator();
         NodeList conditionNodes = myCurrentLevelRoot.getElementsByTagName(CONDITION_NODES_TAG);
-        return conditionsConfigurator.buildConditionsCollection(conditionNodes);
+        return conditionsConfigurator.buildLevelConditionsCollection(conditionNodes);
     }
 
     private String configureBackgroundPath() {

@@ -2,7 +2,7 @@ package tests.engine.sprites;
 
 import org.junit.jupiter.api.Test;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
-import voogasalad.gameengine.executors.gamecontrol.LevelActionsRequester;
+import voogasalad.gameengine.executors.control.levelcontrol.LevelActionsRequester;
 import voogasalad.gameengine.executors.objectcreators.SpriteProductsFactory;
 import voogasalad.gameengine.executors.objectcreators.StrategiesFactory;
 import voogasalad.gameengine.executors.sprites.Sprite;
