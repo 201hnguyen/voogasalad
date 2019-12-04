@@ -6,9 +6,9 @@
 //import voogasalad.gameengine.executors.objectcreators.StrategiesFactory;
 //import voogasalad.gameengine.executors.gamecontrol.Level;
 //import voogasalad.gameengine.executors.gamecontrol.Wave;
-//import voogasalad.gameengine.executors.gamecontrol.action.LevelAction;
-//import voogasalad.gameengine.executors.gamecontrol.condition.LevelCondition;
-//import voogasalad.gameengine.executors.gamecontrol.condition.TemporalCondition;
+//import voogasalad.gameengine.executors.gamecontrol.action.level.LevelAction;
+//import voogasalad.gameengine.executors.gamecontrol.condition.level.LevelCondition;
+//import voogasalad.gameengine.executors.gamecontrol.condition.level.TemporalCondition;
 //import voogasalad.gameengine.executors.objectcreators.SpriteBuilder;
 //
 //import java.awt.*;

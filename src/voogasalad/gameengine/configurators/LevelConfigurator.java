@@ -5,7 +5,7 @@ import org.w3c.dom.NodeList;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.gamecontrol.Level;
 import voogasalad.gameengine.executors.gamecontrol.Wave;
-import voogasalad.gameengine.executors.gamecontrol.condition.LevelCondition;
+import voogasalad.gameengine.executors.gamecontrol.condition.level.LevelCondition;
 import voogasalad.gameengine.executors.objectcreators.LevelBuilder;
 import voogasalad.gameengine.executors.sprites.Sprite;
 import voogasalad.gameengine.executors.utils.ConfigurationTool;

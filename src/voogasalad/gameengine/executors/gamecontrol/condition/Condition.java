@@ -1,12 +1,11 @@
 package voogasalad.gameengine.executors.gamecontrol.condition;
 
-import voogasalad.gameengine.executors.gamecontrol.Level;
-import voogasalad.gameengine.executors.gamecontrol.action.LevelAction;
+import voogasalad.gameengine.executors.gamecontrol.action.level.LevelAction;
 
 import java.util.Map;
 import java.util.Set;
 
-public abstract class LevelCondition {
+public abstract class Condition {
 
     public static final String CONDITION_CLASSIFICATION_MAP_KEY = "classification";
     public static final ConditionClassification DEFAULT_CONDITION_CLASSIFICATION = ConditionClassification.ONETIME;
@@ -14,12 +13,12 @@ public abstract class LevelCondition {
     private Set<LevelAction> myActions;
     private ConditionClassification myConditionClassification;
 
-    public LevelCondition(ConditionClassification classification, Set<LevelAction> actions) {
+    public Condition(ConditionClassification classification, Set<LevelAction> actions) {
         myActions = actions;
         myConditionClassification = classification;
     }
 
-    public LevelCondition(Map<String, String> parameters, Set<LevelAction> actions) {
+    public Condition(Map<String, String> parameters, Set<LevelAction> actions) {
         try {
             myConditionClassification = ConditionClassification.valueOf(parameters.get(CONDITION_CLASSIFICATION_MAP_KEY));
         } catch (NullPointerException | IllegalArgumentException e) {
@@ -27,8 +26,6 @@ public abstract class LevelCondition {
         }
         myActions = actions;
     }
-
-    public abstract boolean hasHappened(Level level);
 
     public Set<LevelAction> getActions() {
         return myActions;

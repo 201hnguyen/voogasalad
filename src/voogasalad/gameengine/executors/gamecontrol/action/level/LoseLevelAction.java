@@ -1,13 +1,13 @@
-package voogasalad.gameengine.executors.gamecontrol.action;
+package voogasalad.gameengine.executors.gamecontrol.action.level;
 
 import voogasalad.gameengine.executors.gamecontrol.GameSceneStatus;
 import voogasalad.gameengine.executors.gamecontrol.Level;
 
-public class WinLevelAction implements LevelAction {
+public class LoseLevelAction implements LevelAction {
 
     @Override
     public void execute(Level level) {
-        level.getStatusManager().setGameSceneStatus(GameSceneStatus.WON);
+        level.getStatusManager().setGameSceneStatus(GameSceneStatus.LOST);
     }
 
     @Override

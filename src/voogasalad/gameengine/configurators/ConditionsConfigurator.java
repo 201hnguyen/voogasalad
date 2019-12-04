@@ -4,8 +4,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
-import voogasalad.gameengine.executors.gamecontrol.action.LevelAction;
-import voogasalad.gameengine.executors.gamecontrol.condition.LevelCondition;
+import voogasalad.gameengine.executors.gamecontrol.action.level.LevelAction;
+import voogasalad.gameengine.executors.gamecontrol.condition.level.LevelCondition;
 import voogasalad.gameengine.executors.utils.ConfigurationTool;
 
 import java.lang.reflect.InvocationTargetException;
@@ -13,8 +13,8 @@ import java.util.*;
 
 public class ConditionsConfigurator {
 
-    public static final String CONDITIONS_PACKAGE_PATH = "voogasalad.gameengine.executors.gamecontrol.condition.";
-    public static final String ACTIONS_PACKAGE_PATH = "voogasalad.gameengine.executors.gamecontrol.action.";
+    public static final String CONDITIONS_PACKAGE_PATH = "voogasalad.gameengine.executors.gamecontrol.condition.level.";
+    public static final String ACTIONS_PACKAGE_PATH = "voogasalad.gameengine.executors.gamecontrol.action.level.";
     public static final String CONDITION_PARAMETERS_ROOT_TAG = "Parameters";
     public static final String CONDITION_ACTIONS_ROOT_TAG = "Actions";
     public static final String CONDITION_TYPE_ROOT_TAG = "Type";
