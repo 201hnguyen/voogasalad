@@ -2,68 +2,69 @@
 <!--TODO: Refactor prototype definitions to Game-level instead of Level-level scale and have levels just specify id numbers for prototypes-->
 <GameConfiguration>
 
-    <LevelSequence>1</LevelSequence>
+    <LevelSequence>1 0</LevelSequence>
     <LevelWinAction>AdvanceToNextLevel</LevelWinAction>
+
+    <SpritePrototype>
+        <Properties>
+            <prototypeid>0</prototypeid>
+            <width>20</width>
+            <height>10</height>
+            <imagepath>bird.png</imagepath>
+            <archetype>ENEMY</archetype>
+        </Properties>
+        <Strategies>
+            <HealthStrategy>
+                <type>Health</type>
+                <parameters>
+                    <health>10</health>
+                </parameters>
+            </HealthStrategy>
+            <MovementStrategy>
+                <type>PathMovement</type>
+                <parameters>
+                    <path></path>
+                </parameters>
+            </MovementStrategy>
+        </Strategies>
+    </SpritePrototype>
+    <SpritePrototype>
+        <Properties>
+            <prototypeid>1</prototypeid>
+            <width>40</width>
+            <height>30</height>
+            <imagepath>pandaslogo.png</imagepath>
+            <archetype>ENEMY</archetype>
+        </Properties>
+        <Strategies>
+            <HealthStrategy>
+                <type>Health</type>
+                <parameters>
+                    <health>20</health>
+                </parameters>
+            </HealthStrategy>
+            <MovementStrategy>
+                <type>NoMovement</type>
+                <parameters></parameters>
+            </MovementStrategy>
+        </Strategies>
+    </SpritePrototype>
 
     <Level>
         <LevelId>1</LevelId>
         <Resources>250</Resources>
         <Lives>20</Lives>
         <BackgroundImage>bird.png</BackgroundImage>
-
-        <SpritePrototype>
-            <Properties>
-                <prototypeid>0</prototypeid>
-                <width>20</width>
-                <height>10</height>
-                <imagepath>bird.png</imagepath>
-                <archetype>ENEMY</archetype>
-            </Properties>
-            <Strategies>
-                <HealthStrategy>
-                    <type>Health</type>
-                    <parameters>
-                        <health>10</health>
-                    </parameters>
-                </HealthStrategy>
-                <MovementStrategy>
-                    <type>PathMovement</type>
-                    <parameters>
-                        <path></path>
-                    </parameters>
-                </MovementStrategy>
-            </Strategies>
-        </SpritePrototype>
-        <SpritePrototype>
-            <Properties>
-                <prototypeid>1</prototypeid>
-                <width>40</width>
-                <height>30</height>
-                <imagepath>bird.png</imagepath>
-                <archetype>ENEMY</archetype>
-            </Properties>
-            <Strategies>
-                <HealthStrategy>
-                    <type>Health</type>
-                    <parameters>
-                        <health>20</health>
-                    </parameters>
-                </HealthStrategy>
-                <MovementStrategy>
-                    <type>NoMovement</type>
-                    <parameters></parameters>
-                </MovementStrategy>
-            </Strategies>
-        </SpritePrototype>
+        <AvailablePrototypes>0</AvailablePrototypes>
 
         <Wave>
-            <Queue>0 1 0 0 1</Queue>
+            <Queue>0 0 0 0 0</Queue>
             <Interval>0.5</Interval>
             <SpawnPointX>100</SpawnPointX>
             <SpawnPointY>100</SpawnPointY>
         </Wave>
         <Wave>
-            <Queue>0 1</Queue>
+            <Queue>0 0</Queue>
             <Interval>1</Interval>
             <SpawnPointX>100</SpawnPointX>
             <SpawnPointY>100</SpawnPointY>
@@ -123,51 +124,7 @@
         <Resources>250</Resources>
         <Lives>20</Lives>
         <BackgroundImage>bird.png</BackgroundImage>
-
-        <SpritePrototype>
-            <Properties>
-                <prototypeid>0</prototypeid>
-                <width>20</width>
-                <height>10</height>
-                <imagepath>pandaslogo.png</imagepath>
-                <archetype>ENEMY</archetype>
-            </Properties>
-            <Strategies>
-                <HealthStrategy>
-                    <type>Health</type>
-                    <parameters>
-                        <health>10</health>
-                    </parameters>
-                </HealthStrategy>
-                <MovementStrategy>
-                    <type>PathMovement</type>
-                    <parameters>
-                        <path></path>
-                    </parameters>
-                </MovementStrategy>
-            </Strategies>
-        </SpritePrototype>
-        <SpritePrototype>
-            <Properties>
-                <prototypeid>1</prototypeid>
-                <width>40</width>
-                <height>30</height>
-                <imagepath>pandaslogo.png</imagepath>
-                <archetype>ENEMY</archetype>
-            </Properties>
-            <Strategies>
-                <HealthStrategy>
-                    <type>Health</type>
-                    <parameters>
-                        <health>20</health>
-                    </parameters>
-                </HealthStrategy>
-                <MovementStrategy>
-                    <type>NoMovement</type>
-                    <parameters></parameters>
-                </MovementStrategy>
-            </Strategies>
-        </SpritePrototype>
+        <AvailablePrototypes>0 1</AvailablePrototypes>
 
         <Wave>
             <Queue>0 1 0 0 1</Queue>
