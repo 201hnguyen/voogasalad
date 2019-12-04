@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--TODO: Refactor prototype definitions to Game-level instead of Level-level scale and have levels just specify id numbers for prototypes-->
 <GameConfiguration>
+
+    <LevelSequence>0 1</LevelSequence>
+    <LevelWinAction>AdvanceToNextLevel</LevelWinAction>
+
     <Level>
+        <LevelId>0</LevelId>
+        <Resources>250</Resources>
+        <Lives>20</Lives>
+        <BackgroundImage>bird.png</BackgroundImage>
+
         <SpritePrototype>
             <Properties>
                 <prototypeid>0</prototypeid>
@@ -59,10 +68,6 @@
             <SpawnPointX>100</SpawnPointX>
             <SpawnPointY>100</SpawnPointY>
         </Wave>
-
-        <Resources>250</Resources>
-
-        <Lives>20</Lives>
 
         <Condition>
             <Type>TemporalCondition</Type>
@@ -114,6 +119,11 @@
     </Level>
 
     <Level>
+        <LevelId>1</LevelId>
+        <Resources>250</Resources>
+        <Lives>20</Lives>
+        <BackgroundImage>bird.png</BackgroundImage>
+
         <SpritePrototype>
             <Properties>
                 <prototypeid>0</prototypeid>
@@ -171,10 +181,6 @@
             <SpawnPointX>100</SpawnPointX>
             <SpawnPointY>100</SpawnPointY>
         </Wave>
-
-        <Resources>250</Resources>
-
-        <Lives>20</Lives>
 
         <Condition>
             <Type>TemporalCondition</Type>

@@ -17,13 +17,17 @@ public class Level implements GameScene {
     private StatusManager myStatusManager;
     private ConditionsManager myConditionsManager;
     private ActionsManager myActionsManager;
+    private int myLevelId;
+    private String myBackgroundPath;
 
     public Level(LevelBuilder levelBuilder) {
+        myLevelId = levelBuilder.getLevelId();
         mySpriteManager = levelBuilder.getSpriteManager();
         myWaveManager = levelBuilder.getWaveManager();
         myStatusManager = levelBuilder.getStatusManager();
         myConditionsManager = levelBuilder.getConditionsManager();
         myActionsManager = levelBuilder.getActionsManager();
+        myBackgroundPath = levelBuilder.getBackgroundPath();
     }
 
     public GameSceneObject execute(double elapsedTime) throws GameEngineException {

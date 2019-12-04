@@ -21,25 +21,26 @@ public class LevelConfigurator {
     public static final String RESOURCES_NODE_TAG = "Resources";
     public static final String LIVES_NODE_TAG = "Lives";
     public static final String CONDITION_NODES_TAG = "Condition";
+    public static final String LEVEL_ID_NODE_TAG = "LevelId";
+    public static final String BACKGROUND_PATH_TAG = "BackgroundImage";
 
     private Element myCurrentLevelRoot;
-    private List<Sprite> myPrototypesList;
-    private Collection<Wave> myWavesCollection;
-    private int myResources;
-    private int myLives;
-    private Collection<LevelCondition> myLevelConditions;
 
     public List<Level> configureLevels(NodeList levelNodes) throws GameEngineException {
         List<Level> levels = new ArrayList<>();
         for (int i=0; i<levelNodes.getLength(); i++) {
             Element levelRoot = ConfigurationTool.convertNodeToElement(levelNodes.item(i));
             myCurrentLevelRoot = levelRoot;
-            myPrototypesList = configurePrototypes();
-            myWavesCollection = configureWaves();
-            myResources = configureResources();
-            myLives = configureLives();
-            myLevelConditions = configureLevelConditions();
-            levels.add(new LevelBuilder().setConditions(myLevelConditions).setLives(myLives).setResources(myResources).setSpritePrototypes(myPrototypesList).setWaves(myWavesCollection).build());
+            List<Sprite> prototypesList = configurePrototypes();
+            Collection<Wave> wavesCollection = configureWaves();
+            int resources = configureIntProperties(RESOURCES_NODE_TAG);
+            int lives = configureIntProperties(LIVES_NODE_TAG);
+            int levelId = configureIntProperties(LEVEL_ID_NODE_TAG);
+            Collection<LevelCondition> levelConditions = configureLevelConditions();
+            String backgroundPath = configureBackgroundPath();
+            levels.add(new LevelBuilder(levelId).setConditions(levelConditions)
+                    .setLives(lives).setResources(resources).setSpritePrototypes(prototypesList)
+                    .setWaves(wavesCollection).setBackgroundPath(backgroundPath).build());
         }
         return levels;
     }
@@ -56,18 +57,26 @@ public class LevelConfigurator {
         return wavesConfigurator.buildWavesCollection(waveNodes);
     }
 
-    private int configureResources() {
-        return Integer.parseInt(myCurrentLevelRoot.getElementsByTagName(RESOURCES_NODE_TAG).item(0).getTextContent());
-    }
-
-    private int configureLives() {
-        return Integer.parseInt(myCurrentLevelRoot.getElementsByTagName(LIVES_NODE_TAG).item(0).getTextContent());
+    private int configureIntProperties(String propertyNodeTagName) {
+        try {
+            return Integer.parseInt(myCurrentLevelRoot.getElementsByTagName(propertyNodeTagName).item(0).getTextContent());
+        } catch (NullPointerException | NumberFormatException e) {
+            return 0;
+        }
     }
 
     private Collection<LevelCondition> configureLevelConditions() {
         ConditionsConfigurator conditionsConfigurator = new ConditionsConfigurator();
         NodeList conditionNodes = myCurrentLevelRoot.getElementsByTagName(CONDITION_NODES_TAG);
         return conditionsConfigurator.buildConditionsCollection(conditionNodes);
+    }
+
+    private String configureBackgroundPath() {
+        try {
+            return myCurrentLevelRoot.getElementsByTagName(BACKGROUND_PATH_TAG).item(0).getTextContent();
+        } catch (NullPointerException e) {
+            return null;
+        }
     }
 
 }

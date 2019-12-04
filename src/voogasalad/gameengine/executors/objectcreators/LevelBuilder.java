@@ -22,14 +22,21 @@ public class LevelBuilder {
     private ActionsManager myActionsManager;
     private ConditionsManager myConditionsManager;
     private SpriteProductsFactory mySpriteProductsFactory;
+    private int myLevelId;
+    private String myBackgroundPath;
 
-    public LevelBuilder() throws GameEngineException {
+    public LevelBuilder(int id) throws GameEngineException {
+        myLevelId = id;
         mySpriteProductsFactory = new SpriteProductsFactory();
         myStatusManager = new StatusManager();
         myWaveManager = new WaveManager();
         myActionsManager = new ActionsManager();
         myConditionsManager = new ConditionsManager();
         mySpriteManager = mySpriteProductsFactory.makeSpriteManager();
+    }
+
+    public String getBackgroundPath() {
+        return myBackgroundPath;
     }
 
     public StatusManager getStatusManager() {
@@ -50,6 +57,15 @@ public class LevelBuilder {
 
     public SpriteManager getSpriteManager() {
         return mySpriteManager;
+    }
+
+    public int getLevelId() {
+        return myLevelId;
+    }
+
+    public LevelBuilder setBackgroundPath(String backgroundPath) {
+        myBackgroundPath = backgroundPath;
+        return this;
     }
 
     public LevelBuilder setWaves(Collection<Wave> waves) {

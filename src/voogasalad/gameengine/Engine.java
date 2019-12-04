@@ -5,7 +5,6 @@ import org.xml.sax.SAXException;
 import voogasalad.gameengine.api.GameSceneObject;
 import voogasalad.gameengine.api.UIActionsProcessor;
 import voogasalad.gameengine.configurators.test.GameConfigurator;
-import voogasalad.gameengine.configurators.test.LevelConfigurator;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.gamecontrol.GameSceneStatus;
 import voogasalad.gameengine.executors.gamecontrol.Level;
@@ -29,7 +28,7 @@ public class Engine {
     private List<Level> myLevels;
 
     public Engine(Document doc) throws GameEngineException {
-        myCurrentLevel = new LevelBuilder().build();
+        myCurrentLevel = new LevelBuilder(-1).build();
         //        configureWithRealDocument(doc);
         configureWithTestDocument();
         myCurrentUIActionsProcessor = new UIActionsProcessor(myCurrentLevel);

@@ -48,7 +48,7 @@ public class EngineDriverManager {
     }
 
     public Level getNewLevel() throws GameEngineException {
-        return new LevelBuilder().
+        return new LevelBuilder(-1).
                 setConditions(levelConditions).setLives(lives).setResources(resources).setWaves(waveList).setSpritePrototypes(mySpritePrototypes).build();
     }
 
