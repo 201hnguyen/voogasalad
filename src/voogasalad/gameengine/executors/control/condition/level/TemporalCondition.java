@@ -9,7 +9,7 @@ import java.util.Set;
 
 public class TemporalCondition extends LevelCondition {
 
-    public static final String MARKED_TIME_MAP_KEY = "markedtime";
+    public static final String MARKED_TIME_MAP_KEY = "MarkedTime";
     public static final int DEFAULT_MARKED_TIME = 0;
 
     private double myMarkedTime;

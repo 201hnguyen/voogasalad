@@ -10,7 +10,7 @@ import java.util.Set;
 public class LivesCountCondition extends LevelCondition {
 
     public static final int DEFAULT_MARKED_COUNT = 0;
-    public static final String MARKED_COUNT_MAP_KEY = "markedcount";
+    public static final String MARKED_COUNT_MAP_KEY = "MarkedCount";
 
     private int myMarkedCount;
 

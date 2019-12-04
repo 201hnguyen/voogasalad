@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 public abstract class GameCondition {
-    public static final String CONDITION_CLASSIFICATION_MAP_KEY = "classification";
+    public static final String CONDITION_CLASSIFICATION_MAP_KEY = "Classification";
     public static final ConditionClassification DEFAULT_CONDITION_CLASSIFICATION = ConditionClassification.CONTINUOUS;
 
     private Set<GameAction> myActions;
