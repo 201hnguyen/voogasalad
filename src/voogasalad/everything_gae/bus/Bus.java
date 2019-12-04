@@ -36,7 +36,6 @@ public class Bus {
      * This method should return frontend to chose GAE or GamePlayer
      */
     public Scene getBusScene(){
-        //currentStage.setScene(gaeObject.createGAEScene());
         return createBusScene();
     }
 
@@ -56,7 +55,6 @@ public class Bus {
     }
 
     public void changeToGAE(){
-        //myGAE.updateXML(myPlayer.getXML);
         currentStage.setScene(gaeObject.createGAEScene(root));
     }
 
