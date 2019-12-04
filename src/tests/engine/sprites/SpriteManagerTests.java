@@ -2,6 +2,7 @@ package tests.engine.sprites;
 
 import org.junit.jupiter.api.Test;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
+import voogasalad.gameengine.executors.gamecontrol.LevelActionsRequester;
 import voogasalad.gameengine.executors.objectcreators.SpriteProductsFactory;
 import voogasalad.gameengine.executors.objectcreators.StrategiesFactory;
 import voogasalad.gameengine.executors.sprites.Sprite;
@@ -23,7 +24,8 @@ public class SpriteManagerTests {
 
     @Test
     public void testMakeSpriteFromPrototype() throws GameEngineException {
-        SpriteManager spriteManager = spriteProductsFactory.makeSpriteManager();
+        LevelActionsRequester levelActionsRequester  = new LevelActionsRequester();
+        SpriteManager spriteManager = spriteProductsFactory.makeSpriteManager(levelActionsRequester);
         Map<String, Object> healthParameters1 = new HashMap<>() {{ put("health", 10); }};
         Map<String, Object> healthParameters2 = new HashMap<>() {{ put("health", 15); }};
         Map<String, Object> movementParameters = new HashMap<>() {{

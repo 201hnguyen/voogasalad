@@ -19,5 +19,7 @@ public interface SpriteManager {
 
     void removeSpriteById(int spriteId);
 
-    public List<Sprite> getPrototypesForArchetype(SpriteArchetype archetype) throws GameEngineException;
+    List<Sprite> getPrototypesForArchetype(SpriteArchetype archetype) throws GameEngineException;
+
+    void executeSpriteNextState(double elapsedTime);
 }
