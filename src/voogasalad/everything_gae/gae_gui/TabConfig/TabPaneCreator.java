@@ -31,12 +31,21 @@ public class TabPaneCreator {
         TabPane tabPane = new TabPane();
         myTabNames = ResourceBundle.getBundle(TAB_NAMES);
 
-        for (String s : myTabNames.keySet()) {
-            String sceneName = myTabNames.getString(s);
-            Tab tab = new Tab(s);
-            //tab.setContent(sceneName); // refactor to use reflection
-            tabPane.getTabs().add(tab);
-        }
+        //refactor to use reflection!!
+//        for (String s : myTabNames.keySet()) {
+//            String tabName = myTabNames.getString(s);
+//            Tab tab = new Tab(s);
+//            tabPane.getTabs().add(tab);
+//        }
+
+
+        Tab towersTab = new TowerConfigTab().getTab();
+        Tab obstaclesTab = new ObstacleConfigTab().getTab();
+        Tab enemiesTab = new EnemyConfigTab().getTab();
+
+        tabPane.getTabs().add(towersTab);
+        tabPane.getTabs().add(obstaclesTab);
+        tabPane.getTabs().add(enemiesTab);
 
         return tabPane;
     }
