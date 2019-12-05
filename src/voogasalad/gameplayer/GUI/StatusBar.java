@@ -7,13 +7,15 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 import java.util.Map;
-import java.util.Set;
 
 public class StatusBar extends VBox {
 
+    private static final int INFO_BOX_SPACING = 10;
+    private static final int ICON_SIZE = 50;
+
     private HBox infoTrackerBox(String infoName, int infoValue) {
         // need to add icon and value
-        HBox infoBox = new HBox(5);
+        HBox infoBox = new HBox(INFO_BOX_SPACING);
         ImageView icon = iconLoader(infoName);
         Text value = new Text();
         value.setText(String.valueOf(infoValue));
@@ -38,8 +40,8 @@ public class StatusBar extends VBox {
     private ImageView iconLoader(String iconIdentifier) {
         iconIdentifier = iconIdentifier.toLowerCase();
         ImageView icon = new ImageView(new Image(iconIdentifier + ".png"));
-        icon.setFitHeight(50);
-        icon.setFitWidth(50);
+        icon.setFitHeight(ICON_SIZE);
+        icon.setFitWidth(ICON_SIZE);
         return icon;
     }
 }
