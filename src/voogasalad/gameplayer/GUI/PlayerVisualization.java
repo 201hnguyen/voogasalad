@@ -6,10 +6,12 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import voogasalad.gameengine.api.GameSceneObject;
 import voogasalad.gameengine.executors.sprites.Sprite;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class PlayerVisualization extends Pane {
 
@@ -26,6 +28,7 @@ public class PlayerVisualization extends Pane {
     private BackgroundImage backgroundImage;
     private VBox panelBox;
     private AccordionCreator accordionCreator;
+    private StatusBar statusBar;
 
     public PlayerVisualization(Stage stage, Timeline timeline) {
         this.stage = stage;
@@ -33,8 +36,9 @@ public class PlayerVisualization extends Pane {
         initialize();
     }
 
-    public void update(List<Sprite> sprites) {
+    public void update(List<Sprite> sprites, Map<String, Integer> gameInfoMap) {
         displayScreen.updateDisplayScreen(sprites);
+        statusBar.updateDisplayedInfo(gameInfoMap);
     }
 
     public void setNewLevel(List<Sprite> towers, List<Sprite> enemies, String backgroundImagePath){
@@ -46,6 +50,7 @@ public class PlayerVisualization extends Pane {
     private void initialize() {
         ButtonCreator buttonCreator = new ButtonCreator(new ButtonController(this));
         accordionCreator = new AccordionCreator();
+        statusBar = new StatusBar();
         panelBox = new VBox();
         panelBox.getChildren().add(buttonCreator);
         panelBox.getChildren().add(accordionCreator);
