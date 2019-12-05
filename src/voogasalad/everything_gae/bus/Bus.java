@@ -19,7 +19,6 @@ public class Bus {
     private Scene busScene;
     private Scene gaeScene;
     private Scene gamePlayerScene;
-    private GUI_Controller gaeGuiController;
     private GUI_SceneMaker gaeObject;
     private Document createdXML;
     private Group busRoot;

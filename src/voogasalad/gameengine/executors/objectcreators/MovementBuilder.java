@@ -4,12 +4,13 @@ import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.sprites.strategies.movement.MovementStrategy;
 
 import java.awt.Point;
+import java.awt.geom.Point2D;
 import java.util.LinkedList;
 
 public class MovementBuilder {
     private String movementType;
     private double mySpeed;
-    private LinkedList<Point> myPath;
+    private LinkedList<Point2D.Double> myPath;
 
     public MovementBuilder setMovementType(String typeString) {
         movementType = typeString.strip();
@@ -22,10 +23,10 @@ public class MovementBuilder {
 
     public MovementBuilder setPath(String pathString) {
         System.out.println("Set path string in movement builder:" + pathString);
-        LinkedList<Point> parsedPath = new LinkedList<>();
+        LinkedList<Point2D.Double> parsedPath = new LinkedList<>();
         String[] pointStrings = pathString.strip().split(";");
         for(String pointString : pointStrings) {
-            Point toAdd = new Point();
+            Point2D.Double toAdd = new Point2D.Double();
             String[] coordinateStrings = pointString.split(",");
             toAdd.setLocation(Double.parseDouble(coordinateStrings[0]), Double.parseDouble(coordinateStrings[1]));
             parsedPath.add(toAdd);
@@ -34,7 +35,7 @@ public class MovementBuilder {
         return this;
     }
 
-    public LinkedList<Point> getPath() {
+    public LinkedList<Point2D.Double> getPath() {
         return myPath;
     }
 

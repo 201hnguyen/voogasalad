@@ -84,10 +84,10 @@ public class PrototypesConfigurator {
 
     private void setMovementStrategy(String type, SpriteBuilder builder, Element movementStrategyNode) throws GameEngineException {
         NodeList parametersNodeList = movementStrategyNode.getElementsByTagName(SPRITE_STRATEGIES_PARAMETERS_NODE_TAG).item(0).getChildNodes();
+        MovementBuilder movementBuilder = new MovementBuilder().setMovementType(type);
         for (int i=0; i<parametersNodeList.getLength();i++) {
             Element parameter = ConfigurationTool.convertNodeToElement(parametersNodeList.item(i));
             if (parameter!= null) {
-                MovementBuilder movementBuilder = new MovementBuilder().setMovementType(type);
                 try {
                     movementBuilder.getClass().getMethod(STRATEGY_CONFIG_BUNDLE.getString(parameter.getNodeName()), String.class).invoke(movementBuilder, parameter.getTextContent());
                 } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
@@ -96,5 +96,6 @@ public class PrototypesConfigurator {
                 }
             }
         }
+        builder.setMovementStrategy(movementBuilder.build());
     }
 }

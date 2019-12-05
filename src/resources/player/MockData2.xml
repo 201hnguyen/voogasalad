@@ -33,7 +33,7 @@
             <MovementStrategy>
                 <Type>PathMovement</Type>
                 <Parameters>
-                    <Path>0,250;250,250;500,250;500,500;</Path>
+                    <Path>200,200;300,100</Path>
                     <Speed>500</Speed>
                 </Parameters>
             </MovementStrategy>
