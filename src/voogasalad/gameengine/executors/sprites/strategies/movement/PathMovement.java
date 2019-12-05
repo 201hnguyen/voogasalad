@@ -47,7 +47,7 @@ public class PathMovement implements MovementStrategy {
         double updatedY = currentPosition.getY() + diffY;
         Point updatedPosition = new Point();
         updatedPosition.setLocation(updatedX, updatedY);
-        if(checkDirectionChange(updatedPosition)) {
+        if(checkDirectionChange(currentPosition, updatedPosition)) {
             Point toReturn = new Point();
             toReturn.setLocation(nextPosition.getX(), nextPosition.getY());
             changeDirection();
@@ -69,27 +69,14 @@ public class PathMovement implements MovementStrategy {
         return updatedDirection;
     }
 
-    private boolean checkDirectionChange(Point updatedPosition) {
-        boolean passedX;
-        boolean passedY;
-
-        if(myDirection.getX() < 0) {
-            passedX = updatedPosition.getX() <= nextPosition.getX();
-        } else if(myDirection.getX() == 0) {
-            passedX = true;
-        } else {
-            passedX = updatedPosition.getX() >= nextPosition.getX();
-        }
-
-        if(myDirection.getY() < 0) {
-            passedY = updatedPosition.getY() <= nextPosition.getY();
-        } else if(myDirection.getY() == 0) {
-            passedY = true;
-        } else {
-            passedY = updatedPosition.getY() >= nextPosition.getY();
-        }
-
+    private boolean checkDirectionChange(Point currentPosition, Point updatedPosition) {
+        boolean passedX = checkInRange(nextPosition.getX(), currentPosition.getX(), updatedPosition.getX());
+        boolean passedY = checkInRange(nextPosition.getY(), currentPosition.getY(), updatedPosition.getY());
         return passedX && passedY;
+    }
+
+    private boolean checkInRange(double x, double bound1, double bound2) {
+        return ((x - bound1) * (x - bound2) <= 0);
     }
 
     private void changeDirection() {
