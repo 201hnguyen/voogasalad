@@ -1,37 +1,37 @@
-package voogasalad.everything_gae.gae_gui.TabConfig;
+package voogasalad.everything_gae.gae_gui.tab_config;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.VBox;
 
-public class ObstacleConfigTab extends ConfigTabTemplate {
+public class EnemyConfigTab extends ConfigTabTemplate {
 
 
-    private Tab myObstacleConfigTab;
+    private Tab myEnemyConfigTab;
     private TabPane myTabPane;
 
 
-    public ObstacleConfigTab() {
+    public EnemyConfigTab() {
 
-        myObstacleConfigTab = addToTab();
+        myEnemyConfigTab = addToTab();
     }
 
     /**
-     * A getter method to retrieve the local variable myObstacleConfigTab
+     * A getter method to retrieve the local variable myTowerConfigTab
      * @return
      */
     public Tab getTab() {
-        return myObstacleConfigTab;
+        return myEnemyConfigTab;
     }
 
     // Creates a tab for the TowerConfig
     public Tab addToTab() {
 
-        myObstacleConfigTab = new Tab("Obstacles");
-        VBox configVBox = new VBox();
+        myEnemyConfigTab = new Tab("Enemies");
 
         //create node content for tab
+        VBox configVBox = new VBox();
         Label configLabel = new Label("Configuration");
 
 
@@ -39,12 +39,10 @@ public class ObstacleConfigTab extends ConfigTabTemplate {
         configVBox.getChildren().addAll(
                 configLabel);
 
-
         //add VBox to tab
-        myObstacleConfigTab.setContent(configVBox);
+        myEnemyConfigTab.setContent(configVBox);
 
-
-        return myObstacleConfigTab;
+        return myEnemyConfigTab;
     }
 
 }

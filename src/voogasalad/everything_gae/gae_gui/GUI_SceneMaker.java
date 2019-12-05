@@ -3,11 +3,10 @@ package voogasalad.everything_gae.gae_gui;
 import javafx.scene.control.TabPane;
 import voogasalad.everything_gae.bus.Bus;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import org.w3c.dom.Document;
-import voogasalad.everything_gae.gae_gui.TabConfig.TabPaneCreator;
-import voogasalad.gameengine.executors.exceptions.GameEngineException;
+import voogasalad.everything_gae.gae_gui.tab_config.TabPaneCreator;
+import voogasalad.everything_gae.gae_gui.tab_config.object_param_creation.CreateObjectParams;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.util.ResourceBundle;
@@ -45,26 +44,12 @@ public class GUI_SceneMaker{
      * @return
      */
     public Scene createGAEScene(BorderPane root){
-        //Button submitButton = buttonToCreateXML();
-        //VBox accordionVBox = createAccordion(new VBox())
-        //root.setRight(accordionVBox);
         TabPane myTabPane = new TabPaneCreator(sendToXML, createdXML, busInstance).getTabPane();
         root.setTop(myTabPane);
-        //root.setBottom(submitButton);
         return new Scene(root, width,  height);
     }
 
-    /**
-     *
-     * @param accordionVBox
-     * @return
-     */
-    public VBox createAccordion(VBox accordionVBox) {
-        typeToParams.getKeys().asIterator().forEachRemaining(key -> {
-            accordionVBox.getChildren().add(new AccordionGUI(key, typeToParams.getString(key), myController, paramFieldType));
-        });
-        return accordionVBox;
-    }
+
 
     // generates an XML file from current settings when submit button is pressed
 //    private Button buttonToCreateXML(){

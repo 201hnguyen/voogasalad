@@ -1,4 +1,4 @@
-package voogasalad.everything_gae.gae_gui.TabConfig;
+package voogasalad.everything_gae.gae_gui.tab_config;
 
 import javafx.scene.Group;
 import javafx.scene.control.Button;

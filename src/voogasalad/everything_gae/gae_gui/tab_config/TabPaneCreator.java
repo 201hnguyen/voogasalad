@@ -1,8 +1,6 @@
-package voogasalad.everything_gae.gae_gui.TabConfig;
+package voogasalad.everything_gae.gae_gui.tab_config;
 
 
-import javafx.application.Application;
-import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
@@ -10,11 +8,15 @@ import org.w3c.dom.Document;
 import voogasalad.everything_gae.bus.Bus;
 import voogasalad.everything_gae.gae_gui.AddToXML;
 import voogasalad.everything_gae.gae_gui.level_map_config.level_config.LevelConfigPane;
+import voogasalad.everything_gae.gae_gui.tab_config.object_param_creation.CreateObjectParams;
 
+import javax.xml.parsers.ParserConfigurationException;
 import java.util.ResourceBundle;
 
 public class TabPaneCreator {
 //public class TabCreator<label> {
+    public static final String SPRITE_OPTIONS_RESOURCE = "voogasalad/everything_gae/resources/SpriteOptions";
+    public static final String PARAM_FIELD_TYPE_RESOURCE = "voogasalad/everything_gae/resources/ParamToInputType";
     private static final String TAB_NAMES = "voogasalad/everything_gae/resources/TabNames";
     private ResourceBundle myTabNames;
     private TabPane myTabPane;
@@ -23,12 +25,17 @@ public class TabPaneCreator {
     private Document createdXML;
     private Bus busInstance;
     private ResourceBundle defaultProperties;
+    private ResourceBundle typeToParams;
+    private ResourceBundle paramFieldType;
+    private BorderPane bp;
 
     public TabPaneCreator(AddToXML sendToXMLParam, Document createdXMLParam, Bus busInstanceParam) {
         sendToXML = sendToXMLParam;
         createdXML = createdXMLParam;
         busInstance = busInstanceParam;
         defaultProperties = ResourceBundle.getBundle("voogasalad/everything_gae/resources/EnemyAttributes");
+        typeToParams = ResourceBundle.getBundle(SPRITE_OPTIONS_RESOURCE);
+        paramFieldType = ResourceBundle.getBundle(PARAM_FIELD_TYPE_RESOURCE);
         myTabPane = createTabPane();
 
     }
@@ -56,18 +63,31 @@ public class TabPaneCreator {
 //        }
 
 
-        Tab towersTab = new TowerConfigTab().getTab();
-        Tab obstaclesTab = new ObstacleConfigTab().getTab();
-        Tab enemiesTab = new Tab("Enemies", new GAE_ObjectConfig("Enemy", defaultProperties));
+//        Tab towersTab = new TowerConfigTab().getTab();
+//        Tab obstaclesTab = new ObstacleConfigTab().getTab();
+//        Tab enemiesTab = new Tab("Enemies", new GAE_ObjectConfig("Enemy", defaultProperties));
+        createPane(tabPane);
         Tab levelTab = new Tab("Level");
         levelTab.setContent(new LevelConfigPane(sendToXML, createdXML, busInstance));
-
-        tabPane.getTabs().add(towersTab);
-        tabPane.getTabs().add(obstaclesTab);
-        tabPane.getTabs().add(enemiesTab);
+//
+//        tabPane.getTabs().add(towersTab);
+//        tabPane.getTabs().add(obstaclesTab);
+//        tabPane.getTabs().add(enemiesTab);
         tabPane.getTabs().add(levelTab);
 
 
         return tabPane;
+    }
+
+    private BorderPane createPane(TabPane tabPane) {
+        typeToParams.getKeys().asIterator().forEachRemaining(key -> {
+            try {
+                Tab objectTab = new Tab(key, new CreateObjectParams(key, typeToParams.getString(key).split(","), paramFieldType) );
+                tabPane.getTabs().add(objectTab);
+            } catch (ParserConfigurationException e) {
+                e.printStackTrace();
+            }
+        });
+        return bp;
     }
 }
