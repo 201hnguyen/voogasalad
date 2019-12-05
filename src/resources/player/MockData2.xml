@@ -18,8 +18,8 @@
     <SpritePrototype>
         <Properties>
             <PrototypeId>0</PrototypeId>
-            <Width>20</Width>
-            <Height>10</Height>
+            <Width>50</Width>
+            <Height>30</Height>
             <ImagePath>bird.png</ImagePath>
             <Archetype>TOWER</Archetype>
         </Properties>
@@ -64,11 +64,11 @@
         <LevelId>1</LevelId>
         <Resources>250</Resources>
         <Lives>20</Lives>
-        <BackgroundImage>bird.png</BackgroundImage>
-        <AvailablePrototypes>0</AvailablePrototypes>
+        <BackgroundImage>background2.jpg</BackgroundImage>
+        <AvailablePrototypes>0 1</AvailablePrototypes>
 
         <Wave>
-            <Queue>0 0 0 0 0</Queue>
+            <Queue>1 0 1 0 1</Queue>
             <Interval>0.5</Interval>
             <SpawnPointX>100</SpawnPointX>
             <SpawnPointY>100</SpawnPointY>

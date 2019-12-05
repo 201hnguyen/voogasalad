@@ -27,7 +27,7 @@ public class PlayerVisualization extends Pane {
     public PlayerVisualization(Stage stage, List<Sprite> sprites, Timeline timeline, String backgroundImagePath) {
         this.stage = stage;
         this.timeline = timeline;
-        this.backgroundImage = new BackgroundImage(new Image(backgroundImagePath), BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(SCENE_WIDTH, SCENE_HEIGHT, false, false, false, true));
+        this.backgroundImage = new BackgroundImage(new Image(backgroundImagePath), BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(SCENE_WIDTH, SCENE_HEIGHT, false, false, true, true));
         displayScreen(sprites);
         initialize(sprites);
         showStage();
@@ -60,15 +60,6 @@ public class PlayerVisualization extends Pane {
         stage.show();
     }
 
-    public void startButtonAction() {
-        timeline.play();
-        System.out.println("hello");
-    }
-
-    public void pauseButtonAction() {
-        timeline.stop();
-    }
-
     private void displayScreen(List<Sprite> sprites) {
         displayScreen = new DisplayScreen(sprites);
         displayScreen.setMinWidth(PANEL_POSITION);
@@ -76,5 +67,13 @@ public class PlayerVisualization extends Pane {
         displayScreen.setLayoutX(LAYOUT);
         displayScreen.setLayoutY(LAYOUT);
         displayScreen.setBackground(new Background(backgroundImage));
+    }
+
+    public void startButtonAction() {
+        timeline.play();
+    }
+
+    public void pauseButtonAction() {
+        timeline.stop();
     }
 }
