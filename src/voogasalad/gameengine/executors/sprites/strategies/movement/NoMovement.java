@@ -7,7 +7,6 @@ import java.util.Map;
 public class NoMovement implements MovementStrategy {
 
     public NoMovement(Map<String, Object> parameters) {
-
     }
 
     @Override
