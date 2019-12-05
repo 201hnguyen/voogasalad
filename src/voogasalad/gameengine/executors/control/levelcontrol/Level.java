@@ -40,6 +40,10 @@ public class Level implements GameScene {
         return new GameSceneObject(myBackgroundPath, myLevelStatusManager.getResources(),  myLevelStatusManager.getLives(), mySpriteManager);
     }
 
+    public String getBackgroundPath() {
+        return myBackgroundPath;
+    }
+
     public LevelActionsRequester getActionsRequester() {
         return myActionsRequester;
     }
