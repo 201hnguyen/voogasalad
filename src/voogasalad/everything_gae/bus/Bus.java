@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.w3c.dom.Document;
+import voogasalad.everything_gae.gae_gui.level_map_config.level_config.LevelConfigScene;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameplayer.Player;
 
@@ -22,6 +23,7 @@ public class Bus {
     private GUI_SceneMaker gaeObject;
     private Document createdXML;
     private Group busRoot;
+    private LevelConfigScene levelConfigScene;
 
     public Bus(Stage currentStageParam, BorderPane rootParam, int widthParam, int heightParam){
         currentStage = currentStageParam;
@@ -29,6 +31,7 @@ public class Bus {
         width = widthParam;
         height = heightParam;
         gaeObject = new GUI_SceneMaker(widthParam, heightParam, this);
+        levelConfigScene = new LevelConfigScene();
 
     }
 
@@ -49,7 +52,9 @@ public class Bus {
     private Button changeToGAEButton(){
         Button myButton = new Button("Enter GAE");
         myButton.setOnMouseClicked(event -> {
-            changeToGAE();
+            //changeToGAE();
+            //FOR TESTING
+            currentStage.setScene(levelConfigScene.getScene(root));
         });
         return myButton;
     }
