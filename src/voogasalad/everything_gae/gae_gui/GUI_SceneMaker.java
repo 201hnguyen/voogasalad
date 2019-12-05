@@ -45,12 +45,12 @@ public class GUI_SceneMaker{
      * @return
      */
     public Scene createGAEScene(BorderPane root){
-        Button submitButton = buttonToCreateXML();
+        //Button submitButton = buttonToCreateXML();
         //VBox accordionVBox = createAccordion(new VBox())
         //root.setRight(accordionVBox);
-        TabPane myTabPane = new TabPaneCreator().getTabPane();
+        TabPane myTabPane = new TabPaneCreator(sendToXML, createdXML, busInstance).getTabPane();
         root.setTop(myTabPane);
-        root.setBottom(submitButton);
+        //root.setBottom(submitButton);
         return new Scene(root, width,  height);
     }
 
@@ -67,19 +67,19 @@ public class GUI_SceneMaker{
     }
 
     // generates an XML file from current settings when submit button is pressed
-    private Button buttonToCreateXML(){
-        Button myButton = new Button("Submit");
-        myButton.setOnMouseClicked(event -> {
-            try {
-                createdXML = sendToXML.createXML();
-                busInstance.goToPlayer(createdXML);
-
-            } catch (ParserConfigurationException | GameEngineException e) {
-                e.printStackTrace();
-            }
-        });
-        return myButton;
-    }
+//    private Button buttonToCreateXML(){
+//        Button myButton = new Button("Submit");
+//        myButton.setOnMouseClicked(event -> {
+//            try {
+//                createdXML = sendToXML.createXML();
+//                busInstance.goToPlayer(createdXML);
+//
+//            } catch (ParserConfigurationException | GameEngineException e) {
+//                e.printStackTrace();
+//            }
+//        });
+//        return myButton;
+//    }
 
     public Document getCreatedXML(){
         return createdXML;

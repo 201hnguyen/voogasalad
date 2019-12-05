@@ -23,7 +23,6 @@ public class Bus {
     private GUI_SceneMaker gaeObject;
     private Document createdXML;
     private Group busRoot;
-    private LevelConfigPane levelConfigPane;
 
     public Bus(Stage currentStageParam, BorderPane rootParam, int widthParam, int heightParam){
         currentStage = currentStageParam;
@@ -31,7 +30,6 @@ public class Bus {
         width = widthParam;
         height = heightParam;
         gaeObject = new GUI_SceneMaker(widthParam, heightParam, this);
-        levelConfigPane = new LevelConfigPane();
 
     }
 
