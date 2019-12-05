@@ -11,15 +11,17 @@ public class MovementBuilder {
     private double mySpeed;
     private LinkedList<Point> myPath;
 
-    public void setMovementType(String typeString) {
+    public MovementBuilder setMovementType(String typeString) {
         movementType = typeString.strip();
+        return this;
     }
 
     public String getMovementType() {
         return movementType;
     }
 
-    public void setPath(String pathString) {
+    public MovementBuilder setPath(String pathString) {
+        System.out.println("Set path string in movement builder:" + pathString);
         LinkedList<Point> parsedPath = new LinkedList<>();
         String[] pointStrings = pathString.strip().split(";");
         for(String pointString : pointStrings) {
@@ -29,14 +31,17 @@ public class MovementBuilder {
             parsedPath.add(toAdd);
         }
         myPath = parsedPath;
+        return this;
     }
 
     public LinkedList<Point> getPath() {
         return myPath;
     }
 
-    public void setSpeed(String speedString) {
+    public MovementBuilder setSpeed(String speedString) {
+        System.out.println("Set speed string in movement builder:" + speedString);
         mySpeed = Double.parseDouble(speedString.strip());
+        return this;
     }
 
     public double getSpeed() {
