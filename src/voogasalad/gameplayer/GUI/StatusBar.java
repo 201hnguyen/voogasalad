@@ -4,19 +4,21 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.util.Map;
 import java.util.Set;
 
-public class StatusBar extends VBox {
+public class StatusBar extends HBox {
 
     private HBox infoTrackerBox(String infoName, int infoValue) {
         // need to add icon and value
         HBox infoBox = new HBox(5);
         ImageView icon = iconLoader(infoName);
         Text value = new Text();
-        value.setText(String.valueOf(infoValue));
+        value.setText("\n" + String.valueOf(infoValue));
+        value.setFont(new Font(20));
         infoBox.getChildren().add(icon);
         infoBox.getChildren().add(value);
         return infoBox;

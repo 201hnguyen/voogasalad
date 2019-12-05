@@ -27,8 +27,9 @@ public class DisplayScreen extends Pane {
     }
 
     private void addImageToScreen(ImageView image, int xPos, int yPos) {
-        image.setX(xPos - image.getFitWidth()/2);
-        image.setY(yPos - image.getFitHeight()/2);
+        //TODO: Check why this has to be like this
+        image.setX(xPos);
+        image.setY(yPos);
         getChildren().add(image);
     }
 
