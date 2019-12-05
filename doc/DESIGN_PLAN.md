@@ -4,7 +4,7 @@
 
 Our goal is to create a program that provides a graphical interface for creating Tower Defense style games. We aim to empower the developer to test their games as comprehensively as possible by allowing live editing of games (i.e editing the game while it's being played). 
 
-We plan to develop games using 'Components', which comprise of towers, enemies, obstacles, enemy spawn zones, etc. Our primary design goal is to implement Components as highly abstracted elements so that adding new types of elements to our game architecture environment is as straightforward as possible. We plan to accomplish this goal through a separation of our game authoring environment and our actual game engine that must implement the Components. Adding new components to the backend now doesn't affect our front end implementation of the authoring environment (other than maybe having to add new options that have now been made available to the game developer).
+We plan to develop games using 'Sprites', which comprise of towers, enemies, enemy spawn zones, etc, as well as 'Actions' that act on levels and sprites. Our primary design goal is to implement Sprites as highly abstracted elements so that adding new types of elements to our game architecture environment is as straightforward as possible. We plan to accomplish this goal through a separation of our game authoring environment and our actual game engine. In addition, we also use Composition in the form of the Strategy pattern in order to make creating sprites as flexible as possible. By returning a GameSceneObject to the front-end, we also allow for modularity in that the player does not need to know everything in the back-end. 
 
 ## Overview
 
@@ -17,10 +17,10 @@ Responsible for displaying the GUI that allows the developer to create a Tower D
 Comprised of two components. Firstly, the XML file that defines the particular Tower Defense variant developed by the game developer. And secondly, the data representing the current state of the game. This is a file containing the data obtained by serializing the collection of objects created by the Game Engine.
 
 #### Game Player
-Responsible for visualizing the game developed by the user. Uses the XML file to set up the initial game as well as the collection of serializable objects to represent the current state of the game (i.e. specific placements of enemies, towers and bullets at the current moment in time for example). Allows user interaction (or playing the game) by calling the game engine to update the collection of serializable objects as applicable (or simply returning some information from one of the objects).
+Responsible for visualizing the game developed by the user. Uses the XML file to set up the initial game as well as the collection of serializable objects to represent the current state of the game (i.e. specific placements of enemies, towers and bullets at the current moment in time for example). Allows user interaction (or playing the game) by calling the game engine to update the collection of serializable objects as applicable (or simply returning some information from one of the objects). In the second sprint, we have decided to move the XML set up process inside the Game Engine rather than the Game Player in order to not expose internal classes of the backend.
 
 #### Game Engine 
-Responsible for defining the functionality of the various Components implemented by the game development environment. Creates a collection of serializable objects that represent the current state of the game 
+Responsible for defining the functionality of the various components implemented by the game development environment. Creates a collection of serializable objects that represent the current state of the game 
 
 
 #### Module Interaction
@@ -68,13 +68,13 @@ The GamePlayer will have a class for parsing through the XML file to make calls 
 
 
 #### Game Engine
-The game engine sits within the GamePlayer, and is invoked at every step of the game loop. The `GameManager` class serves as the point of entry into the rest of the encapsulated components of Game Engine. Within this component, there are several different components; at a high level, they are as follows: the `GameManager`, the `LevelManager`, the components of a level (e.g., `CollisionHandler`, `DeathHandler`, etc.), the `Sprite`, and the classes for each of the component of a sprite (e.g., `Health, Range`, etc.), and the `GameStateObject`. 
+The game engine sits within the GamePlayer, and is invoked at every step of the game loop. The `Engine` class serves as the point of entry into the rest of the encapsulated components of Game Engine. Within this component, there are several different components; at a high level, they are as follows: the `LevelManager`, which manages the different `Level`, which in turn has instances of `StatusManager`, `WavesManager`, `SpriteManager`, `ActionsManager`, and `ConditionsManager`. 
 
-The `GameManager` holds all states that are global to the game and and the collection of level sequence. The `GameManager` class serves as the entry and exit point into the Game Engine (as an entire component) at any particular time; thus, whenever the `GamePlayer` wants to invoke actions carried out by the Game Engine as a unit, it would have to go through the `GameManager` class. The `GameManager` further manages the current level; thus, whenever actions are invoked for a current level, the `GameManager` would access its current level manager and carry out the request. Then, the request would change states of objects in the Game Engine. This change will then be composed and serialized into a `GameStateObject` that is passed back to the `GamePlayer` to render.
+The `Engine` holds all states that are global to the game and and the collection of level sequence. The `Engine` class serves as the entry and exit point into the Game Engine (as an entire component) at any particular time; thus, whenever the `GamePlayer` wants to invoke actions carried out by the Game Engine as a unit, it would have to go through the `Engine` class. The `Engine` further manages the current level; thus, whenever actions are invoked for a current level, the `Engine` would access its current level manager and carry out the request. Then, the request would change states of objects in the Game Engine. This change will then be composed and serialized into a `GameStateObject` that is passed back to the `Player` to render.
 
-The `LevelManager` class manages everything that is specific to a level; this includes the grid, the sprites list, the collision handler, etc. Based on different actions, such as collisions, place tower, etc. the `LevelManager` calls different `Handler` interfaces that will interact with `Sprite` objects and handle events such as collisions. 
+The `Level` class manages everything that is specific to a level; this includes the sprites list, the the actions and conditions, etc. Based on different actions, such as collisions, place tower, etc. the `Level` calls different `Manager` classes that will interact with `Sprite` objects and handle events such as collisions. 
 
-The `Sprite` object holds everything that is specific to a sprite, this includes a `Health` field, a `Range` field, etc. The `Sprite` object will leverage a Builder pattern in order to construct specific classes with these fields. These components will be interfaces that will also handle different implementations of handling things such as `Health`. 
+The `Sprite` object holds everything that is specific to a sprite, this includes a `Health` strategy, a `Range` strategy, etc. The `Sprite` object will leverage a Builder pattern in order to construct specific classes with these fields. These components will be interfaces that will also handle different implementations of handling things such as `Health`. 
 
 #### Game Data
 
@@ -152,22 +152,23 @@ Extras not Visualied:
 #### Game Engine
 ```
 #### GameEngine
-    public GameStateObject getGameStateObject();
-    public void updateSprite(int spriteId);
+    public GameSceneObject execute();
+    public void ConfigureGame();
+    public void processActionRequest(Request request);
     public void createSprite();
     public void updateSound();
     
 ### GameStateObject
-    public Level getCurrentLevel();
+    public List<Sprite> getCurrentOnScreenEnemies();
+    public List<Sprite> getCurrentOnScreenTowers(); 
+    public List<Sprite> getCurrentOnScreenSprites;
     public int getCurrentScore();
     public int getCurrentWealth();
     
 ### Sprite
     public String getImagePath();
     public Point getPosition();
-    
-#### Level
-    public Grid getGrid();
+    public Object getImage();
     
 ```
       
