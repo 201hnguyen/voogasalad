@@ -64,7 +64,7 @@
         <LevelId>1</LevelId>
         <Resources>250</Resources>
         <Lives>20</Lives>
-        <BackgroundImage>bird.png</BackgroundImage>
+        <BackgroundImage>sand-background.jpg</BackgroundImage>
         <AvailablePrototypes>0</AvailablePrototypes>
 
         <Wave>
@@ -133,7 +133,7 @@
         <LevelId>0</LevelId>
         <Resources>250</Resources>
         <Lives>20</Lives>
-        <BackgroundImage>bird.png</BackgroundImage>
+        <BackgroundImage>sand-background.jpg</BackgroundImage>
         <AvailablePrototypes>0 1</AvailablePrototypes>
 
         <Wave>
