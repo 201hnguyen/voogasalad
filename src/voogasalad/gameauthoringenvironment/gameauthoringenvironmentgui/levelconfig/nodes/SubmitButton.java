@@ -1,9 +1,9 @@
-package voogasalad.everything_gae.gae_gui.level_map_config.level_config.nodes;
+package voogasalad.gameauthoringenvironment.gameauthoringenvironmentgui.levelconfig.nodes;
 
 import javafx.scene.control.Button;
 import org.w3c.dom.Document;
-import voogasalad.everything_gae.bus.Bus;
-import voogasalad.everything_gae.gae_gui.AddToXML;
+import voogasalad.gameauthoringenvironment.bus.Bus;
+import voogasalad.gameauthoringenvironment.gameauthoringenvironmentgui.AddToXML;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 
 import javax.xml.parsers.ParserConfigurationException;

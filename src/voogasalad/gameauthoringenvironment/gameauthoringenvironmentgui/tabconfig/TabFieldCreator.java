@@ -1,4 +1,4 @@
-package voogasalad.everything_gae.gae_gui.tab_config;
+package voogasalad.gameauthoringenvironment.gameauthoringenvironmentgui.tabconfig;
 
 import javafx.scene.Group;
 import javafx.scene.control.Button;
@@ -11,7 +11,7 @@ import javafx.scene.layout.VBox;
 
 import java.util.ResourceBundle;
 
-public class GAE_ObjectConfig extends Group {
+public class TabFieldCreator extends Group {
     private String towerResourcesPath = "gae_gui.gaeresource.";
     private ResourceBundle myProperties;
     private String tabName;
@@ -20,7 +20,8 @@ public class GAE_ObjectConfig extends Group {
     private VBox buttonVBox;
     private Image defaultObjectImage;
     private ImageView defaultObjectImageView;
-    public GAE_ObjectConfig(String tabLabel, ResourceBundle myProperties ){
+
+    public TabFieldCreator(String tabLabel, ResourceBundle myProperties ){
         this.myProperties = myProperties;
         defaultObjectImage = new Image(this.getClass().getClassLoader().getResourceAsStream("ghost1.png"));
         defaultObjectImageView = new ImageView(defaultObjectImage);
@@ -36,9 +37,9 @@ public class GAE_ObjectConfig extends Group {
         mainVBox.getChildren().add(saveObject);
         createInputFields();
         this.getChildren().add(mainVBox);
-
     }
 
+    //
     private void createInputFields(){
         for (String key: myProperties.keySet()){
             String attributeName = myProperties.getString(key);
@@ -49,9 +50,6 @@ public class GAE_ObjectConfig extends Group {
             attributeHBox.getChildren().add(attributeField);
             buttonVBox.getChildren().add(attributeHBox);
         }
-
-
     }
-
 
 }

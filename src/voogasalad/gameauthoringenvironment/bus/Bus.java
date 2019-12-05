@@ -1,13 +1,12 @@
-package voogasalad.everything_gae.bus;
+package voogasalad.gameauthoringenvironment.bus;
 
-import voogasalad.everything_gae.gae_gui.*;
+import voogasalad.gameauthoringenvironment.gameauthoringenvironmentgui.*;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.w3c.dom.Document;
-import voogasalad.everything_gae.gae_gui.level_map_config.level_config.LevelConfigPane;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameplayer.Player;
 
@@ -19,7 +18,7 @@ public class Bus {
     private Scene busScene;
     private Scene gaeScene;
     private Scene gamePlayerScene;
-    private GUI_SceneMaker gaeObject;
+    private SceneCreator gaeObject;
     private Document createdXML;
     private Group busRoot;
 
@@ -28,7 +27,7 @@ public class Bus {
         root = rootParam;
         width = widthParam;
         height = heightParam;
-        gaeObject = new GUI_SceneMaker(widthParam, heightParam, this);
+        gaeObject = new SceneCreator(widthParam, heightParam, this);
 
     }
 
