@@ -28,16 +28,17 @@ public class Game {
     private GameRulesController myGameRulesController;
     private Document myGameConfigDocument;
     private UIActionsProcessor myCurrentUIActionsProcessor;
+    private GameActionsRequester myGameActionsRequester;
 
     public Game(Document gameConfigDocument) throws GameEngineException {
-        myCurrentUIActionsProcessor = new UIActionsProcessor();
         myGameRulesController = new GameRulesController();
-        //        configureWithRealDocument(gameConfigDocument);
+        myGameActionsRequester = new GameActionsRequester();
         myGameConfigDocument = configureWithTestDocument();
         GameConfigurator gameConfigurator = new GameConfigurator(myGameConfigDocument);
         myGameRulesController.addGameConditionsAsCollection(gameConfigurator.configureGameConditions());
         myGameLevelsController = gameConfigurator.loadLevelsFromXML();
         myCurrentLevel = myGameLevelsController.loadBaseLevel();
+        myCurrentUIActionsProcessor = new UIActionsProcessor(myCurrentLevel.getActionsRequester(), myGameActionsRequester);
         loadNextLevel();
     }
 
@@ -49,20 +50,8 @@ public class Game {
         return doc;
     }
 
-    private Document configureWithTestDocument() throws GameEngineException {
-        File testFile = new File("src/resources/player/MockData2.xml");
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder ;
-        try {
-            builder = factory.newDocumentBuilder();
-            Document doc = builder.parse(testFile);
-            return doc;
-        } catch (ParserConfigurationException | SAXException | IOException e) {
-            throw new GameEngineException(e, "ConfigurationFailedXML");
-        }
-    }
-
     public GameSceneObject execute(double elapsedTime) throws GameEngineException {
+        myGameRulesController.addGameActions(myGameActionsRequester.getRequestedActions());
         myGameRulesController.checkConditionsAndRunGameActions(this);
         return myCurrentLevel.execute(elapsedTime);
     }
@@ -91,5 +80,18 @@ public class Game {
 
     public String getCurrentLevelBackgroundPath() {
         return myCurrentLevel.getBackgroundPath();
+    }
+
+    private Document configureWithTestDocument() throws GameEngineException {
+        File testFile = new File("src/resources/player/MockData2.xml");
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder ;
+        try {
+            builder = factory.newDocumentBuilder();
+            Document doc = builder.parse(testFile);
+            return doc;
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            throw new GameEngineException(e, "ConfigurationFailedXML");
+        }
     }
 }

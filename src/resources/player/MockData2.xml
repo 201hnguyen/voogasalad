@@ -14,7 +14,7 @@
             </Action>
         </Actions>
     </GameCondition>
-
+<!--TEST-->
     <SpritePrototype>
         <Properties>
             <PrototypeId>0</PrototypeId>
@@ -137,13 +137,13 @@
         <AvailablePrototypes>0 1</AvailablePrototypes>
 
         <Wave>
-            <Queue>0 1 0 0 1</Queue>
+            <Queue>1 1 1 1 1</Queue>
             <Interval>0.5</Interval>
             <SpawnPointX>100</SpawnPointX>
             <SpawnPointY>100</SpawnPointY>
         </Wave>
         <Wave>
-            <Queue>0 1</Queue>
+            <Queue>1 1</Queue>
             <Interval>1</Interval>
             <SpawnPointX>100</SpawnPointX>
             <SpawnPointY>100</SpawnPointY>
