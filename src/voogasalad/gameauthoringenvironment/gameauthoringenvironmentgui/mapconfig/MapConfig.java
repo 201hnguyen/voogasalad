@@ -24,7 +24,8 @@ public class MapConfig {
 
     private static final int window_WIDTH = 1000;
     private static final int window_HEIGHT = 600;
-    private Group root;
+    //private Group root;
+    private BorderPane root;
     private Group subRoot;
     private Scene levelConfigScene;
     private SubScene playerField;
@@ -56,14 +57,14 @@ public class MapConfig {
         activeEnemyList = new ArrayList<>(Arrays.asList(1,2,3));
         waveComposition = new ArrayList<>();
         waveCompositionLabel = new ArrayList<>();
-        spawnPointImage = new Image(this.getClass().getClassLoader().getResourceAsStream("pandaslogo.png"));
+        spawnPointImage = new Image(this.getClass().getClassLoader().getResourceAsStream("spawnPoint.jpg"));
         spawnPointImageView = new ImageView(spawnPointImage);
-        pathPointImage = new Image(this.getClass().getClassLoader().getResourceAsStream("ghost1.png"));
+        pathPointImage = new Image(this.getClass().getClassLoader().getResourceAsStream("pathPoint.png"));
         spawnPointImageView.setFitHeight(20);
         spawnPointImageView.setFitWidth(20);
         levelConfigPage = new Stage();
-        //root = new GridPane();
-        root = new Group();
+        root = new BorderPane();
+        //root = new Group();
         mainhbox = new HBox(10);
         buttonsvbox = new VBox(10);
         //addNewRouteButton();
@@ -76,16 +77,19 @@ public class MapConfig {
 
         //create subscene root
         subRoot = new Group();
+        subRoot.getChildren().add(spawnPointImageView);
         playerField = new SubScene(subRoot, 500, 500);
         playerField.setLayoutX(10);
         playerField.setLayoutY(10);
-        playerField.setOnMouseClicked(e -> handleMouseClickedSubScene(e.getX(),e.getY()));
+        playerField.setOnMouseClicked(e -> handleMouseClickedSubScene(e.getSceneX(),e.getSceneY()));
         //mainhbox.getChildren().add(playerField);
         //mainhbox.getChildren().add(buttonsvbox);
         //root.getChildren().add(mainhbox);
-        root.getChildren().add(playerField);
-        root.getChildren().add(spawnPointImageView);
-        root.getChildren().add(createSubmitAndCloseButton());
+        root.setCenter(playerField);
+        //root.getChildren().add(playerField);
+        //root.getChildren().add(spawnPointImageView);
+        buttonsvbox.getChildren().add(createSubmitAndCloseButton());
+        root.setRight(buttonsvbox);
 
         levelConfigScene = new Scene(root, window_WIDTH, window_HEIGHT);
         levelConfigPage.setTitle("New Level Configuration");
@@ -102,7 +106,7 @@ public class MapConfig {
             pathPointImageView.setFitWidth(20);
             pathPointImageView.setX(xCoordinate);
             pathPointImageView.setY(yCoordinate);
-            root.getChildren().add(pathPointImageView);
+            subRoot.getChildren().add(pathPointImageView);
             System.out.println("x coordinate " + xCoordinate +" y coordinate " + yCoordinate);
 
         }
@@ -131,14 +135,14 @@ public class MapConfig {
         enemyTypeHBox.setLayoutX(xPosition-140);
         enemyTypeHBox.setLayoutY(yPosition);
         yPosition+=spacing;
-        root.getChildren().add(enemyTypeHBox);
+
 
         Button addWaveButton = new Button("Add A New Wave");
         addWaveButton.setLayoutX(xPosition);
         addWaveButton.setLayoutY(yPosition);
         yPosition+=spacing;
         addWaveButton.setOnAction(e->addNewWaveField());
-        root.getChildren().add(addWaveButton);
+
         HBox waveLabelHBox = new HBox(80);
         waveLabelHBox.setLayoutX(xPosition-300);
         waveLabelHBox.setLayoutY(yPosition);
@@ -149,7 +153,12 @@ public class MapConfig {
         waveLabelHBox.getChildren().add(enemyListLabel);
         waveLabelHBox.getChildren().add(spawnTimeLabel);
         waveLabelHBox.getChildren().add(durationLabel);
-        root.getChildren().add(waveLabelHBox);
+        //root.getChildren().add(addWaveButton);
+        //root.getChildren().add(enemyTypeHBox);
+        //root.getChildren().add(waveLabelHBox);
+        buttonsvbox.getChildren().add(addWaveButton);
+        buttonsvbox.getChildren().add(enemyTypeHBox);
+        buttonsvbox.getChildren().add(waveLabelHBox);
     }
 
     private void addEnemyToWave(int enemyIndex) {
@@ -174,8 +183,8 @@ public class MapConfig {
         newWaveHBox.getChildren().add(waveEnemyListLabel);
         newWaveHBox.getChildren().add(startingTimeField);
         newWaveHBox.getChildren().add(durationField);
-        root.getChildren().add(newWaveHBox);
-
+        //root.getChildren().add(newWaveHBox);
+        buttonsvbox.getChildren().add(newWaveHBox);
 
 
     }
@@ -214,10 +223,10 @@ public class MapConfig {
         spawnPointLabel = new Label("To Be Set");
         spawnPointLabel.setLayoutX(window_WIDTH - 220);
         spawnPointLabel.setLayoutY(10);
-        root.getChildren().add(spawnPointLabel);
-        root.getChildren().add(newButton);
         //root.getChildren().add(spawnPointLabel);
-        //buttonsvbox.getChildren().add(newButton);
+        //root.getChildren().add(newButton);
+        buttonsvbox.getChildren().add(spawnPointLabel);
+        buttonsvbox.getChildren().add(newButton);
     }
 
     private void turnOnOffPathCreation(Button myButton) {
@@ -238,8 +247,8 @@ public class MapConfig {
         yPosition+=spacing;
         newButton.setId("NewRoute");
         newButton.setOnAction(e ->turnOnOffPathCreation(newButton));
-        root.getChildren().add(newButton);
-        //buttonsvbox.getChildren().add(newButton);
+        //root.getChildren().add(newButton);
+        buttonsvbox.getChildren().add(newButton);
 
     }
 
@@ -262,8 +271,8 @@ public class MapConfig {
             }
         });
 
-        root.getChildren().add(newButton);
-        //buttonsvbox.getChildren().add(newButton);
+        //root.getChildren().add(newButton);
+        buttonsvbox.getChildren().add(newButton);
     }
 
     private Button createSubmitAndCloseButton(){
