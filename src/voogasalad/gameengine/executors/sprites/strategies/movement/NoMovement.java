@@ -6,13 +6,12 @@ import java.util.Map;
 
 public class NoMovement implements MovementStrategy {
 
-    public NoMovement(Map<String, Object> parameters) {
-
+    public NoMovement() {
     }
 
     @Override
     public MovementStrategy makeClone() {
-        return new NoMovement(new HashMap<>());
+        return new NoMovement();
     }
 
     @Override
