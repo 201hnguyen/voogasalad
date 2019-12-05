@@ -17,6 +17,8 @@ public class LevelActionsRequester {
     }
 
     public Set<LevelAction> getRequestedActions() {
-        return myRequestedActions;
+        Set<LevelAction> returnSet = myRequestedActions;
+        myRequestedActions = new HashSet<>();
+        return returnSet;
     }
 }
