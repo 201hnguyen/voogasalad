@@ -5,15 +5,25 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import org.w3c.dom.Document;
+import voogasalad.everything_gae.bus.Bus;
+import voogasalad.everything_gae.gae_gui.AddToXML;
 import voogasalad.everything_gae.gae_gui.level_map_config.level_config.nodes.MapButton;
 import voogasalad.everything_gae.gae_gui.level_map_config.level_config.nodes.ObjectVBox;
 import voogasalad.everything_gae.gae_gui.level_map_config.level_config.nodes.RuleLine;
+import voogasalad.everything_gae.gae_gui.level_map_config.level_config.nodes.SubmitButton;
 
 public class LevelConfigPane extends BorderPane{
     private int width = 500;
     private int height = 500;
+    private AddToXML sendToXML;
+    private Document createdXML;
+    private Bus busInstance;
 
-    public LevelConfigPane(){
+    public LevelConfigPane(AddToXML sendToXMLParam, Document createdXMLParam, Bus busInstanceParam){
+        sendToXML = sendToXMLParam;
+        createdXML = createdXMLParam;
+        busInstance = busInstanceParam;
         setBorderPane();
     }
 
@@ -78,7 +88,7 @@ public class LevelConfigPane extends BorderPane{
 
     private ScrollPane createRulesVBox(){
         ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setPrefHeight(4*height/10);
+        scrollPane.setPrefHeight(3*height/10);
         scrollPane.setMaxHeight(scrollPane.getPrefHeight());
         scrollPane.setFitToHeight(true);
         BorderPane borderPane = new BorderPane();
@@ -129,7 +139,7 @@ public class LevelConfigPane extends BorderPane{
         h.setPrefWidth(width);
         h.setPrefHeight(height/10);
         Button newLevel = new Button("Create New Level");
-        Button submit = new Button("Submit");
+        SubmitButton submit = new SubmitButton(createdXML, sendToXML, busInstance);
         newLevel.setPrefWidth(width/2);
         newLevel.setPrefHeight(h.getPrefHeight());
         submit.setPrefHeight(h.getPrefHeight());

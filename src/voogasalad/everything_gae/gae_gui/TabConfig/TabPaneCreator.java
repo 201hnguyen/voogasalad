@@ -5,6 +5,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
+import org.w3c.dom.Document;
+import voogasalad.everything_gae.bus.Bus;
+import voogasalad.everything_gae.gae_gui.AddToXML;
 import voogasalad.everything_gae.gae_gui.level_map_config.level_config.LevelConfigPane;
 
 import java.util.ResourceBundle;
@@ -14,8 +17,15 @@ public class TabPaneCreator {
     private static final String TAB_NAMES = "voogasalad/everything_gae/resources/TabNames";
     private ResourceBundle myTabNames;
     private TabPane myTabPane;
+    private int height = 500;
+    private AddToXML sendToXML;
+    private Document createdXML;
+    private Bus busInstance;
 
-    public TabPaneCreator() {
+    public TabPaneCreator(AddToXML sendToXMLParam, Document createdXMLParam, Bus busInstanceParam) {
+        sendToXML = sendToXMLParam;
+        createdXML = createdXMLParam;
+        busInstance = busInstanceParam;
         myTabPane = createTabPane();
     }
 
@@ -31,6 +41,7 @@ public class TabPaneCreator {
     private TabPane createTabPane() {
 
         TabPane tabPane = new TabPane();
+        //tabPane.setMaxHeight(height/10);
         myTabNames = ResourceBundle.getBundle(TAB_NAMES);
 
         //refactor to use reflection!!
@@ -45,7 +56,7 @@ public class TabPaneCreator {
         Tab obstaclesTab = new ObstacleConfigTab().getTab();
         Tab enemiesTab = new EnemyConfigTab().getTab();
         Tab levelTab = new Tab("Level");
-        levelTab.setContent(new LevelConfigPane());
+        levelTab.setContent(new LevelConfigPane(sendToXML, createdXML, busInstance));
 
         tabPane.getTabs().add(towersTab);
         tabPane.getTabs().add(obstaclesTab);
