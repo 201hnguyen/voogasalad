@@ -39,5 +39,4 @@ public class AttackStrategyTests{
         Double expected = 0.0;
         assertEquals(expected, NoAttack.getAttackRate());
     }
-
 }
