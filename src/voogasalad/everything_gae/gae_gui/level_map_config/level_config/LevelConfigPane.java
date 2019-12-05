@@ -12,6 +12,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import voogasalad.everything_gae.gae_gui.level_map_config.map_config.MapConfig;
 
 public class LevelConfigPane extends BorderPane{
     private int width = 500;
@@ -27,7 +28,7 @@ public class LevelConfigPane extends BorderPane{
         HBox allObjects = createAllObjectHBox();
         ScrollPane rules = createRulesVBox();
         Label selectActiveLabel = createSelectActiveLabel();
-        Button createMapButton = createMapButton();
+        Button createMapButton = new MapButton(width, height);
         HBox createSubmitNewLevelButtons = createSubmitNewLevelButtons();
         gridPane.addRow(0, title);
         gridPane.addRow(1, allObjects);
@@ -127,12 +128,6 @@ public class LevelConfigPane extends BorderPane{
         return label;
     }
 
-    private Button createMapButton(){
-        Button b = new Button("Click To Configure Map For Level");
-        b.setPrefWidth(width);
-        b.setPrefHeight(height/10);
-        return b;
-    }
 
     private HBox createSubmitNewLevelButtons(){
         HBox h = new HBox();
