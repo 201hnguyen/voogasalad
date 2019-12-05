@@ -1,4 +1,4 @@
-package voogasalad.gameauthoringenvironment.gameauthoringenvironmentgui.levelconfig;
+package voogasalad.gameauthoringenvironment.gui.levelconfig;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -7,11 +7,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import org.w3c.dom.Document;
 import voogasalad.gameauthoringenvironment.bus.Bus;
-import voogasalad.gameauthoringenvironment.gameauthoringenvironmentgui.AddToXML;
-import voogasalad.gameauthoringenvironment.gameauthoringenvironmentgui.levelconfig.nodes.MapButton;
-import voogasalad.gameauthoringenvironment.gameauthoringenvironmentgui.levelconfig.nodes.VBoxCreator;
-import voogasalad.gameauthoringenvironment.gameauthoringenvironmentgui.levelconfig.nodes.RuleLine;
-import voogasalad.gameauthoringenvironment.gameauthoringenvironmentgui.levelconfig.nodes.SubmitButton;
+import voogasalad.gameauthoringenvironment.gui.AddToXML;
+import voogasalad.gameauthoringenvironment.gui.levelconfig.nodes.MapButton;
+import voogasalad.gameauthoringenvironment.gui.levelconfig.nodes.VBoxCreator;
+import voogasalad.gameauthoringenvironment.gui.levelconfig.nodes.RuleLine;
+import voogasalad.gameauthoringenvironment.gui.levelconfig.nodes.SubmitButton;
 
 public class LevelConfigPane extends BorderPane{
     private int width = 500;

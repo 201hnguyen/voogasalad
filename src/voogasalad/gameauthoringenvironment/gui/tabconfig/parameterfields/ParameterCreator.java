@@ -1,4 +1,4 @@
-package voogasalad.gameauthoringenvironment.gameauthoringenvironmentgui.tabconfig.object_param_creation;
+package voogasalad.gameauthoringenvironment.gui.tabconfig.parameterfields;
 
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -8,8 +8,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import voogasalad.gameauthoringenvironment.gameauthoringenvironmentgui.AddToXML;
-import voogasalad.gameauthoringenvironment.gameauthoringenvironmentgui.SaveGUIParameters;
+import voogasalad.gameauthoringenvironment.gui.AddToXML;
+import voogasalad.gameauthoringenvironment.gui.SaveGUIParameters;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.lang.reflect.InvocationTargetException;
@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-public class CreateObjectParams extends BorderPane{
+public class ParameterCreator extends BorderPane{
 
     private static final int window_WIDTH = 300;
     private static final int window_HEIGHT = 300;
@@ -41,8 +41,7 @@ public class CreateObjectParams extends BorderPane{
     //private static Map<String, Map<String,String>> sendToXML;
 
 
-
-    public CreateObjectParams(String gameObjectNameParam, String[] propertiesParam, ResourceBundle paramFieldTypeParam) throws ParserConfigurationException {
+    public ParameterCreator(String gameObjectNameParam, String[] propertiesParam, ResourceBundle paramFieldTypeParam) throws ParserConfigurationException {
         labelList = new ArrayList<>();
         labelText = new ArrayList<>();
         labelValue = new ArrayList<>();

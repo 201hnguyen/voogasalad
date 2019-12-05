@@ -1,4 +1,4 @@
-package voogasalad.gameauthoringenvironment.gameauthoringenvironmentgui.tabconfig;
+package voogasalad.gameauthoringenvironment.gui.tabconfig;
 
 
 import javafx.scene.control.Tab;
@@ -6,9 +6,9 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 import org.w3c.dom.Document;
 import voogasalad.gameauthoringenvironment.bus.Bus;
-import voogasalad.gameauthoringenvironment.gameauthoringenvironmentgui.AddToXML;
-import voogasalad.gameauthoringenvironment.gameauthoringenvironmentgui.levelconfig.LevelConfigPane;
-import voogasalad.gameauthoringenvironment.gameauthoringenvironmentgui.tabconfig.object_param_creation.CreateObjectParams;
+import voogasalad.gameauthoringenvironment.gui.AddToXML;
+import voogasalad.gameauthoringenvironment.gui.levelconfig.LevelConfigPane;
+import voogasalad.gameauthoringenvironment.gui.tabconfig.parameterfields.ParameterCreator;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.util.ResourceBundle;
@@ -82,7 +82,7 @@ public class TabPaneCreator {
     private BorderPane createPane(TabPane tabPane) {
         typeToParams.getKeys().asIterator().forEachRemaining(key -> {
             try {
-                Tab objectTab = new Tab(key, new CreateObjectParams(key, typeToParams.getString(key).split(","), paramFieldType) );
+                Tab objectTab = new Tab(key, new ParameterCreator(key, typeToParams.getString(key).split(","), paramFieldType) );
                 tabPane.getTabs().add(objectTab);
             } catch (ParserConfigurationException e) {
                 e.printStackTrace();

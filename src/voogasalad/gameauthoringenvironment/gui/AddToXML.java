@@ -1,4 +1,4 @@
-package voogasalad.gameauthoringenvironment.gameauthoringenvironmentgui;
+package voogasalad.gameauthoringenvironment.gui;
 
 import javafx.util.Pair;
 import org.w3c.dom.Document;

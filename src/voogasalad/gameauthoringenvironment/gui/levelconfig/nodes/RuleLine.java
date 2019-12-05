@@ -1,4 +1,4 @@
-package voogasalad.gameauthoringenvironment.gameauthoringenvironmentgui.levelconfig.nodes;
+package voogasalad.gameauthoringenvironment.gui.levelconfig.nodes;
 
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;

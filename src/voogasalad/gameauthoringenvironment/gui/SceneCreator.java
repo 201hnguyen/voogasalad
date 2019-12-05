@@ -1,11 +1,11 @@
-package voogasalad.gameauthoringenvironment.gameauthoringenvironmentgui;
+package voogasalad.gameauthoringenvironment.gui;
 
 import javafx.scene.control.TabPane;
 import voogasalad.gameauthoringenvironment.bus.Bus;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import org.w3c.dom.Document;
-import voogasalad.gameauthoringenvironment.gameauthoringenvironmentgui.tabconfig.TabPaneCreator;
+import voogasalad.gameauthoringenvironment.gui.tabconfig.TabPaneCreator;
 
 import java.util.ResourceBundle;
 

@@ -1,6 +1,6 @@
 package voogasalad.gameauthoringenvironment.bus;
 
-import voogasalad.gameauthoringenvironment.gameauthoringenvironmentgui.*;
+import voogasalad.gameauthoringenvironment.gui.*;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

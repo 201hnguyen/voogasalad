@@ -1,4 +1,4 @@
-package voogasalad.gameauthoringenvironment.gameauthoringenvironmentgui.tabconfig;
+package voogasalad.gameauthoringenvironment.gui.tabconfig;
 
 import javafx.scene.Group;
 import javafx.scene.control.Button;
@@ -12,7 +12,7 @@ import javafx.scene.layout.VBox;
 import java.util.ResourceBundle;
 
 public class TabFieldCreator extends Group {
-    private String towerResourcesPath = "gae_gui.gaeresource.";
+    private final String towerResourcesPath = "gae_gui.gaeresource.";
     private ResourceBundle myProperties;
     private String tabName;
     private VBox mainVBox ;

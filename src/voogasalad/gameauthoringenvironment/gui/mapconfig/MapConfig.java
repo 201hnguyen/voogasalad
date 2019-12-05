@@ -1,4 +1,4 @@
-package voogasalad.gameauthoringenvironment.gameauthoringenvironmentgui.mapconfig;
+package voogasalad.gameauthoringenvironment.gui.mapconfig;
 
 
 import javafx.event.ActionEvent;
@@ -14,7 +14,7 @@ import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Pair;
-import voogasalad.gameauthoringenvironment.gameauthoringenvironmentgui.levelconfig.nodes.MapButton;
+import voogasalad.gameauthoringenvironment.gui.levelconfig.nodes.MapButton;
 
 import java.io.File;
 import java.util.ArrayList;
