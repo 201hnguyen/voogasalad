@@ -37,14 +37,14 @@ public class PlayerVisualization extends Pane {
         displayScreen.updateDisplayScreen(sprites);
     }
 
-    public void setNewLevel(List<Sprite> sprites, String backgroundImagePath){
-        accordionCreator.updateAvailableTowers(sprites);
+    public void setNewLevel(List<Sprite> towers, List<Sprite> enemies, String backgroundImagePath){
+        accordionCreator.updateAvailableTowersAndEnemies(towers, enemies);
         setBackgroundImage(backgroundImagePath);
     }
 
     private void initialize() {
         ButtonCreator buttonCreator = new ButtonCreator(new ButtonController(this));
-        accordionCreator = new AccordionCreator(new ArrayList<>());
+        accordionCreator = new AccordionCreator();
         panelBox = new VBox();
         panelBox.getChildren().add(buttonCreator);
         panelBox.getChildren().add(accordionCreator);

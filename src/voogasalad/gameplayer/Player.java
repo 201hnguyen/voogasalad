@@ -44,7 +44,7 @@ public class Player {
         startGame();
     }
 
-    public void startGame() throws GameEngineException {
+    public void startGame() {
         myTimeline = new Timeline();
         myPlayerVisualization = new PlayerVisualization(myStage, myTimeline);
         setGameLoop();
@@ -53,7 +53,7 @@ public class Player {
     private void gameLoop(double elapsedTime) throws GameEngineException {
         if(myEngine.didLevelSwitch()) {
             System.out.println("level switched");
-            myPlayerVisualization.setNewLevel(myEngine.getSpritePrototypesByArchetype(SpriteArchetype.TOWER), myEngine.getCurrentLevelBackgroundPath());
+            myPlayerVisualization.setNewLevel(myEngine.getSpritePrototypesByArchetype(SpriteArchetype.TOWER), myEngine.getSpritePrototypesByArchetype(SpriteArchetype.ENEMY), myEngine.getCurrentLevelBackgroundPath());
         }
         myCurrentGameSceneObject = myEngine.execute(elapsedTime);
         myPlayerVisualization.update(myCurrentGameSceneObject.getOnScreenSprites());
