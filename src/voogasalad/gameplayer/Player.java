@@ -54,9 +54,10 @@ public class Player {
         if(myEngine.didLevelSwitch()) {
             System.out.println("level switched");
             myPlayerVisualization.setNewLevel(myEngine.getSpritePrototypesByArchetype(SpriteArchetype.TOWER), myEngine.getSpritePrototypesByArchetype(SpriteArchetype.ENEMY), myEngine.getCurrentLevelBackgroundPath());
+
         }
         myCurrentGameSceneObject = myEngine.execute(elapsedTime);
-        myPlayerVisualization.update(myCurrentGameSceneObject.getOnScreenSprites());
+        myPlayerVisualization.update(myCurrentGameSceneObject);
     }
 
     private void setGameLoop() {
