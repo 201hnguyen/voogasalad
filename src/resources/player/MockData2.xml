@@ -21,7 +21,7 @@
             <Width>20</Width>
             <Height>10</Height>
             <ImagePath>bird.png</ImagePath>
-            <Archetype>ENEMY</Archetype>
+            <Archetype>TOWER</Archetype>
         </Properties>
         <Strategies>
             <HealthStrategy>
