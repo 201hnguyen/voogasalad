@@ -2,13 +2,16 @@ package voogasalad.gameplayer.GUI;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import voogasalad.gameengine.engine.sprites.Sprite;
+import voogasalad.gameengine.api.GameSceneObject;
+import voogasalad.gameengine.executors.sprites.Sprite;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class PlayerVisualization extends Pane {
 
@@ -22,16 +25,46 @@ public class PlayerVisualization extends Pane {
     private Stage stage;
     private DisplayScreen displayScreen;
     private Timeline timeline;
+    private BackgroundImage backgroundImage;
+    private VBox panelBox;
+    private AccordionCreator accordionCreator;
+    private StatusBar statusBar;
 
-    public PlayerVisualization(Stage stage, List<Sprite> sprites, Timeline timeline) {
+    public PlayerVisualization(Stage stage, Timeline timeline) {
         this.stage = stage;
         this.timeline = timeline;
-        displayScreen(sprites);
-        initialize(sprites);
+        initialize();
+    }
+
+    public void update(List<Sprite> sprites, Map<String, Integer> gameInfoMap) {
+        displayScreen.updateDisplayScreen(sprites);
+        statusBar.updateDisplayedInfo(gameInfoMap);
+    }
+
+    public void setNewLevel(List<Sprite> towers, List<Sprite> enemies, String backgroundImagePath){
+        displayScreen.updateDisplayScreen(new ArrayList<>());
+        accordionCreator.updateAvailableTowersAndEnemies(towers, enemies);
+        setBackgroundImage(backgroundImagePath);
+    }
+
+    private void initialize() {
+        ButtonCreator buttonCreator = new ButtonCreator(new ButtonController(this));
+        accordionCreator = new AccordionCreator();
+        statusBar = new StatusBar();
+        statusBar.setMinWidth(300);
+        statusBar.setMinHeight(50);
+        panelBox = new VBox();
+        panelBox.getChildren().add(statusBar);
+        panelBox.getChildren().add(buttonCreator);
+        panelBox.getChildren().add(accordionCreator);
+        panelBox.setLayoutX(PANEL_POSITION);
+        this.getChildren().addAll(panelBox);
+        scene = new Scene(this, SCENE_WIDTH, SCENE_HEIGHT);
+        displayGameScreen();
         showStage();
     }
 
-    public void showStage() {
+    private void showStage() {
         this.getChildren().addAll(displayScreen);
         stage.setScene(scene);
         stage.setResizable(false);
@@ -40,39 +73,24 @@ public class PlayerVisualization extends Pane {
 
     }
 
-    public void update(List<Sprite> sprites) {
-        this.getChildren().removeAll(displayScreen);
-        displayScreen(sprites);
-        this.getChildren().addAll(displayScreen);
-    }
-
-    public void initialize(List<Sprite> sprites) {
-        ButtonCreator buttonCreator = new ButtonCreator(new ButtonController(this));
-        AccordionCreator accordionCreator = new AccordionCreator(sprites);
-        VBox panelBox = new VBox();
-        panelBox.getChildren().add(buttonCreator);
-        panelBox.getChildren().add(accordionCreator);
-        panelBox.setLayoutX(PANEL_POSITION);
-        this.getChildren().addAll(panelBox);
-        scene = new Scene(this, SCENE_WIDTH, SCENE_HEIGHT);
-        stage.show();
-    }
-
-    public void startButtonAction() {
-        timeline.play();
-        System.out.println("hello");
-    }
-
-    public void pauseButtonAction() {
-        timeline.stop();
-    }
-
-    private void displayScreen(List<Sprite> sprites) {
-        displayScreen = new DisplayScreen(sprites);
+    private void displayGameScreen() {
+        displayScreen = new DisplayScreen();
         displayScreen.setMinWidth(PANEL_POSITION);
         displayScreen.setMinHeight(SCENE_HEIGHT);
         displayScreen.setLayoutX(LAYOUT);
         displayScreen.setLayoutY(LAYOUT);
-        displayScreen.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+    }
+
+    private void setBackgroundImage(String backgroundImagePath){
+        backgroundImage = new BackgroundImage(new Image(backgroundImagePath), BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(SCENE_WIDTH - panelBox.getMaxWidth(), SCENE_HEIGHT, false, false, true, true));
+        displayScreen.setBackground(new Background(backgroundImage));
+    }
+
+    public void startButtonAction() {
+        timeline.play();
+    }
+
+    public void pauseButtonAction() {
+        timeline.stop();
     }
 }

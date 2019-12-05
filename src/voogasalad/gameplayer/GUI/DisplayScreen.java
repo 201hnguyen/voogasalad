@@ -1,39 +1,24 @@
 package voogasalad.gameplayer.GUI;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
-import javafx.util.Duration;
-import voogasalad.gameengine.engine.sprites.JavaFXSprite;
-import voogasalad.gameengine.engine.sprites.JavaFXSpriteManager;
-import voogasalad.gameengine.engine.sprites.Sprite;
+import voogasalad.gameengine.executors.sprites.Sprite;
 
-import javax.swing.plaf.BorderUIResource;
 import java.util.List;
-import java.util.ResourceBundle;
 
 public class DisplayScreen extends Pane {
 
-    public static final int FRAMES_PER_SECOND = 60;
-    public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
-    private List<Sprite> spriteList;
-
-    public DisplayScreen(List<Sprite> sprites) {
-        setBackground(new Background(new BackgroundFill(Color.GHOSTWHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-        spriteList = sprites;
-        for(Sprite sprite: spriteList){
+    public void updateDisplayScreen(List<Sprite> sprites){
+        this.getChildren().clear();
+        for(Sprite sprite: sprites){
             loadInSprite(sprite);
         }
     }
 
     private void loadInSprite(Sprite sprite) {
-        JavaFXSprite toLoad = (JavaFXSprite) sprite;
+        Sprite toLoad = sprite;
         ImageView toDisplay = (ImageView) toLoad.getImage();
         int xPos = (int) sprite.getX();
         int yPos = (int) sprite.getY();

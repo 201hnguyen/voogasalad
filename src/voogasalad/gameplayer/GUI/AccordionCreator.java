@@ -1,53 +1,51 @@
 package voogasalad.gameplayer.GUI;
-        import javafx.scene.control.Accordion;
-        import javafx.scene.control.Label;
-        import javafx.scene.control.TitledPane;
-        import javafx.scene.image.Image;
-        import javafx.scene.image.ImageView;
-        import javafx.scene.layout.HBox;
-        import voogasalad.gameengine.engine.sprites.JavaFXSprite;
-        import voogasalad.gameengine.engine.sprites.Sprite;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.TitledPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import voogasalad.gameengine.executors.sprites.Sprite;
 
         import java.util.List;
 
 public class AccordionCreator extends Accordion {
-//    private static final String RESOURCE_PATH = "resources.player.AccordionResource";
-//    private ResourceBundle resourceBundle;
+    public static final int ITEM_HEIGHT = 50;
+    public static final int ITEM_WIDTH = 50;
+    public static final String TOWER = "Towers";
+    private static final String ENEMY = "Enemies";
+    private HBox hBoxTowers;
+    private HBox hBoxEnemies;
 
-    private JavaFXSprite javaFXSprite;
 
-    final String[] imageNames = new String[]{"bird", "pandaslogo"};
-    final Image[] images = new Image[imageNames.length];
-    final ImageView[] pics = new ImageView[imageNames.length];
-    private List<Sprite> sprites;
-
-    public AccordionCreator(List<Sprite> sprites) {
-        this.sprites = sprites;
-        createAccordion(sprites);
-    }
-
-    private void createAccordion(List<Sprite> sprites) {
-        HBox hBox = new HBox();
-        for(Sprite sprite: sprites){
-            ImageView image = (ImageView) new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(sprite.getImagePath())));
-            hBox.getChildren().add(image);
-        }
-        TitledPane titledPane = new TitledPane("trial", hBox);
-        getPanes().add(titledPane);
-    }
-
-   /* public AccordionCreator() {
-        resourceBundle = ResourceBundle.getBundle(RESOURCE_PATH);
+    public AccordionCreator() {
         createAccordion();
     }
 
     private void createAccordion() {
-        HBox hBox = new HBox();
-        for (String key : Collections.list(resourceBundle.getKeys())) {
-            ImageView imageView = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream(resourceBundle.getString(key))));
-            hBox.getChildren().add(imageView);
-            TitledPane pane = new TitledPane(key, hBox);
-            getPanes().add(pane);
+        hBoxTowers = new HBox();
+        hBoxEnemies = new HBox();
+        TitledPane towerPane = new TitledPane(TOWER, hBoxTowers);
+        TitledPane enemyPane = new TitledPane(ENEMY, hBoxEnemies);
+        getPanes().add(towerPane);
+        getPanes().add(enemyPane);
+    }
+
+    public void updateAvailableTowersAndEnemies(List<Sprite> towers, List<Sprite> enemies){
+        hBoxTowers.getChildren().clear();
+        hBoxEnemies.getChildren().clear();
+        for(Sprite tower: towers){
+            ImageView image = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(tower.getImagePath())));
+            hBoxTowers.getChildren().add(image);
+            image.setFitHeight(ITEM_HEIGHT);
+            image.setFitWidth(ITEM_WIDTH);
         }
-    }*/
+        for(Sprite enemy: enemies){
+            ImageView image = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(enemy.getImagePath())));
+            hBoxEnemies.getChildren().add(image);
+            image.setFitHeight(ITEM_HEIGHT);
+            image.setFitWidth(ITEM_WIDTH);
+        }
+    }
+
 }

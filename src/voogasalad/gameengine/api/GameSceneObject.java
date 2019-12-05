@@ -1,19 +1,21 @@
 package voogasalad.gameengine.api;
 
-import voogasalad.gameengine.engine.sprites.JavaFXSprite;
-import voogasalad.gameengine.engine.sprites.Sprite;
+import voogasalad.gameengine.executors.sprites.Sprite;
+import voogasalad.gameengine.executors.sprites.SpriteManager;
 
 import java.util.List;
 
 public class GameSceneObject {
     private final int myResources;
     private final int myLives;
-    private final List<Sprite> myOnScreenSprites;
+    private final SpriteManager mySpriteManager;
+    private final String myBackgroundPath;
 
-    public GameSceneObject(int resources, int lives, List<Sprite> sprites) {
+    public GameSceneObject(String backgroundPath, int resources, int lives, SpriteManager spriteManager) {
         myResources = resources;
         myLives = lives;
-        myOnScreenSprites = sprites;
+        mySpriteManager = spriteManager;
+        myBackgroundPath = backgroundPath;
     }
 
     public int getResources() {
@@ -24,8 +26,11 @@ public class GameSceneObject {
         return myLives;
     }
 
-    public List<Sprite> getMyOnScreenSprites() {
-        return myOnScreenSprites;
+    public List<Sprite> getOnScreenSprites() {
+        return mySpriteManager.getOnScreenSprites() ;
     }
 
+    public String getBackgroundPath() {
+        return myBackgroundPath;
+    }
 }
