@@ -102,7 +102,7 @@
         <LevelId>1</LevelId>
         <Resources>250</Resources>
         <Lives>20</Lives>
-        <BackgroundImage>bird.png</BackgroundImage>
+        <BackgroundImage>baconcat.jpeg</BackgroundImage>
         <AvailablePrototypes>0 2</AvailablePrototypes>
 
         <Wave>
@@ -171,7 +171,7 @@
         <LevelId>0</LevelId>
         <Resources>250</Resources>
         <Lives>20</Lives>
-        <BackgroundImage>bird.png</BackgroundImage>
+        <BackgroundImage>pepperonicat.png</BackgroundImage>
         <AvailablePrototypes>0 1 2 3</AvailablePrototypes>
 
         <Wave>
