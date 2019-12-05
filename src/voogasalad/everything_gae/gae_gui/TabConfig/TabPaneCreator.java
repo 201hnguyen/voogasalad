@@ -4,6 +4,8 @@ import javafx.application.Application;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.layout.BorderPane;
+import voogasalad.everything_gae.gae_gui.level_map_config.level_config.LevelConfigPane;
 
 import java.util.ResourceBundle;
 
@@ -42,10 +44,14 @@ public class TabPaneCreator {
         Tab towersTab = new TowerConfigTab().getTab();
         Tab obstaclesTab = new ObstacleConfigTab().getTab();
         Tab enemiesTab = new EnemyConfigTab().getTab();
+        Tab levelTab = new Tab("Level");
+        levelTab.setContent(new LevelConfigPane());
 
         tabPane.getTabs().add(towersTab);
         tabPane.getTabs().add(obstaclesTab);
         tabPane.getTabs().add(enemiesTab);
+        tabPane.getTabs().add(levelTab);
+
 
         return tabPane;
     }

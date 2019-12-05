@@ -13,11 +13,15 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
-public class LevelConfigScene{
+public class LevelConfigPane extends BorderPane{
     private int width = 500;
     private int height = 500;
 
-    public Scene getScene(BorderPane root){
+    public LevelConfigPane(){
+        setBorderPane();
+    }
+
+    public void setBorderPane(){
         GridPane gridPane = new GridPane();
         HBox title = createTitleHBox();
         HBox allObjects = createAllObjectHBox();
@@ -31,8 +35,7 @@ public class LevelConfigScene{
         gridPane.addRow(3, createMapButton);
         gridPane.addRow(4, rules);
         gridPane.addRow(5, createSubmitNewLevelButtons);
-        root.setTop(gridPane);
-        return new Scene(root, width, height);
+        this.setTop(gridPane);
     }
 
 

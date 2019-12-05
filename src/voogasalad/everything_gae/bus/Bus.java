@@ -7,7 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.w3c.dom.Document;
-import voogasalad.everything_gae.gae_gui.level_map_config.level_config.LevelConfigScene;
+import voogasalad.everything_gae.gae_gui.level_map_config.level_config.LevelConfigPane;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameplayer.Player;
 
@@ -23,7 +23,7 @@ public class Bus {
     private GUI_SceneMaker gaeObject;
     private Document createdXML;
     private Group busRoot;
-    private LevelConfigScene levelConfigScene;
+    private LevelConfigPane levelConfigPane;
 
     public Bus(Stage currentStageParam, BorderPane rootParam, int widthParam, int heightParam){
         currentStage = currentStageParam;
@@ -31,7 +31,7 @@ public class Bus {
         width = widthParam;
         height = heightParam;
         gaeObject = new GUI_SceneMaker(widthParam, heightParam, this);
-        levelConfigScene = new LevelConfigScene();
+        levelConfigPane = new LevelConfigPane();
 
     }
 
