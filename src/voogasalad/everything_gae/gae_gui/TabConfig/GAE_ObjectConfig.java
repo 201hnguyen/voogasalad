@@ -1,4 +1,4 @@
-package gae_gui.gae_levelcomponents;
+package voogasalad.everything_gae.gae_gui.TabConfig;
 
 import javafx.scene.Group;
 import javafx.scene.control.Button;
@@ -21,8 +21,8 @@ public class GAE_ObjectConfig extends Group {
     private Image defaultObjectImage;
     private ImageView defaultObjectImageView;
     public GAE_ObjectConfig(String tabLabel, ResourceBundle myProperties ){
-        this.myProperties = ResourceBundle.getBundle(towerResourcesPath+"towerAttributes.properties");
-        defaultObjectImage = new Image(this.getClass().getClassLoader().getResourceAsStream("defaultObjectImage.png"));
+        this.myProperties = myProperties;
+        defaultObjectImage = new Image(this.getClass().getClassLoader().getResourceAsStream("ghost1.png"));
         defaultObjectImageView = new ImageView(defaultObjectImage);
         defaultObjectImageView.setFitWidth(100);
         defaultObjectImageView.setFitHeight(100);
@@ -35,7 +35,7 @@ public class GAE_ObjectConfig extends Group {
         mainVBox.getChildren().add(mainHBox);
         mainVBox.getChildren().add(saveObject);
         createInputFields();
-
+        this.getChildren().add(mainVBox);
 
     }
 

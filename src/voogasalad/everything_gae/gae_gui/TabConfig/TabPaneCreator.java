@@ -1,6 +1,6 @@
 package voogasalad.everything_gae.gae_gui.TabConfig;
 
-import gae_gui.gae_levelcomponents.GAE_ObjectConfig;
+
 import javafx.application.Application;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
@@ -28,8 +28,9 @@ public class TabPaneCreator {
         sendToXML = sendToXMLParam;
         createdXML = createdXMLParam;
         busInstance = busInstanceParam;
+        defaultProperties = ResourceBundle.getBundle("voogasalad/everything_gae/resources/EnemyAttributes");
         myTabPane = createTabPane();
-        defaultProperties = ResourceBundle.getBundle("voogasalad.everything_gae.resources."+"EnemyAttributes.properties");
+
     }
 
     /**
@@ -56,8 +57,8 @@ public class TabPaneCreator {
 
 
         Tab towersTab = new TowerConfigTab().getTab();
-        Tab obstaclesTab = new Tab("Towers", new GAE_ObjectConfig("Enemy", defaultProperties ));
-        Tab enemiesTab = new EnemyConfigTab().getTab();
+        Tab obstaclesTab = new ObstacleConfigTab().getTab();
+        Tab enemiesTab = new Tab("Enemies", new GAE_ObjectConfig("Enemy", defaultProperties));
         Tab levelTab = new Tab("Level");
         levelTab.setContent(new LevelConfigPane(sendToXML, createdXML, busInstance));
 
