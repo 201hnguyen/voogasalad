@@ -4,20 +4,21 @@ import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.utils.Verifier;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 import java.util.LinkedList;
 import java.util.Map;
 
 public class PathMovement implements MovementStrategy {
     private Map<String, Object> myOriginalParameters;
-    private LinkedList<Point> myPath;
-    private Point nextPosition;
+    private LinkedList<Point2D.Double> myPath;
+    private Point2D.Double nextPosition;
     private int nextPositionIndex;
     private boolean reachedEnd;
     private double mySpeed;
     private Point myDirection;
 
 
-    public PathMovement(double speed, LinkedList<Point> path) throws GameEngineException {
+    public PathMovement(double speed, LinkedList<Point2D.Double> path) throws GameEngineException {
         mySpeed = speed;
         myPath = path;
         nextPositionIndex = 0;
