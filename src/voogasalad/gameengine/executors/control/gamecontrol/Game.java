@@ -29,6 +29,7 @@ public class Game {
     private Document myGameConfigDocument;
     private UIActionsProcessor myCurrentUIActionsProcessor;
     private GameActionsRequester myGameActionsRequester;
+    private boolean switchedLevel;
 
     public Game(Document gameConfigDocument) throws GameEngineException {
         myGameRulesController = new GameRulesController();
@@ -39,6 +40,7 @@ public class Game {
         myGameLevelsController = gameConfigurator.loadLevelsFromXML();
         myCurrentLevel = myGameLevelsController.loadBaseLevel();
         myCurrentUIActionsProcessor = new UIActionsProcessor(myCurrentLevel.getActionsRequester(), myGameActionsRequester);
+        switchedLevel = false;
         loadNextLevel();
     }
 
@@ -51,6 +53,7 @@ public class Game {
     }
 
     public GameSceneObject execute(double elapsedTime) throws GameEngineException {
+        switchedLevel = false;
         myGameRulesController.addGameActions(myGameActionsRequester.getRequestedActions());
         myGameRulesController.checkConditionsAndRunGameActions(this);
         return myCurrentLevel.execute(elapsedTime);
@@ -60,6 +63,7 @@ public class Game {
         myCurrentLevel = myGameLevelsController.getNextLevel(myCurrentLevel);
         myCurrentLevel.getStatusManager().setGameSceneStatus(GameSceneStatus.ONGOING);
         myCurrentUIActionsProcessor.updateLevel(myCurrentLevel);
+        switchedLevel = true;
     }
 
     public GameSceneStatus getCurrentLevelStatus() {
@@ -93,5 +97,9 @@ public class Game {
         } catch (ParserConfigurationException | SAXException | IOException e) {
             throw new GameEngineException(e, "ConfigurationFailedXML");
         }
+    }
+
+    public boolean didLevelSwitch() {
+        return switchedLevel;
     }
 }

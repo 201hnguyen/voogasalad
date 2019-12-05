@@ -34,4 +34,8 @@ public class Engine {
     public String getCurrentLevelBackgroundPath() {
         return myGame.getCurrentLevelBackgroundPath();
     }
+
+    public boolean didLevelSwitch() {
+        return myGame.didLevelSwitch();
+    }
 }
