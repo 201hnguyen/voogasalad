@@ -100,6 +100,8 @@ public class Game {
     }
 
     public boolean didLevelSwitch() {
-        return switchedLevel;
+        boolean ret = switchedLevel;
+        switchedLevel = false;
+        return ret;
     }
 }

@@ -10,6 +10,6 @@ public class AdvanceToNextLevelAction implements GameAction{
 
     @Override
     public boolean isFinished() {
-        return false;
+        return true;
     }
 }

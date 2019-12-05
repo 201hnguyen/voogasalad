@@ -11,23 +11,34 @@ import voogasalad.gameengine.executors.sprites.Sprite;
 public class AccordionCreator extends Accordion {
     public static final int ITEM_HEIGHT = 50;
     public static final int ITEM_WIDTH = 50;
+    private HBox hBox;
 
     public AccordionCreator(List<Sprite> sprites) {
         createAccordion(sprites);
     }
 
     private void createAccordion(List<Sprite> sprites) {
-        HBox hBox = new HBox();
+        hBox = new HBox();
         for(Sprite sprite: sprites){
             ImageView image = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(sprite.getImagePath())));
             hBox.getChildren().add(image);
             image.setFitHeight(ITEM_HEIGHT);
             image.setFitWidth(ITEM_WIDTH);
         }
-        TitledPane titledPane = new TitledPane("Towers & Enemies", hBox);
+        TitledPane titledPane = new TitledPane("Towers", hBox);
        // TitledPane enemyPane = new TitledPane("Enemies", hBox);
         //getPanes().add(towersPane);
         getPanes().add(titledPane);
+    }
+
+    public void updateAvailableTowers(List<Sprite> sprites){
+        hBox.getChildren().clear();
+        for(Sprite sprite: sprites){
+            ImageView image = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(sprite.getImagePath())));
+            hBox.getChildren().add(image);
+            image.setFitHeight(ITEM_HEIGHT);
+            image.setFitWidth(ITEM_WIDTH);
+        }
     }
 
 }

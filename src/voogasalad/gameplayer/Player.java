@@ -9,6 +9,7 @@ import org.w3c.dom.Document;
 import voogasalad.gameengine.api.GameSceneObject;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.api.Engine;
+import voogasalad.gameengine.executors.utils.SpriteArchetype;
 import voogasalad.gameplayer.GUI.PlayerVisualization;
 
 /**
@@ -36,20 +37,24 @@ public class Player {
     private GameSceneObject myCurrentGameSceneObject;
 
     //Player expects a javaFX Stage upon instantiation
-    public Player(Stage primaryStage, Document doc) throws GameEngineException {
+    public Player(Stage primaryStage, Document doc) throws GameEngineException { //TODO: Don't throw GameEngineException out of Player
         myStage = primaryStage;
         myMapRoot = new Group();
         myEngine = new Engine(doc);
         startGame();
     }
 
-    public void startGame() {
+    public void startGame() throws GameEngineException {
         myTimeline = new Timeline();
-        myPlayerVisualization = new PlayerVisualization(myStage, myEngine.getSpritePrototypes(), myTimeline);
+        myPlayerVisualization = new PlayerVisualization(myStage, myTimeline);
         setGameLoop();
     }
 
     private void gameLoop(double elapsedTime) throws GameEngineException {
+        if(myEngine.didLevelSwitch()) {
+            System.out.println("level switched");
+            myPlayerVisualization.setNewLevel(myEngine.getSpritePrototypesByArchetype(SpriteArchetype.TOWER), myEngine.getCurrentLevelBackgroundPath());
+        }
         myCurrentGameSceneObject = myEngine.execute(elapsedTime);
         myPlayerVisualization.update(myCurrentGameSceneObject.getOnScreenSprites());
     }
