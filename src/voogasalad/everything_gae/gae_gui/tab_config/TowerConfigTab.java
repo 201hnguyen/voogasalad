@@ -1,4 +1,4 @@
-package voogasalad.everything_gae.gae_gui.TabConfig;
+package voogasalad.everything_gae.gae_gui.tab_config;
 
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -7,11 +7,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import voogasalad.everything_gae.gae_gui.AddToXML;
-import voogasalad.everything_gae.gae_gui.CreateObjectParameters;
-import voogasalad.everything_gae.gae_gui.FieldTextReturnFactory;
-import voogasalad.everything_gae.gae_gui.SaveGUIParameters;
+import voogasalad.everything_gae.gae_gui.tab_config.object_param_creation.FieldTextReturnFactory;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
