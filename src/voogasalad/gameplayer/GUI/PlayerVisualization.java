@@ -57,6 +57,7 @@ public class PlayerVisualization extends Pane {
         panelBox.getChildren().add(statusBar);
         panelBox.getChildren().add(buttonCreator);
         panelBox.getChildren().add(accordionCreator);
+        panelBox.getChildren().add(statusBar);
         panelBox.setLayoutX(PANEL_POSITION);
         this.getChildren().addAll(panelBox);
         scene = new Scene(this, SCENE_WIDTH, SCENE_HEIGHT);
