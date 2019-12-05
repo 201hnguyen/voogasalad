@@ -20,6 +20,8 @@ public class PlayerVisualization extends Pane {
     private static final double PANEL_POSITION = 700;
     private static final double LAYOUT = 0;
     private static final String TITLE = "Player";
+    private static final int STATUS_BAR_WIDTH = 300;
+    private static final int STATUS_BAR_HEIGHT = 50;
 
     private Scene scene;
     private Stage stage;
@@ -51,8 +53,8 @@ public class PlayerVisualization extends Pane {
         ButtonCreator buttonCreator = new ButtonCreator(new ButtonController(this));
         accordionCreator = new AccordionCreator();
         statusBar = new StatusBar();
-        statusBar.setMinWidth(300);
-        statusBar.setMinHeight(50);
+        statusBar.setMinWidth(STATUS_BAR_WIDTH);
+        statusBar.setMinHeight(STATUS_BAR_HEIGHT);
         panelBox = new VBox();
         panelBox.getChildren().add(statusBar);
         panelBox.getChildren().add(buttonCreator);

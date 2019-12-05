@@ -1,6 +1,6 @@
 package voogasalad;
 
-import voogasalad.everything_gae.bus.Bus;
+import voogasalad.gameauthoringenvironment.bus.Bus;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
