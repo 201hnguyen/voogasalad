@@ -50,4 +50,8 @@ public class GameRulesController {
         actionsToRemove.stream().
                 forEach(action -> myGameActionsToExecute.remove(action));
     }
+
+    public void addGameActions(Collection<GameAction> actions) {
+        myGameActionsToExecute.addAll(actions);
+    }
 }

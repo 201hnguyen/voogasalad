@@ -4,6 +4,7 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import voogasalad.gameengine.executors.sprites.Sprite;
 
         import java.util.List;
@@ -11,23 +12,40 @@ import voogasalad.gameengine.executors.sprites.Sprite;
 public class AccordionCreator extends Accordion {
     public static final int ITEM_HEIGHT = 50;
     public static final int ITEM_WIDTH = 50;
+    public static final String TOWER = "Towers";
+    private static final String ENEMY = "Enemies";
+    private HBox hBoxTowers;
+    private HBox hBoxEnemies;
 
-    public AccordionCreator(List<Sprite> sprites) {
-        createAccordion(sprites);
+
+    public AccordionCreator() {
+        createAccordion();
     }
 
-    private void createAccordion(List<Sprite> sprites) {
-        HBox hBox = new HBox();
-        for(Sprite sprite: sprites){
-            ImageView image = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(sprite.getImagePath())));
-            hBox.getChildren().add(image);
+    private void createAccordion() {
+        hBoxTowers = new HBox();
+        hBoxEnemies = new HBox();
+        TitledPane towerPane = new TitledPane(TOWER, hBoxTowers);
+        TitledPane enemyPane = new TitledPane(ENEMY, hBoxEnemies);
+        getPanes().add(towerPane);
+        getPanes().add(enemyPane);
+    }
+
+    public void updateAvailableTowersAndEnemies(List<Sprite> towers, List<Sprite> enemies){
+        hBoxTowers.getChildren().clear();
+        hBoxEnemies.getChildren().clear();
+        for(Sprite tower: towers){
+            ImageView image = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(tower.getImagePath())));
+            hBoxTowers.getChildren().add(image);
             image.setFitHeight(ITEM_HEIGHT);
             image.setFitWidth(ITEM_WIDTH);
         }
-        TitledPane titledPane = new TitledPane("Towers & Enemies", hBox);
-       // TitledPane enemyPane = new TitledPane("Enemies", hBox);
-        //getPanes().add(towersPane);
-        getPanes().add(titledPane);
+        for(Sprite enemy: enemies){
+            ImageView image = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(enemy.getImagePath())));
+            hBoxEnemies.getChildren().add(image);
+            image.setFitHeight(ITEM_HEIGHT);
+            image.setFitWidth(ITEM_WIDTH);
+        }
     }
 
 }

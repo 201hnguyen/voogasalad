@@ -10,14 +10,9 @@ import java.util.List;
 
 public class DisplayScreen extends Pane {
 
-    public static final int FRAMES_PER_SECOND = 60;
-    public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
-    private List<Sprite> spriteList;
-
-    public DisplayScreen(List<Sprite> sprites) {
-        setBackground(new Background(new BackgroundFill(Color.GHOSTWHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-        spriteList = sprites;
-        for(Sprite sprite: spriteList){
+    public void updateDisplayScreen(List<Sprite> sprites){
+        getChildren().clear();
+        for(Sprite sprite: sprites){
             loadInSprite(sprite);
         }
     }

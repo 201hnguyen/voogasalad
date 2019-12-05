@@ -22,7 +22,7 @@ public class ConditionsConfigurator {
     public static final String CONDITION_PARAMETERS_ROOT_TAG = "Parameters";
     public static final String CONDITION_ACTIONS_ROOT_TAG = "Actions";
     public static final String CONDITION_TYPE_ROOT_TAG = "Type";
-    public static final String ASSOCIATED_ACTION_TYPE_TAG = "type";
+    public static final String ASSOCIATED_ACTION_TYPE_TAG = "Type";
 
     public Collection<LevelCondition> buildLevelConditionsCollection(NodeList conditionNodeList) throws GameEngineException {
         Set<LevelCondition> levelConditions = new HashSet<>();
