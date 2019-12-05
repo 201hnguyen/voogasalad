@@ -52,9 +52,9 @@ public class Bus {
     private Button changeToGAEButton(){
         Button myButton = new Button("Enter GAE");
         myButton.setOnMouseClicked(event -> {
-            //changeToGAE();
+            changeToGAE();
             //FOR TESTING
-            currentStage.setScene(levelConfigScene.getScene(root));
+            //currentStage.setScene(levelConfigScene.getScene(root));
         });
         return myButton;
     }

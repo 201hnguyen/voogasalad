@@ -71,9 +71,6 @@ public class TowerConfigTab extends ConfigTabTemplate {
 
         //addInputFields(configVBox);
 
-        new CreateObjectParameters();
-
-
         //add node content to VBox
         configVBox.getChildren().addAll(
                 configLabel);
@@ -85,61 +82,6 @@ public class TowerConfigTab extends ConfigTabTemplate {
         return myTowerConfigTab;
     }
 
-    // a help
-    private void addInputFields(VBox vBox) {
-        System.out.println("entered addInputFields method in TowerConfigTab"); //testing
-
-        for (int j = 0; j < properties.length; j++) {
-            Label label = new Label(properties[j]); //for SaveGuiParameters
-            labelList.add(label);
-            labelText.add(label.getText());
-            vBox.getChildren().add(label);
-            vBox.getChildren().add(createObjectFromString(paramFieldType.getString(properties[j])));
-        }
-        root.setCenter(vBox);
-        root.setBottom(createSubmitButton());
-        towerEditScene = new Scene(root, window_WIDTH, window_HEIGHT);
-        towerPreferencePage.setScene(towerEditScene);
-        towerPreferencePage.show();
-    }
-
-    private Button createSubmitButton(){
-        System.out.println("Entered createSubmitButton in TowerConfigTab"); //testing
-        Button addButton = new Button("Submit");
-        addButton.setOnMouseClicked(event -> {
-            allNodes
-                    .stream()
-                    .forEach(node -> labelValue.add(fieldFactory.getAppropriateText(node)));
-
-            SaveGUIParameters myGuiParameters = new SaveGUIParameters(labelText, labelValue);
-            String myLabel = xmlObject.addToSendToXMLMap(myGuiParameters.getMap(), gameObjectName);
-            addToVBox(createObjectIcon(myGuiParameters.getMap(), myLabel),vBoxFromAccordion);
-        });
-
-        return addButton;
-    }
-
-    // a helper method to implement reflection
-    private Node createObjectFromString(String type){
-        System.out.println("Entered createObjectFromString in TowerConfigTab"); //testing
-        try{
-            Class cls = Class.forName(type);
-            Node myField = (Node) cls.getConstructor().newInstance();
-            allNodes.add(myField);
-
-            return myField;
-        } catch (IllegalAccessException e) {
-            throw new Error(e);
-        } catch (NoSuchMethodException e) {
-            throw new Error(e);
-        } catch (ClassNotFoundException e) {
-            throw new Error(e);
-        } catch (InstantiationException e) {
-            throw new Error(e);
-        } catch (InvocationTargetException e) {
-            throw new Error(e);
-        }
-    }
 
 
     private Button createObjectIcon(Map myMap, String objectName){

@@ -132,16 +132,6 @@ public class CreateObjectParameters {
         myVbox.getChildren().add(myButton);
     }
 
-//    private void addToSendToXMLMap(Map myMap){
-//        int i = 0;
-//        while(true){
-//            String putInMap = String.join(",", gameObjectName, Integer.toString(i));
-//            if(!(sendToXML.containsKey(putInMap))){
-//                sendToXML.putIfAbsent(putInMap, myMap);
-//                break;
-//            }
-//            i++;
-//        }
-//    }
+
 
 }
