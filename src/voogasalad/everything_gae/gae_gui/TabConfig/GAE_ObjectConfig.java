@@ -20,6 +20,7 @@ public class GAE_ObjectConfig extends Group {
     private VBox buttonVBox;
     private Image defaultObjectImage;
     private ImageView defaultObjectImageView;
+
     public GAE_ObjectConfig(String tabLabel, ResourceBundle myProperties ){
         this.myProperties = myProperties;
         defaultObjectImage = new Image(this.getClass().getClassLoader().getResourceAsStream("ghost1.png"));
@@ -36,11 +37,10 @@ public class GAE_ObjectConfig extends Group {
         mainVBox.getChildren().add(saveObject);
         createInputFields();
         this.getChildren().add(mainVBox);
-
     }
 
     private void createInputFields(){
-        for (String key: myProperties.keySet()){
+        for (String key: myProperties.keySet()) {
             String attributeName = myProperties.getString(key);
             HBox attributeHBox = new HBox();
             Label attributeLabel = new Label(attributeName);
@@ -49,9 +49,6 @@ public class GAE_ObjectConfig extends Group {
             attributeHBox.getChildren().add(attributeField);
             buttonVBox.getChildren().add(attributeHBox);
         }
-
-
     }
-
 
 }
