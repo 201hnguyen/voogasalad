@@ -53,6 +53,8 @@ public class GAE_LevelConfigPage {
     private int waveCount = 0;
     private ImageView spawnPointImageView;
     private Image spawnPointImage;
+    private Image defaultBackground;
+    private ImageView backgroundImageView;
 
     private Image pathPointImage;
 
@@ -65,6 +67,8 @@ public class GAE_LevelConfigPage {
         pathPointImage = new Image(this.getClass().getClassLoader().getResourceAsStream("pathPoint.png"));
         spawnPointImageView.setFitHeight(20);
         spawnPointImageView.setFitWidth(20);
+        defaultBackground = new Image(this.getClass().getClassLoader().getResourceAsStream("defaultBG.jpg"));
+        backgroundImageView = new ImageView(defaultBackground);
         levelConfigPage = new Stage();
         //root = new GridPane();
         root = new Group();
@@ -83,14 +87,18 @@ public class GAE_LevelConfigPage {
 
         //create subscene root
         subRoot = new Group();
+        subRoot.getChildren().add(backgroundImageView);
         playerField = new SubScene(subRoot, 500, 500);
+
         playerField.setLayoutX(10);
         playerField.setLayoutY(10);
         playerField.setOnMouseClicked(e -> handleMouseClickedSubScene(e.getX(),e.getY()));
         //mainhbox.getChildren().add(playerField);
         //mainhbox.getChildren().add(buttonsvbox);
         //root.getChildren().add(mainhbox);
+
         root.getChildren().add(playerField);
+
         root.getChildren().add(spawnPointImageView);
 
         levelConfigScene = new Scene(root, window_WIDTH, window_HEIGHT);
@@ -261,10 +269,10 @@ public class GAE_LevelConfigPage {
             File file = imageChooser.showOpenDialog(levelConfigPage);
             if (file != null) {
                 Image image1 = new Image(file.toURI().toString());
-                ImageView ip = new ImageView(image1);
-                ip.setFitWidth(500);
-                ip.setFitHeight(500);
-                subRoot.getChildren().add(ip);
+                backgroundImageView.setImage(image1);
+                backgroundImageView.setFitWidth(500);
+                backgroundImageView.setFitHeight(500);
+                //backgroundImageView.setImage();
             }
         });
 
