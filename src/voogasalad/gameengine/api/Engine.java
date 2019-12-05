@@ -30,4 +30,12 @@ public class Engine {
     public List<Sprite> getSpritePrototypesByArchetype(SpriteArchetype spriteArchetype) throws GameEngineException {
         return myGame.getSpritePrototypesByArchetype(spriteArchetype);
     }
+
+    public String getCurrentLevelBackgroundPath() {
+        return myGame.getCurrentLevelBackgroundPath();
+    }
+
+    public boolean didLevelSwitch() {
+        return myGame.didLevelSwitch();
+    }
 }

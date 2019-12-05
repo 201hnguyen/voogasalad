@@ -10,11 +10,9 @@ import java.util.List;
 
 public class DisplayScreen extends Pane {
 
-    private List<Sprite> spriteList;
-
-    public DisplayScreen(List<Sprite> sprites) {
-        spriteList = sprites;
-        for(Sprite sprite: spriteList){
+    public void updateDisplayScreen(List<Sprite> sprites){
+        getChildren().clear();
+        for(Sprite sprite: sprites){
             loadInSprite(sprite);
         }
     }

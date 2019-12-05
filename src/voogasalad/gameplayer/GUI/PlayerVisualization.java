@@ -8,6 +8,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import voogasalad.gameengine.executors.sprites.Sprite;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerVisualization extends Pane {
@@ -23,13 +24,14 @@ public class PlayerVisualization extends Pane {
     private DisplayScreen displayScreen;
     private Timeline timeline;
     private BackgroundImage backgroundImage;
+    private VBox panelBox;
+    private AccordionCreator accordionCreator;
 
     public PlayerVisualization(Stage stage, List<Sprite> sprites, Timeline timeline, String backgroundImagePath) {
         this.stage = stage;
         this.timeline = timeline;
-        this.backgroundImage = new BackgroundImage(new Image(backgroundImagePath), BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(SCENE_WIDTH, SCENE_HEIGHT, false, false, true, true));
-        displayScreen(sprites);
         initialize(sprites);
+        displayScreen();
         showStage();
     }
 
@@ -43,29 +45,36 @@ public class PlayerVisualization extends Pane {
     }
 
     public void update(List<Sprite> sprites) {
-        this.getChildren().removeAll(displayScreen);
-        displayScreen(sprites);
-        this.getChildren().addAll(displayScreen);
+        displayScreen.updateDisplayScreen(sprites);
     }
 
-    public void initialize(List<Sprite> sprites) {
+    private void initialize(List<Sprite> sprites) {
         ButtonCreator buttonCreator = new ButtonCreator(new ButtonController(this));
-        AccordionCreator accordionCreator = new AccordionCreator(sprites);
-        VBox panelBox = new VBox();
-        panelBox.getChildren().add(buttonCreator);
+        accordionCreator = new AccordionCreator(new ArrayList<>());
+        panelBox = new VBox();
         panelBox.getChildren().add(accordionCreator);
+        panelBox.getChildren().add(buttonCreator);
         panelBox.setLayoutX(PANEL_POSITION);
         this.getChildren().addAll(panelBox);
         scene = new Scene(this, SCENE_WIDTH, SCENE_HEIGHT);
         stage.show();
     }
 
-    private void displayScreen(List<Sprite> sprites) {
-        displayScreen = new DisplayScreen(sprites);
+    public void setNewLevel(List<Sprite> sprites, String backgroundImagePath){
+        accordionCreator.updateAvailableTowers(sprites);
+        setBackgroundImage(backgroundImagePath);
+    }
+
+    private void displayScreen() {
+        displayScreen = new DisplayScreen();
         displayScreen.setMinWidth(PANEL_POSITION);
         displayScreen.setMinHeight(SCENE_HEIGHT);
         displayScreen.setLayoutX(LAYOUT);
         displayScreen.setLayoutY(LAYOUT);
+    }
+
+    private void setBackgroundImage(String backgroundImagePath){
+        backgroundImage = new BackgroundImage(new Image(backgroundImagePath), BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(SCENE_WIDTH, SCENE_HEIGHT, false, false, true, true));
         displayScreen.setBackground(new Background(backgroundImage));
     }
 
