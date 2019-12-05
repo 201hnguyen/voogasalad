@@ -5,13 +5,13 @@ import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import voogasalad.gameengine.engine.sprites.Sprite;
+import voogasalad.gameengine.executors.sprites.Sprite;
 
 import java.util.List;
 
 public class PlayerVisualization extends Pane {
 
-    private static final double SCENE_WIDTH = 830;
+    private static final double SCENE_WIDTH = 1000;
     private static final double SCENE_HEIGHT = 630;
     private static final double PANEL_POSITION = 700;
     private static final double LAYOUT = 0;
@@ -25,26 +25,29 @@ public class PlayerVisualization extends Pane {
     public PlayerVisualization(Stage stage, List<Sprite> sprites, Timeline timeline) {
         this.stage = stage;
         this.timeline = timeline;
-        initialize();
         displayScreen(sprites);
+        initialize(sprites);
         showStage();
     }
 
     public void showStage() {
+        this.getChildren().addAll(displayScreen);
         stage.setScene(scene);
         stage.setResizable(false);
         stage.setTitle(TITLE);
+        stage.show();
+
     }
 
     public void update(List<Sprite> sprites) {
-        this.getChildren().remove(displayScreen);
+        this.getChildren().removeAll(displayScreen);
         displayScreen(sprites);
         this.getChildren().addAll(displayScreen);
     }
 
-    public void initialize() {
+    public void initialize(List<Sprite> sprites) {
         ButtonCreator buttonCreator = new ButtonCreator(new ButtonController(this));
-        AccordionCreator accordionCreator = new AccordionCreator();
+        AccordionCreator accordionCreator = new AccordionCreator(sprites);
         VBox panelBox = new VBox();
         panelBox.getChildren().add(buttonCreator);
         panelBox.getChildren().add(accordionCreator);
@@ -56,6 +59,7 @@ public class PlayerVisualization extends Pane {
 
     public void startButtonAction() {
         timeline.play();
+        System.out.println("hello");
     }
 
     public void pauseButtonAction() {
