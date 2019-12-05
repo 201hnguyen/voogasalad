@@ -7,6 +7,7 @@ import voogasalad.gameengine.executors.sprites.strategies.health.HealthStrategy;
 import voogasalad.gameengine.executors.sprites.strategies.rotation.RotationStrategy;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.LinkedList;
 import java.util.Map;
 
 public class StrategiesFactory {
@@ -25,12 +26,18 @@ public class StrategiesFactory {
         }
     }
 
-    public MovementStrategy makeMovement(String movementStrategy, Map<String, Object> parameters) throws GameEngineException {
+    public MovementStrategy makeMovement(MovementBuilder builder) throws GameEngineException {
+        String movementType = builder.getMovementType();
         try {
-            return (MovementStrategy) Class.forName(CLASS_PATH + MOVEMENT_DIRECTORY + movementStrategy).getConstructor(Map.class).newInstance(parameters);
-        } catch(Exception e) {
+            if (movementType.equalsIgnoreCase("PathMovement")) {
+                return (MovementStrategy) Class.forName(CLASS_PATH + MOVEMENT_DIRECTORY + movementType).getConstructor(double.class, LinkedList.class).newInstance(builder.getSpeed(), builder.getPath());
+            } else if (movementType.equalsIgnoreCase("NoMovement")) {
+                return (MovementStrategy) Class.forName(CLASS_PATH + MOVEMENT_DIRECTORY + movementType).getConstructor().newInstance();
+            }
+        } catch (Exception e) {
             throw new GameEngineException(e, "SpriteMovementInitializationFailed");
         }
+        return null;
     }
 
     public RotationStrategy makeRotation(String rotationStrategy, Map<String, Object> parameters) throws GameEngineException{

@@ -17,10 +17,9 @@ public class PathMovement implements MovementStrategy {
     private Point myDirection;
 
 
-    public PathMovement(Map<String, Object> parameters) throws GameEngineException {
-        myOriginalParameters = parameters;
-        mySpeed = (double) Verifier.verifyAndGetStrategyParameter(parameters, "mySpeed");
-        myPath = (LinkedList<Point>) Verifier.verifyAndGetStrategyParameter(parameters, "myPath");
+    public PathMovement(double speed, LinkedList<Point> path) throws GameEngineException {
+        mySpeed = speed;
+        myPath = path;
         nextPositionIndex = 0;
         if(myPath.size() < 1) {
             reachedEnd = true;
@@ -32,7 +31,7 @@ public class PathMovement implements MovementStrategy {
 
     @Override
     public MovementStrategy makeClone() throws GameEngineException {
-        return new PathMovement(myOriginalParameters);
+        return new PathMovement(mySpeed, myPath);
     }
 
     @Override
