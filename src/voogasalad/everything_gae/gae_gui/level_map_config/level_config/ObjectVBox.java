@@ -20,9 +20,9 @@ public class ObjectVBox extends VBox {
     }
 
     private void createVBoxLayout(int width, int height){
-        this.setMaxHeight(3*height/5);
+        this.setMaxHeight(height);
         this.setAlignment(Pos.TOP_CENTER);
-        this.setPrefWidth(width/3);
+        this.setPrefWidth(width);
         this.setStyle("-fx-border-color: black;\n");
     }
 

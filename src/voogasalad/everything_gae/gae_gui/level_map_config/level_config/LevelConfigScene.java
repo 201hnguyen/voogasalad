@@ -18,20 +18,20 @@ public class LevelConfigScene{
     private int height = 500;
 
     public Scene getScene(BorderPane root){
-
         GridPane gridPane = new GridPane();
         HBox title = createTitleHBox();
         HBox allObjects = createAllObjectHBox();
         ScrollPane rules = createRulesVBox();
         Label selectActiveLabel = createSelectActiveLabel();
+        Button createMapButton = createMapButton();
+        HBox createSubmitNewLevelButtons = createSubmitNewLevelButtons();
         gridPane.addRow(0, title);
         gridPane.addRow(1, allObjects);
         gridPane.addRow(2, selectActiveLabel);
-        gridPane.addRow(3, rules);
-        ScrollPane scrollPane = new ScrollPane(gridPane);
-        scrollPane.setFitToWidth(true);
-        gridPane.setVgrow(scrollPane, Priority.ALWAYS);
-        root.setTop(scrollPane);
+        gridPane.addRow(3, createMapButton);
+        gridPane.addRow(4, rules);
+        gridPane.addRow(5, createSubmitNewLevelButtons);
+        root.setTop(gridPane);
         return new Scene(root, width, height);
     }
 
@@ -48,9 +48,11 @@ public class LevelConfigScene{
 
     private HBox createAllObjectHBox(){
         HBox allObjectHBox = new HBox();
-        ObjectVBox towersVBox = new ObjectVBox("Towers", width, height);
-        ObjectVBox enemiesVBox = new ObjectVBox("Enemies", width, height);
-        ObjectVBox obstaclesVBox = new ObjectVBox("Obstacles", width, height);
+        int heightOfBox = 2*height/10;
+        int widthOfBox = width/3;
+        ObjectVBox towersVBox = new ObjectVBox("Towers", widthOfBox, heightOfBox);
+        ObjectVBox enemiesVBox = new ObjectVBox("Enemies", widthOfBox, heightOfBox);
+        ObjectVBox obstaclesVBox = new ObjectVBox("Obstacles", widthOfBox, heightOfBox);
 //        towersVBox.addToObjectHBox(new Button("test"));
 //        towersVBox.addToObjectHBox(new Button("test"));
 //        towersVBox.addToObjectHBox(new Button("test"));
@@ -69,7 +71,7 @@ public class LevelConfigScene{
 //        obstaclesVBox.addToObjectHBox(new Button("test"));
 //        obstaclesVBox.addToObjectHBox(new Button("test"));
 //        obstaclesVBox.addToObjectHBox(new Button("test"));
-        allObjectHBox.setPrefHeight(3*height/10);
+        allObjectHBox.setPrefHeight(heightOfBox);
         allObjectHBox.setMaxHeight(allObjectHBox.getPrefHeight());
         allObjectHBox.getChildren().addAll(towersVBox, enemiesVBox, obstaclesVBox);
         return allObjectHBox;
@@ -120,6 +122,27 @@ public class LevelConfigScene{
         label.setAlignment(Pos.CENTER);
         label.setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, null, null)));
         return label;
+    }
+
+    private Button createMapButton(){
+        Button b = new Button("Click To Configure Map For Level");
+        b.setPrefWidth(width);
+        b.setPrefHeight(height/10);
+        return b;
+    }
+
+    private HBox createSubmitNewLevelButtons(){
+        HBox h = new HBox();
+        h.setPrefWidth(width);
+        h.setPrefHeight(height/10);
+        Button newLevel = new Button("Create New Level");
+        Button submit = new Button("Submit");
+        newLevel.setPrefWidth(width/2);
+        newLevel.setPrefHeight(h.getPrefHeight());
+        submit.setPrefHeight(h.getPrefHeight());
+        submit.setPrefWidth(width/2);
+        h.getChildren().addAll(newLevel, submit);
+        return h;
     }
 
 
