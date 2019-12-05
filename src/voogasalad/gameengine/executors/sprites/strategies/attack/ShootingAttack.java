@@ -20,11 +20,11 @@ public class ShootingAttack implements AttackStrategy {
     private Double range;
     private LinkedList<Point> bulletPath;
 
-    ShootingAttack(Map<String, Object> parameters) throws GameEngineException{
+    public ShootingAttack(Map<String, Object> parameters) throws GameEngineException{
         originalParameters = parameters;
         attackRate = (Double) Verifier.verifyAndGetStrategyParameter(parameters, "myAttackRate");
-        bulletSpeed = (Double) Verifier.verifyAndGetStrategyParameter(parameters, "myBulletSpeed");
         range = (Double) Verifier.verifyAndGetStrategyParameter(parameters, "myAttackRange");
+        bulletSpeed = (Double) Verifier.verifyAndGetStrategyParameter(parameters, "myBulletSpeed");
     }
 
     @Override
