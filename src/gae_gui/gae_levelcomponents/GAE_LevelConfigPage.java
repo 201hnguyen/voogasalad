@@ -61,7 +61,7 @@ public class GAE_LevelConfigPage {
 
         //create subscene root
         subRoot = new Group();
-        playerField = new SubScene(subRoot, 600, 400);
+        playerField = new SubScene(subRoot, 500, 500);
         playerField.setLayoutX(50);
         playerField.setLayoutY(50);
         playerField.setOnMouseClicked(e -> handleMouseClickedSubScene(e.getX(),e.getY()));
