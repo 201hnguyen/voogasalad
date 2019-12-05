@@ -3,6 +3,7 @@ package voogasalad.everything_gae.gae_gui.level_map_config.level_config;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -14,9 +15,9 @@ public class ObjectVBox extends VBox {
 
     public ObjectVBox(String type, int width, int height){
         Label createdLabel = createLabel(type, Color.CHOCOLATE);
-        createFlowPane();
+        ScrollPane scrollPane = createScrollWithFlowPane(height);
         createVBoxLayout(width, height);
-        this.getChildren().addAll(createdLabel, createdObjects);
+        this.getChildren().addAll(createdLabel, scrollPane);
     }
 
     private void createVBoxLayout(int width, int height){
@@ -27,9 +28,14 @@ public class ObjectVBox extends VBox {
     }
 
 
-    private void createFlowPane(){
+    private ScrollPane createScrollWithFlowPane(int height){
         createdObjects = new FlowPane();
         createdObjects.setAlignment(Pos.CENTER);
+        ScrollPane sp = new ScrollPane(createdObjects);
+        sp.setPrefHeight(height);
+        sp.setMaxHeight(sp.getPrefHeight());
+        sp.setFitToWidth(true);
+        return sp;
     }
 
     private Label createLabel(String type, Paint color){
