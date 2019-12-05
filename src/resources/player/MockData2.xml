@@ -21,7 +21,7 @@
             <Width>20</Width>
             <Height>10</Height>
             <ImagePath>bird.png</ImagePath>
-            <Archetype>TOWER</Archetype>
+            <Archetype>ENEMY</Archetype>
         </Properties>
         <Strategies>
             <HealthStrategy>
@@ -59,23 +59,61 @@
             </MovementStrategy>
         </Strategies>
     </SpritePrototype>
+    <SpritePrototype>
+        <Properties>
+            <PrototypeId>2</PrototypeId>
+            <Width>30</Width>
+            <Height>30</Height>
+            <ImagePath>ghost1.png</ImagePath>
+            <Archetype>TOWER</Archetype>
+        </Properties>
+        <Strategies>
+            <HealthStrategy>
+                <Type>NoHealth</Type>
+                <Parameters></Parameters>
+            </HealthStrategy>
+            <MovementStrategy>
+                <Type>NoMovement</Type>
+                <Parameters></Parameters>
+            </MovementStrategy>
+        </Strategies>
+    </SpritePrototype>
+    <SpritePrototype>
+        <Properties>
+            <PrototypeId>3</PrototypeId>
+            <Width>30</Width>
+            <Height>30</Height>
+            <ImagePath>ghost2.png</ImagePath>
+            <Archetype>TOWER</Archetype>
+        </Properties>
+        <Strategies>
+            <HealthStrategy>
+                <Type>NoHealth</Type>
+                <Parameters></Parameters>
+            </HealthStrategy>
+            <MovementStrategy>
+                <Type>NoMovement</Type>
+                <Parameters></Parameters>
+            </MovementStrategy>
+        </Strategies>
+    </SpritePrototype>
 
     <Level>
         <LevelId>1</LevelId>
         <Resources>250</Resources>
         <Lives>20</Lives>
-        <BackgroundImage>sand-background.jpg</BackgroundImage>
-        <AvailablePrototypes>0</AvailablePrototypes>
+        <BackgroundImage>baconcat.jpeg</BackgroundImage>
+        <AvailablePrototypes>0 2</AvailablePrototypes>
 
         <Wave>
             <Queue>0 0 0 0 0</Queue>
-            <Interval>0.5</Interval>
+            <Interval>2</Interval>
             <SpawnPointX>100</SpawnPointX>
             <SpawnPointY>100</SpawnPointY>
         </Wave>
         <Wave>
             <Queue>0 0</Queue>
-            <Interval>1</Interval>
+            <Interval>3</Interval>
             <SpawnPointX>100</SpawnPointX>
             <SpawnPointY>100</SpawnPointY>
         </Wave>
@@ -133,18 +171,18 @@
         <LevelId>0</LevelId>
         <Resources>250</Resources>
         <Lives>20</Lives>
-        <BackgroundImage>sand-background.jpg</BackgroundImage>
-        <AvailablePrototypes>0 1</AvailablePrototypes>
+        <BackgroundImage>pepperonicat.png</BackgroundImage>
+        <AvailablePrototypes>0 1 2 3</AvailablePrototypes>
 
         <Wave>
-            <Queue>0 1 0 0 1</Queue>
-            <Interval>0.5</Interval>
+            <Queue>1 1 1 1 1</Queue>
+            <Interval>3</Interval>
             <SpawnPointX>100</SpawnPointX>
             <SpawnPointY>100</SpawnPointY>
         </Wave>
         <Wave>
-            <Queue>0 1</Queue>
-            <Interval>1</Interval>
+            <Queue>1 1</Queue>
+            <Interval>3</Interval>
             <SpawnPointX>100</SpawnPointX>
             <SpawnPointY>100</SpawnPointY>
         </Wave>

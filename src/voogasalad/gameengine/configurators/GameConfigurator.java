@@ -44,7 +44,6 @@ public class GameConfigurator {
             levels = levelConfigurator.configureLevels(myRoot.getElementsByTagName(LEVELS_NODES_TAG), myGamePrototypes);
             return levels;
         } catch (NullPointerException e) {
-            e.printStackTrace();
             throw new GameEngineException(e, "NoLevelsSpecified");
         }
     }
