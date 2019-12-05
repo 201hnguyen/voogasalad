@@ -9,10 +9,11 @@ import voogasalad.gameengine.executors.sprites.strategies.movement.MovementStrat
 import voogasalad.gameengine.executors.utils.SpriteArchetype;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 
 public class JavaFXSprite implements Sprite {
     private int mySpriteId;
-    private Point currentPosition;
+    private Point2D.Double currentPosition;
     private HealthStrategy myHealthStrategy;
     private MovementStrategy myMovementStrategy;
     private String myImagePath;
@@ -25,7 +26,7 @@ public class JavaFXSprite implements Sprite {
         myArchetype = builder.getSpriteArchetype();
         myOriginalBuilder = builder;
         mySpriteId = builder.getSpriteId();
-        currentPosition = new Point();
+        currentPosition = new Point2D.Double();
         currentPosition.setLocation(builder.getX(), builder.getY());
         myHealthStrategy = builder.getHealthStrategy();
         myMovementStrategy = builder.getMovementStrategy();
