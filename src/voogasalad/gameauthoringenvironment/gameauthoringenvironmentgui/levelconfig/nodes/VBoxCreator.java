@@ -1,19 +1,18 @@
-package voogasalad.everything_gae.gae_gui.level_map_config.level_config.nodes;
+package voogasalad.gameauthoringenvironment.gameauthoringenvironmentgui.levelconfig.nodes;
 
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
-public class ObjectVBox extends VBox {
+public class VBoxCreator extends VBox {
     FlowPane createdObjects;
 
-    public ObjectVBox(String type, int width, int height){
+    public VBoxCreator(String type, int width, int height){
         Label createdLabel = createLabel(type, Color.CHOCOLATE);
         ScrollPane scrollPane = createScrollWithFlowPane(height);
         createVBoxLayout(width, height);

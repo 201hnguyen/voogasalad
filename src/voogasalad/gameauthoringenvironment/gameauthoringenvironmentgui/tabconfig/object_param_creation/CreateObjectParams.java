@@ -1,4 +1,4 @@
-package voogasalad.everything_gae.gae_gui.tab_config.object_param_creation;
+package voogasalad.gameauthoringenvironment.gameauthoringenvironmentgui.tabconfig.object_param_creation;
 
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -8,8 +8,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import voogasalad.everything_gae.gae_gui.AddToXML;
-import voogasalad.everything_gae.gae_gui.SaveGUIParameters;
+import voogasalad.gameauthoringenvironment.gameauthoringenvironmentgui.AddToXML;
+import voogasalad.gameauthoringenvironment.gameauthoringenvironmentgui.SaveGUIParameters;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.lang.reflect.InvocationTargetException;

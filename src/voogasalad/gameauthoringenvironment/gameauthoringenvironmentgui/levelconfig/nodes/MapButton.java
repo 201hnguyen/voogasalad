@@ -1,10 +1,7 @@
-package voogasalad.everything_gae.gae_gui.level_map_config.level_config.nodes;
+package voogasalad.gameauthoringenvironment.gameauthoringenvironmentgui.levelconfig.nodes;
 
 import javafx.scene.control.Button;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.paint.Color;
-import voogasalad.everything_gae.gae_gui.level_map_config.map_config.MapConfig;
+import voogasalad.gameauthoringenvironment.gameauthoringenvironmentgui.mapconfig.MapConfig;
 
 public class MapButton extends Button {
 
