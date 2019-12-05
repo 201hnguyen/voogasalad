@@ -51,7 +51,10 @@ public class PlayerVisualization extends Pane {
         ButtonCreator buttonCreator = new ButtonCreator(new ButtonController(this));
         accordionCreator = new AccordionCreator();
         statusBar = new StatusBar();
+        statusBar.setMinWidth(300);
+        statusBar.setMinHeight(50);
         panelBox = new VBox();
+        panelBox.getChildren().add(statusBar);
         panelBox.getChildren().add(buttonCreator);
         panelBox.getChildren().add(accordionCreator);
         panelBox.setLayoutX(PANEL_POSITION);
