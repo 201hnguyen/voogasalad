@@ -18,8 +18,8 @@
     <SpritePrototype>
         <Properties>
             <PrototypeId>0</PrototypeId>
-            <Width>20</Width>
-            <Height>10</Height>
+            <Width>50</Width>
+            <Height>50</Height>
             <ImagePath>bird.png</ImagePath>
             <Archetype>ENEMY</Archetype>
         </Properties>
@@ -33,7 +33,8 @@
             <MovementStrategy>
                 <Type>PathMovement</Type>
                 <Parameters>
-                    <Path></Path>
+                    <Path>0,250;250,250;500,250;500,500;</Path>
+                    <Speed>500</Speed>
                 </Parameters>
             </MovementStrategy>
         </Strategies>
@@ -54,8 +55,11 @@
                 </Parameters>
             </HealthStrategy>
             <MovementStrategy>
-                <Type>NoMovement</Type>
-                <Parameters></Parameters>
+                <Type>PathMovement</Type>
+                <Parameters>
+                    <Path>0,250;250,250;500,250;500,500;</Path>
+                    <Speed>500</Speed>
+                </Parameters>
             </MovementStrategy>
         </Strategies>
     </SpritePrototype>
@@ -102,20 +106,20 @@
         <LevelId>1</LevelId>
         <Resources>250</Resources>
         <Lives>20</Lives>
-        <BackgroundImage>baconcat.jpeg</BackgroundImage>
+        <BackgroundImage>white.jpeg</BackgroundImage>
         <AvailablePrototypes>0 2</AvailablePrototypes>
 
         <Wave>
             <Queue>0 0 0 0 0</Queue>
             <Interval>2</Interval>
-            <SpawnPointX>100</SpawnPointX>
-            <SpawnPointY>100</SpawnPointY>
+            <SpawnPointX>0</SpawnPointX>
+            <SpawnPointY>0</SpawnPointY>
         </Wave>
         <Wave>
             <Queue>0 0</Queue>
             <Interval>3</Interval>
-            <SpawnPointX>100</SpawnPointX>
-            <SpawnPointY>100</SpawnPointY>
+            <SpawnPointX>0</SpawnPointX>
+            <SpawnPointY>0</SpawnPointY>
         </Wave>
 
         <Condition>
@@ -177,14 +181,14 @@
         <Wave>
             <Queue>1 1 1 1 1</Queue>
             <Interval>3</Interval>
-            <SpawnPointX>100</SpawnPointX>
-            <SpawnPointY>100</SpawnPointY>
+            <SpawnPointX>0</SpawnPointX>
+            <SpawnPointY>0</SpawnPointY>
         </Wave>
         <Wave>
             <Queue>1 1</Queue>
             <Interval>3</Interval>
-            <SpawnPointX>100</SpawnPointX>
-            <SpawnPointY>100</SpawnPointY>
+            <SpawnPointX>0</SpawnPointX>
+            <SpawnPointY>0</SpawnPointY>
         </Wave>
 
         <Condition>

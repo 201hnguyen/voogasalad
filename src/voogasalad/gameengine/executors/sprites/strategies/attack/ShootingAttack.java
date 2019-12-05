@@ -31,10 +31,10 @@ public class ShootingAttack implements AttackStrategy {
     public void attack(double elapsedTime) throws GameEngineException {
         if(elapsedTime % 2 != 0){  //TODO: make this variable with rate
             constructBulletPathParameters();
-            SpriteBuilder spriteBuilder = new SpriteBuilder();
-            spriteBuilder.setPrototypeId("bullet");
-            spriteBuilder.setMovementStrategy(new PathMovement(bulletPathParameters));
-            Sprite bullet = spriteBuilder.build();
+//            SpriteBuilder spriteBuilder = new SpriteBuilder();
+//            spriteBuilder.setPrototypeId("bullet");
+//            spriteBuilder.setMovementStrategy(new PathMovement(bulletPathParameters));
+//            Sprite bullet = spriteBuilder.build();
             //TODO: spawn this bullet
         }
     }
