@@ -14,10 +14,11 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.util.ResourceBundle;
 
 public class TabPaneCreator {
-//public class TabCreator<label> {
-    public static final String SPRITE_OPTIONS_RESOURCE = "voogasalad/gameauthoringenvironment/resources/SpriteOptions";
-    public static final String PARAM_FIELD_TYPE_RESOURCE = "voogasalad/gameauthoringenvironment/resources/ParamToInputType";
-    private static final String TAB_NAMES = "voogasalad/gameauthoringenvironment/resources/TabNames";
+    private static final String SPRITE_OPTIONS_RESOURCE = "resources.gae.SpriteOptions";
+    private static final String PARAM_FIELD_TYPE_RESOURCE = "resources.gae.ParamToInputType";
+    private static final String TAB_NAMES = "resources.gae.TabNames";
+    private static final String ENEMY_ATTRIBUTES = "resources.gae.EnemyAttributes";
+
     private ResourceBundle myTabNames;
     private TabPane myTabPane;
     private int height = 500;
@@ -33,11 +34,10 @@ public class TabPaneCreator {
         sendToXML = sendToXMLParam;
         createdXML = createdXMLParam;
         busInstance = busInstanceParam;
-        defaultProperties = ResourceBundle.getBundle("voogasalad/gameauthoringenvironment/resources/EnemyAttributes");
+        defaultProperties = ResourceBundle.getBundle(ENEMY_ATTRIBUTES);
         typeToParams = ResourceBundle.getBundle(SPRITE_OPTIONS_RESOURCE);
         paramFieldType = ResourceBundle.getBundle(PARAM_FIELD_TYPE_RESOURCE);
         myTabPane = createTabPane();
-
     }
 
     /**
