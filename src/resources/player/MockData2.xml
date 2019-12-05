@@ -107,13 +107,13 @@
 
         <Wave>
             <Queue>0 0 0 0 0</Queue>
-            <Interval>0.5</Interval>
+            <Interval>2</Interval>
             <SpawnPointX>100</SpawnPointX>
             <SpawnPointY>100</SpawnPointY>
         </Wave>
         <Wave>
             <Queue>0 0</Queue>
-            <Interval>1</Interval>
+            <Interval>3</Interval>
             <SpawnPointX>100</SpawnPointX>
             <SpawnPointY>100</SpawnPointY>
         </Wave>
@@ -176,13 +176,13 @@
 
         <Wave>
             <Queue>1 1 1 1 1</Queue>
-            <Interval>0.5</Interval>
+            <Interval>3</Interval>
             <SpawnPointX>100</SpawnPointX>
             <SpawnPointY>100</SpawnPointY>
         </Wave>
         <Wave>
             <Queue>1 1</Queue>
-            <Interval>1</Interval>
+            <Interval>3</Interval>
             <SpawnPointX>100</SpawnPointX>
             <SpawnPointY>100</SpawnPointY>
         </Wave>

@@ -46,7 +46,7 @@ public class Player {
 
     public void startGame() throws GameEngineException {
         myTimeline = new Timeline();
-        myPlayerVisualization = new PlayerVisualization(myStage, myEngine.getSpritePrototypesByArchetype(SpriteArchetype.TOWER), myTimeline, myEngine.getCurrentLevelBackgroundPath());
+        myPlayerVisualization = new PlayerVisualization(myStage, myTimeline);
         setGameLoop();
     }
 
