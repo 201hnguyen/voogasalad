@@ -18,7 +18,6 @@ public class GUI_SceneMaker{
 
     public static final String SPRITE_OPTIONS_RESOURCE = "voogasalad/everything_gae/resources/SpriteOptions";
     public static final String PARAM_FIELD_TYPE_RESOURCE = "voogasalad/everything_gae/resources/ParamToInputType";
-    private GUI_Controller myController;
     private ResourceBundle typeToParams;
     private ResourceBundle paramFieldType;
     private int width;
@@ -30,7 +29,6 @@ public class GUI_SceneMaker{
 
     public GUI_SceneMaker(int widthParam, int heightParam, Bus myBusInstance){
         sendToXML = new AddToXML();
-        myController = new GUI_Controller();
         busInstance = myBusInstance;
         width = widthParam;
         height = heightParam;
