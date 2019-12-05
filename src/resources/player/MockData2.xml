@@ -106,7 +106,7 @@
         <LevelId>1</LevelId>
         <Resources>250</Resources>
         <Lives>20</Lives>
-        <BackgroundImage>white.jpeg</BackgroundImage>
+        <BackgroundImage>whitebackground.jpg</BackgroundImage>
         <AvailablePrototypes>0 2</AvailablePrototypes>
 
         <Wave>
