@@ -16,7 +16,8 @@ public class ObjectVBox extends VBox {
         Label createdLabel = new Label("Created " + type);
         createdLabel.setTextFill(Color.CHOCOLATE);
         createdObjects = new HBox(5);
-        this.setAlignment(Pos.CENTER);
+        this.setMaxHeight(height/5);
+        this.setAlignment(Pos.TOP_CENTER);
         this.setPrefWidth(width/3);
         this.setStyle("-fx-border-color: black;\n");
         this.getChildren().addAll(createdLabel, createdObjects);
