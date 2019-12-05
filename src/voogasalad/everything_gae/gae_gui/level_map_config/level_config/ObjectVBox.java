@@ -13,16 +13,29 @@ public class ObjectVBox extends VBox {
     FlowPane createdObjects;
 
     public ObjectVBox(String type, int width, int height){
-        super(10);
-        Label createdLabel = new Label("Created " + type);
-        createdLabel.setTextFill(Color.CHOCOLATE);
-        createdObjects = new FlowPane();
-        createdObjects.setAlignment(Pos.CENTER);
-        this.setMaxHeight(height/5);
+        Label createdLabel = createLabel(type, Color.CHOCOLATE);
+        createFlowPane();
+        createVBoxLayout(width, height);
+        this.getChildren().addAll(createdLabel, createdObjects);
+    }
+
+    private void createVBoxLayout(int width, int height){
+        this.setMaxHeight(3*height/5);
         this.setAlignment(Pos.TOP_CENTER);
         this.setPrefWidth(width/3);
         this.setStyle("-fx-border-color: black;\n");
-        this.getChildren().addAll(createdLabel, createdObjects);
+    }
+
+
+    private void createFlowPane(){
+        createdObjects = new FlowPane();
+        createdObjects.setAlignment(Pos.CENTER);
+    }
+
+    private Label createLabel(String type, Paint color){
+        Label createdLabel = new Label("Created " + type);
+        createdLabel.setTextFill(color);
+        return createdLabel;
     }
 
     public void addToObjectHBox(Node icon){
