@@ -1,6 +1,7 @@
 package voogasalad.gameengine.executors.objectcreators;
 
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
+import voogasalad.gameengine.executors.sprites.strategies.attack.AttackStrategy;
 import voogasalad.gameengine.executors.sprites.strategies.movement.MovementStrategy;
 import voogasalad.gameengine.executors.sprites.strategies.health.HealthStrategy;
 import voogasalad.gameengine.executors.sprites.strategies.rotation.RotationStrategy;
@@ -14,6 +15,7 @@ public class StrategiesFactory {
     private static final String HEALTH_DIRECTORY = "health.";
     private static final String MOVEMENT_DIRECTORY = "movement.";
     private static final String ROTATION_DIRECTORY = "rotation.";
+    private static final String ATTACK_DIRECTORY = "attack.";
 
     public HealthStrategy makeHealth(String healthStrategy, Map<String, Object> parameters) throws GameEngineException {
         try {
@@ -40,4 +42,12 @@ public class StrategiesFactory {
         }
     }
 
+    public AttackStrategy makeAttack(String attackStrategy, Map<String, Object> parameters) throws GameEngineException {
+        try{
+            return (AttackStrategy) Class.forName(CLASS_PATH + ATTACK_DIRECTORY + attackStrategy).getConstructor(Map.class).newInstance(parameters);
+        } catch(Exception e){
+            e.printStackTrace(); //TODO: debugging only
+            throw new GameEngineException(e, "SpriteAttackInitializationFailed");
+        }
+    }
 }
