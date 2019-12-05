@@ -1,18 +1,13 @@
 package voogasalad.everything_gae.gae_gui.level_map_config.level_config;
 
-import javafx.application.Application;
-import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
-import javafx.stage.Stage;
-import voogasalad.everything_gae.gae_gui.level_map_config.map_config.MapConfig;
+import voogasalad.everything_gae.gae_gui.level_map_config.level_config.nodes.MapButton;
+import voogasalad.everything_gae.gae_gui.level_map_config.level_config.nodes.ObjectVBox;
+import voogasalad.everything_gae.gae_gui.level_map_config.level_config.nodes.RuleLine;
 
 public class LevelConfigPane extends BorderPane{
     private int width = 500;

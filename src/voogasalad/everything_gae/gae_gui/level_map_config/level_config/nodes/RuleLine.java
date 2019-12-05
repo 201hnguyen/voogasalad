@@ -1,4 +1,4 @@
-package voogasalad.everything_gae.gae_gui.level_map_config.level_config;
+package voogasalad.everything_gae.gae_gui.level_map_config.level_config.nodes;
 
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
