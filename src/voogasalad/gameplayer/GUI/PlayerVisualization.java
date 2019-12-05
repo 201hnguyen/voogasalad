@@ -38,6 +38,7 @@ public class PlayerVisualization extends Pane {
     }
 
     public void setNewLevel(List<Sprite> towers, List<Sprite> enemies, String backgroundImagePath){
+        displayScreen.updateDisplayScreen(new ArrayList<>());
         accordionCreator.updateAvailableTowersAndEnemies(towers, enemies);
         setBackgroundImage(backgroundImagePath);
     }
