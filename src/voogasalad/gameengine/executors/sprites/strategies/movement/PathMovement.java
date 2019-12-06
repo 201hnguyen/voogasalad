@@ -65,6 +65,11 @@ public class PathMovement implements MovementStrategy {
         //todo: I think we should take in a List instead of a LinkedList for myPath; it's just a linkedlist when we create it; but we shouldn't need to specify within this class
     }
 
+    @Override
+    public void updateDirectionalAngle(double angle) {
+
+    }
+
     private Point2D.Double calculateDirection(Point2D.Double currentPosition) {
         Point2D.Double updatedDirection = new Point2D.Double();
         double diffX = nextPosition.getX() - currentPosition.getX();
