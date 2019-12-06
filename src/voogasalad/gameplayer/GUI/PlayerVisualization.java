@@ -1,12 +1,16 @@
 package voogasalad.gameplayer.GUI;
 import javafx.animation.Timeline;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import voogasalad.gameengine.api.GameSceneObject;
+import voogasalad.gameengine.api.UIActionsProcessor;
 import voogasalad.gameengine.executors.sprites.Sprite;
 
 import java.util.ArrayList;
@@ -29,10 +33,12 @@ public class PlayerVisualization extends BorderPane {
     private VBox panelBox;
     private AccordionCreator accordionCreator;
     private StatusBar statusBar;
+    private UIActionsProcessor uiActionsProcessor;
 
-    public PlayerVisualization(Stage stage, Timeline timeline) {
+    public PlayerVisualization(Stage stage, Timeline timeline, UIActionsProcessor uiActionsProcessor) {
         this.stage = stage;
         this.timeline = timeline;
+        this.uiActionsProcessor = uiActionsProcessor;
         initialize();
     }
 
@@ -62,7 +68,7 @@ public class PlayerVisualization extends BorderPane {
     }
 
     private void displayGameScreen() {
-        displayScreen = new DisplayScreen();
+        displayScreen = new DisplayScreen(uiActionsProcessor);
         displayScreen.setMinWidth(SCENE_WIDTH - (SCENE_WIDTH - PANEL_POSITION));
         displayScreen.setMinHeight(SCENE_HEIGHT - this.getTop().getLayoutY());
     }
