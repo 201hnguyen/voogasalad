@@ -37,7 +37,7 @@ public class TabPaneCreator {
         typeToParams = ResourceBundle.getBundle(SPRITE_OPTIONS_RESOURCE);
         paramFieldType = ResourceBundle.getBundle(PARAM_FIELD_TYPE_RESOURCE);
         myTabPane = createTabPane();
-
+        myTabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
     }
 
     /**
