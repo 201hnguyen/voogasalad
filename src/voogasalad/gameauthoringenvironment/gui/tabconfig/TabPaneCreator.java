@@ -12,12 +12,14 @@ import voogasalad.gameauthoringenvironment.gui.tabconfig.parameterfields.Paramet
 import voogasalad.gameengine.executors.control.levelcontrol.Level;
 
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.FileNotFoundException;
 import java.util.ResourceBundle;
 
 public class TabPaneCreator {
     private static final String SPRITE_OPTIONS_RESOURCE = "resources.gae.SpriteOptions";
     private static final String PARAM_FIELD_TYPE_RESOURCE = "resources.gae.ParamToInputType";
     private static final String ENEMY_ATTRIBUTES = "resources.gae.EnemyAttributes";
+    private static final int HEIGHT = 500;
 
     private TabPane myTabPane;
     private AddToXML sendToXML;
@@ -34,8 +36,8 @@ public class TabPaneCreator {
         createdXML = createdXMLParam;
         busInstance = busInstanceParam;
         defaultProperties = ResourceBundle.getBundle(ENEMY_ATTRIBUTES);
-        typeToParams = ResourceBundle.getBundle(SPRITE_OPTIONS_RESOURCE);
-        paramFieldType = ResourceBundle.getBundle(PARAM_FIELD_TYPE_RESOURCE);
+        typeToParams = ResourceBundle.getBundle(SPRITE_OPTIONS);
+        paramFieldType = ResourceBundle.getBundle(FIELD_TYPES);
         myTabPane = createTabPane();
         myTabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
     }
@@ -68,6 +70,8 @@ public class TabPaneCreator {
                 e.printStackTrace();
             }
         });
-        return bp;
+
+        return borderPane;
     }
+
 }

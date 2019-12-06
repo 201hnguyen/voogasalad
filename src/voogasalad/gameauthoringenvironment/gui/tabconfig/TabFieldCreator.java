@@ -12,7 +12,7 @@ import javafx.scene.layout.VBox;
 import java.util.ResourceBundle;
 
 /**
- *
+ * This class is not currently being usesd???
  */
 public class TabFieldCreator extends Group {
     private static final String RESOURCE_PATH = "resources.gae.";
@@ -38,10 +38,11 @@ public class TabFieldCreator extends Group {
         buttonVBox = new VBox();
         mainHBox = new HBox();
         Button saveObject = new Button();
-        mainHBox.getChildren().add(defaultImageView);
-        mainHBox.getChildren().add(buttonVBox);
-        mainVBox.getChildren().add(mainHBox);
-        mainVBox.getChildren().add(saveObject);
+        mainHBox.getChildren().addAll(
+                defaultImageView,
+                buttonVBox,
+                mainHBox,
+                saveObject);
         createInputFields();
         this.getChildren().add(mainVBox);
     }

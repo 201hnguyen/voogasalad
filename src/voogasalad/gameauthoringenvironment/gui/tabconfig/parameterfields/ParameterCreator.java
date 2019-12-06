@@ -1,5 +1,6 @@
 package voogasalad.gameauthoringenvironment.gui.tabconfig.parameterfields;
 
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -14,12 +15,13 @@ import voogasalad.gameauthoringenvironment.gui.SaveGUIParameters;
 import voogasalad.gameauthoringenvironment.gui.levelconfig.LevelConfigPane;
 
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
+/**
+ *
+ */
 public class ParameterCreator extends BorderPane{
 
     private static final int window_WIDTH = 300;
@@ -30,6 +32,7 @@ public class ParameterCreator extends BorderPane{
     private Stage newStage;
     private String[] properties;
     private ResourceBundle paramFieldType;
+    private VBox previewVBox;
     private VBox configVBox;
     private String gameObjectName;
     private List<Node> allNodes = new ArrayList<>();
@@ -56,19 +59,35 @@ public class ParameterCreator extends BorderPane{
         levelConfigPane = levelConfigPaneParam;
         storeAllFieldTypes();
         addInputFields();
-        this.setTop(configVBox);
+        previewVBox = new ImagePreviewCreator().getPreviewVBox();
+        this.setLeft(previewVBox);
+        this.setRight(configVBox);
+    }
+
+    /**
+     * A getter method to return the selected image
+     * @return
+     */
+    public String getMySelectedImage() {return mySelectedImage;
     }
 
     private void addInputFields() {
 
         configVBox = new VBox();
+        Label header = new Label("Set Parameters");
+        header.setFont(Font.font(14));
+        configVBox.getChildren().add(header);
+        configVBox.setPrefWidth(200);
+        configVBox.setPadding(new Insets(50, 50, 50, 50));
+;
         for (int j = 0; j < properties.length; j++) {
-            Label label = new Label(properties[j]); //for SaveGuiParameters
+            Label label = new Label(properties[j]);
             labelList.add(label);
             labelText.add(label.getText());
             configVBox.getChildren().add(label);
             configVBox.getChildren().add(createObjectFromString(paramFieldType.getString(properties[j])));
         }
+
     }
 
     public void createSubmitButton(){
@@ -81,7 +100,17 @@ public class ParameterCreator extends BorderPane{
             addToAppropriateField(gameObjectName, createObjectIcon(myGuiParameters.getMap(), myLabel));
     }
 
+    // a helper method to get a user-selected image file
+    private void getImageName(Map<String, String> map) {
+        for (Map.Entry s : map.entrySet()) {
+            if (map.containsKey("image")) {
+                mySelectedImage = s.getValue().toString();
+            }
+        }
+    }
+
     private Node createObjectFromString(String type){
+
         try{
             if (type.equals(SUBMITBUTTONCLASS)) {
                 SubmitButton myField = new SubmitButton(this);
@@ -107,6 +136,7 @@ public class ParameterCreator extends BorderPane{
         }
     }
 
+    // a helper method to create a list of input field types for each tab
     private void storeAllFieldTypes(){
         for(String key : paramFieldType.keySet()){
             String typesOfFields = paramFieldType.getString(key);
