@@ -15,10 +15,7 @@ import voogasalad.gameauthoringenvironment.gui.levelconfig.LevelConfigPane;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class ParameterCreator extends BorderPane{
 
@@ -26,7 +23,7 @@ public class ParameterCreator extends BorderPane{
     private static final int window_HEIGHT = 300;
     private static final String SUBMITBUTTONCLASS = new SubmitButton().getClass().toString().split("class ")[1];
     private BorderPane root;
-    private BorderPane testRoot;
+    private ObjectPreviewAndActive objectSpecificRoot;
     private Stage newStage;
     private String[] properties;
     private ResourceBundle paramFieldType;
@@ -40,6 +37,7 @@ public class ParameterCreator extends BorderPane{
     private List<String> labelValue;
     private AddToXML xmlObject;
     private LevelConfigPane levelConfigPane;
+    private Map<String, Map<String, String>> activeObjects;
     //private static Map<String, Map<String,String>> sendToXML;
 
 
@@ -47,8 +45,8 @@ public class ParameterCreator extends BorderPane{
         labelList = new ArrayList<>();
         labelText = new ArrayList<>();
         labelValue = new ArrayList<>();
+        activeObjects = new HashMap<>();
         root = new BorderPane();
-        testRoot = new BorderPane();
         xmlObject = new AddToXML();
         properties = propertiesParam;
         paramFieldType = paramFieldTypeParam;
@@ -116,12 +114,12 @@ public class ParameterCreator extends BorderPane{
         }
     }
 
-    private Button createObjectIcon(Map myMap, String objectName){
+    private Button createObjectIcon(Map<String, String> objectContentMap, String objectName){
         Button icon = new Button(objectName);
         icon.setOnMouseClicked(event -> {
             newStage = new Stage();
-            testRoot.setCenter(new TextArea(myMap.toString()));
-            Scene newScene = new Scene(testRoot, window_WIDTH, window_HEIGHT);
+            objectSpecificRoot = new ObjectPreviewAndActive(objectName, objectContentMap, window_HEIGHT, window_WIDTH, newStage, activeObjects, icon);
+            Scene newScene = new Scene(objectSpecificRoot, window_WIDTH, window_HEIGHT);
             newStage.setScene(newScene);
             newStage.show();
         });
