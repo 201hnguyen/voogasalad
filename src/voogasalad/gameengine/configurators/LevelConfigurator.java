@@ -9,6 +9,7 @@ import voogasalad.gameengine.executors.control.condition.level.LevelCondition;
 import voogasalad.gameengine.executors.objectcreators.LevelBuilder;
 import voogasalad.gameengine.executors.sprites.Sprite;
 import voogasalad.gameengine.executors.utils.ConfigurationTool;
+import voogasalad.gameengine.executors.utils.SpriteArchetype;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -89,7 +90,7 @@ public class LevelConfigurator {
         String[] prototypesSpecifiedForLevelAsStrings = myCurrentLevelRoot.getElementsByTagName(PROTOTYPE_SPECIFIED_FOR_LEVEL_NODE_TAG).item(0).getTextContent().split(" ");
         for (String prototypeString : prototypesSpecifiedForLevelAsStrings) {
             for (Sprite prototype : gamePrototypes) {
-                if (prototype.getPrototypeId() == Integer.parseInt(prototypeString)) {
+                if (prototype.getPrototypeId() == Integer.parseInt(prototypeString) || prototype.getSpriteArchetype()== SpriteArchetype.PROJECTILE) {
                     prototypesSpecifiedForLevel.add(prototype);
                 }
             }
