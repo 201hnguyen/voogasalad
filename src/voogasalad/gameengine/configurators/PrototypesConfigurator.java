@@ -4,6 +4,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
+import voogasalad.gameengine.executors.objectcreators.HealthBuilder;
 import voogasalad.gameengine.executors.objectcreators.MovementBuilder;
 import voogasalad.gameengine.executors.objectcreators.SpriteBuilder;
 import voogasalad.gameengine.executors.sprites.Sprite;
@@ -22,6 +23,8 @@ public class PrototypesConfigurator {
     public static final String SPRITE_STRATEGIES_NODE_TAG = "Strategies";
     public static final String SPRITE_STRATEGIES_TYPE_NODE_TAG = "Type";
     public static final String SPRITE_STRATEGIES_PARAMETERS_NODE_TAG = "Parameters";
+
+    //TODO: Refactor all the different strategy builders into one builder.
 
     private NodeList myPrototypesNodesList;
 
@@ -79,7 +82,21 @@ public class PrototypesConfigurator {
         }
     }
 
-    private void setHealthStrategy(String type, SpriteBuilder builder, Element healthStrategyNode) {
+    private void setHealthStrategy(String type, SpriteBuilder builder, Element healthStrategyNode) throws GameEngineException {
+        NodeList parametersNodeList = healthStrategyNode.getElementsByTagName(SPRITE_STRATEGIES_PARAMETERS_NODE_TAG).item(0).getChildNodes();
+        HealthBuilder healthBuilder = new HealthBuilder().setHealthType(type);
+        for (int i=0; i<parametersNodeList.getLength();i++) {
+            Element parameter = ConfigurationTool.convertNodeToElement(parametersNodeList.item(i));
+            if (parameter!= null) {
+                try {
+                    healthBuilder.getClass().getMethod(STRATEGY_CONFIG_BUNDLE.getString(parameter.getNodeName()), String.class).invoke(healthBuilder, parameter.getTextContent());
+                } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                    e.printStackTrace();
+                    throw new GameEngineException(e, "SpriteProductionFailed");
+                }
+            }
+        }
+        builder.setHealthStrategy(healthBuilder.build());
     }
 
     private void setMovementStrategy(String type, SpriteBuilder builder, Element movementStrategyNode) throws GameEngineException {

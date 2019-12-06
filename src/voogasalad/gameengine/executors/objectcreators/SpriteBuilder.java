@@ -168,11 +168,18 @@ public class SpriteBuilder {
     }
 
     private void checkParametersAndAssignDefault() throws GameEngineException {
-        StrategiesFactory strategiesFactory = new StrategiesFactory();
-        if (myMovementStrategy == null) myMovementStrategy = new MovementBuilder().setMovementType("NoMovement").build();
-        if (myHealthStrategy == null) myHealthStrategy = strategiesFactory.makeHealth("NoHealth", new HashMap<>());
-        if (myImagePath == null) myImagePath = "pandaslogo.png";
-        if (myArchetype == null) myArchetype = SpriteArchetype.UNCLASSIFIED;
+        if (myMovementStrategy == null) {
+            myMovementStrategy = new MovementBuilder().setMovementType("NoMovement").build();
+        }
+        if (myHealthStrategy == null) {
+            myHealthStrategy = new HealthBuilder().build();
+        }
+        if (myImagePath == null) {
+            myImagePath = "pandaslogo.png";
+        }
+        if (myArchetype == null) {
+            myArchetype = SpriteArchetype.UNCLASSIFIED;
+        }
     }
 }
 

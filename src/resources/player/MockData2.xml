@@ -27,7 +27,7 @@
             <HealthStrategy>
                 <Type>Health</Type>
                 <Parameters>
-                    <Health>10</Health>
+                    <HealthValue>10</HealthValue>
                 </Parameters>
             </HealthStrategy>
             <MovementStrategy>
@@ -51,7 +51,7 @@
             <HealthStrategy>
                 <Type>Health</Type>
                 <Parameters>
-                    <Health>20</Health>
+                    <HealthValue>20</HealthValue>
                 </Parameters>
             </HealthStrategy>
             <MovementStrategy>
