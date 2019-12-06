@@ -104,4 +104,8 @@ public class Game {
         switchedLevel = false;
         return ret;
     }
+
+    public int getCurrentTotalGameScore() {
+        return myGameLevelsController.getTotalScoreForAllLevels();
+    }
 }

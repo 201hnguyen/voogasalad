@@ -38,4 +38,8 @@ public class Engine {
     public boolean didLevelSwitch() {
         return myGame.didLevelSwitch();
     }
+
+    public int getCurrentTotalGameScore() {
+        return myGame.getCurrentTotalGameScore();
+    }
 }
