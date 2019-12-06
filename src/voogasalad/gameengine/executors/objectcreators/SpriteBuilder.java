@@ -2,11 +2,10 @@ package voogasalad.gameengine.executors.objectcreators;
 
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.sprites.Sprite;
+import voogasalad.gameengine.executors.sprites.strategies.attack.AttackStrategy;
 import voogasalad.gameengine.executors.utils.SpriteArchetype;
 import voogasalad.gameengine.executors.sprites.strategies.health.HealthStrategy;
 import voogasalad.gameengine.executors.sprites.strategies.movement.MovementStrategy;
-
-import java.util.HashMap;
 
 public class SpriteBuilder {
 
@@ -20,6 +19,7 @@ public class SpriteBuilder {
     private double myYPos;
     private HealthStrategy myHealthStrategy;
     private MovementStrategy myMovementStrategy;
+    private AttackStrategy myAttackStrategy;
     private String myImagePath;
     private SpriteArchetype myArchetype;
     private int myPrototypeId;
@@ -76,6 +76,15 @@ public class SpriteBuilder {
         return this;
     }
 
+    public SpriteBuilder setAttackStrategy(AttackStrategy attackStrategy) {
+        myAttackStrategy = attackStrategy;
+        return this;
+    }
+
+    public AttackStrategy getAttackStrategy() {
+        return myAttackStrategy;
+    }
+
     public HealthStrategy getHealthStrategy() {
         return myHealthStrategy;
     }
@@ -124,7 +133,7 @@ public class SpriteBuilder {
         return this;
     }
 
-    public SpriteBuilder setHeight(String height) throws GameEngineException {
+    public SpriteBuilder setHeight(String height){
         try {
             Double heightDouble = Double.parseDouble(height);
             myHeight = heightDouble;
@@ -168,11 +177,21 @@ public class SpriteBuilder {
     }
 
     private void checkParametersAndAssignDefault() throws GameEngineException {
-        StrategiesFactory strategiesFactory = new StrategiesFactory();
-        if (myMovementStrategy == null) myMovementStrategy = new MovementBuilder().setMovementType("NoMovement").build();
-        if (myHealthStrategy == null) myHealthStrategy = strategiesFactory.makeHealth("NoHealth", new HashMap<>());
-        if (myImagePath == null) myImagePath = "pandaslogo.png";
-        if (myArchetype == null) myArchetype = SpriteArchetype.UNCLASSIFIED;
+        if (myMovementStrategy == null) {
+            myMovementStrategy = new MovementBuilder().setMovementType("NoMovement").build();
+        }
+        if (myHealthStrategy == null) {
+            myHealthStrategy = new HealthBuilder().build();
+        }
+        if (myImagePath == null) {
+            myImagePath = "pandaslogo.png";
+        }
+        if (myArchetype == null) {
+            myArchetype = SpriteArchetype.UNCLASSIFIED;
+        }
+        if (myAttackStrategy == null) {
+            myAttackStrategy = new AttackBuilder().build();
+        }
     }
 }
 
