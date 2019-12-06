@@ -14,4 +14,6 @@ public interface MovementStrategy {
     Point2D.Double calculateNextPosition(double elapsedTime, Point2D.Double currentPosition);
 
     void updatePath(List<Point2D.Double> path);
+
+    void updateDirectionalAngle(double angle);
 }

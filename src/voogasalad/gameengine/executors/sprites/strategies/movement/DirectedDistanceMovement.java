@@ -20,7 +20,8 @@ public class DirectedDistanceMovement implements MovementStrategy{
         myDistance = 100;
     }
 
-    public void updateAngle(double angle) {
+    @Override
+    public void updateDirectionalAngle(double angle) {
 
     }
 
