@@ -13,8 +13,10 @@ import voogasalad.gameengine.executors.sprites.Sprite;
 import java.util.List;
 
 public class DisplayScreen extends Pane {
+    private UIActionsProcessor actionsProcessor;
 
     public DisplayScreen(UIActionsProcessor uiActionsProcessor) {
+        actionsProcessor = uiActionsProcessor;
         this.setOnDragOver((DragEvent event) -> {
             Dragboard db = event.getDragboard();
             if (db.hasImage()) {
