@@ -83,13 +83,18 @@ public class JavaFXSprite implements Sprite {
         myAttackStrategy.attack(elapsedTime, myCurrentAttackAngle, levelActionsRequester, currentPosition);
     }
 
-    public void updateAngle(double elapsedTime){
+    public void updateShootingAngle(double elapsedTime){
         myCurrentAttackAngle = myRotationStrategy.updateAngle(elapsedTime, myCurrentAttackAngle);
     }
 
     @Override
     public void updatePath(List<Point2D.Double> path) {
         myMovementStrategy.updatePath(path);
+    }
+
+    @Override
+    public void updateMovementAngle(double angle) {
+        myMovementStrategy.updateDirectionalAngle(angle);
     }
 
     @Override

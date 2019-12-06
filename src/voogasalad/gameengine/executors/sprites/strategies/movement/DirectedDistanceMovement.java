@@ -26,7 +26,7 @@ public class DirectedDistanceMovement implements MovementStrategy{
     }
 
     @Override
-    public MovementStrategy makeClone() throws GameEngineException {
+    public MovementStrategy makeClone() {
         return new DirectedDistanceMovement(myMovementBuilder);
     }
 
