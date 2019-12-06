@@ -118,7 +118,7 @@ public class ParameterCreator extends BorderPane{
         Button icon = new Button(objectName);
         icon.setOnMouseClicked(event -> {
             newStage = new Stage();
-            objectSpecificRoot = new ObjectPreviewAndActive(gameObjectName, objectContentMap, window_HEIGHT, window_WIDTH, newStage, activeObjects, icon);
+            objectSpecificRoot = new ObjectPreviewAndActive(objectName, objectContentMap, window_HEIGHT, window_WIDTH, newStage, activeObjects, icon);
             Scene newScene = new Scene(objectSpecificRoot, window_WIDTH, window_HEIGHT);
             newStage.setScene(newScene);
             newStage.show();
