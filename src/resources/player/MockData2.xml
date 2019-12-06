@@ -152,8 +152,10 @@
                 <Parameters></Parameters>
             </HealthStrategy>
             <MovementStrategy>
-                <Type>NoMovement</Type>
-                <Parameters></Parameters>
+                <Type>DirectedDistanceMovement</Type>
+                <Parameters>
+                    <Distance>77</Distance>
+                </Parameters>
             </MovementStrategy>
         </Strategies>
     </SpritePrototype>
