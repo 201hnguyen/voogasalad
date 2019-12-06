@@ -11,15 +11,14 @@ public class FullRotationStrategy implements RotationStrategy {
     private Double rotationSpeed;
     private Map<String, Object> originalParameters;
 
-    public FullRotationStrategy(Map<String, Object> parameters) throws GameEngineException {
+    public FullRotationStrategy(Map<String, Object> parameters) {
         originalParameters = parameters;
-        rotationSpeed = (Double) Verifier.verifyAndGetStrategyParameter(parameters, "myRotationSpeed");
+        rotationSpeed = 3.0;
     }
 
     @Override
     public double updateAngle(double elapsedTime, double currentAngle) {
         determineRotationDirection(currentAngle);
-        System.out.println("My current direction is " + rotationDirection); //TODO: DEBUGGING ONLY
         double diffAngle = elapsedTime * rotationDirection * rotationSpeed;
         return (currentAngle + diffAngle) % 360;
     }

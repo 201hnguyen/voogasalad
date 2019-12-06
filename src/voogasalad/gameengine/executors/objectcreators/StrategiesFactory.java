@@ -18,9 +18,9 @@ public class StrategiesFactory {
     private static final String ROTATION_DIRECTORY = "rotation.";
     private static final String ATTACK_DIRECTORY = "attack.";
 
-    public HealthStrategy makeHealth(String healthStrategy, Map<String, Object> parameters) throws GameEngineException {
+    public HealthStrategy makeHealth(HealthBuilder healthBuilder) throws GameEngineException {
         try {
-            return (HealthStrategy) Class.forName(CLASS_PATH + HEALTH_DIRECTORY + healthStrategy).getConstructor(Map.class).newInstance(parameters);
+            return (HealthStrategy) Class.forName(CLASS_PATH + HEALTH_DIRECTORY + healthBuilder.getType()).getConstructor(HealthBuilder.class).newInstance(healthBuilder);
         } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException | ClassNotFoundException e) {
             throw new GameEngineException(e, "SpriteHealthInitializationFailed");
         }
@@ -49,9 +49,9 @@ public class StrategiesFactory {
         }
     }
 
-    public AttackStrategy makeAttack(String attackStrategy, Map<String, Object> parameters) throws GameEngineException {
+    public AttackStrategy makeAttack(AttackBuilder attackBuilder) throws GameEngineException {
         try{
-            return (AttackStrategy) Class.forName(CLASS_PATH + ATTACK_DIRECTORY + attackStrategy).getConstructor(Map.class).newInstance(parameters);
+            return (AttackStrategy) Class.forName(CLASS_PATH + ATTACK_DIRECTORY + attackBuilder.getType()).getConstructor(AttackBuilder.class).newInstance(attackBuilder);
         } catch(Exception e){
             e.printStackTrace(); //TODO: debugging only
             throw new GameEngineException(e, "SpriteAttackInitializationFailed");

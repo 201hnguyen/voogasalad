@@ -9,7 +9,7 @@ import java.util.Map;
 public interface SpriteManager {
     void addSpritePrototype(Sprite sprite);
 
-    void makeSpriteFromPrototype(double xPos, double yPos, int prototypeId) throws GameEngineException;
+    Sprite makeSpriteFromPrototype(double xPos, double yPos, int prototypeId) throws GameEngineException;
 
     List<Sprite> getOnScreenSprites();
 
@@ -21,5 +21,5 @@ public interface SpriteManager {
 
     List<Sprite> getPrototypesForArchetype(SpriteArchetype archetype) throws GameEngineException;
 
-    void executeSpriteNextState(double elapsedTime);
+    void executeSpriteNextState(double elapsedTime) throws GameEngineException;
 }

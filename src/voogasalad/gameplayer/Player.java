@@ -48,7 +48,7 @@ public class Player {
 
     public void startGame() throws GameEngineException {
         myTimeline = new Timeline();
-        myPlayerVisualization = new PlayerVisualization(myStage, myTimeline);
+        myPlayerVisualization = new PlayerVisualization(myStage, myTimeline, myEngine.getUIActionProcessor());
         gameInfo = new HashMap<>();
         setGameLoop();
     }
