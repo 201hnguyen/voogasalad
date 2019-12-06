@@ -48,6 +48,35 @@
     </SpritePrototype>
     <SpritePrototype>
         <Properties>
+            <PrototypeId>5</PrototypeId>
+            <Width>50</Width>
+            <Height>50</Height>
+            <ImagePath>bird.png</ImagePath>
+            <Archetype>TOWER</Archetype>
+        </Properties>
+        <Strategies>
+            <AttackStrategy>
+                <Type>ShootingAttack</Type>
+                <Parameters>
+                    <AttackRate>1</AttackRate>
+                    <BulletPrototypeId>4</BulletPrototypeId>
+                </Parameters>
+            </AttackStrategy>
+            <HealthStrategy>
+                <Type>Health</Type>
+                <Parameters>
+                    <HealthValue>10</HealthValue>
+                </Parameters>
+            </HealthStrategy>
+            <MovementStrategy>
+                <Type>NoMovement</Type>
+                <Parameters>
+                </Parameters>
+            </MovementStrategy>
+        </Strategies>
+    </SpritePrototype>
+    <SpritePrototype>
+        <Properties>
             <PrototypeId>1</PrototypeId>
             <Width>40</Width>
             <Height>30</Height>
@@ -134,7 +163,7 @@
         <Resources>250</Resources>
         <Lives>20</Lives>
         <BackgroundImage>baconcat.jpeg</BackgroundImage>
-        <AvailablePrototypes>0 2</AvailablePrototypes>
+        <AvailablePrototypes>0 2 5</AvailablePrototypes>
 
         <Wave>
             <Queue>0 0 0 0 0</Queue>

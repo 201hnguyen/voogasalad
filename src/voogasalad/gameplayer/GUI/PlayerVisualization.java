@@ -14,6 +14,7 @@ import voogasalad.gameengine.api.UIActionsProcessor;
 import voogasalad.gameengine.executors.sprites.Sprite;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -49,7 +50,13 @@ public class PlayerVisualization extends BorderPane {
 
     public void setNewLevel(List<Sprite> towers, List<Sprite> enemies, String backgroundImagePath){
         displayScreen.updateDisplayScreen(new ArrayList<>());
-        accordionCreator.updateAvailableTowersAndEnemies(towers, enemies);
+        int i = 0;
+        HashMap<Integer, Integer> idMap = new HashMap<>();
+        for(Sprite tower : towers){
+            idMap.put(i, tower.getPrototypeId());
+            i++;
+        }
+        accordionCreator.updateAvailableTowersAndEnemies(towers, enemies, idMap);
         setBackgroundImage(backgroundImagePath);
     }
 
@@ -63,14 +70,15 @@ public class PlayerVisualization extends BorderPane {
         this.setRight(panelBox);
         this.setTop(statusBar);
         scene = new Scene(this, SCENE_WIDTH, SCENE_HEIGHT);
-        displayGameScreen();
+        displayGameScreenAndAttachToAccordion();
         showStage();
     }
 
-    private void displayGameScreen() {
+    private void displayGameScreenAndAttachToAccordion() {
         displayScreen = new DisplayScreen(uiActionsProcessor);
         displayScreen.setMinWidth(SCENE_WIDTH - (SCENE_WIDTH - PANEL_POSITION));
         displayScreen.setMinHeight(SCENE_HEIGHT - this.getTop().getLayoutY());
+        accordionCreator.attachDisplayScreen(displayScreen);
     }
 
     private void showStage() {
