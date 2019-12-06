@@ -48,9 +48,13 @@ public class JavaFXSpriteManager implements SpriteManager {
         return archetypeList;    }
 
     @Override
-    public void makeSpriteFromPrototype(double xPos, double yPos, int prototypeId) throws GameEngineException {
-        myOnScreenSprites.add(mySpritePrototypes.get(prototypeId).makeClone(xPos, yPos, mySpriteIdGenerator++));
+    public Sprite makeSpriteFromPrototype(double xPos, double yPos, int prototypeId) throws GameEngineException {
+        int spriteId = mySpriteIdGenerator++;
+        Sprite sprite = mySpritePrototypes.get(prototypeId).makeClone(xPos, yPos, spriteId);
+        myOnScreenSprites.add(sprite);
+        return sprite;
     }
+
 
     public void removeSpriteById(int spriteId) {
         myOnScreenSprites.stream().filter(sprite -> sprite.getId() == spriteId).forEach(sprite -> myOnScreenSprites.remove(sprite));
