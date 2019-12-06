@@ -9,6 +9,7 @@ import voogasalad.gameauthoringenvironment.bus.Bus;
 import voogasalad.gameauthoringenvironment.gui.AddToXML;
 import voogasalad.gameauthoringenvironment.gui.levelconfig.LevelConfigPane;
 import voogasalad.gameauthoringenvironment.gui.tabconfig.parameterfields.ParameterCreator;
+import voogasalad.gameengine.executors.control.levelcontrol.Level;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.util.ResourceBundle;
@@ -26,6 +27,7 @@ public class TabPaneCreator {
     private ResourceBundle typeToParams;
     private ResourceBundle paramFieldType;
     private BorderPane bp;
+    private LevelConfigPane levelConfigPane;
 
     public TabPaneCreator(AddToXML sendToXMLParam, Document createdXMLParam, Bus busInstanceParam) {
         sendToXML = sendToXMLParam;
@@ -47,20 +49,20 @@ public class TabPaneCreator {
     }
 
     private TabPane createTabPane() {
-
+        levelConfigPane = new LevelConfigPane(sendToXML, createdXML, busInstance);
         TabPane tabPane = new TabPane();
-        createPane(tabPane);
+        createPane(tabPane, levelConfigPane);
         Tab levelTab = new Tab("Level");
-        levelTab.setContent(new LevelConfigPane(sendToXML, createdXML, busInstance));
+        levelTab.setContent(levelConfigPane);
         tabPane.getTabs().add(levelTab);
 
         return tabPane;
     }
 
-    private BorderPane createPane(TabPane tabPane) {
+    private BorderPane createPane(TabPane tabPane, LevelConfigPane levelConfigPane) {
         typeToParams.getKeys().asIterator().forEachRemaining(key -> {
             try {
-                Tab objectTab = new Tab(key, new ParameterCreator(key, typeToParams.getString(key).split(","), paramFieldType) );
+                Tab objectTab = new Tab(key, new ParameterCreator(key, typeToParams.getString(key).split(","), paramFieldType, levelConfigPane) );
                 tabPane.getTabs().add(objectTab);
             } catch (ParserConfigurationException e) {
                 e.printStackTrace();

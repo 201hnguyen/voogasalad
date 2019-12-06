@@ -6,10 +6,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import voogasalad.gameauthoringenvironment.gui.AddToXML;
 import voogasalad.gameauthoringenvironment.gui.SaveGUIParameters;
+import voogasalad.gameauthoringenvironment.gui.levelconfig.LevelConfigPane;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.lang.reflect.InvocationTargetException;
@@ -22,10 +24,9 @@ public class ParameterCreator extends BorderPane{
 
     private static final int window_WIDTH = 300;
     private static final int window_HEIGHT = 300;
+    private static final String SUBMITBUTTONCLASS = new SubmitButton().getClass().toString().split("class ")[1];
     private BorderPane root;
     private BorderPane testRoot;
-    private Scene towerEditScene;
-    private Stage towerPreferencePage;
     private Stage newStage;
     private String[] properties;
     private ResourceBundle paramFieldType;
@@ -38,20 +39,21 @@ public class ParameterCreator extends BorderPane{
     private List<String> labelText;
     private List<String> labelValue;
     private AddToXML xmlObject;
+    private LevelConfigPane levelConfigPane;
     //private static Map<String, Map<String,String>> sendToXML;
 
 
-    public ParameterCreator(String gameObjectNameParam, String[] propertiesParam, ResourceBundle paramFieldTypeParam) throws ParserConfigurationException {
+    public ParameterCreator(String gameObjectNameParam, String[] propertiesParam, ResourceBundle paramFieldTypeParam, LevelConfigPane levelConfigPaneParam) throws ParserConfigurationException {
         labelList = new ArrayList<>();
         labelText = new ArrayList<>();
         labelValue = new ArrayList<>();
-        towerPreferencePage = new Stage();
         root = new BorderPane();
         testRoot = new BorderPane();
         xmlObject = new AddToXML();
         properties = propertiesParam;
         paramFieldType = paramFieldTypeParam;
         gameObjectName = gameObjectNameParam;
+        levelConfigPane = levelConfigPaneParam;
         storeAllFieldTypes();
         addInputFields();
         this.setTop(configVBox);
@@ -69,27 +71,29 @@ public class ParameterCreator extends BorderPane{
         }
     }
 
-    private Button createSubmitButton(){
-        Button addButton = new Button("Submit");
-        addButton.setOnMouseClicked(event -> {
+    public void createSubmitButton(){
             allNodes
                     .stream()
                     .forEach(node -> labelValue.add(fieldFactory.getAppropriateText(node)));
 
             SaveGUIParameters myGuiParameters = new SaveGUIParameters(labelText, labelValue);
             String myLabel = xmlObject.addToSendToXMLMap(myGuiParameters.getMap(), gameObjectName);
-        });
-
-        return addButton;
+            addToAppropriateField(gameObjectName, createObjectIcon(myGuiParameters.getMap(), myLabel));
     }
 
     private Node createObjectFromString(String type){
         try{
-            Class cls = Class.forName(type);
-            Node myField = (Node) cls.getConstructor().newInstance();
-            allNodes.add(myField);
+            if (type.equals(SUBMITBUTTONCLASS)) {
+                SubmitButton myField = new SubmitButton(this);
+                return myField;
+            }
+            else {
+                Class cls = Class.forName(type);
+                Node myField = (Node) cls.getConstructor().newInstance();
+                allNodes.add(myField);
+                return myField;
+            }
 
-            return myField;
         } catch (IllegalAccessException e) {
             throw new Error(e);
         } catch (NoSuchMethodException e) {
@@ -122,6 +126,10 @@ public class ParameterCreator extends BorderPane{
             newStage.show();
         });
         return icon;
+    }
+
+    private void addToAppropriateField(String gameObjectNameParam, Button icon){
+        levelConfigPane.addIconToVBox(gameObjectNameParam, icon);
     }
 
 
