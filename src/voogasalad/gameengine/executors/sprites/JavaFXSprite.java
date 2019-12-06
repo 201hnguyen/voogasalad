@@ -9,7 +9,6 @@ import voogasalad.gameengine.executors.sprites.strategies.attack.AttackStrategy;
 import voogasalad.gameengine.executors.sprites.strategies.health.HealthStrategy;
 import voogasalad.gameengine.executors.sprites.strategies.movement.MovementStrategy;
 import voogasalad.gameengine.executors.sprites.strategies.rotation.FullRotationStrategy;
-import voogasalad.gameengine.executors.sprites.strategies.rotation.NoRotationStrategy;
 import voogasalad.gameengine.executors.sprites.strategies.rotation.RotationStrategy;
 import voogasalad.gameengine.executors.utils.SpriteArchetype;
 
