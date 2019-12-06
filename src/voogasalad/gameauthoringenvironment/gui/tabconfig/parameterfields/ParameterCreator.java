@@ -26,7 +26,7 @@ public class ParameterCreator extends BorderPane{
     private static final int window_HEIGHT = 300;
     private static final String SUBMITBUTTONCLASS = new SubmitButton().getClass().toString().split("class ")[1];
     private BorderPane root;
-    private BorderPane testRoot;
+    private BorderPane objectSpecificRoot;
     private Stage newStage;
     private String[] properties;
     private ResourceBundle paramFieldType;
@@ -48,7 +48,6 @@ public class ParameterCreator extends BorderPane{
         labelText = new ArrayList<>();
         labelValue = new ArrayList<>();
         root = new BorderPane();
-        testRoot = new BorderPane();
         xmlObject = new AddToXML();
         properties = propertiesParam;
         paramFieldType = paramFieldTypeParam;
@@ -116,12 +115,13 @@ public class ParameterCreator extends BorderPane{
         }
     }
 
-    private Button createObjectIcon(Map myMap, String objectName){
+    private Button createObjectIcon(Map objectContentMap, String objectName){
         Button icon = new Button(objectName);
         icon.setOnMouseClicked(event -> {
+            objectSpecificRoot = new BorderPane();
             newStage = new Stage();
-            testRoot.setCenter(new TextArea(myMap.toString()));
-            Scene newScene = new Scene(testRoot, window_WIDTH, window_HEIGHT);
+            objectSpecificRoot.setCenter(new TextArea(objectContentMap.toString()));
+            Scene newScene = new Scene(objectSpecificRoot, window_WIDTH, window_HEIGHT);
             newStage.setScene(newScene);
             newStage.show();
         });
