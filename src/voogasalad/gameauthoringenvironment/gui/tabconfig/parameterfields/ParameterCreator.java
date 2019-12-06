@@ -115,12 +115,11 @@ public class ParameterCreator extends BorderPane{
         }
     }
 
-    private Button createObjectIcon(Map objectContentMap, String objectName){
+    private Button createObjectIcon(Map<String, String> objectContentMap, String objectName){
         Button icon = new Button(objectName);
         icon.setOnMouseClicked(event -> {
-            objectSpecificRoot = new BorderPane();
             newStage = new Stage();
-            objectSpecificRoot.setCenter(new TextArea(objectContentMap.toString()));
+            objectSpecificRoot = new ObjectPreviewAndActive(objectContentMap, window_HEIGHT, window_WIDTH);
             Scene newScene = new Scene(objectSpecificRoot, window_WIDTH, window_HEIGHT);
             newStage.setScene(newScene);
             newStage.show();
