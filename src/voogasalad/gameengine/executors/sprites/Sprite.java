@@ -1,5 +1,6 @@
 package voogasalad.gameengine.executors.sprites;
 
+import voogasalad.gameengine.executors.control.levelcontrol.LevelActionsRequester;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.utils.SpriteArchetype;
 
@@ -14,4 +15,6 @@ public interface Sprite {
     void updatePosition(double elapsedTime);
     String getImagePath();
     int getPrototypeId();
+    void updateAngle(double elapsedTime);
+    void shoot(double elapsedTime, LevelActionsRequester levelActionsRequester) throws GameEngineException;
     }

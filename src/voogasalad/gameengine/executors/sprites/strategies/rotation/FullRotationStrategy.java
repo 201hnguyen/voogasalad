@@ -13,7 +13,7 @@ public class FullRotationStrategy implements RotationStrategy {
 
     public FullRotationStrategy(Map<String, Object> parameters) throws GameEngineException {
         originalParameters = parameters;
-        rotationSpeed = (Double) Verifier.verifyAndGetStrategyParameter(parameters, "myRotationSpeed");
+        rotationSpeed = 3.0;
     }
 
     @Override

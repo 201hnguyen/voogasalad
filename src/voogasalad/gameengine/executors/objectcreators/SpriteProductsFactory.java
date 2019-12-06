@@ -29,6 +29,7 @@ public class SpriteProductsFactory {
                     .getConstructor(SpriteBuilder.class)
                     .newInstance(builder);
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | ClassNotFoundException e) {
+            e.printStackTrace();
             throw new GameEngineException(e, "SpriteProductionFailed");
         }
     }

@@ -11,7 +11,7 @@ public class NoAttack implements AttackStrategy {
 
     private Map<String, Object> originalParameters;
 
-    NoAttack(Map<String, Object> parameters){
+    public NoAttack(Map<String, Object> parameters){
         originalParameters = parameters;
     }
 

@@ -102,12 +102,32 @@
         </Strategies>
     </SpritePrototype>
 
+    <SpritePrototype>
+        <Properties>
+            <PrototypeId>4</PrototypeId>
+            <Width>20</Width>
+            <Height>20</Height>
+            <ImagePath>ghost2.png</ImagePath>
+            <Archetype>PROJECTILE</Archetype>
+        </Properties>
+        <Strategies>
+            <HealthStrategy>
+                <Type>NoHealth</Type>
+                <Parameters></Parameters>
+            </HealthStrategy>
+            <MovementStrategy>
+                <Type>NoMovement</Type>
+                <Parameters></Parameters>
+            </MovementStrategy>
+        </Strategies>
+    </SpritePrototype>
+
     <Level>
         <LevelId>1</LevelId>
         <Resources>250</Resources>
         <Lives>20</Lives>
-        <BackgroundImage>whitebackground.jpg</BackgroundImage>
-        <AvailablePrototypes>0 2</AvailablePrototypes>
+        <BackgroundImage>baconcat.jpeg</BackgroundImage>
+        <AvailablePrototypes>0 2 4</AvailablePrototypes>
 
         <Wave>
             <Queue>0 0 0 0 0</Queue>
@@ -149,7 +169,7 @@
         <Condition>
             <Type>OnscreenArchetypeCountCondition</Type>
             <Parameters>
-                <MarkedCount>7</MarkedCount>
+                <MarkedCount>15</MarkedCount>
                 <Archetype>ENEMY</Archetype>
             </Parameters>
             <Actions>
@@ -176,7 +196,7 @@
         <Resources>250</Resources>
         <Lives>20</Lives>
         <BackgroundImage>pepperonicat.png</BackgroundImage>
-        <AvailablePrototypes>0 1 2 3</AvailablePrototypes>
+        <AvailablePrototypes>0 1 2 3 4</AvailablePrototypes>
 
         <Wave>
             <Queue>1 1 1 1 1</Queue>
