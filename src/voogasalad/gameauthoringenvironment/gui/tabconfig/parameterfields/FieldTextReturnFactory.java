@@ -6,8 +6,6 @@ import javafx.scene.control.TextField;
 
 public class FieldTextReturnFactory {
 
-
-
     public String getAppropriateText(Object node){
         if(node instanceof javafx.scene.control.TextField){
             return ((TextField) node).getText();
