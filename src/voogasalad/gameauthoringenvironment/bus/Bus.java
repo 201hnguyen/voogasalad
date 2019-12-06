@@ -1,5 +1,9 @@
 package voogasalad.gameauthoringenvironment.bus;
 
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import voogasalad.gameauthoringenvironment.gui.*;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -9,6 +13,9 @@ import javafx.stage.Stage;
 import org.w3c.dom.Document;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameplayer.Player;
+
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class Bus {
     private Stage currentStage;
@@ -45,18 +52,43 @@ public class Bus {
         return new Scene(busRoot, width, height);
     }
 
-    private Button changeToGAEButton(){
-        Button myButton = new Button("Enter GAE");
-        myButton.setOnMouseClicked(event -> {
-            changeToGAE();
-            //FOR TESTING
-            //currentStage.setScene(levelConfigScene.getScene(root));
-        });
+    private Label changeToGAEButton(){
+        Label myButton = createMenuButton("newgame.png", "newgame-hover.png", e -> changeToGAE());
+
+//        myButton.setOnMouseClicked(event -> {
+//            changeToGAE();
+//            //FOR TESTING
+//            //currentStage.setScene(levelConfigScene.getScene(root));
+//        });
         return myButton;
+    }
+
+    private Label uploadNewGameButton() {
+        Label myButton = createMenuButton("newgame.png", "newgame-hover.png", e -> changeToGAE());
+        return myButton;
+    }
+
+    private void loadGameHandler() {
+        // TODO: on click, will open finder - file selected will be call
     }
 
     public void changeToGAE(){
         currentStage.setScene(gaeObject.createGAEScene(root));
+    }
+
+    public Label createMenuButton(String imagePath, String imagePathHover, Consumer consumer) {
+        Label myButton = new Label();
+        ImageView image = new ImageView(new Image(imagePath));
+        ImageView imageHover = new ImageView(new Image(imagePathHover));
+        image.setFitHeight(50);
+        image.setPreserveRatio(true);
+        imageHover.setFitHeight(50);
+        imageHover.setPreserveRatio(true);
+        myButton.setGraphic(image);
+        myButton.setOnMouseEntered(e -> myButton.setGraphic(imageHover));
+        myButton.setOnMouseExited(e -> myButton.setGraphic(image));
+        myButton.setOnMouseClicked(consumer::accept);
+        return myButton;
     }
 
 
