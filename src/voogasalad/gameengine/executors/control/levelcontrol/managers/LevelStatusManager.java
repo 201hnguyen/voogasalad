@@ -11,13 +11,24 @@ public class LevelStatusManager {
     private int myResources;
     private int myLives;
     private GameSceneStatus myGameSceneStatus;
+    private int myScore;
 
     public LevelStatusManager() {
         myResources = 0;
         myLives = 0;
         myTotalElapsedTime = 0;
         myElapsedTimeSinceLastFrame = 0;
+        myScore = 0;
         myGameSceneStatus = INITIAL_GAME_SCENE_STATUS;
+    }
+
+    public LevelStatusManager (int resources, int lives, int score, double totalElapsedTime, double elapsedTimeSinceLastFrame, GameSceneStatus gameSceneStatus) {
+        myTotalElapsedTime = totalElapsedTime;
+        myElapsedTimeSinceLastFrame = elapsedTimeSinceLastFrame;
+        myResources = resources;
+        myScore = score;
+        myLives = lives;
+        myGameSceneStatus = gameSceneStatus;
     }
 
     public void setGameSceneStatus(GameSceneStatus status) {
@@ -39,6 +50,15 @@ public class LevelStatusManager {
     public void notifyNewCycle(double elapsedTime) {
         myElapsedTimeSinceLastFrame = elapsedTime;
         myTotalElapsedTime += elapsedTime;
+    }
+
+    public int alterScoreByValue(int value) {
+        myScore += value;
+        return myScore;
+    }
+
+    public int getScore() {
+        return myScore;
     }
 
     public double getTotalElapsedTime() {
@@ -65,5 +85,9 @@ public class LevelStatusManager {
     public int alterLivesByValue(int value) {
         myLives += value;
         return myLives;
+    }
+
+    public LevelStatusManager getCopyOfStatusManager() {
+        return new LevelStatusManager(myResources, myLives, myScore, myTotalElapsedTime, myElapsedTimeSinceLastFrame, myGameSceneStatus);
     }
 }
