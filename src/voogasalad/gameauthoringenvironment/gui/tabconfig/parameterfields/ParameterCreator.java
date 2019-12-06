@@ -120,7 +120,6 @@ public class ParameterCreator extends BorderPane{
             newStage = new Stage();
             objectSpecificRoot = new ObjectPreviewAndActive(gameObjectName, objectContentMap, window_HEIGHT, window_WIDTH, newStage, activeObjects, icon);
             Scene newScene = new Scene(objectSpecificRoot, window_WIDTH, window_HEIGHT);
-            //objectSpecificRoot.addToActive(newStage, activeObjects);
             newStage.setScene(newScene);
             newStage.show();
         });

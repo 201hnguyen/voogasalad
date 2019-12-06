@@ -25,6 +25,7 @@ public class ObjectPreviewAndActive extends BorderPane{
     private Stage windowStage;
     private Map<String, Map<String, String>> activeObjects;
     private Button icon;
+    private Button makeActive;
 
     public ObjectPreviewAndActive(String gameObjectNameParam, Map<String, String> objectContentMapParam, int windowHeightParam,
                                   int windowWidthParam, Stage windowStageParam, Map<String, Map<String, String>> activeObjectsParam, Button iconParam){
@@ -45,7 +46,12 @@ public class ObjectPreviewAndActive extends BorderPane{
         Label title = formatTitleLabel();
         vBox.getChildren().add(title);
         addMapProperties();
-        Button makeActive = styleActivateButton();
+        if(activeObjects.containsKey(gameObjectName)){
+            makeActive = styleDeactivateButton();
+        }
+        else{
+            makeActive = styleActivateButton();
+        }
         vBox.getChildren().add(makeActive);
     }
 
@@ -78,6 +84,16 @@ public class ObjectPreviewAndActive extends BorderPane{
         return makeActive;
     }
 
+    private Button styleDeactivateButton(){
+        Button makeActive = new Button("Click Here to Deactivate");
+        makeActive.setStyle("-fx-background-color: #ff6666; -fx-border-color:black;");
+        makeActive.setPrefWidth(windowWidth);
+        makeActive.setOnMouseClicked(event -> {
+            removeFromActive();
+        });
+        return makeActive;
+    }
+
     private ScrollPane configureScrollPane(){
         ScrollPane scrollPane = new ScrollPane(vBox);
         scrollPane.setPrefHeight(windowHeight);
@@ -95,6 +111,12 @@ public class ObjectPreviewAndActive extends BorderPane{
     public void addToActive(){
         activeObjects.put(gameObjectName, objectContentMap);
         icon.setStyle("-fx-background-color: #00ff00; -fx-border-color:black;");
+        windowStage.close();
+    }
+
+    public void removeFromActive(){
+        activeObjects.remove(gameObjectName, objectContentMap);
+        icon.setStyle(null);
         windowStage.close();
     }
 }
