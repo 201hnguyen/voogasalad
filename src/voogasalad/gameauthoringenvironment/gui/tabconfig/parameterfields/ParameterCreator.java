@@ -84,10 +84,7 @@ public class ParameterCreator extends BorderPane{
     private Node createObjectFromString(String type){
         try{
             if (type.equals(SUBMITBUTTONCLASS)) {
-//                SubmitButton myField = new SubmitButton(allNodes,labelValue, fieldFactory,labelText,xmlObject, gameObjectName);
                 SubmitButton myField = new SubmitButton(this);
-
-                //allNodes.add(myField);
                 return myField;
             }
             else {
