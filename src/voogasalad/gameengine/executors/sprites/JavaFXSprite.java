@@ -17,6 +17,7 @@ import voogasalad.gameengine.executors.utils.SpriteArchetype;
 
 import java.awt.geom.Point2D;
 import java.util.HashMap;
+import java.util.List;
 
 public class JavaFXSprite implements Sprite {
     private int mySpriteId;
@@ -73,6 +74,11 @@ public class JavaFXSprite implements Sprite {
 
     public void updateAngle(double elapsedTime){
         myCurrentAttackAngle = myRotationStrategy.updateAngle(elapsedTime, myCurrentAttackAngle);
+    }
+
+    @Override
+    public void updatePath(List<Point2D.Double> path) {
+        myMovementStrategy.updatePath(path);
     }
 
     @Override
