@@ -1,14 +1,41 @@
 package voogasalad.gameplayer.GUI;
 
-import javafx.geometry.Insets;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
+import voogasalad.gameengine.api.UIActionsProcessor;
 import voogasalad.gameengine.executors.sprites.Sprite;
 
 import java.util.List;
 
 public class DisplayScreen extends Pane {
+    private UIActionsProcessor actionsProcessor;
+    private int currentImageID;
+
+    public DisplayScreen(UIActionsProcessor uiActionsProcessor) {
+        actionsProcessor = uiActionsProcessor;
+        this.setOnDragOver((DragEvent event) -> {
+            Dragboard db = event.getDragboard();
+            if (db.hasImage()) {
+                event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+            }
+            event.consume();
+        });
+        this.setOnDragDropped((DragEvent event) -> {
+            Dragboard db = event.getDragboard();
+            boolean success = false;
+            if (db.hasImage()) {
+                success = true;
+                actionsProcessor.processAddSpriteAction(currentImageID, event.getX(), event.getY());
+            }
+            event.setDropCompleted(success);
+            event.consume();
+        });
+    }
 
     public void updateDisplayScreen(List<Sprite> sprites){
         this.getChildren().clear();
@@ -17,6 +44,9 @@ public class DisplayScreen extends Pane {
         }
     }
 
+    public void setImageDraggedID(int id){
+        currentImageID = id;
+    }
     private void loadInSprite(Sprite sprite) {
         Sprite toLoad = sprite;
         ImageView toDisplay = (ImageView) toLoad.getImage();
@@ -27,8 +57,9 @@ public class DisplayScreen extends Pane {
     }
 
     private void addImageToScreen(ImageView image, int xPos, int yPos) {
-        image.setX(xPos - image.getFitWidth()/2);
-        image.setY(yPos - image.getFitHeight()/2);
+        //TODO: Check why this has to be like this
+        image.setX(xPos);
+        image.setY(yPos);
         getChildren().add(image);
     }
 

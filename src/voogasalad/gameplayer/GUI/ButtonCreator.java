@@ -8,8 +8,6 @@ import java.util.Collections;
 import java.util.ResourceBundle;
 
 public class ButtonCreator extends HBox {
-    private static final double Y_LAYOUT = 430;
-    private static final double X_LAYOUT = 20;
     private static final String RESOURCE_PATH = "resources.player.ButtonResource";
 
     private ResourceBundle resourceBundle;
@@ -18,10 +16,7 @@ public class ButtonCreator extends HBox {
     public ButtonCreator(ButtonController buttonController) {
         resourceBundle = ResourceBundle.getBundle(RESOURCE_PATH);
         myButtonController = buttonController;
-        GridPane buttons = new GridPane();
         createButtons();
-        setLayoutY(Y_LAYOUT);
-        setLayoutX(X_LAYOUT);
     }
 
     private void createButtons() {
@@ -30,6 +25,7 @@ public class ButtonCreator extends HBox {
             Button button = new Button(key);
             button.setOnAction(e -> callAction(key));
             button.setPrefHeight(getHeight());
+            button.setMinWidth(100);
             getChildren().add(button);
         }
     }

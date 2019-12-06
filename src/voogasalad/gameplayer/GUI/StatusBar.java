@@ -4,11 +4,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.util.Map;
 
-public class StatusBar extends VBox {
+public class StatusBar extends HBox {
 
     private static final int INFO_BOX_SPACING = 10;
     private static final int ICON_SIZE = 50;
@@ -18,7 +19,8 @@ public class StatusBar extends VBox {
         HBox infoBox = new HBox(INFO_BOX_SPACING);
         ImageView icon = iconLoader(infoName);
         Text value = new Text();
-        value.setText(String.valueOf(infoValue));
+        value.setText("\n" + String.valueOf(infoValue));
+        value.setFont(new Font(20));
         infoBox.getChildren().add(icon);
         infoBox.getChildren().add(value);
         return infoBox;

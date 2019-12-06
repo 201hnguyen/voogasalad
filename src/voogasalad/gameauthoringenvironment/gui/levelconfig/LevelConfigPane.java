@@ -19,6 +19,10 @@ public class LevelConfigPane extends BorderPane{
     private AddToXML sendToXML;
     private Document createdXML;
     private Bus busInstance;
+    private VBoxCreator towersVBox;
+    private VBoxCreator enemiesVBox;
+    private VBoxCreator obstaclesVBox;
+
 
     public LevelConfigPane(AddToXML sendToXMLParam, Document createdXMLParam, Bus busInstanceParam){
         sendToXML = sendToXMLParam;
@@ -59,27 +63,9 @@ public class LevelConfigPane extends BorderPane{
         HBox allObjectHBox = new HBox();
         int heightOfBox = 2*height/10;
         int widthOfBox = width/3;
-        VBoxCreator towersVBox = new VBoxCreator("Towers", widthOfBox, heightOfBox);
-        VBoxCreator enemiesVBox = new VBoxCreator("Enemies", widthOfBox, heightOfBox);
-        VBoxCreator obstaclesVBox = new VBoxCreator("Obstacles", widthOfBox, heightOfBox);
-        towersVBox.addToObjectHBox(new Button("test"));
-        towersVBox.addToObjectHBox(new Button("test"));
-        towersVBox.addToObjectHBox(new Button("test"));
-        towersVBox.addToObjectHBox(new Button("test"));
-        towersVBox.addToObjectHBox(new Button("test"));
-        towersVBox.addToObjectHBox(new Button("test"));
-        towersVBox.addToObjectHBox(new Button("test"));
-        towersVBox.addToObjectHBox(new Button("test"));
-        towersVBox.addToObjectHBox(new Button("test"));
-        towersVBox.addToObjectHBox(new Button("test"));
-        towersVBox.addToObjectHBox(new Button("test"));
-        towersVBox.addToObjectHBox(new Button("test"));
-        enemiesVBox.addToObjectHBox(new Button("test"));
-        enemiesVBox.addToObjectHBox(new Button("test"));
-        enemiesVBox.addToObjectHBox(new Button("test"));
-        obstaclesVBox.addToObjectHBox(new Button("test"));
-        obstaclesVBox.addToObjectHBox(new Button("test"));
-        obstaclesVBox.addToObjectHBox(new Button("test"));
+        towersVBox = new VBoxCreator("Towers", widthOfBox, heightOfBox);
+        enemiesVBox = new VBoxCreator("Enemies", widthOfBox, heightOfBox);
+        obstaclesVBox = new VBoxCreator("Obstacles", widthOfBox, heightOfBox);
         allObjectHBox.setPrefHeight(heightOfBox);
         allObjectHBox.setMaxHeight(allObjectHBox.getPrefHeight());
         allObjectHBox.getChildren().addAll(towersVBox, enemiesVBox, obstaclesVBox);
@@ -146,6 +132,19 @@ public class LevelConfigPane extends BorderPane{
         submit.setPrefWidth(width/2);
         h.getChildren().addAll(newLevel, submit);
         return h;
+    }
+
+    public void addIconToVBox(String objectType, Button icon){
+        if(objectType.equals("Towers")){
+            towersVBox.addToObjectHBox(icon);
+        }
+        if(objectType.equals("Enemies")){
+            enemiesVBox.addToObjectHBox(icon);
+        }
+        if(objectType.equals("Obstacles")){
+            obstaclesVBox.addToObjectHBox(icon);
+        }
+
     }
 
 
