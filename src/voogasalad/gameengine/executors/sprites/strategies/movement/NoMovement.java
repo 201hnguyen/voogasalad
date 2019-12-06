@@ -1,9 +1,7 @@
 package voogasalad.gameengine.executors.sprites.strategies.movement;
 
-import java.awt.Point;
 import java.awt.geom.Point2D;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 public class NoMovement implements MovementStrategy {
 
@@ -18,5 +16,10 @@ public class NoMovement implements MovementStrategy {
     @Override
     public Point2D.Double calculateNextPosition(double elapsedTime, Point2D.Double currentPosition) {
         return currentPosition;
+    }
+
+    @Override
+    public void updatePath(List<Point2D.Double> path) {
+        //do nothing
     }
 }
