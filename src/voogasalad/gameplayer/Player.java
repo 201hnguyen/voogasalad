@@ -56,16 +56,14 @@ public class Player {
     private void gameLoop(double elapsedTime) throws GameEngineException {
         if(myEngine.didLevelSwitch()) {
             myPlayerVisualization.setNewLevel(myEngine.getSpritePrototypesByArchetype(SpriteArchetype.TOWER), myEngine.getSpritePrototypesByArchetype(SpriteArchetype.ENEMY), myEngine.getCurrentLevelBackgroundPath());
-            flag = -1;
-        }
-        if(flag == -1){
             myTimeline.pause();
-            flag = 0;
         }
-        myCurrentGameSceneObject = myEngine.execute(elapsedTime);
-        gameInfo.put("Lives", myCurrentGameSceneObject.getLives());
-        gameInfo.put("Coins", myCurrentGameSceneObject.getResources());
-        myPlayerVisualization.update(myCurrentGameSceneObject.getOnScreenSprites(), gameInfo);
+        else {
+            myCurrentGameSceneObject = myEngine.execute(elapsedTime);
+            gameInfo.put("Lives", myCurrentGameSceneObject.getLives());
+            gameInfo.put("Coins", myCurrentGameSceneObject.getResources());
+            myPlayerVisualization.update(myCurrentGameSceneObject.getOnScreenSprites(), gameInfo);
+        }
     }
 
     private void setGameLoop() {
