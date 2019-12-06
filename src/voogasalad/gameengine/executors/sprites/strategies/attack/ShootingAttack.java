@@ -20,16 +20,14 @@ public class ShootingAttack implements AttackStrategy {
 
     private Map<String, Object> originalParameters;
     private Double attackRate; //how many ticks until the next shot?
-    private Map<String, Object> bulletPathParameters;
-    private Double bulletSpeed;
-    private double elapsedTimeSinceLastAttack; //TODO: make double/Double consistent
+    private double elapsedTimeSinceLastAttack;
     private int bulletPrototypeID;
 
 
     public ShootingAttack(Map<String, Object> parameters) throws GameEngineException{
         originalParameters = parameters;
-        attackRate = (Double) Verifier.verifyAndGetStrategyParameter(parameters, "myAttackRate");
-        bulletSpeed = (Double) Verifier.verifyAndGetStrategyParameter(parameters, "mySpeed");
+        attackRate = 2.0;
+        bulletPrototypeID = 4; //TODO: FIX
     }
 
     @Override
@@ -37,13 +35,14 @@ public class ShootingAttack implements AttackStrategy {
             throws GameEngineException {
         elapsedTimeSinceLastAttack += elapsedTime;
         if(elapsedTimeSinceLastAttack >= attackRate){
-            shootBullet(actionsRequester, currentPos);
+            shootBullet(currentAngle, actionsRequester, currentPos);
             //TODO: spawn this bullet
         }
     }
 
-    private void shootBullet(LevelActionsRequester actionsRequester, Point2D.Double currentPos){
-        LevelAction action = new AddSpriteAction(bulletPrototypeID, currentPos.getX(), currentPos.getY());
+    private void shootBullet(double currentAngle, LevelActionsRequester actionsRequester, Point2D.Double currentPos){
+        System.out.println("Angle shot at:" + currentAngle);
+        LevelAction action = new AddSpriteAction(bulletPrototypeID, currentPos.getX() + Math.cos(currentAngle)*50, currentPos.getY() + Math.sin(currentAngle)*50);
         actionsRequester.requestAction(action);
     }
 

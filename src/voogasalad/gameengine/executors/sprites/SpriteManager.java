@@ -21,5 +21,5 @@ public interface SpriteManager {
 
     List<Sprite> getPrototypesForArchetype(SpriteArchetype archetype) throws GameEngineException;
 
-    void executeSpriteNextState(double elapsedTime);
+    void executeSpriteNextState(double elapsedTime) throws GameEngineException;
 }
