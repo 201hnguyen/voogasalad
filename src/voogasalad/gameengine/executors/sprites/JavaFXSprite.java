@@ -2,27 +2,36 @@ package voogasalad.gameengine.executors.sprites;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import voogasalad.gameengine.executors.control.levelcontrol.LevelActionsRequester;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.objectcreators.SpriteBuilder;
+import voogasalad.gameengine.executors.sprites.strategies.attack.AttackStrategy;
+import voogasalad.gameengine.executors.sprites.strategies.attack.ShootingAttack;
 import voogasalad.gameengine.executors.sprites.strategies.health.HealthStrategy;
 import voogasalad.gameengine.executors.sprites.strategies.movement.MovementStrategy;
+import voogasalad.gameengine.executors.sprites.strategies.rotation.FullRotationStrategy;
+import voogasalad.gameengine.executors.sprites.strategies.rotation.RotationStrategy;
 import voogasalad.gameengine.executors.utils.SpriteArchetype;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.util.HashMap;
 
 public class JavaFXSprite implements Sprite {
     private int mySpriteId;
     private Point2D.Double currentPosition;
+    private Double myCurrentAttackAngle;
     private HealthStrategy myHealthStrategy;
     private MovementStrategy myMovementStrategy;
+    private RotationStrategy myRotationStrategy;
+    private AttackStrategy myAttackStrategy;
     private String myImagePath;
     private ImageView myImageView;
     private SpriteBuilder myOriginalBuilder;
     private SpriteArchetype myArchetype;
     private int myPrototypeId;
 
-    public JavaFXSprite(SpriteBuilder builder) {
+    public JavaFXSprite(SpriteBuilder builder) throws GameEngineException {
         myArchetype = builder.getSpriteArchetype();
         myOriginalBuilder = builder;
         mySpriteId = builder.getSpriteId();
@@ -30,6 +39,9 @@ public class JavaFXSprite implements Sprite {
         currentPosition.setLocation(builder.getX(), builder.getY());
         myHealthStrategy = builder.getHealthStrategy();
         myMovementStrategy = builder.getMovementStrategy();
+        myRotationStrategy = new FullRotationStrategy(new HashMap<>()); //TODO: don't hardcode
+        myAttackStrategy = new ShootingAttack(new HashMap<>()); //TODO: don't hardcode
+        myCurrentAttackAngle = 0.0;
         myImagePath = builder.getImagePath();
         myPrototypeId = builder.getPrototypeId();
         configureImageView(builder.getHeight(), builder.getWidth());
@@ -46,6 +58,14 @@ public class JavaFXSprite implements Sprite {
                 .setArchetype(myOriginalBuilder.getSpriteArchetype())
                 .setPrototypeId(myPrototypeId)
                 .build();
+    }
+
+    public void shoot(double elapsedTime) throws GameEngineException {
+        //TODO: myAttackStrategy.attack(elapsedTime, myCurrentAttackAngle, LEVELACTIONSREQUESTER, currentPosition);
+    }
+
+    public void updateAngle(double elapsedTime){
+        myCurrentAttackAngle = myRotationStrategy.updateAngle(elapsedTime, myCurrentAttackAngle);
     }
 
     @Override
