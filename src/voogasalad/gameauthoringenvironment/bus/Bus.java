@@ -63,15 +63,6 @@ public class Bus {
         return myButton;
     }
 
-    private Label uploadNewGameButton() {
-        Label myButton = createMenuButton("newgame.png", "newgame-hover.png", e -> changeToGAE());
-        return myButton;
-    }
-
-    private void loadGameHandler() {
-        // TODO: on click, will open finder - file selected will be call
-    }
-
     public void changeToGAE(){
         currentStage.setScene(gaeObject.createGAEScene(root));
     }
