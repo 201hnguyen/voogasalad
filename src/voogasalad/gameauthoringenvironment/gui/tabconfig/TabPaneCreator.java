@@ -8,7 +8,7 @@ import org.w3c.dom.Document;
 import voogasalad.gameauthoringenvironment.bus.Bus;
 import voogasalad.gameauthoringenvironment.gui.AddToXML;
 import voogasalad.gameauthoringenvironment.gui.levelconfig.LevelConfigPane;
-import voogasalad.gameauthoringenvironment.gui.tabconfig.parameterfields.InputFieldCreator;
+import voogasalad.gameauthoringenvironment.gui.tabconfig.parameterfields.ParameterCreator;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.FileNotFoundException;
@@ -70,7 +70,7 @@ public class TabPaneCreator {
 
         typeToParams.getKeys().asIterator().forEachRemaining(key -> {
             try {
-                Tab tab = new Tab(key, new InputFieldCreator(key, typeToParams.getString(key).split(","), paramFieldType) );
+                Tab tab = new Tab(key, new ParameterCreator(key, typeToParams.getString(key).split(","), paramFieldType) );
                 tabPane.getTabs().add(tab);
             } catch (ParserConfigurationException | FileNotFoundException e) {
                 e.printStackTrace();

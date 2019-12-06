@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import voogasalad.gameauthoringenvironment.gui.AddToXML;
 import voogasalad.gameauthoringenvironment.gui.SaveInputParameters;
@@ -20,7 +21,7 @@ import java.util.*;
 /**
  *
  */
-public class InputFieldCreator extends BorderPane{
+public class ParameterCreator extends BorderPane{
 
     private static final int window_WIDTH = 300;
     private static final int window_HEIGHT = 300;
@@ -33,6 +34,7 @@ public class InputFieldCreator extends BorderPane{
     private Stage newStage;
     private String[] properties;
     private ResourceBundle paramFieldType;
+    private VBox previewVBox;
     private VBox configVBox;
     private String gameObjectName;
     private List<Node> allNodes = new ArrayList<>();
@@ -46,7 +48,7 @@ public class InputFieldCreator extends BorderPane{
     //private static Map<String, Map<String,String>> sendToXML;
 
 
-    public InputFieldCreator(String gameObjectNameParam, String[] propertiesParam, ResourceBundle paramFieldTypeParam) throws ParserConfigurationException, FileNotFoundException {
+    public ParameterCreator(String gameObjectNameParam, String[] propertiesParam, ResourceBundle paramFieldTypeParam) throws ParserConfigurationException, FileNotFoundException {
         labelList = new ArrayList<>();
         labelText = new ArrayList<>();
         labelValue = new ArrayList<>();
@@ -59,6 +61,8 @@ public class InputFieldCreator extends BorderPane{
         gameObjectName = gameObjectNameParam;
         storeAllFieldTypes();
         addInputFields();
+        previewVBox = new ImagePreviewCreator().getPreviewVBox();
+        this.setLeft(previewVBox);
         this.setRight(configVBox);
     }
 
@@ -72,7 +76,12 @@ public class InputFieldCreator extends BorderPane{
     private void addInputFields() {
 
         configVBox = new VBox();
-
+        Label header = new Label("Set Parameters");
+        header.setFont(Font.font(14));
+        configVBox.getChildren().add(header);
+        configVBox.setPrefWidth(200);
+        configVBox.setPadding(new Insets(50, 50, 50, 50));
+;
         for (int j = 0; j < properties.length; j++) {
             Label label = new Label(properties[j]);
             labelList.add(label);
@@ -81,8 +90,6 @@ public class InputFieldCreator extends BorderPane{
             configVBox.getChildren().add(createObjectFromString(paramFieldType.getString(properties[j])));
         }
 
-        configVBox.setPrefWidth(150);
-        configVBox.setPadding(new Insets(0, 20, 10, 20));
     }
 
     //
@@ -94,7 +101,6 @@ public class InputFieldCreator extends BorderPane{
                     .forEach(node -> labelValue.add(fieldFactory.getAppropriateText(node)));
 
             SaveInputParameters myInputParameters = new SaveInputParameters(labelText, labelValue);
-            getImageName(myInputParameters.getMap());
             String myLabel = xmlObject.addToSendToXMLMap(myInputParameters.getMap(), gameObjectName);
         });
 
