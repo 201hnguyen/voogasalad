@@ -8,11 +8,13 @@ import java.awt.geom.Point2D;
 import java.util.LinkedList;
 
 public class MovementBuilder {
+
+    public static final double DEFAULT_DISTANCE=100;
+
     private String movementType;
     private double mySpeed;
     private LinkedList<Point2D.Double> myPath;
     private double myDistance;
-    private double myAngle;
 
     public MovementBuilder setMovementType(String typeString) {
         movementType = typeString.strip();
@@ -47,6 +49,15 @@ public class MovementBuilder {
         return this;
     }
 
+    public MovementBuilder setDistance(String distanceString) {
+        try {
+            myDistance = Double.parseDouble(distanceString);
+        } catch (NumberFormatException e) {
+            myDistance = DEFAULT_DISTANCE;
+        }
+        return this;
+    }
+
     public double getSpeed() {
         return mySpeed;
     }
@@ -54,11 +65,6 @@ public class MovementBuilder {
     public double getDistance() {
         return myDistance;
     }
-
-    public double getAngle() {
-        return myAngle;
-    }
-
 
     public MovementStrategy build() throws GameEngineException {
         StrategiesFactory movementStrategyFactory = new StrategiesFactory();

@@ -84,7 +84,7 @@ public class JavaFXSpriteManager implements SpriteManager {
     public void executeSpriteNextState(double elapsedTime) throws GameEngineException {
         for (Sprite sprite : myOnScreenSprites) {
             sprite.updatePosition(elapsedTime);
-            sprite.updateAngle(elapsedTime);
+            sprite.updateShootingAngle(elapsedTime);
             sprite.shoot(elapsedTime, myLevelActionsRequester);
         }
         System.out.println("executed next sprite state");

@@ -67,7 +67,7 @@ public class PathMovement implements MovementStrategy {
 
     @Override
     public void updateDirectionalAngle(double angle) {
-
+        //do nothing
     }
 
     private Point2D.Double calculateDirection(Point2D.Double currentPosition) {

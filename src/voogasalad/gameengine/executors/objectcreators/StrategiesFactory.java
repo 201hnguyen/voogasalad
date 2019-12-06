@@ -33,8 +33,11 @@ public class StrategiesFactory {
                 return (MovementStrategy) Class.forName(CLASS_PATH + MOVEMENT_DIRECTORY + movementType).getConstructor(double.class, LinkedList.class).newInstance(builder.getSpeed(), builder.getPath());
             } else if (movementType.equalsIgnoreCase("NoMovement")) {
                 return (MovementStrategy) Class.forName(CLASS_PATH + MOVEMENT_DIRECTORY + movementType).getConstructor().newInstance();
+            } else if (movementType.equalsIgnoreCase("DirectedDistanceMovement")) {
+                return (MovementStrategy) Class.forName(CLASS_PATH + MOVEMENT_DIRECTORY + movementType).getConstructor(MovementBuilder.class).newInstance(builder);
             }
         } catch (Exception e) {
+            e.printStackTrace();
             throw new GameEngineException(e, "SpriteMovementInitializationFailed");
         }
         return null;

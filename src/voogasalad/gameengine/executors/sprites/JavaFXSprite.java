@@ -40,11 +40,7 @@ public class JavaFXSprite implements Sprite {
         currentPosition = new Point2D.Double();
         currentPosition.setLocation(builder.getX(), builder.getY());
         myHealthStrategy = builder.getHealthStrategy();
-        if (myPrototypeId==4) {
-            myMovementStrategy = new DirectedDistanceMovement(new MovementBuilder());
-        } else {
-            myMovementStrategy = builder.getMovementStrategy();
-        }
+        myMovementStrategy = builder.getMovementStrategy();
         myAttackStrategy = builder.getAttackStrategy();
         myRotationStrategy = new FullRotationStrategy(new HashMap<>()); //TODO: don't hardcode
         myCurrentAttackAngle = 0.0;
@@ -54,42 +50,34 @@ public class JavaFXSprite implements Sprite {
 
     @Override
     public Sprite makeClone(double x, double y, int spriteId) throws GameEngineException {
-        if (myPrototypeId == 4) {
-            return new SpriteBuilder().setSpriteId(spriteId).setX(x).setY(y)
-                    .setHealthStrategy(myOriginalBuilder.getHealthStrategy().makeClone())
-                    .setHeight(myOriginalBuilder.getHeight())
-                    .setImagePath(myOriginalBuilder.getImagePath())
-                    .setMovementStrategy(new DirectedDistanceMovement(new MovementBuilder()))
-                    .setWidth(myOriginalBuilder.getWidth())
-                    .setArchetype(myOriginalBuilder.getSpriteArchetype())
-                    .setAttackStrategy(myOriginalBuilder.getAttackStrategy())
-                    .setPrototypeId(myPrototypeId)
-                    .build();
-        } else {
-            return new SpriteBuilder().setSpriteId(spriteId).setX(x).setY(y)
-                    .setHealthStrategy(myOriginalBuilder.getHealthStrategy().makeClone())
-                    .setHeight(myOriginalBuilder.getHeight())
-                    .setImagePath(myOriginalBuilder.getImagePath())
-                    .setMovementStrategy(myOriginalBuilder.getMovementStrategy().makeClone())
-                    .setWidth(myOriginalBuilder.getWidth())
-                    .setArchetype(myOriginalBuilder.getSpriteArchetype())
-                    .setAttackStrategy(myOriginalBuilder.getAttackStrategy())
-                    .setPrototypeId(myPrototypeId)
-                    .build();
-        }
+        return new SpriteBuilder().setSpriteId(spriteId).setX(x).setY(y)
+                .setHealthStrategy(myOriginalBuilder.getHealthStrategy().makeClone())
+                .setHeight(myOriginalBuilder.getHeight())
+                .setImagePath(myOriginalBuilder.getImagePath())
+                .setMovementStrategy(myOriginalBuilder.getMovementStrategy().makeClone())
+                .setWidth(myOriginalBuilder.getWidth())
+                .setArchetype(myOriginalBuilder.getSpriteArchetype())
+                .setAttackStrategy(myOriginalBuilder.getAttackStrategy())
+                .setPrototypeId(myPrototypeId)
+                .build();
     }
 
     public void shoot(double elapsedTime, LevelActionsRequester levelActionsRequester) throws GameEngineException {
         myAttackStrategy.attack(elapsedTime, myCurrentAttackAngle, levelActionsRequester, currentPosition);
     }
 
-    public void updateAngle(double elapsedTime){
+    public void updateShootingAngle(double elapsedTime){
         myCurrentAttackAngle = myRotationStrategy.updateAngle(elapsedTime, myCurrentAttackAngle);
     }
 
     @Override
     public void updatePath(List<Point2D.Double> path) {
         myMovementStrategy.updatePath(path);
+    }
+
+    @Override
+    public void updateMovementAngle(double angle) {
+        myMovementStrategy.updateDirectionalAngle(angle);
     }
 
     @Override
