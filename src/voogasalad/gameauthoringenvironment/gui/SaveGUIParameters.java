@@ -29,7 +29,7 @@ public class SaveGUIParameters {
         return vBoxMap;
     }
 
-    public Map getMap(){
+    public Map<String, String> getMap(){
         return vBoxMap;
     }
 
