@@ -4,37 +4,29 @@ import voogasalad.gameengine.executors.control.action.level.AddSpriteAction;
 import voogasalad.gameengine.executors.control.action.level.LevelAction;
 import voogasalad.gameengine.executors.control.levelcontrol.LevelActionsRequester;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
-import voogasalad.gameengine.executors.objectcreators.SpriteBuilder;
-import voogasalad.gameengine.executors.objectcreators.StrategiesFactory;
-import voogasalad.gameengine.executors.sprites.Sprite;
-import voogasalad.gameengine.executors.sprites.strategies.movement.PathMovement;
-import voogasalad.gameengine.executors.sprites.strategies.rotation.RotationStrategy;
-import voogasalad.gameengine.executors.utils.Verifier;
+import voogasalad.gameengine.executors.objectcreators.AttackBuilder;
 
-import java.awt.*;
 import java.awt.geom.Point2D;
-import java.util.LinkedList;
-import java.util.Map;
 
 public class ShootingAttack implements AttackStrategy {
 
-    private Map<String, Object> originalParameters;
-    private Double attackRate; //how many ticks until the next shot?
+    private AttackBuilder myBuilder;
+    private double attackRate; //how many ticks until the next shot?
     private double elapsedTimeSinceLastAttack;
-    private int bulletPrototypeID;
+    private Integer bulletPrototypeID;
 
 
-    public ShootingAttack(Map<String, Object> parameters) throws GameEngineException{
-        originalParameters = parameters;
-        attackRate = 2.0;
-        bulletPrototypeID = 4; //TODO: FIX
+    public ShootingAttack(AttackBuilder attackBuilder) {
+        myBuilder = attackBuilder;
+        attackRate = myBuilder.getAttackRate();
+        bulletPrototypeID = myBuilder.getBulletPrototypeId();
     }
 
     @Override
-    public void attack(double elapsedTime, double currentAngle, LevelActionsRequester actionsRequester, Point2D.Double currentPos)
-            throws GameEngineException {
+    public void attack(double elapsedTime, double currentAngle, LevelActionsRequester actionsRequester, Point2D.Double currentPos) {
         elapsedTimeSinceLastAttack += elapsedTime;
         if(elapsedTimeSinceLastAttack >= attackRate){
+            elapsedTimeSinceLastAttack = 0;
             shootBullet(currentAngle, actionsRequester, currentPos);
             //TODO: spawn this bullet
         }
@@ -53,7 +45,6 @@ public class ShootingAttack implements AttackStrategy {
 
     @Override
     public AttackStrategy makeClone() throws GameEngineException {
-        StrategiesFactory factory = new StrategiesFactory();
-        return factory.makeAttack("ShootingAttack", originalParameters);
+        return new ShootingAttack(myBuilder);
     }
 }

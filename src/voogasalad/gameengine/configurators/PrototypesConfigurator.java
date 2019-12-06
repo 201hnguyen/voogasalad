@@ -4,6 +4,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
+import voogasalad.gameengine.executors.objectcreators.AttackBuilder;
 import voogasalad.gameengine.executors.objectcreators.HealthBuilder;
 import voogasalad.gameengine.executors.objectcreators.MovementBuilder;
 import voogasalad.gameengine.executors.objectcreators.SpriteBuilder;
@@ -111,5 +112,20 @@ public class PrototypesConfigurator {
             }
         }
         builder.setMovementStrategy(movementBuilder.build());
+    }
+
+    private void setAttackStrategy(String type, SpriteBuilder builder, NodeList parametersNodeList) throws GameEngineException {
+        AttackBuilder attackBuilder = new AttackBuilder().setType(type);
+        for (int i=0; i<parametersNodeList.getLength();i++) {
+            Element parameter = ConfigurationTool.convertNodeToElement(parametersNodeList.item(i));
+            if (parameter!= null) {
+                try {
+                    attackBuilder.getClass().getMethod(STRATEGY_CONFIG_BUNDLE.getString(parameter.getNodeName()), String.class).invoke(attackBuilder, parameter.getTextContent());
+                } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                    throw new GameEngineException(e, "SpriteProductionFailed");
+                }
+            }
+        }
+        builder.setAttackStrategy(attackBuilder.build());
     }
 }

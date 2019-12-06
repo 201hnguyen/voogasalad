@@ -49,9 +49,9 @@ public class StrategiesFactory {
         }
     }
 
-    public AttackStrategy makeAttack(String attackStrategy, Map<String, Object> parameters) throws GameEngineException {
+    public AttackStrategy makeAttack(AttackBuilder attackBuilder) throws GameEngineException {
         try{
-            return (AttackStrategy) Class.forName(CLASS_PATH + ATTACK_DIRECTORY + attackStrategy).getConstructor(Map.class).newInstance(parameters);
+            return (AttackStrategy) Class.forName(CLASS_PATH + ATTACK_DIRECTORY + attackBuilder.getType()).getConstructor(AttackBuilder.class).newInstance(attackBuilder);
         } catch(Exception e){
             e.printStackTrace(); //TODO: debugging only
             throw new GameEngineException(e, "SpriteAttackInitializationFailed");

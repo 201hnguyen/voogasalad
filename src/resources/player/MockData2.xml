@@ -24,6 +24,13 @@
             <Archetype>ENEMY</Archetype>
         </Properties>
         <Strategies>
+            <AttackStrategy>
+                <Type>ShootingAttack</Type>
+                <Parameters>
+                    <AttackRate>1</AttackRate>
+                    <BulletPrototypeId>4</BulletPrototypeId>
+                </Parameters>
+            </AttackStrategy>
             <HealthStrategy>
                 <Type>Health</Type>
                 <Parameters>
