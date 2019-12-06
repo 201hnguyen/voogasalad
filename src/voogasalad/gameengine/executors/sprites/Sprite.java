@@ -1,7 +1,11 @@
 package voogasalad.gameengine.executors.sprites;
 
+import voogasalad.gameengine.executors.control.levelcontrol.LevelActionsRequester;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.utils.SpriteArchetype;
+
+import java.awt.geom.Point2D;
+import java.util.List;
 
 public interface Sprite {
     Sprite makeClone(double x, double y, int spriteId) throws GameEngineException;
@@ -14,4 +18,7 @@ public interface Sprite {
     void updatePosition(double elapsedTime);
     String getImagePath();
     int getPrototypeId();
+    void updateAngle(double elapsedTime);
+    void shoot(double elapsedTime, LevelActionsRequester levelActionsRequester) throws GameEngineException;
+    void updatePath(List<Point2D.Double> path);
     }

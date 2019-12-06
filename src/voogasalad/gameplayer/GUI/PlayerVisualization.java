@@ -13,13 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class PlayerVisualization extends BorderPane {
+public class PlayerVisualization extends Pane {
 
     private static final double SCENE_WIDTH = 1000;
-    private static final double SCENE_HEIGHT = 800;
-    private static final double PANEL_POSITION = 800;
+    private static final double SCENE_HEIGHT = 630;
+    private static final double PANEL_POSITION = 700;
     private static final double LAYOUT = 0;
     private static final String TITLE = "Player";
+    private static final int STATUS_BAR_WIDTH = 300;
+    private static final int STATUS_BAR_HEIGHT = 50;
 
     private Scene scene;
     private Stage stage;
@@ -51,24 +53,21 @@ public class PlayerVisualization extends BorderPane {
         ButtonCreator buttonCreator = new ButtonCreator(new ButtonController(this));
         accordionCreator = new AccordionCreator();
         statusBar = new StatusBar();
-        panelBox = new VBox(10);
+        statusBar.setMinWidth(STATUS_BAR_WIDTH);
+        statusBar.setMinHeight(STATUS_BAR_HEIGHT);
+        panelBox = new VBox();
+        panelBox.getChildren().add(statusBar);
         panelBox.getChildren().add(buttonCreator);
         panelBox.getChildren().add(accordionCreator);
-        this.setRight(panelBox);
-        this.setTop(statusBar);
+        panelBox.setLayoutX(PANEL_POSITION);
+        this.getChildren().addAll(panelBox);
         scene = new Scene(this, SCENE_WIDTH, SCENE_HEIGHT);
         displayGameScreen();
         showStage();
     }
 
-    private void displayGameScreen() {
-        displayScreen = new DisplayScreen();
-        displayScreen.setMinWidth(SCENE_WIDTH - (SCENE_WIDTH - PANEL_POSITION));
-        displayScreen.setMinHeight(SCENE_HEIGHT - this.getTop().getLayoutY());
-    }
-
     private void showStage() {
-        this.setCenter(displayScreen);
+        this.getChildren().addAll(displayScreen);
         stage.setScene(scene);
         stage.setResizable(false);
         stage.setTitle(TITLE);
@@ -76,8 +75,16 @@ public class PlayerVisualization extends BorderPane {
 
     }
 
+    private void displayGameScreen() {
+        displayScreen = new DisplayScreen();
+        displayScreen.setMinWidth(PANEL_POSITION);
+        displayScreen.setMinHeight(SCENE_HEIGHT);
+        displayScreen.setLayoutX(LAYOUT);
+        displayScreen.setLayoutY(LAYOUT);
+    }
+
     private void setBackgroundImage(String backgroundImagePath){
-        backgroundImage = new BackgroundImage(new Image(backgroundImagePath), BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(SCENE_WIDTH - (SCENE_WIDTH - PANEL_POSITION), SCENE_HEIGHT, false, false, false, false));
+        backgroundImage = new BackgroundImage(new Image(backgroundImagePath), BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(SCENE_WIDTH - panelBox.getMaxWidth(), SCENE_HEIGHT, false, false, true, true));
         displayScreen.setBackground(new Background(backgroundImage));
     }
 

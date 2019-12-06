@@ -48,9 +48,13 @@ public class JavaFXSpriteManager implements SpriteManager {
         return archetypeList;    }
 
     @Override
-    public void makeSpriteFromPrototype(double xPos, double yPos, int prototypeId) throws GameEngineException {
-        myOnScreenSprites.add(mySpritePrototypes.get(prototypeId).makeClone(xPos, yPos, mySpriteIdGenerator++));
+    public Sprite makeSpriteFromPrototype(double xPos, double yPos, int prototypeId) throws GameEngineException {
+        int spriteId = mySpriteIdGenerator++;
+        Sprite sprite = mySpritePrototypes.get(prototypeId).makeClone(xPos, yPos, spriteId);
+        myOnScreenSprites.add(sprite);
+        return sprite;
     }
+
 
     public void removeSpriteById(int spriteId) {
         myOnScreenSprites.stream().filter(sprite -> sprite.getId() == spriteId).forEach(sprite -> myOnScreenSprites.remove(sprite));
@@ -77,8 +81,12 @@ public class JavaFXSpriteManager implements SpriteManager {
     }
 
     @Override
-    public void executeSpriteNextState(double elapsedTime) {
-        myOnScreenSprites.stream().forEach((sprite -> sprite.updatePosition(elapsedTime)));
+    public void executeSpriteNextState(double elapsedTime) throws GameEngineException {
+        for (Sprite sprite : myOnScreenSprites) {
+            sprite.updatePosition(elapsedTime);
+            sprite.updateAngle(elapsedTime);
+            sprite.shoot(elapsedTime, myLevelActionsRequester);
+        }
         System.out.println("executed next sprite state");
     }
 }

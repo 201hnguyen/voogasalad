@@ -7,37 +7,29 @@ import voogasalad.gameengine.executors.utils.Verifier;
 import java.util.Map;
 
 public class FullRotationStrategy implements RotationStrategy {
-    private Double currentAngle;
     private int rotationDirection;
     private Double rotationSpeed;
     private Map<String, Object> originalParameters;
 
-    public FullRotationStrategy(Map<String, Object> parameters) throws GameEngineException {
+    public FullRotationStrategy(Map<String, Object> parameters) {
         originalParameters = parameters;
-        currentAngle = (Double) Verifier.verifyAndGetStrategyParameter(parameters, "myAngle");
-        rotationSpeed = (Double) Verifier.verifyAndGetStrategyParameter(parameters, "myRotationSpeed");
+        rotationSpeed = 3.0;
     }
 
     @Override
-    public void updateAngle(double elapsedTime) {
-        determineRotationDirection();
-        System.out.println("My current direction is " + rotationDirection); //TODO: DEBUGGING ONLY
+    public double updateAngle(double elapsedTime, double currentAngle) {
+        determineRotationDirection(currentAngle);
         double diffAngle = elapsedTime * rotationDirection * rotationSpeed;
-        currentAngle = (currentAngle + diffAngle) % 360;
+        return (currentAngle + diffAngle) % 360;
     }
 
     @Override
-    public Double getCurrentAngle() {
-        return currentAngle;
-    }
-
-    @Override
-    public void determineTargetAngle() {
+    public void determineTargetAngle(Double currentAngle) {
         //no target angle
     }
 
     @Override
-    public void determineRotationDirection() {
+    public void determineRotationDirection(Double currentAngle) {
         rotationDirection = 1;
     }
 

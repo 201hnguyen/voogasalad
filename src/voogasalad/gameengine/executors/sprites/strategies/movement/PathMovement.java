@@ -6,6 +6,7 @@ import voogasalad.gameengine.executors.utils.Verifier;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 public class PathMovement implements MovementStrategy {
@@ -56,6 +57,12 @@ public class PathMovement implements MovementStrategy {
         } else {
             return updatedPosition;
         }
+    }
+
+    @Override
+    public void updatePath(List<Point2D.Double> path) {
+        myPath = (LinkedList<Point2D.Double>) path;
+        //todo: I think we should take in a List instead of a LinkedList for myPath; it's just a linkedlist when we create it; but we shouldn't need to specify within this class
     }
 
     private Point2D.Double calculateDirection(Point2D.Double currentPosition) {

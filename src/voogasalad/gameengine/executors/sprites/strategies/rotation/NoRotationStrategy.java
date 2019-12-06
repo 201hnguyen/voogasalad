@@ -7,31 +7,24 @@ import voogasalad.gameengine.executors.utils.Verifier;
 import java.util.Map;
 
 public class NoRotationStrategy implements RotationStrategy { //TODO: can also be achieved by creating a fullrotation w speed 0
-    private Double currentAngle;
     private Map<String, Object> originalParameters;
 
     public NoRotationStrategy(Map<String, Object> parameters) throws GameEngineException {
         originalParameters = parameters;
-        currentAngle = (Double) Verifier.verifyAndGetStrategyParameter(parameters, "myAngle");
     }
 
     @Override
-    public Double getCurrentAngle() {
+    public double updateAngle(double elapsedTime, double currentAngle) {
         return currentAngle;
     }
 
     @Override
-    public void updateAngle(double elapsedTime) {
+    public void determineTargetAngle(Double currentAngle) {
         //will never rotate!
     }
 
     @Override
-    public void determineTargetAngle() {
-        //will never rotate!
-    }
-
-    @Override
-    public void determineRotationDirection() {
+    public void determineRotationDirection(Double currentAngle) {
         //will never rotate!
     }
 
