@@ -38,10 +38,11 @@ public class TabFieldCreator extends Group {
         buttonVBox = new VBox();
         mainHBox = new HBox();
         Button saveObject = new Button();
-        mainHBox.getChildren().add(defaultImageView);
-        mainHBox.getChildren().add(buttonVBox);
-        mainVBox.getChildren().add(mainHBox);
-        mainVBox.getChildren().add(saveObject);
+        mainHBox.getChildren().addAll(
+                defaultImageView,
+                buttonVBox,
+                mainHBox,
+                saveObject);
         createInputFields();
         this.getChildren().add(mainVBox);
     }

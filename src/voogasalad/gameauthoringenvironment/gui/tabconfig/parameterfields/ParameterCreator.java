@@ -5,6 +5,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -12,6 +14,8 @@ import voogasalad.gameauthoringenvironment.gui.AddToXML;
 import voogasalad.gameauthoringenvironment.gui.SaveGUIParameters;
 
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +26,8 @@ public class ParameterCreator extends BorderPane{
 
     private static final int window_WIDTH = 300;
     private static final int window_HEIGHT = 300;
+    private static final String TEST_IMAGE = "voogasalad_worksdonttouch.bird.png";
+
     private BorderPane root;
     private BorderPane testRoot;
     private Scene towerEditScene;
@@ -30,6 +36,7 @@ public class ParameterCreator extends BorderPane{
     private String[] properties;
     private ResourceBundle paramFieldType;
     private VBox configVBox;
+    private VBox previewVBox;
     private String gameObjectName;
     private List<Node> allNodes = new ArrayList<>();
     private List<String> fieldTypes= new ArrayList<>();
@@ -41,7 +48,7 @@ public class ParameterCreator extends BorderPane{
     //private static Map<String, Map<String,String>> sendToXML;
 
 
-    public ParameterCreator(String gameObjectNameParam, String[] propertiesParam, ResourceBundle paramFieldTypeParam) throws ParserConfigurationException {
+    public ParameterCreator(String gameObjectNameParam, String[] propertiesParam, ResourceBundle paramFieldTypeParam) throws ParserConfigurationException, FileNotFoundException {
         labelList = new ArrayList<>();
         labelText = new ArrayList<>();
         labelValue = new ArrayList<>();
@@ -54,7 +61,9 @@ public class ParameterCreator extends BorderPane{
         gameObjectName = gameObjectNameParam;
         storeAllFieldTypes();
         addInputFields();
-        this.setTop(configVBox);
+        createPreviewVBox();
+        this.setRight(configVBox);
+        this.setLeft(previewVBox);
     }
 
     private void addInputFields() {
@@ -67,6 +76,19 @@ public class ParameterCreator extends BorderPane{
             configVBox.getChildren().add(label);
             configVBox.getChildren().add(createObjectFromString(paramFieldType.getString(properties[j])));
         }
+    }
+
+    // a helper method to create the image preview for the tab
+    private void createPreviewVBox() throws FileNotFoundException {
+
+        previewVBox = new VBox();
+        Label label = new Label("Preview");
+
+        previewVBox.getChildren().addAll(
+                label);
+
+
+
     }
 
     private Button createSubmitButton(){
@@ -84,12 +106,14 @@ public class ParameterCreator extends BorderPane{
     }
 
     private Node createObjectFromString(String type){
+
         try{
             Class cls = Class.forName(type);
             Node myField = (Node) cls.getConstructor().newInstance();
             allNodes.add(myField);
 
             return myField;
+
         } catch (IllegalAccessException e) {
             throw new Error(e);
         } catch (NoSuchMethodException e) {
@@ -123,7 +147,6 @@ public class ParameterCreator extends BorderPane{
         });
         return icon;
     }
-
 
 }
 
