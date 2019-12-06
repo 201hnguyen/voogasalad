@@ -6,12 +6,9 @@ import voogasalad.gameengine.executors.control.levelcontrol.LevelActionsRequeste
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.objectcreators.SpriteBuilder;
 import voogasalad.gameengine.executors.sprites.strategies.attack.AttackStrategy;
-import voogasalad.gameengine.executors.sprites.strategies.attack.NoAttack;
-import voogasalad.gameengine.executors.sprites.strategies.attack.ShootingAttack;
 import voogasalad.gameengine.executors.sprites.strategies.health.HealthStrategy;
 import voogasalad.gameengine.executors.sprites.strategies.movement.MovementStrategy;
 import voogasalad.gameengine.executors.sprites.strategies.rotation.FullRotationStrategy;
-import voogasalad.gameengine.executors.sprites.strategies.rotation.NoRotationStrategy;
 import voogasalad.gameengine.executors.sprites.strategies.rotation.RotationStrategy;
 import voogasalad.gameengine.executors.utils.SpriteArchetype;
 
@@ -41,14 +38,8 @@ public class JavaFXSprite implements Sprite {
         currentPosition.setLocation(builder.getX(), builder.getY());
         myHealthStrategy = builder.getHealthStrategy();
         myMovementStrategy = builder.getMovementStrategy();
-        if (mySpriteId==2) {
-            myRotationStrategy = new FullRotationStrategy(new HashMap<>()); //TODO: don't hardcode
-            myAttackStrategy = new ShootingAttack(new HashMap<>()); //TODO: don't hardcode
-        } else {
-            myRotationStrategy = new NoRotationStrategy(new HashMap<>());
-            myAttackStrategy = new NoAttack(new HashMap<>());
-        }
-
+        myAttackStrategy = builder.getAttackStrategy();
+        myRotationStrategy = new FullRotationStrategy(new HashMap<>()); //TODO: don't hardcode
         myCurrentAttackAngle = 0.0;
         myImagePath = builder.getImagePath();
         myPrototypeId = builder.getPrototypeId();
@@ -64,6 +55,7 @@ public class JavaFXSprite implements Sprite {
                 .setMovementStrategy(myOriginalBuilder.getMovementStrategy().makeClone())
                 .setWidth(myOriginalBuilder.getWidth())
                 .setArchetype(myOriginalBuilder.getSpriteArchetype())
+                .setAttackStrategy(myOriginalBuilder.getAttackStrategy())
                 .setPrototypeId(myPrototypeId)
                 .build();
     }
