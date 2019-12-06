@@ -74,7 +74,8 @@ public class PrototypesConfigurator {
                 try {
                     String methodName = STRATEGY_CONFIG_BUNDLE.getString(strategy.getNodeName());
                     String type = strategy.getElementsByTagName(SPRITE_STRATEGIES_TYPE_NODE_TAG).item(0).getTextContent();
-                    this.getClass().getDeclaredMethod(methodName, String.class, SpriteBuilder.class, Element.class).invoke(this, type, builder, strategy);
+                    NodeList parametersNodeList = strategy.getElementsByTagName(SPRITE_STRATEGIES_PARAMETERS_NODE_TAG).item(0).getChildNodes();
+                    this.getClass().getDeclaredMethod(methodName, String.class, SpriteBuilder.class, NodeList.class).invoke(this, type, builder, parametersNodeList);
                 } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
                     throw new GameEngineException(e, "SpriteProductionFailed");
                 }
@@ -82,8 +83,7 @@ public class PrototypesConfigurator {
         }
     }
 
-    private void setHealthStrategy(String type, SpriteBuilder builder, Element healthStrategyNode) throws GameEngineException {
-        NodeList parametersNodeList = healthStrategyNode.getElementsByTagName(SPRITE_STRATEGIES_PARAMETERS_NODE_TAG).item(0).getChildNodes();
+    private void setHealthStrategy(String type, SpriteBuilder builder, NodeList parametersNodeList) throws GameEngineException {
         HealthBuilder healthBuilder = new HealthBuilder().setHealthType(type);
         for (int i=0; i<parametersNodeList.getLength();i++) {
             Element parameter = ConfigurationTool.convertNodeToElement(parametersNodeList.item(i));
@@ -91,7 +91,6 @@ public class PrototypesConfigurator {
                 try {
                     healthBuilder.getClass().getMethod(STRATEGY_CONFIG_BUNDLE.getString(parameter.getNodeName()), String.class).invoke(healthBuilder, parameter.getTextContent());
                 } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-                    e.printStackTrace();
                     throw new GameEngineException(e, "SpriteProductionFailed");
                 }
             }
@@ -99,8 +98,7 @@ public class PrototypesConfigurator {
         builder.setHealthStrategy(healthBuilder.build());
     }
 
-    private void setMovementStrategy(String type, SpriteBuilder builder, Element movementStrategyNode) throws GameEngineException {
-        NodeList parametersNodeList = movementStrategyNode.getElementsByTagName(SPRITE_STRATEGIES_PARAMETERS_NODE_TAG).item(0).getChildNodes();
+    private void setMovementStrategy(String type, SpriteBuilder builder, NodeList parametersNodeList) throws GameEngineException {
         MovementBuilder movementBuilder = new MovementBuilder().setMovementType(type);
         for (int i=0; i<parametersNodeList.getLength();i++) {
             Element parameter = ConfigurationTool.convertNodeToElement(parametersNodeList.item(i));
@@ -108,7 +106,6 @@ public class PrototypesConfigurator {
                 try {
                     movementBuilder.getClass().getMethod(STRATEGY_CONFIG_BUNDLE.getString(parameter.getNodeName()), String.class).invoke(movementBuilder, parameter.getTextContent());
                 } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-                    e.printStackTrace();
                     throw new GameEngineException(e, "SpriteProductionFailed");
                 }
             }
