@@ -1,28 +1,26 @@
 package voogasalad.gameauthoringenvironment.gui.tabconfig.parameterfields;
 
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
+
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import voogasalad.gameauthoringenvironment.gui.AddToXML;
-import voogasalad.gameauthoringenvironment.gui.SaveGUIParameters;
+import voogasalad.gameauthoringenvironment.gui.SaveInputParameters;
 
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
-public class ParameterCreator extends BorderPane{
+/**
+ *
+ */
+public class InputFieldCreator extends BorderPane{
 
     private static final int window_WIDTH = 300;
     private static final int window_HEIGHT = 300;
@@ -36,7 +34,6 @@ public class ParameterCreator extends BorderPane{
     private String[] properties;
     private ResourceBundle paramFieldType;
     private VBox configVBox;
-    private VBox previewVBox;
     private String gameObjectName;
     private List<Node> allNodes = new ArrayList<>();
     private List<String> fieldTypes= new ArrayList<>();
@@ -45,10 +42,11 @@ public class ParameterCreator extends BorderPane{
     private List<String> labelText;
     private List<String> labelValue;
     private AddToXML xmlObject;
+    private String mySelectedImage = "";
     //private static Map<String, Map<String,String>> sendToXML;
 
 
-    public ParameterCreator(String gameObjectNameParam, String[] propertiesParam, ResourceBundle paramFieldTypeParam) throws ParserConfigurationException, FileNotFoundException {
+    public InputFieldCreator(String gameObjectNameParam, String[] propertiesParam, ResourceBundle paramFieldTypeParam) throws ParserConfigurationException, FileNotFoundException {
         labelList = new ArrayList<>();
         labelText = new ArrayList<>();
         labelValue = new ArrayList<>();
@@ -61,36 +59,33 @@ public class ParameterCreator extends BorderPane{
         gameObjectName = gameObjectNameParam;
         storeAllFieldTypes();
         addInputFields();
-        createPreviewVBox();
         this.setRight(configVBox);
-        this.setLeft(previewVBox);
+    }
+
+    /**
+     * A getter method to return the selected image
+     * @return
+     */
+    public String getMySelectedImage() {return mySelectedImage;
     }
 
     private void addInputFields() {
 
         configVBox = new VBox();
+
         for (int j = 0; j < properties.length; j++) {
-            Label label = new Label(properties[j]); //for SaveGuiParameters
+            Label label = new Label(properties[j]);
             labelList.add(label);
             labelText.add(label.getText());
             configVBox.getChildren().add(label);
             configVBox.getChildren().add(createObjectFromString(paramFieldType.getString(properties[j])));
         }
+
+        configVBox.setPrefWidth(150);
+        configVBox.setPadding(new Insets(0, 20, 10, 20));
     }
 
-    // a helper method to create the image preview for the tab
-    private void createPreviewVBox() throws FileNotFoundException {
-
-        previewVBox = new VBox();
-        Label label = new Label("Preview");
-
-        previewVBox.getChildren().addAll(
-                label);
-
-
-
-    }
-
+    //
     private Button createSubmitButton(){
         Button addButton = new Button("Submit");
         addButton.setOnMouseClicked(event -> {
@@ -98,11 +93,21 @@ public class ParameterCreator extends BorderPane{
                     .stream()
                     .forEach(node -> labelValue.add(fieldFactory.getAppropriateText(node)));
 
-            SaveGUIParameters myGuiParameters = new SaveGUIParameters(labelText, labelValue);
-            String myLabel = xmlObject.addToSendToXMLMap(myGuiParameters.getMap(), gameObjectName);
+            SaveInputParameters myInputParameters = new SaveInputParameters(labelText, labelValue);
+            getImageName(myInputParameters.getMap());
+            String myLabel = xmlObject.addToSendToXMLMap(myInputParameters.getMap(), gameObjectName);
         });
 
         return addButton;
+    }
+
+    // a helper method to get a user-selected image file
+    private void getImageName(Map<String, String> map) {
+        for (Map.Entry s : map.entrySet()) {
+            if (map.containsKey("image")) {
+                mySelectedImage = s.getValue().toString();
+            }
+        }
     }
 
     private Node createObjectFromString(String type){
@@ -127,6 +132,7 @@ public class ParameterCreator extends BorderPane{
         }
     }
 
+    // a helper method to create a list of input field types for each tab
     private void storeAllFieldTypes(){
         for(String key : paramFieldType.keySet()){
             String typesOfFields = paramFieldType.getString(key);

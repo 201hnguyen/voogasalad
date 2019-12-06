@@ -14,8 +14,8 @@ import java.util.ResourceBundle;
  */
 public class SceneCreator {
 
-    public static final String SPRITE_OPTIONS_RESOURCE = "resources.gae.SpriteOptions";
-    public static final String PARAM_FIELD_TYPE_RESOURCE = "resources.gae.ParamToInputType";
+    public static final String SPRITE_OPTIONS = "resources.gae.SpriteOptions";
+    public static final String FIELD_TYPES = "resources.gae.ParamToInputType";
     private ResourceBundle typeToParams;
     private ResourceBundle paramFieldType;
     private int width;
@@ -30,12 +30,12 @@ public class SceneCreator {
         busInstance = myBusInstance;
         width = widthParam;
         height = heightParam;
-        typeToParams = ResourceBundle.getBundle(SPRITE_OPTIONS_RESOURCE);
-        paramFieldType = ResourceBundle.getBundle(PARAM_FIELD_TYPE_RESOURCE);
+        typeToParams = ResourceBundle.getBundle(SPRITE_OPTIONS);
+        paramFieldType = ResourceBundle.getBundle(FIELD_TYPES);
     }
 
     /**
-     * Called in
+     * Called in Bus.java
      * @param root
      * @return
      */

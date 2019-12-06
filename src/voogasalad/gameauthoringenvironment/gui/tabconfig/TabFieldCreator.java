@@ -12,7 +12,7 @@ import javafx.scene.layout.VBox;
 import java.util.ResourceBundle;
 
 /**
- *
+ * This class is not currently being usesd???
  */
 public class TabFieldCreator extends Group {
     private static final String RESOURCE_PATH = "resources.gae.";

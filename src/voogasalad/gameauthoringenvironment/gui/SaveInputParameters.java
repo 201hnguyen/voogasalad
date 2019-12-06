@@ -5,14 +5,23 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class SaveGUIParameters {
+/**
+ *
+ */
+public class SaveInputParameters {
 
     private Map<String, String> vBoxMap;
 
-    public SaveGUIParameters(List labels, List values) {
+    public SaveInputParameters(List labels, List values) {
         vBoxMap = new HashMap<>();
         this.vBoxMap = makeMap(labels, values);
     }
+
+    /**
+     *
+     * @return
+     */
+    public Map getMap() { return vBoxMap; }
 
     private Map makeMap(List labels, List values) {
 
@@ -21,18 +30,11 @@ public class SaveGUIParameters {
         while(iterLabels.hasNext() && iterValues.hasNext()) {
             vBoxMap.put((String)iterLabels.next(), (String)iterValues.next());
         }
-
         for (Map.Entry s : vBoxMap.entrySet()) {
             System.out.println(s);
         }
 
         return vBoxMap;
     }
-
-    public Map getMap(){
-        return vBoxMap;
-    }
-
-
 
 }
