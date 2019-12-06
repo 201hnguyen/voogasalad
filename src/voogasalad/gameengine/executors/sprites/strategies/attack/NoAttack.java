@@ -2,18 +2,14 @@ package voogasalad.gameengine.executors.sprites.strategies.attack;
 
 import voogasalad.gameengine.executors.control.levelcontrol.LevelActionsRequester;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
-import voogasalad.gameengine.executors.objectcreators.StrategiesFactory;
+import voogasalad.gameengine.executors.objectcreators.AttackBuilder;
 
 import java.awt.geom.Point2D;
-import java.util.Map;
 
 public class NoAttack implements AttackStrategy {
 
-    private Map<String, Object> originalParameters;
 
-    public NoAttack(Map<String, Object> parameters){
-        originalParameters = parameters;
-    }
+    public NoAttack(AttackBuilder attackBuilder){ }
 
     @Override
     public void attack(double elapsedTime, double currentAngle, LevelActionsRequester actionsRequester, Point2D.Double currentPos) {
@@ -27,7 +23,6 @@ public class NoAttack implements AttackStrategy {
 
     @Override
     public AttackStrategy makeClone() throws GameEngineException {
-        StrategiesFactory factory = new StrategiesFactory();
-        return factory.makeAttack("NoAttack", originalParameters);
+        return new AttackBuilder().build();
     }
 }
