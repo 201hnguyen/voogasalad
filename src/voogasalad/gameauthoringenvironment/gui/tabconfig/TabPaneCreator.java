@@ -16,12 +16,9 @@ import java.util.ResourceBundle;
 public class TabPaneCreator {
     private static final String SPRITE_OPTIONS_RESOURCE = "resources.gae.SpriteOptions";
     private static final String PARAM_FIELD_TYPE_RESOURCE = "resources.gae.ParamToInputType";
-    private static final String TAB_NAMES = "resources.gae.TabNames";
     private static final String ENEMY_ATTRIBUTES = "resources.gae.EnemyAttributes";
 
-    private ResourceBundle myTabNames;
     private TabPane myTabPane;
-    private int height = 500;
     private AddToXML sendToXML;
     private Document createdXML;
     private Bus busInstance;
@@ -48,33 +45,13 @@ public class TabPaneCreator {
         return myTabPane;
     }
 
-    // create a TabPane with tab names from a resource file
     private TabPane createTabPane() {
 
         TabPane tabPane = new TabPane();
-        //tabPane.setMaxHeight(height/10);
-        myTabNames = ResourceBundle.getBundle(TAB_NAMES);
-
-        //refactor to use reflection!!
-//        for (String s : myTabNames.keySet()) {
-//            String tabName = myTabNames.getString(s);
-//            Tab tab = new Tab(s);
-//            tabPane.getTabs().add(tab);
-//        }
-
-
-//        Tab towersTab = new TowerConfigTab().getTab();
-//        Tab obstaclesTab = new ObstacleConfigTab().getTab();
-//        Tab enemiesTab = new Tab("Enemies", new GAE_ObjectConfig("Enemy", defaultProperties));
         createPane(tabPane);
         Tab levelTab = new Tab("Level");
         levelTab.setContent(new LevelConfigPane(sendToXML, createdXML, busInstance));
-//
-//        tabPane.getTabs().add(towersTab);
-//        tabPane.getTabs().add(obstaclesTab);
-//        tabPane.getTabs().add(enemiesTab);
         tabPane.getTabs().add(levelTab);
-
 
         return tabPane;
     }

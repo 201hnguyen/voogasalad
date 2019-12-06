@@ -37,7 +37,7 @@ public class Level implements GameScene {
         myLevelActionsManager.addLevelActionsAsCollection(myLevelConditionsManager.getLevelActionsToExecute(this));
         myLevelActionsManager.executeLevelActions(this);
         mySpriteManager.executeSpriteNextState(elapsedTime);
-        return new GameSceneObject(myBackgroundPath, myLevelStatusManager.getResources(),  myLevelStatusManager.getLives(), mySpriteManager);
+        return new GameSceneObject(myBackgroundPath, myLevelStatusManager.getCopyOfStatusManager(), mySpriteManager);
     }
 
     public String getBackgroundPath() {
@@ -62,5 +62,9 @@ public class Level implements GameScene {
 
     public int getLevelId() {
         return myLevelId;
+    }
+
+    public int getCurrentScore() {
+        return myLevelStatusManager.getScore();
     }
 }

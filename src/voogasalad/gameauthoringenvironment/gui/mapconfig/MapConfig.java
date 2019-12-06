@@ -57,9 +57,9 @@ public class MapConfig {
         activeEnemyList = new ArrayList<>(Arrays.asList(1,2,3));
         waveComposition = new ArrayList<>();
         waveCompositionLabel = new ArrayList<>();
-        spawnPointImage = new Image(this.getClass().getClassLoader().getResourceAsStream("spawnPoint.jpg"));
+        spawnPointImage = new Image(this.getClass().getClassLoader().getResourceAsStream("ghost1.png"));
         spawnPointImageView = new ImageView(spawnPointImage);
-        pathPointImage = new Image(this.getClass().getClassLoader().getResourceAsStream("pathPoint.png"));
+        pathPointImage = new Image(this.getClass().getClassLoader().getResourceAsStream("ghost2.png"));
         spawnPointImageView.setFitHeight(20);
         spawnPointImageView.setFitWidth(20);
         levelConfigPage = new Stage();
