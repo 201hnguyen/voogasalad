@@ -70,6 +70,11 @@ public class PathMovement implements MovementStrategy {
         //do nothing
     }
 
+    @Override
+    public boolean isMovementFinished() {
+        return false;
+    }
+
     private Point2D.Double calculateDirection(Point2D.Double currentPosition) {
         Point2D.Double updatedDirection = new Point2D.Double();
         double diffX = nextPosition.getX() - currentPosition.getX();

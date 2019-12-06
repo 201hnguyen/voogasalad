@@ -132,4 +132,9 @@ public class JavaFXSprite implements Sprite {
         myImageView.setPreserveRatio(true);
     }
 
+    @Override
+    public boolean isMovementFinished(){
+        return myMovementStrategy.isMovementFinished();
+    }
+
 }

@@ -27,4 +27,9 @@ public class NoMovement implements MovementStrategy {
     public void updateDirectionalAngle(double angle) {
 
     }
+
+    @Override
+    public boolean isMovementFinished() {
+        return false;
+    }
 }

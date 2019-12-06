@@ -155,6 +155,7 @@
                 <Type>DirectedDistanceMovement</Type>
                 <Parameters>
                     <Distance>77</Distance>
+                    <Speed>2</Speed>
                 </Parameters>
             </MovementStrategy>
         </Strategies>

@@ -16,4 +16,6 @@ public interface MovementStrategy {
     void updatePath(List<Point2D.Double> path);
 
     void updateDirectionalAngle(double angle);
+
+    boolean isMovementFinished();
 }

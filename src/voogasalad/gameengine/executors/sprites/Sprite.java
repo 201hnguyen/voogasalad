@@ -22,4 +22,5 @@ public interface Sprite {
     void shoot(double elapsedTime, LevelActionsRequester levelActionsRequester) throws GameEngineException;
     void updatePath(List<Point2D.Double> path);
     void updateMovementAngle(double angle);
+    boolean isMovementFinished();
 }

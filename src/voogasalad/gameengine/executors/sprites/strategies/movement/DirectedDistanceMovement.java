@@ -12,13 +12,16 @@ public class DirectedDistanceMovement implements MovementStrategy{
     private double myAngle;
     private double myDistance;
     private double mySpeed;
+    private double myDistanceTravelled;
+    private boolean isMovementFinished;
 
     public DirectedDistanceMovement(MovementBuilder builder) {
         myMovementBuilder = builder;
-        //TODO: Get angle, distance and speed through MovementBuilder object passed to constructor
         myAngle = 0;
         myDistance = builder.getDistance();
         mySpeed = builder.getSpeed();
+        myDistanceTravelled = 0;
+        isMovementFinished = false;
     }
 
     @Override
@@ -33,20 +36,27 @@ public class DirectedDistanceMovement implements MovementStrategy{
 
     @Override
     public Point2D.Double calculateNextPosition(double elapsedTime, Point2D.Double currentPosition) {
-        Point2D.Double oldPosition = currentPosition;
+        Point2D.Double oldPosition = new Point2D.Double();
+        oldPosition.setLocation(currentPosition.getX(), currentPosition.getY());
         currentPosition.setLocation(currentPosition.getX() + currentPosition.getX() * Math.cos(myAngle)*elapsedTime*mySpeed, currentPosition.getY() + currentPosition.getY()*Math.sin(myAngle)*elapsedTime*mySpeed);
-//        double distance = calculateDistanceTravelled(oldPosition, currentPosition);
+        calculateDistanceTravelled(oldPosition, currentPosition);
+        if(myDistanceTravelled >= myDistance){
+            isMovementFinished = true;
+        }
         return currentPosition;
     }
 
-//    private double calculateDistanceTravelled(Point2D.Double oldPosition, Point2D.Double currentPosition){
-//        double distance = 0;
-//        distance = Math.sqrt(Math.pow(o))
-//        return distance;
-//    }
+    private void calculateDistanceTravelled(Point2D.Double oldPosition, Point2D.Double currentPosition){
+        myDistanceTravelled = myDistanceTravelled + Math.sqrt((Math.pow((currentPosition.getX() - oldPosition.getX()), 2) + Math.pow((currentPosition.getY() - oldPosition.getY()), 2)));
+    }
 
     @Override
     public void updatePath(List<Point2D.Double> path) {
         //do nothing
+    }
+
+    @Override
+    public boolean isMovementFinished() {
+        return isMovementFinished;
     }
 }

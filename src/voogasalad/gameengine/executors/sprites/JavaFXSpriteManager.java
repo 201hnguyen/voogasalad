@@ -1,5 +1,6 @@
 package voogasalad.gameengine.executors.sprites;
 
+import voogasalad.gameengine.executors.control.action.level.RemoveSpriteAction;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.control.levelcontrol.LevelActionsRequester;
 import voogasalad.gameengine.executors.utils.SpriteArchetype;
@@ -82,11 +83,16 @@ public class JavaFXSpriteManager implements SpriteManager {
 
     @Override
     public void executeSpriteNextState(double elapsedTime) throws GameEngineException {
+        List<Sprite> spritesToRemove = new ArrayList<>();
         for (Sprite sprite : myOnScreenSprites) {
+            if(sprite.isMovementFinished()){
+                spritesToRemove.add(sprite);
+            }
             sprite.updatePosition(elapsedTime);
             sprite.updateShootingAngle(elapsedTime);
             sprite.shoot(elapsedTime, myLevelActionsRequester);
         }
+        myOnScreenSprites.removeAll(spritesToRemove);
         System.out.println("executed next sprite state");
     }
 }
