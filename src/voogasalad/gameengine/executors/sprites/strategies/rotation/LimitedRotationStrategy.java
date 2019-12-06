@@ -8,7 +8,6 @@ import voogasalad.gameengine.executors.utils.Verifier;
 import java.util.Map;
 
 public class LimitedRotationStrategy implements RotationStrategy {
-    private Double currentAngle;
     private Double targetAngle;
     private Double rotationSpeed;
     private Pair<Double, Double> validRotationRange;
@@ -18,26 +17,20 @@ public class LimitedRotationStrategy implements RotationStrategy {
 
     public LimitedRotationStrategy(Map<String, Object> parameters) throws GameEngineException {
         originalParameters = parameters;
-        currentAngle = (Double) Verifier.verifyAndGetStrategyParameter(parameters, "myAngle");
         rotationSpeed = (Double) Verifier.verifyAndGetStrategyParameter(parameters, "myRotationSpeed");
         validRotationRange = (Pair<Double, Double>) Verifier.verifyAndGetStrategyParameter(parameters, "myRotationRange");
         targetAngle = validRotationRange.getKey();
     }
 
     @Override
-    public void updateAngle(double elapsedTime) {
-        determineRotationDirection();
+    public double updateAngle(double elapsedTime, double currentAngle) {
+        determineRotationDirection(currentAngle);
         double diffAngle = rotationDirection * elapsedTime * rotationSpeed;
-        currentAngle = currentAngle + diffAngle;
+        return currentAngle + diffAngle;
     }
 
     @Override
-    public Double getCurrentAngle() {
-        return currentAngle;
-    }
-
-    @Override
-    public void determineTargetAngle() {
+    public void determineTargetAngle(Double currentAngle) {
         Double lowerBound = validRotationRange.getKey();
         Double upperBound = validRotationRange.getValue();
         if (currentAngle >= upperBound){
@@ -49,8 +42,8 @@ public class LimitedRotationStrategy implements RotationStrategy {
     }
 
     @Override
-    public void determineRotationDirection() {
-        determineTargetAngle();
+    public void determineRotationDirection(Double currentAngle) {
+        determineTargetAngle(currentAngle);
         if (currentAngle.equals(targetAngle)) {
             rotationDirection = 0;
         } else if (currentAngle > targetAngle) {
