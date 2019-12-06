@@ -21,8 +21,17 @@ public class ObjectPreviewAndActive extends BorderPane{
     private int windowHeight;
     private int windowWidth;
     private Map<String, String> objectContentMap;
+    private String gameObjectName;
+    private Stage windowStage;
+    private Map<String, Map<String, String>> activeObjects;
+    private Button icon;
 
-    public ObjectPreviewAndActive(Map<String, String> objectContentMapParam, int windowHeightParam, int windowWidthParam){
+    public ObjectPreviewAndActive(String gameObjectNameParam, Map<String, String> objectContentMapParam, int windowHeightParam,
+                                  int windowWidthParam, Stage windowStageParam, Map<String, Map<String, String>> activeObjectsParam, Button iconParam){
+        icon = iconParam;
+        activeObjects = activeObjectsParam;
+        windowStage = windowStageParam;
+        gameObjectName = gameObjectNameParam;
         objectContentMap = objectContentMapParam;
         windowHeight = windowHeightParam;
         windowWidth = windowWidthParam;
@@ -63,6 +72,9 @@ public class ObjectPreviewAndActive extends BorderPane{
         Button makeActive = new Button("Click Here to Activate");
         makeActive.setStyle("-fx-background-color: #00ff00; -fx-border-color:black;");
         makeActive.setPrefWidth(windowWidth);
+        makeActive.setOnMouseClicked(event -> {
+            addToActive();
+        });
         return makeActive;
     }
 
@@ -78,5 +90,11 @@ public class ObjectPreviewAndActive extends BorderPane{
         vBox = new VBox(10);
         vBox.setPrefHeight(windowHeight);
         vBox.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, null, null)));
+    }
+
+    public void addToActive(){
+        activeObjects.put(gameObjectName, objectContentMap);
+        icon.setStyle("-fx-background-color: #00ff00; -fx-border-color:black;");
+        windowStage.close();
     }
 }
