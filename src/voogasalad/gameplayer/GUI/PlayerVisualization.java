@@ -5,10 +5,13 @@ import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import voogasalad.gameengine.api.Engine;
 import voogasalad.gameengine.api.GameSceneObject;
 import voogasalad.gameengine.api.UIActionsProcessor;
 import voogasalad.gameengine.executors.sprites.Sprite;
@@ -28,6 +31,7 @@ public class PlayerVisualization extends BorderPane {
     private Scene scene;
     private Stage stage;
     private DisplayScreen displayScreen;
+    private Engine engine;
     private Timeline timeline;
     private BackgroundImage backgroundImage;
     private VBox panelBox;
@@ -59,6 +63,7 @@ public class PlayerVisualization extends BorderPane {
         statusBar = new StatusBar();
         panelBox = new VBox(10);
         panelBox.getChildren().add(buttonCreator);
+        panelBox.getChildren().add((showInstructions()));
         panelBox.getChildren().add(accordionCreator);
         this.setRight(panelBox);
         this.setTop(statusBar);
@@ -85,6 +90,18 @@ public class PlayerVisualization extends BorderPane {
     private void setBackgroundImage(String backgroundImagePath){
         backgroundImage = new BackgroundImage(new Image(backgroundImagePath), BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(SCENE_WIDTH - (SCENE_WIDTH - PANEL_POSITION), SCENE_HEIGHT, false, false, false, false));
         displayScreen.setBackground(new Background(backgroundImage));
+    }
+
+    private Text showInstructions() {
+        DropShadow shadow = new DropShadow();
+        shadow.setOffsetY(3.0f);
+        shadow.setColor(Color.color(0.4f, 0.4f, 0.4f));
+
+        Text instructions = new Text();
+        instructions.setText(" Instructions: Drag and drop \n towers onto display screen.");
+        instructions.setFill(Color.BLACK);
+        instructions.setEffect(shadow);
+        return instructions;
     }
 
     public void startButtonAction() {

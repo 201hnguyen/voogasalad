@@ -6,6 +6,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
+import voogasalad.gameengine.api.Engine;
 import voogasalad.gameengine.executors.sprites.Sprite;
 
 import java.util.List;

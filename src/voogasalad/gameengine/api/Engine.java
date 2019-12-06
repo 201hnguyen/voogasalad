@@ -10,6 +10,7 @@ import java.util.List;
 
 public class Engine {
     private Game myGame;
+    private String gameTitle="Bloons TD5";
 
     public Engine(Document doc) throws GameEngineException {
         myGame = new Game(doc);
@@ -37,5 +38,13 @@ public class Engine {
 
     public boolean didLevelSwitch() {
         return myGame.didLevelSwitch();
+    }
+
+    public int getCurrentTotalGameScore() {
+        return myGame.getCurrentTotalGameScore();
+    }
+
+    public String getGameTitle() {
+        return gameTitle;
     }
 }
