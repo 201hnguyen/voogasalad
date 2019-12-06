@@ -14,6 +14,7 @@ import java.util.List;
 
 public class DisplayScreen extends Pane {
     private UIActionsProcessor actionsProcessor;
+    private int currentImageID;
 
     public DisplayScreen(UIActionsProcessor uiActionsProcessor) {
         actionsProcessor = uiActionsProcessor;
@@ -28,15 +29,10 @@ public class DisplayScreen extends Pane {
             Dragboard db = event.getDragboard();
             boolean success = false;
             if (db.hasImage()) {
-                System.out.println("Dropped");
                 success = true;
+                actionsProcessor.processAddSpriteAction(currentImageID, event.getX(), event.getY());
             }
             event.setDropCompleted(success);
-            // TODO: uiActionsProcessor.processAddSpriteAction();
-            ImageView image = new ImageView(db.getImage());
-            image.setLayoutX(event.getX());
-            image.setLayoutY(event.getY());
-            this.getChildren().add(image);
             event.consume();
         });
     }
@@ -48,6 +44,9 @@ public class DisplayScreen extends Pane {
         }
     }
 
+    public void setImageDraggedID(int id){
+        currentImageID = id;
+    }
     private void loadInSprite(Sprite sprite) {
         Sprite toLoad = sprite;
         ImageView toDisplay = (ImageView) toLoad.getImage();
