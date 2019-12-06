@@ -1,5 +1,6 @@
 package voogasalad.gameauthoringenvironment.gui.tabconfig.parameterfields;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -19,25 +20,35 @@ public class ObjectPreviewAndActive extends BorderPane{
     private VBox vBox;
     private int windowHeight;
     private int windowWidth;
+    private Map<String, String> objectContentMap;
 
-    public ObjectPreviewAndActive(Map<String, String> objectContentMap, int windowHeightParam, int windowWidthParam){
+    public ObjectPreviewAndActive(Map<String, String> objectContentMapParam, int windowHeightParam, int windowWidthParam){
+        objectContentMap = objectContentMapParam;
         windowHeight = windowHeightParam;
         windowWidth = windowWidthParam;
-        vBox = new VBox(10);
-        vBox.setPrefHeight(windowHeight);
-        vBox.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, null, null)));
-        addToVBox(objectContentMap);
-        ScrollPane scrollPane = new ScrollPane(vBox);
-        scrollPane.setPrefHeight(windowHeight);
-        scrollPane.setMaxHeight(scrollPane.getPrefHeight());
-        scrollPane.setFitToWidth(true);
+        styleVBox();
+        addToVBox();
+        ScrollPane scrollPane = configureScrollPane();
         this.setTop(scrollPane);
     }
 
-    private void addToVBox(Map<String, String> objectContentMap){
-        Label title = new Label("Properties");
-        title.setFont(Font.font("Verdana", 40));
+    private void addToVBox(){
+        Label title = formatTitleLabel();
         vBox.getChildren().add(title);
+        addMapProperties();
+        Button makeActive = styleActivateButton();
+        vBox.getChildren().add(makeActive);
+    }
+
+    private Label formatTitleLabel(){
+        Label title = new Label("Properties");
+        title.setPrefWidth(windowWidth);
+        title.setAlignment(Pos.CENTER);
+        title.setFont(Font.font("Verdana", 40));
+        return title;
+    }
+
+    private void addMapProperties(){
         for(String key : objectContentMap.keySet()){
             String value = objectContentMap.get(key);
             if(objectContentMap.get(key) == null || objectContentMap.get(key).isEmpty()){
@@ -46,9 +57,26 @@ public class ObjectPreviewAndActive extends BorderPane{
             Label fieldLabel = new Label(key + " : " + value);
             vBox.getChildren().add(fieldLabel);
         }
+    }
+
+    private Button styleActivateButton(){
         Button makeActive = new Button("Click Here to Activate");
         makeActive.setStyle("-fx-background-color: #00ff00; -fx-border-color:black;");
         makeActive.setPrefWidth(windowWidth);
-        vBox.getChildren().add(makeActive);
+        return makeActive;
+    }
+
+    private ScrollPane configureScrollPane(){
+        ScrollPane scrollPane = new ScrollPane(vBox);
+        scrollPane.setPrefHeight(windowHeight);
+        scrollPane.setMaxHeight(scrollPane.getPrefHeight());
+        scrollPane.setFitToWidth(true);
+        return scrollPane;
+    }
+
+    private void styleVBox(){
+        vBox = new VBox(10);
+        vBox.setPrefHeight(windowHeight);
+        vBox.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, null, null)));
     }
 }
