@@ -11,6 +11,8 @@ public class MovementBuilder {
     private String movementType;
     private double mySpeed;
     private LinkedList<Point2D.Double> myPath;
+    private double myDistance;
+    private double myAngle;
 
     public MovementBuilder setMovementType(String typeString) {
         movementType = typeString.strip();
@@ -47,6 +49,14 @@ public class MovementBuilder {
 
     public double getSpeed() {
         return mySpeed;
+    }
+
+    public double getDistance() {
+        return myDistance;
+    }
+
+    public double getAngle() {
+        return myAngle;
     }
 
 

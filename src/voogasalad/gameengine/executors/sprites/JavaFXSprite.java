@@ -4,9 +4,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import voogasalad.gameengine.executors.control.levelcontrol.LevelActionsRequester;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
+import voogasalad.gameengine.executors.objectcreators.MovementBuilder;
 import voogasalad.gameengine.executors.objectcreators.SpriteBuilder;
 import voogasalad.gameengine.executors.sprites.strategies.attack.AttackStrategy;
 import voogasalad.gameengine.executors.sprites.strategies.health.HealthStrategy;
+import voogasalad.gameengine.executors.sprites.strategies.movement.DirectedDistanceMovement;
 import voogasalad.gameengine.executors.sprites.strategies.movement.MovementStrategy;
 import voogasalad.gameengine.executors.sprites.strategies.rotation.FullRotationStrategy;
 import voogasalad.gameengine.executors.sprites.strategies.rotation.RotationStrategy;
@@ -31,33 +33,50 @@ public class JavaFXSprite implements Sprite {
     private int myPrototypeId;
 
     public JavaFXSprite(SpriteBuilder builder) throws GameEngineException {
+        myPrototypeId = builder.getPrototypeId();
         myArchetype = builder.getSpriteArchetype();
         myOriginalBuilder = builder;
         mySpriteId = builder.getSpriteId();
         currentPosition = new Point2D.Double();
         currentPosition.setLocation(builder.getX(), builder.getY());
         myHealthStrategy = builder.getHealthStrategy();
-        myMovementStrategy = builder.getMovementStrategy();
+        if (myPrototypeId==4) {
+            myMovementStrategy = new DirectedDistanceMovement(new MovementBuilder());
+        } else {
+            myMovementStrategy = builder.getMovementStrategy();
+        }
         myAttackStrategy = builder.getAttackStrategy();
         myRotationStrategy = new FullRotationStrategy(new HashMap<>()); //TODO: don't hardcode
         myCurrentAttackAngle = 0.0;
         myImagePath = builder.getImagePath();
-        myPrototypeId = builder.getPrototypeId();
         configureImageView(builder.getHeight(), builder.getWidth());
     }
 
     @Override
     public Sprite makeClone(double x, double y, int spriteId) throws GameEngineException {
-        return new SpriteBuilder().setSpriteId(spriteId).setX(x).setY(y)
-                .setHealthStrategy(myOriginalBuilder.getHealthStrategy().makeClone())
-                .setHeight(myOriginalBuilder.getHeight())
-                .setImagePath(myOriginalBuilder.getImagePath())
-                .setMovementStrategy(myOriginalBuilder.getMovementStrategy().makeClone())
-                .setWidth(myOriginalBuilder.getWidth())
-                .setArchetype(myOriginalBuilder.getSpriteArchetype())
-                .setAttackStrategy(myOriginalBuilder.getAttackStrategy())
-                .setPrototypeId(myPrototypeId)
-                .build();
+        if (myPrototypeId == 4) {
+            return new SpriteBuilder().setSpriteId(spriteId).setX(x).setY(y)
+                    .setHealthStrategy(myOriginalBuilder.getHealthStrategy().makeClone())
+                    .setHeight(myOriginalBuilder.getHeight())
+                    .setImagePath(myOriginalBuilder.getImagePath())
+                    .setMovementStrategy(new DirectedDistanceMovement(new MovementBuilder()))
+                    .setWidth(myOriginalBuilder.getWidth())
+                    .setArchetype(myOriginalBuilder.getSpriteArchetype())
+                    .setAttackStrategy(myOriginalBuilder.getAttackStrategy())
+                    .setPrototypeId(myPrototypeId)
+                    .build();
+        } else {
+            return new SpriteBuilder().setSpriteId(spriteId).setX(x).setY(y)
+                    .setHealthStrategy(myOriginalBuilder.getHealthStrategy().makeClone())
+                    .setHeight(myOriginalBuilder.getHeight())
+                    .setImagePath(myOriginalBuilder.getImagePath())
+                    .setMovementStrategy(myOriginalBuilder.getMovementStrategy().makeClone())
+                    .setWidth(myOriginalBuilder.getWidth())
+                    .setArchetype(myOriginalBuilder.getSpriteArchetype())
+                    .setAttackStrategy(myOriginalBuilder.getAttackStrategy())
+                    .setPrototypeId(myPrototypeId)
+                    .build();
+        }
     }
 
     public void shoot(double elapsedTime, LevelActionsRequester levelActionsRequester) throws GameEngineException {
