@@ -134,7 +134,7 @@
         <Resources>250</Resources>
         <Lives>20</Lives>
         <BackgroundImage>baconcat.jpeg</BackgroundImage>
-        <AvailablePrototypes>0 2 4</AvailablePrototypes>
+        <AvailablePrototypes>0 2</AvailablePrototypes>
 
         <Wave>
             <Queue>0 0 0 0 0</Queue>
@@ -205,7 +205,7 @@
         <Resources>250</Resources>
         <Lives>20</Lives>
         <BackgroundImage>pepperonicat.png</BackgroundImage>
-        <AvailablePrototypes>0 1 2 3 4</AvailablePrototypes>
+        <AvailablePrototypes>0 1 2 3</AvailablePrototypes>
 
         <Wave>
             <Queue>1 1 1 1 1</Queue>
