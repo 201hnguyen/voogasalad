@@ -25,6 +25,9 @@ public class PlayerVisualization extends BorderPane {
     private static final double LAYOUT = 0;
     private static final String TITLE = "Player";
     private static final String INSTRUCTIONS = " Instructions: Drag and drop \n towers onto display screen.";
+    private static final double INS_COLOR = 0.4f;
+    private static final double Y_SHADOW = 3.0f;
+    private static final double PANEL_SPACING = 10;
 
     private Scene scene;
     private Stage stage;
@@ -64,7 +67,7 @@ public class PlayerVisualization extends BorderPane {
         ButtonCreator buttonCreator = new ButtonCreator(new ButtonController(this));
         statusBar = new StatusBar();
         accordionCreator = new AccordionCreator();
-        panelBox = new VBox(10);
+        panelBox = new VBox(PANEL_SPACING);
         panelBox.getChildren().addAll(buttonCreator,showInstructions(),accordionCreator,backToGAE());
         this.setTop(statusBar);
         this.setRight(panelBox);
@@ -104,14 +107,16 @@ public class PlayerVisualization extends BorderPane {
 
     private Text showInstructions() {
         DropShadow shadow = new DropShadow();
-        shadow.setOffsetY(3.0f);
-        shadow.setColor(Color.color(0.4f, 0.4f, 0.4f));
+        shadow.setOffsetY(Y_SHADOW);
+        shadow.setColor(Color.color(INS_COLOR, INS_COLOR, INS_COLOR));
         Text instructions = new Text();
         instructions.setText(INSTRUCTIONS);
         instructions.setFill(Color.BLACK);
         instructions.setEffect(shadow);
         return instructions;
     }
+
+
 
     public void startButtonAction() {
         timeline.play();
