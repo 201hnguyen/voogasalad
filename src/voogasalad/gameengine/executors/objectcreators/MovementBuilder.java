@@ -9,7 +9,9 @@ import java.util.LinkedList;
 
 public class MovementBuilder {
 
-    public static final double DEFAULT_DISTANCE=100;
+    private static final String CLASS_PATH = "voogasalad.gameengine.executors.sprites.strategies.movement.";
+
+    public static final double DEFAULT_DISTANCE = 100;
 
     private String myType;
     private double mySpeed;
@@ -67,7 +69,11 @@ public class MovementBuilder {
     }
 
     public MovementStrategy build() throws GameEngineException {
-        StrategiesFactory movementStrategyFactory = new StrategiesFactory();
-        return movementStrategyFactory.makeMovement(this);
+        try {
+            return (MovementStrategy) Class.forName(CLASS_PATH + myType).getConstructor(MovementBuilder.class).newInstance(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new GameEngineException(e, "SpriteMovementInitializationFailed");
+        }
     }
 }
