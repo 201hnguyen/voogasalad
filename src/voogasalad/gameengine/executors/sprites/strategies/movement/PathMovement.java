@@ -23,6 +23,7 @@ public class PathMovement implements MovementStrategy {
     public PathMovement(MovementBuilder builder) throws GameEngineException {
         mySpeed = builder.getSpeed();
         myPath = builder.getPath();
+        myOriginalBuilder = builder;
         nextPositionIndex = 0;
         if(myPath.size() < 1) {
             reachedEnd = true;
