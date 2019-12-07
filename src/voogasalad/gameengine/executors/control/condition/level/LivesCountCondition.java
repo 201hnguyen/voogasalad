@@ -14,13 +14,13 @@ public class LivesCountCondition extends LevelCondition {
 
     private int myMarkedCount;
 
-    public LivesCountCondition(int markedCount, ConditionClassification conditionClassification, Set<LevelAction> actions) {
-        super(conditionClassification, actions);
+    public LivesCountCondition(int levelConditionId, int markedCount, ConditionClassification conditionClassification, Set<LevelAction> actions) {
+        super(levelConditionId, conditionClassification, actions);
         myMarkedCount = markedCount;
     }
 
-    public LivesCountCondition(Map<String, String> parameters, Set<LevelAction> actions) {
-        super(parameters, actions);
+    public LivesCountCondition(int levelConditionId, Map<String, String> parameters, Set<LevelAction> actions) {
+        super(levelConditionId, parameters, actions);
         try {
             myMarkedCount = Integer.parseInt(parameters.get(MARKED_COUNT_MAP_KEY));
         } catch (NullPointerException | NumberFormatException e) {
