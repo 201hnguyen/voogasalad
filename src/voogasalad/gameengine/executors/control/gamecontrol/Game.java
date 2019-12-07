@@ -124,4 +124,8 @@ public class Game {
     public List<Level> getLevels() {
         return myGameLevelsController.getLevels();
     }
+
+    public int getCurrentLevelId() {
+        return myCurrentLevel.getLevelId();
+    }
 }

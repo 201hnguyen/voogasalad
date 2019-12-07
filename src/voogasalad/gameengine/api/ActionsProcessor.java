@@ -22,6 +22,7 @@ import java.util.ResourceBundle;
 
 public class ActionsProcessor {
     public static final String GAME_ACTIONS_DIRECTORY_ROOT = "voogasalad.gameengine.executors.control.action.game.";
+    public static final String LEVEL_ACTIONS_DIRECTORY_ROOT = "voogasalad.gameengine.executors.control.action.level.";
     public static final String LIVE_GAME_EDITING_CLASS_PATH = "resources/engine/LiveGameEditing";
     public static final ResourceBundle LIVE_GAME_EDITING_BUNDLE = ResourceBundle.getBundle(LIVE_GAME_EDITING_CLASS_PATH);
 
@@ -56,7 +57,7 @@ public class ActionsProcessor {
         }
     }
 
-    private void processEditOnGameRootLevelAction(String editGameActionType, Element editableObject) throws GameEngineException {
+    private void processEditOnGameAction(String editGameActionType, Element editableObject) throws GameEngineException {
         try {
             GameAction action = (GameAction) Class.forName(GAME_ACTIONS_DIRECTORY_ROOT + editGameActionType).getConstructor(Element.class).newInstance(editableObject);
             myGameActionsRequester.requestAction(action);
@@ -65,8 +66,17 @@ public class ActionsProcessor {
         }
     }
 
+    private void processEditOnLevelAction(String editLevelActionType, Element editableObject) {
+        try {
+            LevelAction action = (LevelAction) Class.forName(LEVEL_ACTIONS_DIRECTORY_ROOT + editLevelActionType).getConstructor(Element.class).newInstance(editableObject);
+            myLevelActionsRequester.requestAction(action);
+        } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace(); //FIXME
+        }
+    }
+
     private Document configureWithTestDocument() throws GameEngineException {
-        File testFile = new File("src/resources/player/EditedConditions.xml");
+        File testFile = new File("src/resources/player/EditedLevelConditions.xml");
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder ;
         try {

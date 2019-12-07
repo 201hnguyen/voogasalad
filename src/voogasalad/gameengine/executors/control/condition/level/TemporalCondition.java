@@ -30,6 +30,9 @@ public class TemporalCondition extends LevelCondition {
 
     @Override
     public boolean hasHappened(Level level) {
+        if (level.getStatusManager().getTotalElapsedTime() >= myMarkedTime) {
+            System.out.println("Temporal condition happened" + level.getStatusManager().getTotalElapsedTime());
+        }
         return level.getStatusManager().getTotalElapsedTime() >= myMarkedTime;
     }
 }

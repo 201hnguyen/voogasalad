@@ -224,7 +224,7 @@
             <ConditionId>0</ConditionId>
             <Type>TemporalCondition</Type>
             <Parameters>
-                <MarkedTime>0</MarkedTime>
+                <MarkedTime>7</MarkedTime>
             </Parameters>
             <Actions>
                 <Action>
@@ -236,7 +236,7 @@
             <ConditionId>1</ConditionId>
             <Type>OnscreenArchetypeCountCondition</Type>
             <Parameters>
-                <MarkedCount>0</MarkedCount>
+                <MarkedCount>15</MarkedCount>
                 <Archetype>TOWER</Archetype>
                 <Classification>CONTINUOUS</Classification>
             </Parameters>
@@ -299,7 +299,7 @@
             <ConditionId>0</ConditionId>
             <Type>TemporalCondition</Type>
             <Parameters>
-                <Markedtime>0</Markedtime>
+                <Markedtime>7</Markedtime>
             </Parameters>
             <Actions>
                 <Action>

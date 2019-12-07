@@ -47,4 +47,9 @@ public class Engine {
     public String getGameTitle() {
         return gameTitle;
     }
+
+    public int getCurrentLevelId() {
+        return myGame.getCurrentLevelId();
+    }
+
 }

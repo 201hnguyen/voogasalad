@@ -42,7 +42,7 @@ public class Player {
         myStage = primaryStage;
         myEngine = new Engine(doc);
         startGame();
-        myEngine.getActionsProcessor().processGameEditingAction(doc);
+        myEngine.getActionsProcessor().processGameEditingAction(null);
     }
 
     public void startGame() throws GameEngineException {
