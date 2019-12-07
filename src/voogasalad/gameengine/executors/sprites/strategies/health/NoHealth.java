@@ -31,6 +31,6 @@ public class NoHealth implements HealthStrategy {
 
     @Override
     public HealthStrategy makeClone() throws GameEngineException {
-        return new HealthBuilder().build();
+        return new NoHealth(new HealthBuilder());
     }
 }
