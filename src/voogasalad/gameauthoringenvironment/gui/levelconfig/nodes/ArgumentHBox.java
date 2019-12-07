@@ -1,22 +1,32 @@
 package voogasalad.gameauthoringenvironment.gui.levelconfig.nodes;
 
+import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 public class ArgumentHBox extends HBox {
+    private static final String CONDITION_ARGUMENT_TYPES = "resources.gae.conditionaction.ConditionArgumentTypes";
+    private ResourceBundle conditionArgumentTypes;
+    private String condition;
 
-    public ArgumentHBox(String argument, Map<String, Map<String, Map<String, String>>> allActiveObjectMap){
+    public ArgumentHBox(String argument, Map<String, Map<String, Map<String, String>>> allActiveObjectMap, String conditionParam) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        condition = conditionParam;
+        conditionArgumentTypes = ResourceBundle.getBundle(CONDITION_ARGUMENT_TYPES);
         this.getChildren().add(new Label(argument + " -----> "));
-        this.getChildren().add(appropriateComboBox(allActiveObjectMap));
+        this.getChildren().add(appropriateNode(allActiveObjectMap));
     }
 
 
-    public ComboBox appropriateComboBox(Map<String, Map<String, Map<String, String>>> allActiveObjectMap){
-        // look at Resource file to determine which comboBox should be added
-        return new ActiveObjectComboBox(allActiveObjectMap);
+    public Node appropriateNode(Map<String, Map<String, Map<String, String>>> allActiveObjectMap) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        ActiveObjectComboBox activeObjectComboBox = new ActiveObjectComboBox(allActiveObjectMap);
+        Class cls = Class.forName(conditionArgumentTypes.getString(condition));
+        Node myField = (Node) cls.getConstructor().newInstance();
+        return myField;
     }
 
 }

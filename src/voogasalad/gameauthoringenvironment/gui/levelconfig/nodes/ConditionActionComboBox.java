@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -27,12 +28,24 @@ public class ConditionActionComboBox extends ComboBox {
         this.valueProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                openArgumentWindow(allActiveObjectMap);
+                try {
+                    openArgumentWindow(allActiveObjectMap);
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
 
-    public void openArgumentWindow(Map<String, Map<String, Map<String, String>>> allActiveObjectMap){
+    public void openArgumentWindow(Map<String, Map<String, Map<String, String>>> allActiveObjectMap) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         Stage argumentStage = new Stage();
         VBox argumentVBox = new VBox();
         String condition = this.getValue().toString();
@@ -42,7 +55,7 @@ public class ConditionActionComboBox extends ComboBox {
         conditionLabel.setPadding(new Insets(0,0,20,0));
         argumentVBox.getChildren().add(conditionLabel);
         for(String argument : arguments){
-            ArgumentHBox argumentHBox = new ArgumentHBox(argument, allActiveObjectMap);
+            ArgumentHBox argumentHBox = new ArgumentHBox(argument, allActiveObjectMap, condition);
             argumentVBox.getChildren().add(argumentHBox);
         }
         BorderPane root = new BorderPane();
