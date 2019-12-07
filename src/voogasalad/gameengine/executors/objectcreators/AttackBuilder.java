@@ -3,7 +3,7 @@ package voogasalad.gameengine.executors.objectcreators;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.sprites.strategies.attack.AttackStrategy;
 
-public class AttackBuilder {
+public class AttackBuilder implements StrategyBuilder {
 
     private static final String CLASS_PATH = "voogasalad.gameengine.executors.sprites.strategies.attack.";
 
@@ -53,6 +53,7 @@ public class AttackBuilder {
         return myType;
     }
 
+    @Override
     public AttackStrategy build() throws GameEngineException {
         if (myType==null) {
             myType = DEFAULT_TYPE;

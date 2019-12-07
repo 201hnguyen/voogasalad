@@ -4,7 +4,7 @@ import javafx.util.Pair;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.sprites.strategies.rotation.RotationStrategy;
 
-public class RotationBuilder {
+public class RotationBuilder implements StrategyBuilder {
     private static final String CLASS_PATH = "voogasalad.gameengine.executors.sprites.strategies.rotation.";
 
     public static final Pair<Double, Double> DEFAULT_ROTATION_RANGE = new Pair(0.0, 360.0);

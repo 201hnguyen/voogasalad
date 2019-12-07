@@ -7,7 +7,7 @@ import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.LinkedList;
 
-public class MovementBuilder {
+public class MovementBuilder implements StrategyBuilder {
 
     private static final String CLASS_PATH = "voogasalad.gameengine.executors.sprites.strategies.movement.";
 
@@ -68,6 +68,7 @@ public class MovementBuilder {
         return myDistance;
     }
 
+    @Override
     public MovementStrategy build() throws GameEngineException {
         try {
             return (MovementStrategy) Class.forName(CLASS_PATH + myType).getConstructor(MovementBuilder.class).newInstance(this);
