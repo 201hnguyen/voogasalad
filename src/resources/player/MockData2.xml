@@ -21,7 +21,7 @@
             <Width>50</Width>
             <Height>50</Height>
             <ImagePath>bird.png</ImagePath>
-            <Archetype>ENEMY</Archetype>
+            <Archetype>TOWER</Archetype>
         </Properties>
         <Strategies>
             <AttackStrategy>
@@ -81,7 +81,7 @@
             <Width>40</Width>
             <Height>30</Height>
             <ImagePath>pandaslogo.png</ImagePath>
-            <Archetype>ENEMY</Archetype>
+            <Archetype>TOWER</Archetype>
         </Properties>
         <Strategies>
             <HealthStrategy>
@@ -144,7 +144,7 @@
             <Width>20</Width>
             <Height>20</Height>
             <ImagePath>ghost2.png</ImagePath>
-            <Archetype>PROJECTILE</Archetype>
+            <Archetype>TOWER</Archetype>
         </Properties>
         <Strategies>
             <HealthStrategy>
@@ -163,7 +163,7 @@
         <Resources>250</Resources>
         <Lives>20</Lives>
         <BackgroundImage>baconcat.jpeg</BackgroundImage>
-        <AvailablePrototypes>0 2</AvailablePrototypes>
+        <AvailablePrototypes>0 1 2 3 4 5</AvailablePrototypes>
 
         <Wave>
             <Queue>0 0 0 0 0</Queue>
@@ -195,7 +195,7 @@
             <Type>OnscreenArchetypeCountCondition</Type>
             <Parameters>
                 <MarkedCount>0</MarkedCount>
-                <Archetype>ENEMY</Archetype>
+                <Archetype>TOWER</Archetype>
                 <Classification>CONTINUOUS</Classification>
             </Parameters>
             <Actions>
@@ -208,7 +208,7 @@
             <Type>OnscreenArchetypeCountCondition</Type>
             <Parameters>
                 <MarkedCount>15</MarkedCount>
-                <Archetype>ENEMY</Archetype>
+                <Archetype>TOWER</Archetype>
             </Parameters>
             <Actions>
                 <Action>
@@ -266,7 +266,7 @@
             <Type>OnscreenArchetypeCountCondition</Type>
             <Parameters>
                 <MarkedCount>1</MarkedCount>
-                <Archetype>ENEMY</Archetype>
+                <Archetype>TOWER</Archetype>
                 <Classification>CONTINUOUS</Classification>
             </Parameters>
             <Actions>
