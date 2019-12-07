@@ -4,6 +4,7 @@ import voogasalad.gameengine.executors.control.action.game.GameAction;
 import voogasalad.gameengine.executors.control.condition.ConditionClassification;
 import voogasalad.gameengine.executors.control.condition.game.GameCondition;
 import voogasalad.gameengine.executors.control.gamecontrol.Game;
+import voogasalad.gameengine.executors.exceptions.GameEngineException;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -24,7 +25,7 @@ public class GameRulesController {
     }
 
 
-    public void checkConditionsAndRunGameActions(Game game) {
+    public void checkConditionsAndRunGameActions(Game game) throws GameEngineException {
         Set<GameCondition> conditionsToRemove = new HashSet<>();
         for (GameCondition condition : myGameConditions) {
             if (condition.hasHappened(game)) {
@@ -39,7 +40,7 @@ public class GameRulesController {
         executeGameActions(game);
     }
 
-    private void executeGameActions(Game game) {
+    private void executeGameActions(Game game) throws GameEngineException {
         Set<GameAction> actionsToRemove = new HashSet<>();
         for (GameAction action : myGameActionsToExecute) {
             action.execute(game);

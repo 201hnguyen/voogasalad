@@ -58,7 +58,7 @@
             <Width>50</Width>
             <Height>50</Height>
             <ImagePath>bird.png</ImagePath>
-            <Archetype>TOWER</Archetype>
+            <Archetype>ENEMY</Archetype>
         </Properties>
         <Strategies>
             <AttackStrategy>
@@ -92,8 +92,8 @@
             <PrototypeId>1</PrototypeId>
             <Width>40</Width>
             <Height>30</Height>
-            <ImagePath>pandaslogo.png</ImagePath>
-            <Archetype>TOWER</Archetype>
+            <ImagePath>ghost2.png</ImagePath>
+            <Archetype>ENEMY</Archetype>
         </Properties>
         <Strategies>
             <HealthStrategy>
@@ -174,7 +174,7 @@
             <Width>20</Width>
             <Height>20</Height>
             <ImagePath>ghost2.png</ImagePath>
-            <Archetype>TOWER</Archetype>
+            <Archetype>PROJECTILE</Archetype>
         </Properties>
         <Strategies>
             <HealthStrategy>
@@ -246,7 +246,7 @@
         <Condition>
             <Type>OnscreenArchetypeCountCondition</Type>
             <Parameters>
-                <MarkedCount>15</MarkedCount>
+                <MarkedCount>6</MarkedCount>
                 <Archetype>TOWER</Archetype>
             </Parameters>
             <Actions>
