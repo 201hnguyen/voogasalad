@@ -1,16 +1,19 @@
 package voogasalad.gameengine.executors.sprites.strategies.movement;
 
+import voogasalad.gameengine.executors.objectcreators.MovementBuilder;
+
 import java.awt.geom.Point2D;
 import java.util.List;
 
 public class NoMovement implements MovementStrategy {
 
-    public NoMovement() {
+    public NoMovement(MovementBuilder builder) {
+        //do nothing
     }
 
     @Override
     public MovementStrategy makeClone() {
-        return new NoMovement();
+        return new NoMovement(new MovementBuilder());
     }
 
     @Override
@@ -25,7 +28,7 @@ public class NoMovement implements MovementStrategy {
 
     @Override
     public void updateDirectionalAngle(double angle) {
-
+        //do nothing
     }
 
     @Override
