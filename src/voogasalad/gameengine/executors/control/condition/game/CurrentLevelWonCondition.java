@@ -9,12 +9,12 @@ import java.util.Map;
 import java.util.Set;
 
 public class CurrentLevelWonCondition extends GameCondition {
-    public CurrentLevelWonCondition(ConditionClassification classification, Set<GameAction> actions) {
-        super(classification, actions);
+    public CurrentLevelWonCondition(int gameConditionId, ConditionClassification classification, Set<GameAction> actions) {
+        super(gameConditionId, classification, actions);
     }
 
-    public CurrentLevelWonCondition(Map<String, String> parameters, Set<GameAction> actions) {
-        super(parameters, actions);
+    public CurrentLevelWonCondition(int gameConditionId, Map<String, String> parameters, Set<GameAction> actions) {
+        super(gameConditionId, parameters, actions);
     }
 
     @Override

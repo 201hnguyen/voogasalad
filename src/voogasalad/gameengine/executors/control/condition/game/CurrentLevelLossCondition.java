@@ -9,12 +9,13 @@ import java.util.Map;
 import java.util.Set;
 
 public class CurrentLevelLossCondition extends GameCondition {
-    public CurrentLevelLossCondition(ConditionClassification classification, Set<GameAction> actions) {
-        super(classification, actions);
+
+    public CurrentLevelLossCondition(int gameConditionId, ConditionClassification classification, Set<GameAction> actions) {
+        super(gameConditionId, classification, actions);
     }
 
-    public CurrentLevelLossCondition(Map<String, String> parameters, Set<GameAction> actions) {
-        super(parameters, actions);
+    public CurrentLevelLossCondition(int gameConditionId, Map<String, String> parameters, Set<GameAction> actions) {
+        super(gameConditionId, parameters, actions);
     }
 
     @Override

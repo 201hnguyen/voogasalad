@@ -4,6 +4,7 @@
     <LevelSequence>1 0</LevelSequence>
 
     <GameCondition>
+        <ConditionId>0</ConditionId>
         <Type>CurrentLevelWonCondition</Type>
         <Parameters>
             <Classification>CONTINUOUS</Classification>
@@ -220,6 +221,7 @@
         </Wave>
 
         <Condition>
+            <ConditionId>0</ConditionId>
             <Type>TemporalCondition</Type>
             <Parameters>
                 <MarkedTime>0</MarkedTime>
@@ -231,6 +233,7 @@
             </Actions>
         </Condition>
         <Condition>
+            <ConditionId>1</ConditionId>
             <Type>OnscreenArchetypeCountCondition</Type>
             <Parameters>
                 <MarkedCount>0</MarkedCount>
@@ -244,6 +247,7 @@
             </Actions>
         </Condition>
         <Condition>
+            <ConditionId>2</ConditionId>
             <Type>OnscreenArchetypeCountCondition</Type>
             <Parameters>
                 <MarkedCount>6</MarkedCount>
@@ -256,6 +260,7 @@
             </Actions>
         </Condition>
         <Condition>
+            <ConditionId>3</ConditionId>
             <Type>LivesCountCondition</Type>
             <Parameters>
                 <MarkedCount>0</MarkedCount>
@@ -291,6 +296,7 @@
         </Wave>
 
         <Condition>
+            <ConditionId>0</ConditionId>
             <Type>TemporalCondition</Type>
             <Parameters>
                 <Markedtime>0</Markedtime>
@@ -302,6 +308,7 @@
             </Actions>
         </Condition>
         <Condition>
+            <ConditionId>1</ConditionId>
             <Type>OnscreenArchetypeCountCondition</Type>
             <Parameters>
                 <MarkedCount>1</MarkedCount>
@@ -315,6 +322,7 @@
             </Actions>
         </Condition>
         <Condition>
+            <ConditionId>2</ConditionId>
             <Type>EnemiesClearedCondition</Type>
             <Parameters></Parameters>
             <Actions>
@@ -324,6 +332,7 @@
             </Actions>
         </Condition>
         <Condition>
+            <ConditionId>3</ConditionId>
             <Type>LivesCountCondition</Type>
             <Parameters>
                 <MarkedCount>0</MarkedCount>

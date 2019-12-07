@@ -14,13 +14,13 @@ public class TemporalCondition extends LevelCondition {
 
     private double myMarkedTime;
 
-    public TemporalCondition(double markedTime, ConditionClassification conditionClassification, Set<LevelAction> actions) {
-        super(conditionClassification, actions);
+    public TemporalCondition(int levelConditionId, double markedTime, ConditionClassification conditionClassification, Set<LevelAction> actions) {
+        super(levelConditionId, conditionClassification, actions);
         myMarkedTime = markedTime;
     }
 
-    public TemporalCondition(Map<String, String> parameters, Set<LevelAction> actions) {
-        super(parameters, actions);
+    public TemporalCondition(int levelConditionId, Map<String, String> parameters, Set<LevelAction> actions) {
+        super(levelConditionId, parameters, actions);
         try {
             myMarkedTime = Integer.parseInt(parameters.get(MARKED_TIME_MAP_KEY));
         } catch (NullPointerException | NumberFormatException e) {

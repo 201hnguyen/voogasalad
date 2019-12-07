@@ -13,19 +13,22 @@ public abstract class LevelCondition {
 
     private Set<LevelAction> myActions;
     private ConditionClassification myConditionClassification;
+    private int myLevelConditionId;
 
-    public LevelCondition(ConditionClassification classification, Set<LevelAction> actions) {
+    public LevelCondition(int levelConditionId, ConditionClassification classification, Set<LevelAction> actions) {
         myActions = actions;
         myConditionClassification = classification;
+        myLevelConditionId = levelConditionId;
     }
 
-    public LevelCondition(Map<String, String> parameters, Set<LevelAction> actions) {
+    public LevelCondition(int levelConditionId, Map<String, String> parameters, Set<LevelAction> actions) {
         try {
             myConditionClassification = ConditionClassification.valueOf(parameters.get(CONDITION_CLASSIFICATION_MAP_KEY));
         } catch (NullPointerException | IllegalArgumentException e) {
             myConditionClassification = DEFAULT_CONDITION_CLASSIFICATION;
         }
         myActions = actions;
+        myLevelConditionId = levelConditionId;
     }
 
     public ConditionClassification getClassification() {
@@ -37,4 +40,8 @@ public abstract class LevelCondition {
     }
 
     public abstract boolean hasHappened(Level level);
+
+    public int getLevelConditionId() {
+        return myLevelConditionId;
+    }
 }
