@@ -8,6 +8,7 @@ import voogasalad.gameengine.executors.exceptions.GameEngineException;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class GameRulesController {
@@ -50,6 +51,10 @@ public class GameRulesController {
         }
         actionsToRemove.stream().
                 forEach(action -> myGameActionsToExecute.remove(action));
+    }
+
+    public Collection<GameCondition> getGameConditions() {
+        return myGameConditions;
     }
 
     public void addGameActions(Collection<GameAction> actions) {

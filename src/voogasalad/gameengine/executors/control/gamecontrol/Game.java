@@ -6,6 +6,7 @@ import voogasalad.gameengine.api.GameSceneObject;
 import voogasalad.gameengine.api.UIActionsProcessor;
 //import voogasalad.gameengine.configurators.EngineConfigurator;
 import voogasalad.gameengine.configurators.GameConfigurator;
+import voogasalad.gameengine.executors.control.condition.game.GameCondition;
 import voogasalad.gameengine.executors.control.gamecontrol.controllers.GameLevelsController;
 import voogasalad.gameengine.executors.control.gamecontrol.controllers.GameRulesController;
 import voogasalad.gameengine.executors.control.levelcontrol.GameSceneStatus;
@@ -19,6 +20,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 
 public class Game {
@@ -113,6 +115,10 @@ public class Game {
 
     public int getCurrentTotalGameScore() {
         return myGameLevelsController.getTotalScoreForAllLevels();
+    }
+
+    public Collection<GameCondition> getAllGameConditions() {
+        return myGameRulesController.getGameConditions();
     }
 
     public List<Level> getLevels() {
