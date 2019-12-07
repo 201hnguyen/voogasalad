@@ -53,7 +53,7 @@ public class UIActionsProcessor {
     }
 
     private Document configureWithTestDocument() throws GameEngineException {
-        File testFile = new File("src/resources/player/EditedLevel.xml");
+        File testFile = new File("src/resources/player/EditedConditions.xml");
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder ;
         try {
