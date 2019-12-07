@@ -44,7 +44,6 @@ public class PlayerVisualization extends BorderPane {
         this.stage = stage;
         this.timeline = timeline;
         this.uiActionsProcessor = uiActionsProcessor;
-        this.myStopWatch = new StopWatch();
         initialize();
     }
 

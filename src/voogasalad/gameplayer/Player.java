@@ -36,14 +36,12 @@ public class Player {
     private Timeline myTimeline;
     private GameSceneObject myCurrentGameSceneObject;
     private HashMap<String, Integer> gameInfo;
-    private int flag = -1;
 
     //Player expects a javaFX Stage upon instantiation
     public Player(Stage primaryStage, Document doc) throws GameEngineException { //TODO: Don't throw GameEngineException out of Player
         myStage = primaryStage;
         myEngine = new Engine(doc);
         startGame();
-        myEngine.getActionsProcessor().processGameEditingAction(null);
     }
 
     public void startGame() throws GameEngineException {

@@ -38,6 +38,7 @@ public class StatusBar extends HBox {
 
     public void updateDisplayedInfo(Map<String, Integer> gameInfoMap) {
         this.getChildren().removeAll(currentDisplayedInfo);
+        currentDisplayedInfo.clear();
         for(String key : gameInfoMap.keySet()) {
             HBox box = infoTrackerBox(key, gameInfoMap.get(key));
             this.getChildren().add(box);
