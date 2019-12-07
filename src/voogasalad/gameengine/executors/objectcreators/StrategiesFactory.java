@@ -28,7 +28,7 @@ public class StrategiesFactory {
 
     public MovementStrategy makeMovement(MovementBuilder movementBuilder) throws GameEngineException {
         try {
-            return (MovementStrategy) Class.forName(CLASS_PATH + MOVEMENT_DIRECTORY + movementBuilder).getConstructor(MovementBuilder.class).newInstance(movementBuilder);
+            return (MovementStrategy) Class.forName(CLASS_PATH + MOVEMENT_DIRECTORY + movementBuilder.getType()).getConstructor(MovementBuilder.class).newInstance(movementBuilder);
         } catch (Exception e) {
             e.printStackTrace();
             throw new GameEngineException(e, "SpriteMovementInitializationFailed");
