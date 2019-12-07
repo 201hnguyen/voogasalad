@@ -10,18 +10,13 @@ public class ArgumentHBox extends HBox {
 
     public ArgumentHBox(String argument, Map<String, Map<String, Map<String, String>>> allActiveObjectMap){
         this.getChildren().add(new Label(argument + " -----> "));
-        this.getChildren().add(getActiveObjectComboBox(allActiveObjectMap));
+        this.getChildren().add(appropriateComboBox(allActiveObjectMap));
     }
 
 
-
-    private ComboBox getActiveObjectComboBox(Map<String, Map<String, Map<String, String>>> allActiveObjectMap){
-        ComboBox activeObjects = new ComboBox();
-        for(String type : allActiveObjectMap.keySet()){
-            for(String name : allActiveObjectMap.get(type).keySet()){
-                activeObjects.getItems().add(name);
-            }
-        }
-        return activeObjects;
+    public ComboBox appropriateComboBox(Map<String, Map<String, Map<String, String>>> allActiveObjectMap){
+        // look at Resource file to determine which comboBox should be added
+        return new ActiveObjectComboBox(allActiveObjectMap);
     }
+
 }
