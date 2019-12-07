@@ -68,12 +68,12 @@ public class PlayerVisualization extends BorderPane {
 
     private void initialize() {
         ButtonCreator buttonCreator = new ButtonCreator(new ButtonController(this));
-        accordionCreator = new AccordionCreator();
         statusBar = new StatusBar();
+        accordionCreator = new AccordionCreator();
         panelBox = new VBox(10);
         panelBox.getChildren().addAll(buttonCreator,showInstructions(),accordionCreator,backToGAE());
-        this.setRight(panelBox);
         this.setTop(statusBar);
+        this.setRight(panelBox);
         scene = new Scene(this, SCENE_WIDTH, SCENE_HEIGHT);
         displayGameScreenAndAttachToAccordion();
         showStage();
