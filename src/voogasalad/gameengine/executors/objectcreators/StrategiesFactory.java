@@ -33,16 +33,19 @@ public class StrategiesFactory {
                 return (MovementStrategy) Class.forName(CLASS_PATH + MOVEMENT_DIRECTORY + movementType).getConstructor(double.class, LinkedList.class).newInstance(builder.getSpeed(), builder.getPath());
             } else if (movementType.equalsIgnoreCase("NoMovement")) {
                 return (MovementStrategy) Class.forName(CLASS_PATH + MOVEMENT_DIRECTORY + movementType).getConstructor().newInstance();
+            } else if (movementType.equalsIgnoreCase("DirectedDistanceMovement")) {
+                return (MovementStrategy) Class.forName(CLASS_PATH + MOVEMENT_DIRECTORY + movementType).getConstructor(MovementBuilder.class).newInstance(builder);
             }
         } catch (Exception e) {
+            e.printStackTrace();
             throw new GameEngineException(e, "SpriteMovementInitializationFailed");
         }
         return null;
     }
 
-    public RotationStrategy makeRotation(String rotationStrategy, Map<String, Object> parameters) throws GameEngineException{
+    public RotationStrategy makeRotation(RotationBuilder rotationBuilder) throws GameEngineException{
         try{
-            return (RotationStrategy) Class.forName(CLASS_PATH + ROTATION_DIRECTORY + rotationStrategy).getConstructor(Map.class).newInstance(parameters);
+            return (RotationStrategy) Class.forName(CLASS_PATH + ROTATION_DIRECTORY + rotationBuilder.getType()).getConstructor(RotationBuilder.class).newInstance(rotationBuilder);
         } catch(Exception e){
             e.printStackTrace(); //TODO: debugging only
             throw new GameEngineException(e, "SpriteRotationInitializationFailed");

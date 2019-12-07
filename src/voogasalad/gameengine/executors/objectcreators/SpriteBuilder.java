@@ -3,6 +3,7 @@ package voogasalad.gameengine.executors.objectcreators;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.sprites.Sprite;
 import voogasalad.gameengine.executors.sprites.strategies.attack.AttackStrategy;
+import voogasalad.gameengine.executors.sprites.strategies.rotation.RotationStrategy;
 import voogasalad.gameengine.executors.utils.SpriteArchetype;
 import voogasalad.gameengine.executors.sprites.strategies.health.HealthStrategy;
 import voogasalad.gameengine.executors.sprites.strategies.movement.MovementStrategy;
@@ -20,6 +21,7 @@ public class SpriteBuilder {
     private HealthStrategy myHealthStrategy;
     private MovementStrategy myMovementStrategy;
     private AttackStrategy myAttackStrategy;
+    private RotationStrategy myRotationStrategy;
     private String myImagePath;
     private SpriteArchetype myArchetype;
     private int myPrototypeId;
@@ -102,6 +104,15 @@ public class SpriteBuilder {
         myImagePath = imagePath;
         System.out.println("image path set in builder with value: " + myImagePath);
         return this;
+    }
+
+    public SpriteBuilder setRotationStrategy(RotationStrategy rotationStrategy) {
+        myRotationStrategy = rotationStrategy;
+        return this;
+    }
+
+    public RotationStrategy getRotationStrategy() {
+        return myRotationStrategy;
     }
 
     public String getImagePath() {

@@ -1,6 +1,7 @@
 package voogasalad.gameengine.executors.control.levelcontrol;
 
 import voogasalad.gameengine.api.GameSceneObject;
+import voogasalad.gameengine.executors.control.condition.level.LevelCondition;
 import voogasalad.gameengine.executors.control.levelcontrol.managers.LevelConditionsManager;
 import voogasalad.gameengine.executors.control.levelcontrol.managers.LevelStatusManager;
 import voogasalad.gameengine.executors.control.levelcontrol.managers.LevelWaveManager;
@@ -8,6 +9,8 @@ import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.control.levelcontrol.managers.LevelActionsManager;
 import voogasalad.gameengine.executors.objectcreators.LevelBuilder;
 import voogasalad.gameengine.executors.sprites.SpriteManager;
+
+import java.util.Set;
 
 public class Level implements GameScene {
 
@@ -66,5 +69,9 @@ public class Level implements GameScene {
 
     public int getCurrentScore() {
         return myLevelStatusManager.getScore();
+    }
+
+    public Set<LevelCondition> getLevelConditions() {
+        return myLevelConditionsManager.getLevelConditions();
     }
 }

@@ -15,6 +15,7 @@ public class SubmitButton extends Button {
         super("CREATE");
         this.setOnMouseClicked(event -> {
             parameterCreatorInstanceParam.createSubmitButton();
+            parameterCreatorInstanceParam.clearFields();
         });
     }
 

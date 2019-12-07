@@ -18,7 +18,9 @@ public interface Sprite {
     void updatePosition(double elapsedTime);
     String getImagePath();
     int getPrototypeId();
-    void updateAngle(double elapsedTime);
+    void updateShootingAngle(double elapsedTime);
     void shoot(double elapsedTime, LevelActionsRequester levelActionsRequester) throws GameEngineException;
     void updatePath(List<Point2D.Double> path);
-    }
+    void updateMovementAngle(double angle);
+    boolean isMovementFinished();
+}

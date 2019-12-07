@@ -29,23 +29,28 @@ public class ParameterCreator extends BorderPane{
     private ResourceBundle paramFieldType;
     private VBox configVBox;
     private String gameObjectName;
-    private List<Node> allNodes = new ArrayList<>();
-    private List<String> fieldTypes= new ArrayList<>();
-    private FieldTextReturnFactory fieldFactory = new FieldTextReturnFactory();
+    private List<Node> allNodes;
+    private List<String> fieldTypes;
+    private FieldTextReturnFactory fieldFactory;
     private List<Label> labelList;
     private List<String> labelText;
     private List<String> labelValue;
     private AddToXML xmlObject;
     private LevelConfigPane levelConfigPane;
     private Map<String, Map<String, String>> activeObjects;
+    private ClearFieldsFactory clearFieldsFactory;
     //private static Map<String, Map<String,String>> sendToXML;
 
 
     public ParameterCreator(String gameObjectNameParam, String[] propertiesParam, ResourceBundle paramFieldTypeParam, LevelConfigPane levelConfigPaneParam) throws ParserConfigurationException {
+        clearFieldsFactory = new ClearFieldsFactory();
+        fieldFactory = new FieldTextReturnFactory();
         labelList = new ArrayList<>();
         labelText = new ArrayList<>();
         labelValue = new ArrayList<>();
         activeObjects = new HashMap<>();
+        fieldTypes = new ArrayList<>();
+        allNodes = new ArrayList<>();
         root = new BorderPane();
         xmlObject = new AddToXML();
         properties = propertiesParam;
@@ -128,6 +133,12 @@ public class ParameterCreator extends BorderPane{
 
     private void addToAppropriateField(String gameObjectNameParam, Button icon){
         levelConfigPane.addIconToVBox(gameObjectNameParam, icon);
+    }
+
+    public void clearFields(){
+        allNodes
+                .stream()
+                .forEach(node -> clearFieldsFactory.clearField(node));
     }
 
 
