@@ -37,10 +37,16 @@ public class ActionsProcessor {
     public void processAddSpriteAction(int prototypeId, double xPos, double yPos) {
         LevelAction action = new AddSpriteAction(prototypeId, xPos, yPos);
         myLevelActionsRequester.requestAction(action);
+//        myLevelActionsRequester.request
     }
 
     public void processRemoveSpriteAction(int spriteId) {
         LevelAction action = new RemoveSpriteAction(spriteId);
+        myLevelActionsRequester.requestAction(action);
+    }
+
+    public void processRemoveSpriteAction(double xpos, double ypos) {
+        LevelAction action = new RemoveSpriteAction(xpos, ypos);
         myLevelActionsRequester.requestAction(action);
     }
 

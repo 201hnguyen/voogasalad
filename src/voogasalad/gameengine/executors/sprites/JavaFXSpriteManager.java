@@ -1,5 +1,6 @@
 package voogasalad.gameengine.executors.sprites;
 
+import javafx.scene.image.ImageView;
 import voogasalad.gameengine.executors.control.action.level.RemoveSpriteAction;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.control.levelcontrol.LevelActionsRequester;
@@ -57,8 +58,20 @@ public class JavaFXSpriteManager implements SpriteManager {
     }
 
 
+    @Override
     public void removeSpriteById(int spriteId) {
         myOnScreenSprites.stream().filter(sprite -> sprite.getId() == spriteId).forEach(sprite -> myOnScreenSprites.remove(sprite));
+    }
+
+    public void removeSpriteByCoordinates(double xpos, double ypos) {
+        Sprite spriteToRemove=null;
+        for (Sprite sprite : myOnScreenSprites) {
+            ImageView spriteImageView = (ImageView) sprite.getImage();
+            if (spriteImageView.getBoundsInParent().contains(xpos,ypos)) {
+                spriteToRemove = sprite;
+            }
+        }
+        myOnScreenSprites.remove(spriteToRemove);
     }
 
     @Override
