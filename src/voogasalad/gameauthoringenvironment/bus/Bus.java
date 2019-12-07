@@ -3,7 +3,10 @@ package voogasalad.gameauthoringenvironment.bus;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
+import org.xml.sax.SAXException;
 import voogasalad.gameauthoringenvironment.gui.*;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -14,6 +17,11 @@ import org.w3c.dom.Document;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameplayer.Player;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
+import java.io.IOException;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -27,7 +35,7 @@ public class Bus {
     private Scene gamePlayerScene;
     private SceneCreator gaeObject;
     private Document createdXML;
-    private Group busRoot;
+    private VBox busRoot;
 
     public Bus(Stage currentStageParam, BorderPane rootParam, int widthParam, int heightParam){
         currentStage = currentStageParam;
@@ -41,33 +49,44 @@ public class Bus {
     /**
      * This method should return frontend to chose GAE or GamePlayer
      */
-    public Scene getBusScene(){
+    public Scene getBusScene() {
         return createBusScene();
     }
 
-    public Scene createBusScene(){
-        busRoot = new Group();
-        busRoot.getChildren().add(changeToGAEButton());
+    public Scene createBusScene() {
+        busRoot = new VBox();
+        busRoot.getChildren().add(createMenuButton("newgame.png", "newgame-hover.png", e -> changeToGAE()));
+        busRoot.getChildren().add(createMenuButton("loadgame.png", "loadgame-hover.png", e -> {
+            try {
+                loadGameHandler();
+            } catch (GameEngineException ex) {
+                ex.printStackTrace();
+            }
+        }));
+
         //busRoot.getChildren().add(changeToGamePlayerButton());
         return new Scene(busRoot, width, height);
     }
 
-    private Label changeToGAEButton(){
-        Label myButton = createMenuButton("newgame.png", "newgame-hover.png", e -> changeToGAE());
-
-//        myButton.setOnMouseClicked(event -> {
-//            changeToGAE();
-//            //FOR TESTING
-//            //currentStage.setScene(levelConfigScene.getScene(root));
-//        });
-        return myButton;
-    }
+//    private Label changeToGAEButton(){
+//
+////        myButton.setOnMouseClicked(event -> {
+////            changeToGAE();
+////            //FOR TESTING
+////            //currentStage.setScene(levelConfigScene.getScene(root));
+////        });
+//        return createMenuButton("newgame.png", "newgame-hover.png", e -> changeToGAE());
+//    }
+//
+//    private Label loadGameButton() {
+//        return createMenuButton("loadgame.png", "loadgame-hover.png", e -> loadGameHandler());
+//    }
 
     public void changeToGAE(){
         currentStage.setScene(gaeObject.createGAEScene(root));
     }
 
-    public Label createMenuButton(String imagePath, String imagePathHover, Consumer consumer) {
+    private Label createMenuButton(String imagePath, String imagePathHover, Consumer consumer) {
         Label myButton = new Label();
         ImageView image = new ImageView(new Image(imagePath));
         ImageView imageHover = new ImageView(new Image(imagePathHover));
@@ -87,14 +106,19 @@ public class Bus {
         Player player = new Player(currentStage, createdXML);
     }
 
+    private void loadGameHandler() throws GameEngineException {
+        FileChooser fileChooser = new FileChooser();
+        File selectedFile = fileChooser.showOpenDialog(currentStage);
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder;
+        try {
+            builder = factory.newDocumentBuilder();
+            Document doc = builder.parse(selectedFile);
+            goToPlayer(doc);
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            throw new GameEngineException(e, "ConfigurationFailedXML");
 
-    //not doing anything yet
-    private Button changeToGamePlayerButton(){
-        Button myButton = new Button("Load File and Play Game");
-        myButton.setOnMouseClicked(event -> {
-            changeToGAE();
-        });
-        return myButton;
+        }
     }
 
 }

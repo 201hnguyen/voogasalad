@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import voogasalad.gameengine.executors.exceptions.GameEngineException;
 
 
 public class Main extends Application {
@@ -26,7 +27,7 @@ public class Main extends Application {
         //Player player = new Player(primaryStage, );
     }
 
-    private Scene setBusScene(Stage currentStage, BorderPane root){
+    private Scene setBusScene(Stage currentStage, BorderPane root) throws GameEngineException {
         myBus = new Bus(currentStage, root, 500, 500);
         return myBus.getBusScene();
     }
