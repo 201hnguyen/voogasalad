@@ -68,7 +68,7 @@ public class PlayerVisualization extends BorderPane {
         ButtonCreator buttonCreator = new ButtonCreator(new ButtonController(this));
         accordionCreator = new AccordionCreator();
         statusBar = new StatusBar();
-        selectedTowerPane = new SelectedTowerPane();
+        selectedTowerPane = new SelectedTowerPane(actionsProcessor, displayScreen);
         panelBox = new VBox(10);
         panelBox.getChildren().addAll(buttonCreator,showInstructions(),accordionCreator,backToGAE(), selectedTowerPane);
         this.setRight(panelBox);
@@ -79,7 +79,7 @@ public class PlayerVisualization extends BorderPane {
     }
 
     private void displayGameScreenAndAttachToAccordion() {
-        displayScreen = new DisplayScreen(actionsProcessor, engine);
+        displayScreen = new DisplayScreen(actionsProcessor, engine, selectedTowerPane);
         displayScreen.setMinWidth(SCENE_WIDTH - (SCENE_WIDTH - PANEL_POSITION));
         displayScreen.setMinHeight(SCENE_HEIGHT - this.getTop().getLayoutY());
         accordionCreator.attachDisplayScreen(displayScreen);

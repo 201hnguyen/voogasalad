@@ -1,5 +1,6 @@
 package voogasalad.gameplayer.GUI;
 
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
@@ -16,11 +17,13 @@ import voogasalad.gameengine.executors.utils.SpriteArchetype;
 import java.util.List;
 
 public class DisplayScreen extends Pane {
+    private SelectedTowerPane selectedTowerPane;
     private ActionsProcessor actionsProcessor;
     private int currentImageID;
 
-    public DisplayScreen(ActionsProcessor actionsProcessor, Engine engine) {
+    public DisplayScreen(ActionsProcessor actionsProcessor, Engine engine, SelectedTowerPane selectedTowerPane) {
         this.actionsProcessor = actionsProcessor;
+        this.selectedTowerPane = selectedTowerPane;
         this.setOnDragOver((DragEvent event) -> {
             Dragboard db = event.getDragboard();
             if (db.hasImage()) {
@@ -59,13 +62,14 @@ public class DisplayScreen extends Pane {
 
     private void loadInSprite(Sprite sprite) {
         Sprite toLoad = sprite;
+//        ImageView toDisplay = new ImageView(new Image(toLoad.getImagePath()));
         ImageView toDisplay = (ImageView) toLoad.getImage();
         int xPos = (int) sprite.getX();
         int yPos = (int) sprite.getY();
         addImageToScreen(toDisplay, xPos, yPos);
         if (sprite.getSpriteArchetype() == SpriteArchetype.TOWER) {
-            toDisplay.setOnMouseClicked((MouseEvent e) -> {
-
+            toDisplay.setOnMouseClicked(e -> {
+                selectedTowerPane.removeTower(toLoad, xPos, yPos);
             });
         }
         // TODO: figure out how we will pass in the height and width
