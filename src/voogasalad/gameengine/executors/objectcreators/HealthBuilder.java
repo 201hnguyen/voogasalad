@@ -4,8 +4,9 @@ import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.sprites.strategies.health.HealthStrategy;
 
 public class HealthBuilder {
-    public static final int DEFAULT_HEALTH_VALUE=0;
-    public static final String DEFAULT_TYPE="NoHealth";
+    private static final String CLASS_PATH = "voogasalad.gameengine.executors.sprites.strategies.heatlh.";
+    public static final int DEFAULT_HEALTH_VALUE = 0;
+    public static final String DEFAULT_TYPE = "NoHealth";
 
     private int myHealthValue;
     private String myType;
@@ -33,10 +34,13 @@ public class HealthBuilder {
     }
 
     public HealthStrategy build() throws GameEngineException {
-        if (myType==null) {
-            myType=DEFAULT_TYPE;
+        if (myType == null) {
+            myType = DEFAULT_TYPE;
         }
-        return new StrategiesFactory().makeHealth(this);
+        try {
+            return (HealthStrategy) Class.forName(CLASS_PATH + myType).getConstructor(HealthBuilder.class).newInstance(this);
+        } catch (Exception e) {
+            throw new GameEngineException(e, "SpriteHealthInitializationFailed");
+        }
     }
-
 }
