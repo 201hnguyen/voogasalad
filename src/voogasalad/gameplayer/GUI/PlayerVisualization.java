@@ -35,11 +35,13 @@ public class PlayerVisualization extends BorderPane {
     private AccordionCreator accordionCreator;
     private StatusBar statusBar;
     private UIActionsProcessor uiActionsProcessor;
+    private StopWatch myStopWatch;
 
     public PlayerVisualization(Stage stage, Timeline timeline, UIActionsProcessor uiActionsProcessor) {
         this.stage = stage;
         this.timeline = timeline;
         this.uiActionsProcessor = uiActionsProcessor;
+        this.myStopWatch = new StopWatch();
         initialize();
     }
 
