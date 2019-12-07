@@ -22,13 +22,8 @@ public class Health implements HealthStrategy {
     }
 
     @Override
-    public void addHealth(int value) {
-        myHealth += value;
-    }
-
-    @Override
-    public void chunkHealth(int value) {
-        myHealth -= value;
+    public void alterHealthByAddition(int value) {
+        myHealth+=value;
     }
 
     @Override

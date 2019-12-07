@@ -23,6 +23,4 @@ public interface Sprite {
     void updatePath(List<Point2D.Double> path);
     void updateMovementAngle(double angle);
     boolean isMovementFinished();
-    void chunkHealth(int damage);
-    boolean isDead();
 }

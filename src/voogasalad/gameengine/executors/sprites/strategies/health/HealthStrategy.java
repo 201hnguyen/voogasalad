@@ -4,7 +4,6 @@ import voogasalad.gameengine.executors.exceptions.GameEngineException;
 
 public interface HealthStrategy {
     Integer getHealth();
-    void addHealth(int value);
-    void chunkHealth(int value);
+    void alterHealthByAddition(int value);
     HealthStrategy makeClone() throws GameEngineException;
 }

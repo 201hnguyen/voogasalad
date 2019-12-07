@@ -11,7 +11,7 @@ public class NoHealth implements HealthStrategy {
 
 
     public NoHealth(HealthBuilder healthBuilder) {
-        //do nothing
+
     }
 
     @Override
@@ -20,17 +20,12 @@ public class NoHealth implements HealthStrategy {
     }
 
     @Override
-    public void addHealth(int value) {
-        // do nothing
-    }
-
-    @Override
-    public void chunkHealth(int value) {
+    public void alterHealthByAddition(int value) {
         // do nothing
     }
 
     @Override
     public HealthStrategy makeClone() throws GameEngineException {
-        return new NoHealth(new HealthBuilder());
+        return new HealthBuilder().build();
     }
 }
