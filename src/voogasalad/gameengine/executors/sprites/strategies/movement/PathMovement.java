@@ -35,7 +35,7 @@ public class PathMovement implements MovementStrategy {
 
     @Override
     public MovementStrategy makeClone() throws GameEngineException {
-        return myOriginalBuilder.build();
+        return new PathMovement(myOriginalBuilder);
     }
 
     @Override
@@ -74,7 +74,7 @@ public class PathMovement implements MovementStrategy {
 
     @Override
     public boolean isMovementFinished() {
-        return false;
+        return reachedEnd;
     }
 
     private Point2D.Double calculateDirection(Point2D.Double currentPosition) {

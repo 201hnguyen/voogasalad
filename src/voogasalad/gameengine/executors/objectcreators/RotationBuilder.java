@@ -4,8 +4,7 @@ import javafx.util.Pair;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.sprites.strategies.rotation.RotationStrategy;
 
-public class RotationBuilder implements StrategyBuilder {
-    private static final String CLASS_PATH = "voogasalad.gameengine.executors.sprites.strategies.rotation.";
+public class RotationBuilder {
 
     public static final Pair<Double, Double> DEFAULT_ROTATION_RANGE = new Pair(0.0, 360.0);
     public static final Double DEFAULT_SPEED = 50.0;
@@ -63,12 +62,7 @@ public class RotationBuilder implements StrategyBuilder {
         if (mySpeed == null) {
             mySpeed = DEFAULT_SPEED;
         }
-        try{
-            return (RotationStrategy) Class.forName(CLASS_PATH + myType).getConstructor(RotationBuilder.class).newInstance(this);
-        } catch(Exception e){
-            e.printStackTrace(); //TODO: debugging only
-            throw new GameEngineException(e, "SpriteRotationInitializationFailed");
-        }
+        return new StrategiesFactory().makeRotation(this);
     }
 
 }

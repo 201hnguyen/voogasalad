@@ -6,10 +6,6 @@ import org.w3c.dom.NodeList;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.objectcreators.*;
 import voogasalad.gameengine.executors.sprites.Sprite;
-import voogasalad.gameengine.executors.sprites.strategies.attack.AttackStrategy;
-import voogasalad.gameengine.executors.sprites.strategies.health.HealthStrategy;
-import voogasalad.gameengine.executors.sprites.strategies.movement.MovementStrategy;
-import voogasalad.gameengine.executors.sprites.strategies.rotation.RotationStrategy;
 import voogasalad.gameengine.executors.utils.ConfigurationTool;
 
 import java.lang.reflect.InvocationTargetException;
@@ -19,11 +15,8 @@ public class PrototypesConfigurator {
 
     public static final String PROTOTYPE_CONFIG_METHOD_CALLS_PATH = "resources/engine/PrototypeConfiguratorMethodCalls";
     public static final String STRATEGY_CONFIG_METHOD_CALLS_PATH = "resources/engine/StrategyConfiguratorMethodCalls";
-    public static final String STRATEGY_BUILDERS_PATH = "resources/engine/StrategyBuilders";
-    public static final String STRATEGY_BUILDER_CLASS_PATH = "voogasalad.gameengine.executors.objectcreators.";
     public static final ResourceBundle PROTOTYPE_CONFIG_BUNDLE = ResourceBundle.getBundle(PROTOTYPE_CONFIG_METHOD_CALLS_PATH);
     public static final ResourceBundle STRATEGY_CONFIG_BUNDLE = ResourceBundle.getBundle(STRATEGY_CONFIG_METHOD_CALLS_PATH);
-    public static final ResourceBundle STRATEGY_BUILDERS_BUNDLE = ResourceBundle.getBundle(STRATEGY_BUILDERS_PATH);
     public static final String SPRITE_PROPERTIES_NODE_TAG = "Properties";
     public static final String SPRITE_STRATEGIES_NODE_TAG = "Strategies";
     public static final String SPRITE_STRATEGIES_TYPE_NODE_TAG = "Type";
@@ -76,9 +69,10 @@ public class PrototypesConfigurator {
             Element strategy = ConfigurationTool.convertNodeToElement(listOfSpriteStrategies.item(i));
             if (strategy != null) {
                 try {
-                    Object builtStrategy = buildStrategy(strategy);
                     String methodName = STRATEGY_CONFIG_BUNDLE.getString(strategy.getNodeName());
-                    this.getClass().getDeclaredMethod(methodName, SpriteBuilder.class, Object.class).invoke(this, builder, builtStrategy);
+                    String type = strategy.getElementsByTagName(SPRITE_STRATEGIES_TYPE_NODE_TAG).item(0).getTextContent();
+                    NodeList parametersNodeList = strategy.getElementsByTagName(SPRITE_STRATEGIES_PARAMETERS_NODE_TAG).item(0).getChildNodes();
+                    this.getClass().getDeclaredMethod(methodName, String.class, SpriteBuilder.class, NodeList.class).invoke(this, type, builder, parametersNodeList);
                 } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
                     e.printStackTrace();
                     throw new GameEngineException(e, "SpriteProductionFailed");
@@ -87,44 +81,65 @@ public class PrototypesConfigurator {
         }
     }
 
-    private Object buildStrategy(Element strategy) throws GameEngineException {
-        try {
-            String test = STRATEGY_BUILDERS_BUNDLE.getString(strategy.getNodeName());
-            var builder = Class.forName(STRATEGY_BUILDER_CLASS_PATH + STRATEGY_BUILDERS_BUNDLE.getString(strategy.getNodeName())).getConstructor().newInstance();
-            String type = strategy.getElementsByTagName(SPRITE_STRATEGIES_TYPE_NODE_TAG).item(0).getTextContent();
-            builder.getClass().getMethod(STRATEGY_CONFIG_BUNDLE.getString(SPRITE_STRATEGIES_TYPE_NODE_TAG), String.class).invoke(builder, type);
-            NodeList parametersNodeList = strategy.getElementsByTagName(SPRITE_STRATEGIES_PARAMETERS_NODE_TAG).item(0).getChildNodes();
-            for (int i = 0; i < parametersNodeList.getLength(); i++) {
-                Element parameter = ConfigurationTool.convertNodeToElement(parametersNodeList.item(i));
-                if (parameter!= null) {
-                    builder.getClass().getMethod(STRATEGY_CONFIG_BUNDLE.getString(parameter.getNodeName()), String.class).invoke(builder, parameter.getTextContent());
+    private void setRotationStrategy(String type, SpriteBuilder builder, NodeList parametersNodeList) throws GameEngineException {
+        RotationBuilder rotationBuilder = new RotationBuilder().setType(type);
+        for (int i=0; i<parametersNodeList.getLength();i++) {
+            Element parameter = ConfigurationTool.convertNodeToElement(parametersNodeList.item(i));
+            if (parameter!= null) {
+                try {
+                    rotationBuilder.getClass().getMethod(STRATEGY_CONFIG_BUNDLE.getString(parameter.getNodeName()), String.class).invoke(rotationBuilder, parameter.getTextContent());
+                } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                    e.printStackTrace();
+                    throw new GameEngineException(e, "SpriteProductionFailed");
                 }
             }
-            StrategyBuilder strategyBuilder = (StrategyBuilder) builder;
-            return strategyBuilder.build();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new GameEngineException(e, "SpriteProductionFailed");
         }
+        builder.setRotationStrategy(rotationBuilder.build());
     }
 
-    private void setRotationStrategy(SpriteBuilder builder, Object strategy) {
-        RotationStrategy toSet = (RotationStrategy) strategy;
-        builder.setRotationStrategy(toSet);
+    private void setHealthStrategy(String type, SpriteBuilder builder, NodeList parametersNodeList) throws GameEngineException {
+        HealthBuilder healthBuilder = new HealthBuilder().setHealthType(type);
+        for (int i=0; i<parametersNodeList.getLength();i++) {
+            Element parameter = ConfigurationTool.convertNodeToElement(parametersNodeList.item(i));
+            if (parameter!= null) {
+                try {
+                    healthBuilder.getClass().getMethod(STRATEGY_CONFIG_BUNDLE.getString(parameter.getNodeName()), String.class).invoke(healthBuilder, parameter.getTextContent());
+                } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                    throw new GameEngineException(e, "SpriteProductionFailed");
+                }
+            }
+        }
+        builder.setHealthStrategy(healthBuilder.build());
     }
 
-    private void setHealthStrategy(SpriteBuilder builder, Object strategy) {
-        HealthStrategy toSet = (HealthStrategy) strategy;
-        builder.setHealthStrategy(toSet);
+    private void setMovementStrategy(String type, SpriteBuilder builder, NodeList parametersNodeList) throws GameEngineException {
+        MovementBuilder movementBuilder = new MovementBuilder().setMovementType(type);
+        for (int i=0; i<parametersNodeList.getLength();i++) {
+            Element parameter = ConfigurationTool.convertNodeToElement(parametersNodeList.item(i));
+            if (parameter!= null) {
+                try {
+                    movementBuilder.getClass().getMethod(STRATEGY_CONFIG_BUNDLE.getString(parameter.getNodeName()), String.class).invoke(movementBuilder, parameter.getTextContent());
+                } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                    e.printStackTrace();
+                    throw new GameEngineException(e, "SpriteProductionFailed");
+                }
+            }
+        }
+        builder.setMovementStrategy(movementBuilder.build());
     }
 
-    private void setMovementStrategy(SpriteBuilder builder, Object strategy) {
-        MovementStrategy toSet = (MovementStrategy) strategy;
-        builder.setMovementStrategy(toSet);
-    }
-
-    private void setAttackStrategy(SpriteBuilder builder, Object strategy) {
-        AttackStrategy toSet = (AttackStrategy) strategy;
-        builder.setAttackStrategy(toSet);
+    private void setAttackStrategy(String type, SpriteBuilder builder, NodeList parametersNodeList) throws GameEngineException {
+        AttackBuilder attackBuilder = new AttackBuilder().setType(type);
+        for (int i=0; i<parametersNodeList.getLength();i++) {
+            Element parameter = ConfigurationTool.convertNodeToElement(parametersNodeList.item(i));
+            if (parameter!= null) {
+                try {
+                    attackBuilder.getClass().getMethod(STRATEGY_CONFIG_BUNDLE.getString(parameter.getNodeName()), String.class).invoke(attackBuilder, parameter.getTextContent());
+                } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                    throw new GameEngineException(e, "SpriteProductionFailed");
+                }
+            }
+        }
+        builder.setAttackStrategy(attackBuilder.build());
     }
 }

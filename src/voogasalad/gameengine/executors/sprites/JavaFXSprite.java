@@ -59,12 +59,10 @@ public class JavaFXSprite implements Sprite {
                 .build();
     }
 
-    @Override
     public void shoot(double elapsedTime, LevelActionsRequester levelActionsRequester) throws GameEngineException {
         myAttackStrategy.attack(elapsedTime, myCurrentAttackAngle, levelActionsRequester, currentPosition);
     }
 
-    @Override
     public void updateShootingAngle(double elapsedTime){
         myCurrentAttackAngle = myRotationStrategy.updateAngle(elapsedTime, myCurrentAttackAngle);
     }
@@ -134,16 +132,6 @@ public class JavaFXSprite implements Sprite {
     @Override
     public boolean isMovementFinished(){
         return myMovementStrategy.isMovementFinished();
-    }
-
-    @Override
-    public void chunkHealth(int damage) {
-        myHealthStrategy.chunkHealth(damage);
-    }
-
-    @Override
-    public boolean isDead() {
-        return myHealthStrategy.getHealth() != null && myHealthStrategy.getHealth() <= 0;
     }
 
 }
