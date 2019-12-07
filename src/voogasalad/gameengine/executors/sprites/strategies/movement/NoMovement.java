@@ -22,4 +22,14 @@ public class NoMovement implements MovementStrategy {
     public void updatePath(List<Point2D.Double> path) {
         //do nothing
     }
+
+    @Override
+    public void updateDirectionalAngle(double angle) {
+
+    }
+
+    @Override
+    public boolean isMovementFinished() {
+        return false;
+    }
 }
