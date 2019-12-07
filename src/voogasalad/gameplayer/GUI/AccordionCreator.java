@@ -5,19 +5,28 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.TilePane;
+import javafx.scene.text.Text;
+import voogasalad.gameengine.api.Engine;
 import voogasalad.gameengine.executors.sprites.Sprite;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.Flow;
 
 public class AccordionCreator extends Accordion {
     public static final int ITEM_HEIGHT = 50;
     public static final int ITEM_WIDTH = 50;
+    public static final int NO_COLUMNS = 3;
+    public static final int HORIZONTAL_SPACING = 10;
+    public static final int VERTICAL_SPACING = 10;
     public static final String TOWER = "Towers";
     private static final String ENEMY = "Enemies";
-    private HBox hBoxTowers;
-    private HBox hBoxEnemies;
+    private TilePane hBoxTowers;
+    private TilePane hBoxEnemies;
     private DisplayScreen displayScreen;
 
 
@@ -26,8 +35,10 @@ public class AccordionCreator extends Accordion {
     }
 
     private void createAccordion() {
-        hBoxTowers = new HBox();
-        hBoxEnemies = new HBox();
+        hBoxTowers = new TilePane(HORIZONTAL_SPACING, VERTICAL_SPACING);
+        hBoxEnemies = new TilePane(HORIZONTAL_SPACING, VERTICAL_SPACING);
+        hBoxTowers.setPrefColumns(NO_COLUMNS);
+        hBoxEnemies.setPrefColumns(NO_COLUMNS);
         TitledPane towerPane = new TitledPane(TOWER, hBoxTowers);
         TitledPane enemyPane = new TitledPane(ENEMY, hBoxEnemies);
         getPanes().add(towerPane);
@@ -59,6 +70,7 @@ public class AccordionCreator extends Accordion {
             });
             i++;
         }
+
         for(Sprite enemy: enemies){
             ImageView image = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(enemy.getImagePath())));
             hBoxEnemies.getChildren().add(image);

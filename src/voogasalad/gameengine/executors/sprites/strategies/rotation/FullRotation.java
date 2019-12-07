@@ -1,19 +1,20 @@
 package voogasalad.gameengine.executors.sprites.strategies.rotation;
 
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
+import voogasalad.gameengine.executors.objectcreators.RotationBuilder;
 import voogasalad.gameengine.executors.objectcreators.StrategiesFactory;
 import voogasalad.gameengine.executors.utils.Verifier;
 
 import java.util.Map;
 
-public class FullRotationStrategy implements RotationStrategy {
+public class FullRotation implements RotationStrategy {
     private int rotationDirection;
     private Double rotationSpeed;
-    private Map<String, Object> originalParameters;
+    private RotationBuilder myBuilder;
 
-    public FullRotationStrategy(Map<String, Object> parameters) {
-        originalParameters = parameters;
-        rotationSpeed = 3.0;
+    public FullRotation(RotationBuilder rotationBuilder) {
+        myBuilder = rotationBuilder;
+        rotationSpeed = rotationBuilder.getSpeed();
     }
 
     @Override
@@ -40,7 +41,6 @@ public class FullRotationStrategy implements RotationStrategy {
 
     @Override
     public RotationStrategy makeClone() throws GameEngineException {
-        StrategiesFactory factory = new StrategiesFactory();
-        return factory.makeRotation("FullRotationStrategy", originalParameters);
+        return new FullRotation(myBuilder);
     }
 }

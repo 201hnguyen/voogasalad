@@ -15,10 +15,7 @@ import voogasalad.gameauthoringenvironment.gui.levelconfig.LevelConfigPane;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class ParameterCreator extends BorderPane{
 
@@ -26,29 +23,35 @@ public class ParameterCreator extends BorderPane{
     private static final int window_HEIGHT = 300;
     private static final String SUBMITBUTTONCLASS = new SubmitButton().getClass().toString().split("class ")[1];
     private BorderPane root;
-    private BorderPane testRoot;
+    private ObjectPreviewAndActive objectSpecificRoot;
     private Stage newStage;
     private String[] properties;
     private ResourceBundle paramFieldType;
     private VBox configVBox;
     private String gameObjectName;
-    private List<Node> allNodes = new ArrayList<>();
-    private List<String> fieldTypes= new ArrayList<>();
-    private FieldTextReturnFactory fieldFactory = new FieldTextReturnFactory();
+    private List<Node> allNodes;
+    private List<String> fieldTypes;
+    private FieldTextReturnFactory fieldFactory;
     private List<Label> labelList;
     private List<String> labelText;
     private List<String> labelValue;
     private AddToXML xmlObject;
     private LevelConfigPane levelConfigPane;
+    private Map<String, Map<String, String>> activeObjects;
+    private ClearFieldsFactory clearFieldsFactory;
     //private static Map<String, Map<String,String>> sendToXML;
 
 
     public ParameterCreator(String gameObjectNameParam, String[] propertiesParam, ResourceBundle paramFieldTypeParam, LevelConfigPane levelConfigPaneParam) throws ParserConfigurationException {
+        clearFieldsFactory = new ClearFieldsFactory();
+        fieldFactory = new FieldTextReturnFactory();
         labelList = new ArrayList<>();
         labelText = new ArrayList<>();
         labelValue = new ArrayList<>();
+        activeObjects = new HashMap<>();
+        fieldTypes = new ArrayList<>();
+        allNodes = new ArrayList<>();
         root = new BorderPane();
-        testRoot = new BorderPane();
         xmlObject = new AddToXML();
         properties = propertiesParam;
         paramFieldType = paramFieldTypeParam;
@@ -116,12 +119,12 @@ public class ParameterCreator extends BorderPane{
         }
     }
 
-    private Button createObjectIcon(Map myMap, String objectName){
+    private Button createObjectIcon(Map<String, String> objectContentMap, String objectName){
         Button icon = new Button(objectName);
         icon.setOnMouseClicked(event -> {
             newStage = new Stage();
-            testRoot.setCenter(new TextArea(myMap.toString()));
-            Scene newScene = new Scene(testRoot, window_WIDTH, window_HEIGHT);
+            objectSpecificRoot = new ObjectPreviewAndActive(objectName, objectContentMap, window_HEIGHT, window_WIDTH, newStage, activeObjects, icon);
+            Scene newScene = new Scene(objectSpecificRoot, window_WIDTH, window_HEIGHT);
             newStage.setScene(newScene);
             newStage.show();
         });
@@ -130,6 +133,12 @@ public class ParameterCreator extends BorderPane{
 
     private void addToAppropriateField(String gameObjectNameParam, Button icon){
         levelConfigPane.addIconToVBox(gameObjectNameParam, icon);
+    }
+
+    public void clearFields(){
+        allNodes
+                .stream()
+                .forEach(node -> clearFieldsFactory.clearField(node));
     }
 
 

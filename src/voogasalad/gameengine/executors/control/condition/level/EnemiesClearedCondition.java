@@ -10,12 +10,12 @@ import java.util.Set;
 
 public class EnemiesClearedCondition extends LevelCondition {
 
-    public EnemiesClearedCondition(ConditionClassification classification, Set<LevelAction> actions) {
-        super(classification, actions);
+    public EnemiesClearedCondition(int levelConditionId, ConditionClassification classification, Set<LevelAction> actions) {
+        super(levelConditionId, classification, actions);
     }
 
-    public EnemiesClearedCondition(Map<String, String> parameters, Set<LevelAction> actions) {
-        super (parameters, actions);
+    public EnemiesClearedCondition(int levelConditionId, Map<String, String> parameters, Set<LevelAction> actions) {
+        super (levelConditionId, parameters, actions);
     }
 
     @Override

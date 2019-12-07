@@ -1,16 +1,15 @@
 package voogasalad.gameengine.executors.sprites.strategies.rotation;
 
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
+import voogasalad.gameengine.executors.objectcreators.RotationBuilder;
 import voogasalad.gameengine.executors.objectcreators.StrategiesFactory;
 import voogasalad.gameengine.executors.utils.Verifier;
 
 import java.util.Map;
 
-public class NoRotationStrategy implements RotationStrategy { //TODO: can also be achieved by creating a fullrotation w speed 0
-    private Map<String, Object> originalParameters;
+public class NoRotation implements RotationStrategy { //TODO: can also be achieved by creating a fullrotation w speed 0
 
-    public NoRotationStrategy(Map<String, Object> parameters) throws GameEngineException {
-        originalParameters = parameters;
+    public NoRotation(RotationBuilder builder) {
     }
 
     @Override
@@ -34,8 +33,7 @@ public class NoRotationStrategy implements RotationStrategy { //TODO: can also b
     }
 
     @Override
-    public RotationStrategy makeClone() throws GameEngineException {
-        StrategiesFactory factory = new StrategiesFactory();
-        return factory.makeRotation("NoRotationStrategy", originalParameters);
+    public RotationStrategy makeClone() {
+        return new NoRotation(new RotationBuilder());
     }
 }

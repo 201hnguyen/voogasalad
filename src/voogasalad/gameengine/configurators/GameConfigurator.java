@@ -31,6 +31,10 @@ public class GameConfigurator {
         myGamePrototypes = configurePrototypes();
     }
 
+    public List<Sprite> getGamePrototypesCollection() {
+        return myGamePrototypes;
+    }
+
     public GameLevelsController loadLevelsFromXML() throws GameEngineException {
         List<Level> levels = loadLevels();
         List<Integer> levelsSequence = loadLevelsSequence();

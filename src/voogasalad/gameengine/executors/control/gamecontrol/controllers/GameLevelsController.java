@@ -49,4 +49,8 @@ public class GameLevelsController {
         }
         return totalScore;
     }
+
+    public List<Level> getLevels() {
+        return myLevels;
+    }
 }

@@ -4,18 +4,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import voogasalad.gameengine.executors.control.levelcontrol.LevelActionsRequester;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
-import voogasalad.gameengine.executors.objectcreators.MovementBuilder;
 import voogasalad.gameengine.executors.objectcreators.SpriteBuilder;
 import voogasalad.gameengine.executors.sprites.strategies.attack.AttackStrategy;
 import voogasalad.gameengine.executors.sprites.strategies.health.HealthStrategy;
-import voogasalad.gameengine.executors.sprites.strategies.movement.DirectedDistanceMovement;
 import voogasalad.gameengine.executors.sprites.strategies.movement.MovementStrategy;
-import voogasalad.gameengine.executors.sprites.strategies.rotation.FullRotationStrategy;
 import voogasalad.gameengine.executors.sprites.strategies.rotation.RotationStrategy;
 import voogasalad.gameengine.executors.utils.SpriteArchetype;
 
 import java.awt.geom.Point2D;
-import java.util.HashMap;
 import java.util.List;
 
 public class JavaFXSprite implements Sprite {
@@ -42,7 +38,7 @@ public class JavaFXSprite implements Sprite {
         myHealthStrategy = builder.getHealthStrategy();
         myMovementStrategy = builder.getMovementStrategy();
         myAttackStrategy = builder.getAttackStrategy();
-        myRotationStrategy = new FullRotationStrategy(new HashMap<>()); //TODO: don't hardcode
+        myRotationStrategy = builder.getRotationStrategy();
         myCurrentAttackAngle = 0.0;
         myImagePath = builder.getImagePath();
         configureImageView(builder.getHeight(), builder.getWidth());
@@ -58,6 +54,7 @@ public class JavaFXSprite implements Sprite {
                 .setWidth(myOriginalBuilder.getWidth())
                 .setArchetype(myOriginalBuilder.getSpriteArchetype())
                 .setAttackStrategy(myOriginalBuilder.getAttackStrategy())
+                .setRotationStrategy(myOriginalBuilder.getRotationStrategy())
                 .setPrototypeId(myPrototypeId)
                 .build();
     }
