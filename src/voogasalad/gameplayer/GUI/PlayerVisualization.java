@@ -10,6 +10,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import voogasalad.gameengine.api.ActionsProcessor;
+import voogasalad.gameengine.api.Engine;
 import voogasalad.gameengine.executors.sprites.Sprite;
 
 import java.util.ArrayList;
@@ -34,12 +35,15 @@ public class PlayerVisualization extends BorderPane {
     private VBox panelBox;
     private AccordionCreator accordionCreator;
     private StatusBar statusBar;
+    private SelectedTowerPane selectedTowerPane;
     private ActionsProcessor actionsProcessor;
+    private Engine engine;
 
-    public PlayerVisualization(Stage stage, Timeline timeline, ActionsProcessor actionsProcessor) {
+    public PlayerVisualization(Stage stage, Timeline timeline, ActionsProcessor actionsProcessor, Engine engine) {
         this.stage = stage;
         this.timeline = timeline;
         this.actionsProcessor = actionsProcessor;
+        this.engine = engine;
         initialize();
     }
 
@@ -64,8 +68,9 @@ public class PlayerVisualization extends BorderPane {
         ButtonCreator buttonCreator = new ButtonCreator(new ButtonController(this));
         accordionCreator = new AccordionCreator();
         statusBar = new StatusBar();
+        selectedTowerPane = new SelectedTowerPane();
         panelBox = new VBox(10);
-        panelBox.getChildren().addAll(buttonCreator,showInstructions(),accordionCreator,backToGAE());
+        panelBox.getChildren().addAll(buttonCreator,showInstructions(),accordionCreator,backToGAE(), selectedTowerPane);
         this.setRight(panelBox);
         this.setTop(statusBar);
         scene = new Scene(this, SCENE_WIDTH, SCENE_HEIGHT);
@@ -74,7 +79,7 @@ public class PlayerVisualization extends BorderPane {
     }
 
     private void displayGameScreenAndAttachToAccordion() {
-        displayScreen = new DisplayScreen(actionsProcessor);
+        displayScreen = new DisplayScreen(actionsProcessor, engine);
         displayScreen.setMinWidth(SCENE_WIDTH - (SCENE_WIDTH - PANEL_POSITION));
         displayScreen.setMinHeight(SCENE_HEIGHT - this.getTop().getLayoutY());
         accordionCreator.attachDisplayScreen(displayScreen);
