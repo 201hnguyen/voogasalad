@@ -44,6 +44,12 @@
                     <Speed>500</Speed>
                 </Parameters>
             </MovementStrategy>
+            <RotationStrategy>
+                <Type>FullRotation</Type>
+                <Parameters>
+                    <RotationSpeed>3</RotationSpeed>
+                </Parameters>
+            </RotationStrategy>
         </Strategies>
     </SpritePrototype>
     <SpritePrototype>
@@ -73,6 +79,12 @@
                 <Parameters>
                 </Parameters>
             </MovementStrategy>
+            <RotationStrategy>
+                <Type>FullRotation</Type>
+                <Parameters>
+                    <RotationSpeed>3</RotationSpeed>
+                </Parameters>
+            </RotationStrategy>
         </Strategies>
     </SpritePrototype>
     <SpritePrototype>
@@ -97,6 +109,12 @@
                     <Speed>500</Speed>
                 </Parameters>
             </MovementStrategy>
+            <RotationStrategy>
+                <Type>FullRotation</Type>
+                <Parameters>
+                    <RotationSpeed>3</RotationSpeed>
+                </Parameters>
+            </RotationStrategy>
         </Strategies>
     </SpritePrototype>
     <SpritePrototype>
@@ -116,6 +134,12 @@
                 <Type>NoMovement</Type>
                 <Parameters></Parameters>
             </MovementStrategy>
+            <RotationStrategy>
+                <Type>FullRotation</Type>
+                <Parameters>
+                    <RotationSpeed>3</RotationSpeed>
+                </Parameters>
+            </RotationStrategy>
         </Strategies>
     </SpritePrototype>
     <SpritePrototype>
@@ -135,6 +159,12 @@
                 <Type>NoMovement</Type>
                 <Parameters></Parameters>
             </MovementStrategy>
+            <RotationStrategy>
+                <Type>FullRotation</Type>
+                <Parameters>
+                    <RotationSpeed>3</RotationSpeed>
+                </Parameters>
+            </RotationStrategy>
         </Strategies>
     </SpritePrototype>
 
@@ -158,6 +188,12 @@
                     <Speed>2</Speed>
                 </Parameters>
             </MovementStrategy>
+            <RotationStrategy>
+                <Type>FullRotation</Type>
+                <Parameters>
+                    <RotationSpeed>3</RotationSpeed>
+                </Parameters>
+            </RotationStrategy>
         </Strategies>
     </SpritePrototype>
 
