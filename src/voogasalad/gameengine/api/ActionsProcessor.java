@@ -18,13 +18,17 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ResourceBundle;
 
-public class UIActionsProcessor {
+public class ActionsProcessor {
     public static final String GAME_ACTIONS_DIRECTORY_ROOT = "voogasalad.gameengine.executors.control.action.game.";
+    public static final String LIVE_GAME_EDITING_CLASS_PATH = "resources/engine/LiveGameEditing";
+    public static final ResourceBundle LIVE_GAME_EDITING_BUNDLE = ResourceBundle.getBundle(LIVE_GAME_EDITING_CLASS_PATH);
+
     private LevelActionsRequester myLevelActionsRequester;
     private GameActionsRequester myGameActionsRequester;
 
-    public UIActionsProcessor(LevelActionsRequester levelActionsRequester, GameActionsRequester gameActionsRequester) {
+    public ActionsProcessor(LevelActionsRequester levelActionsRequester, GameActionsRequester gameActionsRequester) {
         myGameActionsRequester = gameActionsRequester;
         myLevelActionsRequester = levelActionsRequester;
     }
@@ -39,11 +43,20 @@ public class UIActionsProcessor {
         myLevelActionsRequester.requestAction(action);
     }
 
-    public void editOnGameRootLevel(Document doc) throws GameEngineException {
+    public void processGameEditingAction(Document doc) throws GameEngineException {
         Document document = configureWithTestDocument();
         Element documentRoot = document.getDocumentElement();
         String editGameActionType = documentRoot.getElementsByTagName("EditActionType").item(0).getTextContent();
         Element editableObject = (Element) documentRoot.getElementsByTagName("EditableObject").item(0);
+        String methodName = LIVE_GAME_EDITING_BUNDLE.getString(editGameActionType);
+        try {
+            this.getClass().getDeclaredMethod(methodName, String.class, Element.class).invoke(this, editGameActionType, editableObject);
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace(); //FIXME
+        }
+    }
+
+    private void processEditOnGameRootLevelAction(String editGameActionType, Element editableObject) throws GameEngineException {
         try {
             GameAction action = (GameAction) Class.forName(GAME_ACTIONS_DIRECTORY_ROOT + editGameActionType).getConstructor(Element.class).newInstance(editableObject);
             myGameActionsRequester.requestAction(action);

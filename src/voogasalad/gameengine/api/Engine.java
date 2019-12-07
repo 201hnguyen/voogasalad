@@ -20,8 +20,8 @@ public class Engine {
         return myGame.execute(elapsedTime);
     }
 
-    public UIActionsProcessor getUIActionProcessor() {
-        return myGame.getUIActionProcessor();
+    public ActionsProcessor getActionsProcessor() {
+        return myGame.getActionsProcessor();
     }
 
     public List<Sprite> getSpritePrototypes() {

@@ -2,8 +2,8 @@ package voogasalad.gameengine.executors.control.gamecontrol;
 
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
+import voogasalad.gameengine.api.ActionsProcessor;
 import voogasalad.gameengine.api.GameSceneObject;
-import voogasalad.gameengine.api.UIActionsProcessor;
 //import voogasalad.gameengine.configurators.EngineConfigurator;
 import voogasalad.gameengine.configurators.GameConfigurator;
 import voogasalad.gameengine.executors.control.condition.game.GameCondition;
@@ -29,7 +29,7 @@ public class Game {
     private GameLevelsController myGameLevelsController;
     private GameRulesController myGameRulesController;
     private Document myGameConfigDocument;
-    private UIActionsProcessor myCurrentUIActionsProcessor;
+    private ActionsProcessor myCurrentActionsProcessor;
     private GameActionsRequester myGameActionsRequester;
     private boolean switchedLevel;
     private List<Sprite> myCompletePrototypesCollection;
@@ -43,7 +43,7 @@ public class Game {
         myGameRulesController.addGameConditionsAsCollection(gameConfigurator.configureGameConditions());
         myGameLevelsController = gameConfigurator.loadLevelsFromXML();
         myCurrentLevel = myGameLevelsController.loadBaseLevel();
-        myCurrentUIActionsProcessor = new UIActionsProcessor(myCurrentLevel.getActionsRequester(), myGameActionsRequester);
+        myCurrentActionsProcessor = new ActionsProcessor(myCurrentLevel.getActionsRequester(), myGameActionsRequester);
         switchedLevel = false;
         loadNextLevel();
     }
@@ -66,7 +66,7 @@ public class Game {
     public void loadNextLevel() {
         myCurrentLevel = myGameLevelsController.getNextLevel(myCurrentLevel);
         myCurrentLevel.getStatusManager().setGameSceneStatus(GameSceneStatus.ONGOING);
-        myCurrentUIActionsProcessor.updateLevel(myCurrentLevel);
+        myCurrentActionsProcessor.updateLevel(myCurrentLevel);
         switchedLevel = true;
     }
 
@@ -74,8 +74,8 @@ public class Game {
         return myCurrentLevel.getStatusManager().getGameSceneStatus();
     }
 
-    public UIActionsProcessor getUIActionProcessor() {
-        return myCurrentUIActionsProcessor;
+    public ActionsProcessor getActionsProcessor() {
+        return myCurrentActionsProcessor;
     }
 
     public List<Sprite> getCurrentLevelSpritePrototypes() {
