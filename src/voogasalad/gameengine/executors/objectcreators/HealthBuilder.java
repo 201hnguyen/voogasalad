@@ -4,7 +4,7 @@ import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.sprites.strategies.health.HealthStrategy;
 
 public class HealthBuilder {
-    private static final String CLASS_PATH = "voogasalad.gameengine.executors.sprites.strategies.heatlh.";
+    private static final String CLASS_PATH = "voogasalad.gameengine.executors.sprites.strategies.health.";
     public static final int DEFAULT_HEALTH_VALUE = 0;
     public static final String DEFAULT_TYPE = "NoHealth";
 

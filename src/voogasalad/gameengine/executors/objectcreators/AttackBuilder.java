@@ -5,6 +5,9 @@ import voogasalad.gameengine.executors.sprites.strategies.attack.AttackStrategy;
 
 public class AttackBuilder {
 
+    private static final String CLASS_PATH = "voogasalad.gameengine.executors.sprites.strategies.attack.";
+
+
     public static final String DEFAULT_TYPE = "NoAttack";
     public static final Integer DEFAULT_BULLET_PROTOTYPE_ID = 0; //FIXME
     public static final Double DEFAULT_ATTACK_SPEED = 0.0;
@@ -60,6 +63,11 @@ public class AttackBuilder {
         if (myBulletPrototypeId == null) {
             myBulletPrototypeId = DEFAULT_BULLET_PROTOTYPE_ID;
         }
-        return new StrategiesFactory().makeAttack(this);
+        try{
+            return (AttackStrategy) Class.forName(CLASS_PATH + myType).getConstructor(AttackBuilder.class).newInstance(this);
+        } catch(Exception e){
+            e.printStackTrace(); //TODO: debugging only
+            throw new GameEngineException(e, "SpriteAttackInitializationFailed");
+        }
     }
 }
