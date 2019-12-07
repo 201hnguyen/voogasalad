@@ -8,7 +8,7 @@ import java.util.List;
 
 public class DirectedDistanceMovement implements MovementStrategy{
 
-    private MovementBuilder myMovementBuilder;
+    private MovementBuilder myOriginalBuilder;
     private double myAngle;
     private double myDistance;
     private double mySpeed;
@@ -16,7 +16,7 @@ public class DirectedDistanceMovement implements MovementStrategy{
     private boolean isMovementFinished;
 
     public DirectedDistanceMovement(MovementBuilder builder) {
-        myMovementBuilder = builder;
+        myOriginalBuilder = builder;
         myAngle = 0;
         myDistance = builder.getDistance();
         mySpeed = builder.getSpeed();
@@ -30,8 +30,8 @@ public class DirectedDistanceMovement implements MovementStrategy{
     }
 
     @Override
-    public MovementStrategy makeClone() {
-        return new DirectedDistanceMovement(myMovementBuilder);
+    public MovementStrategy makeClone() throws GameEngineException {
+        return myOriginalBuilder.build();
     }
 
     @Override

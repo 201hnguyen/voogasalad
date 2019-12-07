@@ -35,7 +35,7 @@ public class PathMovement implements MovementStrategy {
 
     @Override
     public MovementStrategy makeClone() throws GameEngineException {
-        return new PathMovement(myOriginalBuilder);
+        return myOriginalBuilder.build();
     }
 
     @Override
