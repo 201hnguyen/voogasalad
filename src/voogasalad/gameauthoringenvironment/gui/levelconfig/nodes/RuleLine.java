@@ -10,7 +10,7 @@ public class RuleLine extends HBox {
     public RuleLine(){
         super(10);
         conditionActionComboBox = new ConditionActionReader();
-        this.getChildren().addAll(new Label("Condition: "), new ConditionActionComboBox(), new Label("  --->   Action: "), conditionActionComboBox.getActions());
+        this.getChildren().addAll(new Label("Condition: "), conditionActionComboBox.getConditions(), new Label("  --->   Action: "), conditionActionComboBox.getActions());
     }
 
 }
