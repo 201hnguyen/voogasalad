@@ -26,21 +26,13 @@ public class StrategiesFactory {
         }
     }
 
-    public MovementStrategy makeMovement(MovementBuilder builder) throws GameEngineException {
-        String movementType = builder.getMovementType();
+    public MovementStrategy makeMovement(MovementBuilder movementBuilder) throws GameEngineException {
         try {
-            if (movementType.equalsIgnoreCase("PathMovement")) {
-                return (MovementStrategy) Class.forName(CLASS_PATH + MOVEMENT_DIRECTORY + movementType).getConstructor(double.class, LinkedList.class).newInstance(builder.getSpeed(), builder.getPath());
-            } else if (movementType.equalsIgnoreCase("NoMovement")) {
-                return (MovementStrategy) Class.forName(CLASS_PATH + MOVEMENT_DIRECTORY + movementType).getConstructor().newInstance();
-            } else if (movementType.equalsIgnoreCase("DirectedDistanceMovement")) {
-                return (MovementStrategy) Class.forName(CLASS_PATH + MOVEMENT_DIRECTORY + movementType).getConstructor(MovementBuilder.class).newInstance(builder);
-            }
+            return (MovementStrategy) Class.forName(CLASS_PATH + MOVEMENT_DIRECTORY + movementBuilder).getConstructor(MovementBuilder.class).newInstance(movementBuilder);
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(); //TODO: debugging only
             throw new GameEngineException(e, "SpriteMovementInitializationFailed");
         }
-        return null;
     }
 
     public RotationStrategy makeRotation(RotationBuilder rotationBuilder) throws GameEngineException{
