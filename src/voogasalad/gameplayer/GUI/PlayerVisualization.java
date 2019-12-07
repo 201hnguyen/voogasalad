@@ -10,7 +10,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import voogasalad.gameengine.api.GameSceneObject;
-import voogasalad.gameengine.api.UIActionsProcessor;
+import voogasalad.gameengine.api.ActionsProcessor;
 import voogasalad.gameengine.executors.sprites.Sprite;
 
 import java.util.ArrayList;
@@ -34,10 +34,10 @@ public class PlayerVisualization extends BorderPane {
     private VBox panelBox;
     private AccordionCreator accordionCreator;
     private StatusBar statusBar;
-    private UIActionsProcessor uiActionsProcessor;
+    private ActionsProcessor uiActionsProcessor;
     private StopWatch myStopWatch;
 
-    public PlayerVisualization(Stage stage, Timeline timeline, UIActionsProcessor uiActionsProcessor) {
+    public PlayerVisualization(Stage stage, Timeline timeline, ActionsProcessor uiActionsProcessor) {
         this.stage = stage;
         this.timeline = timeline;
         this.uiActionsProcessor = uiActionsProcessor;
