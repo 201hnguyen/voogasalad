@@ -2,7 +2,6 @@ package voogasalad.gameplayer;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.scene.Group;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.w3c.dom.Document;
@@ -12,14 +11,13 @@ import voogasalad.gameengine.api.Engine;
 import voogasalad.gameengine.executors.utils.SpriteArchetype;
 import voogasalad.gameplayer.GUI.PlayerVisualization;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
  * PLEASE READ BEFORE MAKING CHANGES TO THE PLAYER PACKAGE:
  * DO NOT INSTANTIATE OR ACCESS ANY ENGINE OBJECT BESIDES THE ENGINE ITSELF WHEN TRYING TO DISPLAY IN THE PLAYER.
  * We currently do not have modules in the engine, but if/when we do, all other classes will be locked from outside access
- * to maintain API consistency. Currently, the classes you will have access to are: Engine, UIActionsProcessor
+ * to maintain API consistency. Currently, the classes you will have access to are: Engine, ActionsProcessor
  * (retrieve with a getter method once you have the engine), Sprite, and GameSceneObject. The engine and the UIActionProcessor
  * are essentially the input API for the game, and the GameSceneObject (with a list of Sprites and resources/
  * lives/stats/etc.) is the output API that is outputted by the engine at every execute level.
@@ -44,11 +42,12 @@ public class Player {
         myStage = primaryStage;
         myEngine = new Engine(doc);
         startGame();
+        myEngine.getActionsProcessor().processGameEditingAction(null);
     }
 
     public void startGame() throws GameEngineException {
         myTimeline = new Timeline();
-        myPlayerVisualization = new PlayerVisualization(myStage, myTimeline, myEngine.getUIActionProcessor());
+        myPlayerVisualization = new PlayerVisualization(myStage, myTimeline, myEngine.getActionsProcessor());
         gameInfo = new HashMap<>();
         setGameLoop();
     }

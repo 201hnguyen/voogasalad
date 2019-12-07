@@ -4,6 +4,7 @@
     <LevelSequence>1 0</LevelSequence>
 
     <GameCondition>
+        <ConditionId>0</ConditionId>
         <Type>CurrentLevelWonCondition</Type>
         <Parameters>
             <Classification>CONTINUOUS</Classification>
@@ -44,6 +45,12 @@
                     <Speed>500</Speed>
                 </Parameters>
             </MovementStrategy>
+            <RotationStrategy>
+                <Type>FullRotation</Type>
+                <Parameters>
+                    <RotationSpeed>3</RotationSpeed>
+                </Parameters>
+            </RotationStrategy>
         </Strategies>
     </SpritePrototype>
     <SpritePrototype>
@@ -52,7 +59,7 @@
             <Width>50</Width>
             <Height>50</Height>
             <ImagePath>bird.png</ImagePath>
-            <Archetype>TOWER</Archetype>
+            <Archetype>ENEMY</Archetype>
         </Properties>
         <Strategies>
             <AttackStrategy>
@@ -73,6 +80,12 @@
                 <Parameters>
                 </Parameters>
             </MovementStrategy>
+            <RotationStrategy>
+                <Type>FullRotation</Type>
+                <Parameters>
+                    <RotationSpeed>3</RotationSpeed>
+                </Parameters>
+            </RotationStrategy>
         </Strategies>
     </SpritePrototype>
     <SpritePrototype>
@@ -80,8 +93,8 @@
             <PrototypeId>1</PrototypeId>
             <Width>40</Width>
             <Height>30</Height>
-            <ImagePath>pandaslogo.png</ImagePath>
-            <Archetype>TOWER</Archetype>
+            <ImagePath>ghost2.png</ImagePath>
+            <Archetype>ENEMY</Archetype>
         </Properties>
         <Strategies>
             <HealthStrategy>
@@ -97,6 +110,12 @@
                     <Speed>500</Speed>
                 </Parameters>
             </MovementStrategy>
+            <RotationStrategy>
+                <Type>FullRotation</Type>
+                <Parameters>
+                    <RotationSpeed>3</RotationSpeed>
+                </Parameters>
+            </RotationStrategy>
         </Strategies>
     </SpritePrototype>
     <SpritePrototype>
@@ -116,6 +135,12 @@
                 <Type>NoMovement</Type>
                 <Parameters></Parameters>
             </MovementStrategy>
+            <RotationStrategy>
+                <Type>FullRotation</Type>
+                <Parameters>
+                    <RotationSpeed>3</RotationSpeed>
+                </Parameters>
+            </RotationStrategy>
         </Strategies>
     </SpritePrototype>
     <SpritePrototype>
@@ -135,6 +160,12 @@
                 <Type>NoMovement</Type>
                 <Parameters></Parameters>
             </MovementStrategy>
+            <RotationStrategy>
+                <Type>FullRotation</Type>
+                <Parameters>
+                    <RotationSpeed>3</RotationSpeed>
+                </Parameters>
+            </RotationStrategy>
         </Strategies>
     </SpritePrototype>
 
@@ -144,7 +175,7 @@
             <Width>20</Width>
             <Height>20</Height>
             <ImagePath>ghost2.png</ImagePath>
-            <Archetype>TOWER</Archetype>
+            <Archetype>PROJECTILE</Archetype>
         </Properties>
         <Strategies>
             <HealthStrategy>
@@ -158,6 +189,12 @@
                     <Speed>2</Speed>
                 </Parameters>
             </MovementStrategy>
+            <RotationStrategy>
+                <Type>FullRotation</Type>
+                <Parameters>
+                    <RotationSpeed>3</RotationSpeed>
+                </Parameters>
+            </RotationStrategy>
         </Strategies>
     </SpritePrototype>
 
@@ -184,9 +221,10 @@
         </Wave>
 
         <Condition>
+            <ConditionId>0</ConditionId>
             <Type>TemporalCondition</Type>
             <Parameters>
-                <MarkedTime>0</MarkedTime>
+                <MarkedTime>7</MarkedTime>
             </Parameters>
             <Actions>
                 <Action>
@@ -195,9 +233,10 @@
             </Actions>
         </Condition>
         <Condition>
+            <ConditionId>1</ConditionId>
             <Type>OnscreenArchetypeCountCondition</Type>
             <Parameters>
-                <MarkedCount>0</MarkedCount>
+                <MarkedCount>15</MarkedCount>
                 <Archetype>TOWER</Archetype>
                 <Classification>CONTINUOUS</Classification>
             </Parameters>
@@ -208,9 +247,10 @@
             </Actions>
         </Condition>
         <Condition>
+            <ConditionId>2</ConditionId>
             <Type>OnscreenArchetypeCountCondition</Type>
             <Parameters>
-                <MarkedCount>15</MarkedCount>
+                <MarkedCount>6</MarkedCount>
                 <Archetype>TOWER</Archetype>
             </Parameters>
             <Actions>
@@ -220,6 +260,7 @@
             </Actions>
         </Condition>
         <Condition>
+            <ConditionId>3</ConditionId>
             <Type>LivesCountCondition</Type>
             <Parameters>
                 <MarkedCount>0</MarkedCount>
@@ -255,9 +296,10 @@
         </Wave>
 
         <Condition>
+            <ConditionId>0</ConditionId>
             <Type>TemporalCondition</Type>
             <Parameters>
-                <Markedtime>0</Markedtime>
+                <Markedtime>7</Markedtime>
             </Parameters>
             <Actions>
                 <Action>
@@ -266,6 +308,7 @@
             </Actions>
         </Condition>
         <Condition>
+            <ConditionId>1</ConditionId>
             <Type>OnscreenArchetypeCountCondition</Type>
             <Parameters>
                 <MarkedCount>1</MarkedCount>
@@ -279,6 +322,7 @@
             </Actions>
         </Condition>
         <Condition>
+            <ConditionId>2</ConditionId>
             <Type>EnemiesClearedCondition</Type>
             <Parameters></Parameters>
             <Actions>
@@ -288,6 +332,7 @@
             </Actions>
         </Condition>
         <Condition>
+            <ConditionId>3</ConditionId>
             <Type>LivesCountCondition</Type>
             <Parameters>
                 <MarkedCount>0</MarkedCount>

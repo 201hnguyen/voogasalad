@@ -23,6 +23,7 @@ public class ConditionsConfigurator {
     public static final String CONDITION_ACTIONS_ROOT_TAG = "Actions";
     public static final String CONDITION_TYPE_ROOT_TAG = "Type";
     public static final String ASSOCIATED_ACTION_TYPE_TAG = "Type";
+    public static final String CONDITION_ID_ROOT_TAG = "ConditionId";
 
     public Collection<LevelCondition> buildLevelConditionsCollection(NodeList conditionNodeList) throws GameEngineException {
         Set<LevelCondition> levelConditions = new HashSet<>();
@@ -32,11 +33,13 @@ public class ConditionsConfigurator {
                 Element parametersRoot = ConfigurationTool.convertNodeToElement(definedCondition.getElementsByTagName(CONDITION_PARAMETERS_ROOT_TAG).item(0));
                 Element actionsRoot = ConfigurationTool.convertNodeToElement(definedCondition.getElementsByTagName(CONDITION_ACTIONS_ROOT_TAG).item(0));
                 String conditionName = definedCondition.getElementsByTagName(CONDITION_TYPE_ROOT_TAG).item(0).getTextContent();
+                String conditionIdString = definedCondition.getElementsByTagName(CONDITION_ID_ROOT_TAG).item(0).getTextContent();
                 try {
                     Map<String, String> parameters = setParameters(parametersRoot);
                     Set<LevelAction> actions = setLevelActions(actionsRoot);
-                    levelConditions.add((LevelCondition) Class.forName(LEVEL_CONDITIONS_PACKAGE_PATH + conditionName).getConstructor(Map.class, Set.class).newInstance(parameters, actions));
-                } catch (InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException | ClassNotFoundException e) {
+                    int conditionId = Integer.parseInt(conditionIdString);
+                    levelConditions.add((LevelCondition) Class.forName(LEVEL_CONDITIONS_PACKAGE_PATH + conditionName).getConstructor(int.class, Map.class, Set.class).newInstance(conditionId, parameters, actions));
+                } catch (InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException | ClassNotFoundException | NumberFormatException e) {
                     throw new GameEngineException(e, "ConditionsInitializationFailed");
                 }
             }
@@ -52,10 +55,12 @@ public class ConditionsConfigurator {
                 Element parametersRoot = ConfigurationTool.convertNodeToElement(definedCondition.getElementsByTagName(CONDITION_PARAMETERS_ROOT_TAG).item(0));
                 Element actionsRoot = ConfigurationTool.convertNodeToElement(definedCondition.getElementsByTagName(CONDITION_ACTIONS_ROOT_TAG).item(0));
                 String conditionName = definedCondition.getElementsByTagName(CONDITION_TYPE_ROOT_TAG).item(0).getTextContent();
+                String conditionIdString = definedCondition.getElementsByTagName(CONDITION_ID_ROOT_TAG).item(0).getTextContent();
                 try {
                     Map<String, String> parameters = setParameters(parametersRoot);
                     Set<GameAction> actions = setGameActions(actionsRoot);
-                    gameConditions.add((GameCondition) Class.forName(GAME_CONDITIONS_PACKAGE_PATH + conditionName).getConstructor(Map.class, Set.class).newInstance(parameters, actions));
+                    int conditionId = Integer.parseInt(conditionIdString);
+                    gameConditions.add((GameCondition) Class.forName(GAME_CONDITIONS_PACKAGE_PATH + conditionName).getConstructor(int.class, Map.class, Set.class).newInstance(conditionId, parameters, actions));
                 } catch (InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException | ClassNotFoundException e) {
                     throw new GameEngineException(e, "ConditionsInitializationFailed");
                 }

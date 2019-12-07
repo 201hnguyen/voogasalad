@@ -11,18 +11,18 @@ public class MovementBuilder {
 
     public static final double DEFAULT_DISTANCE=100;
 
-    private String movementType;
+    private String myType;
     private double mySpeed;
     private LinkedList<Point2D.Double> myPath;
     private double myDistance;
 
     public MovementBuilder setMovementType(String typeString) {
-        movementType = typeString.strip();
+        myType = typeString.strip();
         return this;
     }
 
-    public String getMovementType() {
-        return movementType;
+    public String getType() {
+        return myType;
     }
 
     public MovementBuilder setPath(String pathString) {
