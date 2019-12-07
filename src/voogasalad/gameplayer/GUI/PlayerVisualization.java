@@ -8,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import voogasalad.gameengine.api.GameSceneObject;
 import voogasalad.gameengine.api.ActionsProcessor;
@@ -36,6 +38,7 @@ public class PlayerVisualization extends BorderPane {
     private StatusBar statusBar;
     private ActionsProcessor uiActionsProcessor;
     private StopWatch myStopWatch;
+    private Text myStopWatchDisplay;
 
     public PlayerVisualization(Stage stage, Timeline timeline, ActionsProcessor uiActionsProcessor) {
         this.stage = stage;
@@ -48,9 +51,12 @@ public class PlayerVisualization extends BorderPane {
     public void update(List<Sprite> sprites, Map<String, Integer> gameInfoMap) {
         displayScreen.updateDisplayScreen(sprites);
         statusBar.updateDisplayedInfo(gameInfoMap);
+        myStopWatchDisplay.setText(myStopWatch.getCurrentTime());
     }
 
-    public void setNewLevel(List<Sprite> towers, List<Sprite> enemies, String backgroundImagePath){
+    public void setNewLevel(List<Sprite> towers, List<Sprite> enemies, String backgroundImagePath, Map<String, Integer> gameInfoMap){
+        myStopWatch = new StopWatch();
+        statusBar.updateDisplayedInfo(gameInfoMap);
         displayScreen.updateDisplayScreen(new ArrayList<>());
         int i = 0;
         HashMap<Integer, Integer> idMap = new HashMap<>();
@@ -69,6 +75,8 @@ public class PlayerVisualization extends BorderPane {
         panelBox = new VBox(10);
         panelBox.getChildren().add(buttonCreator);
         panelBox.getChildren().add(accordionCreator);
+        createStopWatchDisplay();
+        statusBar.getChildren().add(myStopWatchDisplay);
         this.setRight(panelBox);
         this.setTop(statusBar);
         scene = new Scene(this, SCENE_WIDTH, SCENE_HEIGHT);
@@ -92,6 +100,11 @@ public class PlayerVisualization extends BorderPane {
 
     }
 
+    private void createStopWatchDisplay(){
+        myStopWatchDisplay = new Text("\n0 : 0");
+        myStopWatchDisplay.setFont(new Font(20));
+    }
+
     private void setBackgroundImage(String backgroundImagePath){
         backgroundImage = new BackgroundImage(new Image(backgroundImagePath), BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(SCENE_WIDTH - (SCENE_WIDTH - PANEL_POSITION), SCENE_HEIGHT, false, false, false, false));
         displayScreen.setBackground(new Background(backgroundImage));
@@ -99,9 +112,11 @@ public class PlayerVisualization extends BorderPane {
 
     public void startButtonAction() {
         timeline.play();
+        myStopWatch.startStopWatch();
     }
 
     public void pauseButtonAction() {
         timeline.stop();
+        myStopWatch.pauseStopWatch();
     }
 }

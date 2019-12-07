@@ -11,6 +11,7 @@ import voogasalad.gameengine.api.Engine;
 import voogasalad.gameengine.executors.utils.SpriteArchetype;
 import voogasalad.gameplayer.GUI.PlayerVisualization;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -48,13 +49,16 @@ public class Player {
     public void startGame() throws GameEngineException {
         myTimeline = new Timeline();
         myPlayerVisualization = new PlayerVisualization(myStage, myTimeline, myEngine.getActionsProcessor());
-        gameInfo = new HashMap<>();
         setGameLoop();
     }
 
     private void gameLoop(double elapsedTime) throws GameEngineException {
         if(myEngine.didLevelSwitch()) {
-            myPlayerVisualization.setNewLevel(myEngine.getSpritePrototypesByArchetype(SpriteArchetype.TOWER), myEngine.getSpritePrototypesByArchetype(SpriteArchetype.ENEMY), myEngine.getCurrentLevelBackgroundPath());
+            myCurrentGameSceneObject = myEngine.execute(0);
+            gameInfo = new HashMap<>();
+            gameInfo.put("Lives", myCurrentGameSceneObject.getLives());
+            gameInfo.put("Coins", myCurrentGameSceneObject.getResources());
+            myPlayerVisualization.setNewLevel(myEngine.getSpritePrototypesByArchetype(SpriteArchetype.TOWER), myEngine.getSpritePrototypesByArchetype(SpriteArchetype.ENEMY), myEngine.getCurrentLevelBackgroundPath(), gameInfo);
             myTimeline.pause();
         }
         else {
