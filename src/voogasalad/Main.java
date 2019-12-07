@@ -27,7 +27,7 @@ public class Main extends Application {
         //Player player = new Player(primaryStage, );
     }
 
-    private Scene setBusScene(Stage currentStage, BorderPane root) throws GameEngineException {
+    private Scene setBusScene(Stage currentStage, BorderPane root) {
         myBus = new Bus(currentStage, root, 500, 500);
         return myBus.getBusScene();
     }

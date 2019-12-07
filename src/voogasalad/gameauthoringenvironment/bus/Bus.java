@@ -3,10 +3,12 @@ package voogasalad.gameauthoringenvironment.bus;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import org.xml.sax.SAXException;
+import voogasalad.ErrorPane;
 import voogasalad.gameauthoringenvironment.gui.*;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -35,7 +37,8 @@ public class Bus {
     private Scene gamePlayerScene;
     private SceneCreator gaeObject;
     private Document createdXML;
-    private VBox busRoot;
+    private HBox busRoot;
+    private ErrorPane errorPane;
 
     public Bus(Stage currentStageParam, BorderPane rootParam, int widthParam, int heightParam){
         currentStage = currentStageParam;
@@ -43,7 +46,7 @@ public class Bus {
         width = widthParam;
         height = heightParam;
         gaeObject = new SceneCreator(widthParam, heightParam, this);
-
+        errorPane = new ErrorPane();
     }
 
     /**
@@ -54,17 +57,17 @@ public class Bus {
     }
 
     public Scene createBusScene() {
-        busRoot = new VBox();
-        busRoot.getChildren().add(createMenuButton("newgame.png", "newgame-hover.png", e -> changeToGAE()));
-        busRoot.getChildren().add(createMenuButton("loadgame.png", "loadgame-hover.png", e -> {
+        busRoot = new HBox();
+        busRoot.getChildren().add(createMenuButton("new-game.png", "new-game-hover.png", e -> changeToGAE()));
+        busRoot.getChildren().add(createMenuButton("load-game.png", "load-game-hover.png", e -> {
             try {
                 loadGameHandler();
             } catch (GameEngineException ex) {
-                ex.printStackTrace();
+                System.out.println(ex.getMessage());
+                //TODO: catch this GameEngineException
             }
         }));
 
-        //busRoot.getChildren().add(changeToGamePlayerButton());
         return new Scene(busRoot, width, height);
     }
 
@@ -77,10 +80,7 @@ public class Bus {
 ////        });
 //        return createMenuButton("newgame.png", "newgame-hover.png", e -> changeToGAE());
 //    }
-//
-//    private Label loadGameButton() {
-//        return createMenuButton("loadgame.png", "loadgame-hover.png", e -> loadGameHandler());
-//    }
+
 
     public void changeToGAE(){
         currentStage.setScene(gaeObject.createGAEScene(root));
@@ -116,7 +116,9 @@ public class Bus {
             Document doc = builder.parse(selectedFile);
             goToPlayer(doc);
         } catch (ParserConfigurationException | SAXException | IOException e) {
-            throw new GameEngineException(e, "ConfigurationFailedXML");
+//            throw new GameEngineException(e, "ConfigurationFailedXML");
+            errorPane.errorMessage("Wrong file type selected for upload: select XML");
+            //TODO: dont hard code the error message -- also figure out how to connect error pane up to game engine exception messages
 
         }
     }
