@@ -7,18 +7,16 @@ import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.LinkedList;
 
-public class MovementBuilder implements StrategyBuilder {
+public class MovementBuilder {
 
-    private static final String CLASS_PATH = "voogasalad.gameengine.executors.sprites.strategies.movement.";
-
-    public static final double DEFAULT_DISTANCE = 100;
+    public static final double DEFAULT_DISTANCE=100;
 
     private String myType;
     private double mySpeed;
     private LinkedList<Point2D.Double> myPath;
     private double myDistance;
 
-    public MovementBuilder setType(String typeString) {
+    public MovementBuilder setMovementType(String typeString) {
         myType = typeString.strip();
         return this;
     }
@@ -68,13 +66,8 @@ public class MovementBuilder implements StrategyBuilder {
         return myDistance;
     }
 
-    @Override
     public MovementStrategy build() throws GameEngineException {
-        try {
-            return (MovementStrategy) Class.forName(CLASS_PATH + myType).getConstructor(MovementBuilder.class).newInstance(this);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new GameEngineException(e, "SpriteMovementInitializationFailed");
-        }
+        StrategiesFactory movementStrategyFactory = new StrategiesFactory();
+        return movementStrategyFactory.makeMovement(this);
     }
 }

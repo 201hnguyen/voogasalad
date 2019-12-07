@@ -15,7 +15,6 @@ public class LimitedRotation implements RotationStrategy {
         myBuilder = builder;
         rotationSpeed = myBuilder.getSpeed();
         validRotationRange = myBuilder.getRotationRange();
-        targetAngle = validRotationRange.getKey();
     }
 
     @Override
@@ -47,6 +46,7 @@ public class LimitedRotation implements RotationStrategy {
         } else {
             rotationDirection = 1;
         }
+        System.out.println("Testing limited rotation:" + rotationDirection + "current angle: " + currentAngle + "target angle:" + targetAngle);
     }
 
     @Override
