@@ -78,6 +78,7 @@ public class PrototypesConfigurator {
                     NodeList parametersNodeList = strategy.getElementsByTagName(SPRITE_STRATEGIES_PARAMETERS_NODE_TAG).item(0).getChildNodes();
                     this.getClass().getDeclaredMethod(methodName, String.class, SpriteBuilder.class, NodeList.class).invoke(this, type, builder, parametersNodeList);
                 } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                    e.printStackTrace();
                     throw new GameEngineException(e, "SpriteProductionFailed");
                 }
             }
@@ -107,6 +108,7 @@ public class PrototypesConfigurator {
                 try {
                     movementBuilder.getClass().getMethod(STRATEGY_CONFIG_BUNDLE.getString(parameter.getNodeName()), String.class).invoke(movementBuilder, parameter.getTextContent());
                 } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                    e.printStackTrace();
                     throw new GameEngineException(e, "SpriteProductionFailed");
                 }
             }
