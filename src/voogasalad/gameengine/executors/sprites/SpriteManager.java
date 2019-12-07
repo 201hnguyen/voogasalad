@@ -22,4 +22,7 @@ public interface SpriteManager {
     List<Sprite> getPrototypesForArchetype(SpriteArchetype archetype) throws GameEngineException;
 
     void executeSpriteNextState(double elapsedTime) throws GameEngineException;
+
+    void removeSpriteByCoordinates(double xpos, double ypos);
+
 }
