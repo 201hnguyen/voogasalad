@@ -30,12 +30,14 @@ public class Game {
     private UIActionsProcessor myCurrentUIActionsProcessor;
     private GameActionsRequester myGameActionsRequester;
     private boolean switchedLevel;
+    private List<Sprite> myCompletePrototypesCollection;
 
     public Game(Document gameConfigDocument) throws GameEngineException {
         myGameRulesController = new GameRulesController();
         myGameActionsRequester = new GameActionsRequester();
         myGameConfigDocument = configureWithTestDocument();
         GameConfigurator gameConfigurator = new GameConfigurator(myGameConfigDocument);
+        myCompletePrototypesCollection = gameConfigurator.getGamePrototypesCollection();
         myGameRulesController.addGameConditionsAsCollection(gameConfigurator.configureGameConditions());
         myGameLevelsController = gameConfigurator.loadLevelsFromXML();
         myCurrentLevel = myGameLevelsController.loadBaseLevel();
@@ -74,8 +76,12 @@ public class Game {
         return myCurrentUIActionsProcessor;
     }
 
-    public List<Sprite> getSpritePrototypes() {
+    public List<Sprite> getCurrentLevelSpritePrototypes() {
         return myCurrentLevel.getSpriteManager().getSpritePrototypes();
+    }
+
+    public List<Sprite> getCompletePrototypesCollection() {
+        return myCompletePrototypesCollection;
     }
 
     public List<Sprite> getSpritePrototypesByArchetype(SpriteArchetype spriteArchetype) throws GameEngineException {
@@ -107,5 +113,9 @@ public class Game {
 
     public int getCurrentTotalGameScore() {
         return myGameLevelsController.getTotalScoreForAllLevels();
+    }
+
+    public List<Level> getLevels() {
+        return myGameLevelsController.getLevels();
     }
 }

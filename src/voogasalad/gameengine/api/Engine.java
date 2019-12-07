@@ -25,7 +25,7 @@ public class Engine {
     }
 
     public List<Sprite> getSpritePrototypes() {
-        return myGame.getSpritePrototypes();
+        return myGame.getCurrentLevelSpritePrototypes();
     }
 
     public List<Sprite> getSpritePrototypesByArchetype(SpriteArchetype spriteArchetype) throws GameEngineException {
