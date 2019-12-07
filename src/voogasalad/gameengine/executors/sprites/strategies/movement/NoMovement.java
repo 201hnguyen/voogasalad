@@ -14,7 +14,7 @@ public class NoMovement implements MovementStrategy {
 
     @Override
     public MovementStrategy makeClone() throws GameEngineException {
-        return new MovementBuilder().build();
+        return new NoMovement(new MovementBuilder());
     }
 
     @Override
