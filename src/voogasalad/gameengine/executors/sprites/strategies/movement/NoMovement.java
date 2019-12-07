@@ -1,5 +1,6 @@
 package voogasalad.gameengine.executors.sprites.strategies.movement;
 
+import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.objectcreators.MovementBuilder;
 
 import java.awt.geom.Point2D;
@@ -12,8 +13,8 @@ public class NoMovement implements MovementStrategy {
     }
 
     @Override
-    public MovementStrategy makeClone() {
-        return new NoMovement(new MovementBuilder());
+    public MovementStrategy makeClone() throws GameEngineException {
+        return new MovementBuilder().build();
     }
 
     @Override
