@@ -1,6 +1,7 @@
 package voogasalad.gameengine.executors.sprites.strategies.movement;
 
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
+import voogasalad.gameengine.executors.objectcreators.MovementBuilder;
 import voogasalad.gameengine.executors.utils.Verifier;
 
 import java.awt.*;
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public class PathMovement implements MovementStrategy {
-    private Map<String, Object> myOriginalParameters;
+    private MovementBuilder myOriginalBuilder;
     private LinkedList<Point2D.Double> myPath;
     private Point2D.Double nextPosition;
     private int nextPositionIndex;
@@ -19,9 +20,9 @@ public class PathMovement implements MovementStrategy {
     private Point2D.Double myDirection;
 
 
-    public PathMovement(double speed, LinkedList<Point2D.Double> path) throws GameEngineException {
-        mySpeed = speed;
-        myPath = path;
+    public PathMovement(MovementBuilder builder) throws GameEngineException {
+        mySpeed = builder.getSpeed();
+        myPath = builder.getPath();
         nextPositionIndex = 0;
         if(myPath.size() < 1) {
             reachedEnd = true;
@@ -33,7 +34,7 @@ public class PathMovement implements MovementStrategy {
 
     @Override
     public MovementStrategy makeClone() throws GameEngineException {
-        return new PathMovement(mySpeed, myPath);
+        return new PathMovement(myOriginalBuilder);
     }
 
     @Override
