@@ -23,6 +23,6 @@ public interface SpriteManager {
 
     void executeSpriteNextState(double elapsedTime) throws GameEngineException;
 
-    void removeSpriteByCoordinates(double xpos, double ypos);
+    void removeSpriteTowerByCoordinates(double xpos, double ypos);
 
 }

@@ -4,6 +4,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 import voogasalad.gameengine.executors.control.action.game.GameAction;
+import voogasalad.gameengine.executors.control.action.level.SellTowerAction;
 import voogasalad.gameengine.executors.control.gamecontrol.GameActionsRequester;
 import voogasalad.gameengine.executors.control.levelcontrol.Level;
 import voogasalad.gameengine.executors.control.levelcontrol.LevelActionsRequester;
@@ -45,8 +46,8 @@ public class ActionsProcessor {
         myLevelActionsRequester.requestAction(action);
     }
 
-    public void processRemoveSpriteAction(double xpos, double ypos) {
-        LevelAction action = new RemoveSpriteAction(xpos, ypos);
+    public void processSellTowerAction(double xpos, double ypos) {
+        LevelAction action = new SellTowerAction(xpos, ypos);
         myLevelActionsRequester.requestAction(action);
     }
 
