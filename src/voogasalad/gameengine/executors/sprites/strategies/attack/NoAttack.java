@@ -23,6 +23,6 @@ public class NoAttack implements AttackStrategy {
 
     @Override
     public AttackStrategy makeClone() throws GameEngineException {
-        return new AttackBuilder().build();
+        return new NoAttack(new AttackBuilder());
     }
 }
