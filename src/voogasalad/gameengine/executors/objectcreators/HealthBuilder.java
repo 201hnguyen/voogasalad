@@ -11,7 +11,7 @@ public class HealthBuilder implements StrategyBuilder {
     private int myHealthValue;
     private String myType;
 
-    public HealthBuilder setHealthType(String type) {
+    public HealthBuilder setType(String type) {
         myType = type;
         return this;
     }

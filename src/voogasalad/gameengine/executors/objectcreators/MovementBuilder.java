@@ -18,7 +18,7 @@ public class MovementBuilder implements StrategyBuilder {
     private LinkedList<Point2D.Double> myPath;
     private double myDistance;
 
-    public MovementBuilder setMovementType(String typeString) {
+    public MovementBuilder setType(String typeString) {
         myType = typeString.strip();
         return this;
     }
