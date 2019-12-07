@@ -33,8 +33,7 @@ public class ShootingAttack implements AttackStrategy {
     }
 
     private void shootBullet(double currentAngle, LevelActionsRequester actionsRequester, Point2D.Double currentPos){
-        System.out.println("Angle shot at:" + currentAngle);
-        LevelAction action = new AddSpriteAction(bulletPrototypeID, currentPos.getX() + Math.cos(currentAngle)*50, currentPos.getY() + Math.sin(currentAngle)*50);
+        LevelAction action = new AddSpriteAction(bulletPrototypeID, currentPos.getX() + Math.cos(currentAngle)*30, currentPos.getY() + Math.sin(currentAngle)*30, currentAngle);
         actionsRequester.requestAction(action);
     }
 

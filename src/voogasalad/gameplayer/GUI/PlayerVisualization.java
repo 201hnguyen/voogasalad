@@ -1,10 +1,6 @@
 package voogasalad.gameplayer.GUI;
 import javafx.animation.Timeline;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
@@ -13,9 +9,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import voogasalad.gameengine.api.Engine;
-import voogasalad.gameengine.api.GameSceneObject;
-import voogasalad.gameengine.api.UIActionsProcessor;
+import voogasalad.gameengine.api.ActionsProcessor;
 import voogasalad.gameengine.executors.sprites.Sprite;
 
 import java.util.ArrayList;
@@ -40,12 +34,12 @@ public class PlayerVisualization extends BorderPane {
     private VBox panelBox;
     private AccordionCreator accordionCreator;
     private StatusBar statusBar;
-    private UIActionsProcessor uiActionsProcessor;
+    private ActionsProcessor actionsProcessor;
 
-    public PlayerVisualization(Stage stage, Timeline timeline, UIActionsProcessor uiActionsProcessor) {
+    public PlayerVisualization(Stage stage, Timeline timeline, ActionsProcessor actionsProcessor) {
         this.stage = stage;
         this.timeline = timeline;
-        this.uiActionsProcessor = uiActionsProcessor;
+        this.actionsProcessor = actionsProcessor;
         initialize();
     }
 
@@ -80,7 +74,7 @@ public class PlayerVisualization extends BorderPane {
     }
 
     private void displayGameScreenAndAttachToAccordion() {
-        displayScreen = new DisplayScreen(uiActionsProcessor);
+        displayScreen = new DisplayScreen(actionsProcessor);
         displayScreen.setMinWidth(SCENE_WIDTH - (SCENE_WIDTH - PANEL_POSITION));
         displayScreen.setMinHeight(SCENE_HEIGHT - this.getTop().getLayoutY());
         accordionCreator.attachDisplayScreen(displayScreen);

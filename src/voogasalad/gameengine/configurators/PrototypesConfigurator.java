@@ -4,10 +4,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
-import voogasalad.gameengine.executors.objectcreators.AttackBuilder;
-import voogasalad.gameengine.executors.objectcreators.HealthBuilder;
-import voogasalad.gameengine.executors.objectcreators.MovementBuilder;
-import voogasalad.gameengine.executors.objectcreators.SpriteBuilder;
+import voogasalad.gameengine.executors.objectcreators.*;
 import voogasalad.gameengine.executors.sprites.Sprite;
 import voogasalad.gameengine.executors.utils.ConfigurationTool;
 
@@ -43,7 +40,6 @@ public class PrototypesConfigurator {
             setStrategiesForSpriteBuilder(spriteBuilder, strategiesRoot);
             prototypesForLevel.add(spriteBuilder.build());
         }
-        System.out.println("Current number of prototypes created for level: " + prototypesForLevel.size());
         return prototypesForLevel;
     }
 
@@ -78,10 +74,27 @@ public class PrototypesConfigurator {
                     NodeList parametersNodeList = strategy.getElementsByTagName(SPRITE_STRATEGIES_PARAMETERS_NODE_TAG).item(0).getChildNodes();
                     this.getClass().getDeclaredMethod(methodName, String.class, SpriteBuilder.class, NodeList.class).invoke(this, type, builder, parametersNodeList);
                 } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                    e.printStackTrace();
                     throw new GameEngineException(e, "SpriteProductionFailed");
                 }
             }
         }
+    }
+
+    private void setRotationStrategy(String type, SpriteBuilder builder, NodeList parametersNodeList) throws GameEngineException {
+        RotationBuilder rotationBuilder = new RotationBuilder().setType(type);
+        for (int i=0; i<parametersNodeList.getLength();i++) {
+            Element parameter = ConfigurationTool.convertNodeToElement(parametersNodeList.item(i));
+            if (parameter!= null) {
+                try {
+                    rotationBuilder.getClass().getMethod(STRATEGY_CONFIG_BUNDLE.getString(parameter.getNodeName()), String.class).invoke(rotationBuilder, parameter.getTextContent());
+                } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                    e.printStackTrace();
+                    throw new GameEngineException(e, "SpriteProductionFailed");
+                }
+            }
+        }
+        builder.setRotationStrategy(rotationBuilder.build());
     }
 
     private void setHealthStrategy(String type, SpriteBuilder builder, NodeList parametersNodeList) throws GameEngineException {
@@ -107,6 +120,7 @@ public class PrototypesConfigurator {
                 try {
                     movementBuilder.getClass().getMethod(STRATEGY_CONFIG_BUNDLE.getString(parameter.getNodeName()), String.class).invoke(movementBuilder, parameter.getTextContent());
                 } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                    e.printStackTrace();
                     throw new GameEngineException(e, "SpriteProductionFailed");
                 }
             }

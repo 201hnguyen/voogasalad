@@ -20,12 +20,12 @@ public class Engine {
         return myGame.execute(elapsedTime);
     }
 
-    public UIActionsProcessor getUIActionProcessor() {
-        return myGame.getUIActionProcessor();
+    public ActionsProcessor getActionsProcessor() {
+        return myGame.getActionsProcessor();
     }
 
     public List<Sprite> getSpritePrototypes() {
-        return myGame.getSpritePrototypes();
+        return myGame.getCurrentLevelSpritePrototypes();
     }
 
     public List<Sprite> getSpritePrototypesByArchetype(SpriteArchetype spriteArchetype) throws GameEngineException {
@@ -47,4 +47,9 @@ public class Engine {
     public String getGameTitle() {
         return gameTitle;
     }
+
+    public int getCurrentLevelId() {
+        return myGame.getCurrentLevelId();
+    }
+
 }

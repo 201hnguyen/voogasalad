@@ -2,7 +2,6 @@ package voogasalad.gameplayer;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.scene.Group;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.w3c.dom.Document;
@@ -12,14 +11,13 @@ import voogasalad.gameengine.api.Engine;
 import voogasalad.gameengine.executors.utils.SpriteArchetype;
 import voogasalad.gameplayer.GUI.PlayerVisualization;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
  * PLEASE READ BEFORE MAKING CHANGES TO THE PLAYER PACKAGE:
  * DO NOT INSTANTIATE OR ACCESS ANY ENGINE OBJECT BESIDES THE ENGINE ITSELF WHEN TRYING TO DISPLAY IN THE PLAYER.
  * We currently do not have modules in the engine, but if/when we do, all other classes will be locked from outside access
- * to maintain API consistency. Currently, the classes you will have access to are: Engine, UIActionsProcessor
+ * to maintain API consistency. Currently, the classes you will have access to are: Engine, ActionsProcessor
  * (retrieve with a getter method once you have the engine), Sprite, and GameSceneObject. The engine and the UIActionProcessor
  * are essentially the input API for the game, and the GameSceneObject (with a list of Sprites and resources/
  * lives/stats/etc.) is the output API that is outputted by the engine at every execute level.
@@ -28,7 +26,7 @@ import java.util.HashMap;
  */
 public class Player {
 
-    public static final int FRAMES_PER_SECOND = 40;
+    public static final int FRAMES_PER_SECOND = 10;
     public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     private Stage myStage;
@@ -37,18 +35,19 @@ public class Player {
     private Timeline myTimeline;
     private GameSceneObject myCurrentGameSceneObject;
     private HashMap<String, Integer> gameInfo;
-    private int flag = 0;
+    private int flag = -1;
 
     //Player expects a javaFX Stage upon instantiation
     public Player(Stage primaryStage, Document doc) throws GameEngineException { //TODO: Don't throw GameEngineException out of Player
         myStage = primaryStage;
         myEngine = new Engine(doc);
         startGame();
+        myEngine.getActionsProcessor().processGameEditingAction(null);
     }
 
     public void startGame() throws GameEngineException {
         myTimeline = new Timeline();
-        myPlayerVisualization = new PlayerVisualization(myStage, myTimeline, myEngine.getUIActionProcessor());
+        myPlayerVisualization = new PlayerVisualization(myStage, myTimeline, myEngine.getActionsProcessor());
         gameInfo = new HashMap<>();
         setGameLoop();
     }
@@ -56,15 +55,13 @@ public class Player {
     private void gameLoop(double elapsedTime) throws GameEngineException {
         if(myEngine.didLevelSwitch()) {
             myPlayerVisualization.setNewLevel(myEngine.getSpritePrototypesByArchetype(SpriteArchetype.TOWER), myEngine.getSpritePrototypesByArchetype(SpriteArchetype.ENEMY), myEngine.getCurrentLevelBackgroundPath());
-            flag = -1;
-        }
-        myCurrentGameSceneObject = myEngine.execute(elapsedTime);
-        gameInfo.put("Lives", myCurrentGameSceneObject.getLives());
-        gameInfo.put("Coins", myCurrentGameSceneObject.getResources());
-        myPlayerVisualization.update(myCurrentGameSceneObject.getOnScreenSprites(), gameInfo);
-        if(flag == -1){
             myTimeline.pause();
-            flag = 0;
+        }
+        else {
+            myCurrentGameSceneObject = myEngine.execute(elapsedTime);
+            gameInfo.put("Lives", myCurrentGameSceneObject.getLives());
+            gameInfo.put("Coins", myCurrentGameSceneObject.getResources());
+            myPlayerVisualization.update(myCurrentGameSceneObject.getOnScreenSprites(), gameInfo);
         }
     }
 
