@@ -1,15 +1,16 @@
 package voogasalad.gameplayer.GUI;
 import javafx.animation.Timeline;
-import javafx.geometry.Pos;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.geometry.Insets;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import voogasalad.gameengine.api.ActionsProcessor;
+import voogasalad.gameengine.api.GameSceneObject;
+import voogasalad.gameengine.api.UIActionsProcessor;
 import voogasalad.gameengine.executors.sprites.Sprite;
 
 import java.util.ArrayList;
@@ -24,10 +25,6 @@ public class PlayerVisualization extends BorderPane {
     private static final double PANEL_POSITION = 800;
     private static final double LAYOUT = 0;
     private static final String TITLE = "Player";
-    private static final String INSTRUCTIONS = " Instructions: Drag and drop \n towers onto display screen.";
-    private static final double INS_COLOR = 0.4f;
-    private static final double Y_SHADOW = 3.0f;
-    private static final double PANEL_SPACING = 10;
 
     private Scene scene;
     private Stage stage;
@@ -37,12 +34,14 @@ public class PlayerVisualization extends BorderPane {
     private VBox panelBox;
     private AccordionCreator accordionCreator;
     private StatusBar statusBar;
-    private ActionsProcessor actionsProcessor;
+    private UIActionsProcessor uiActionsProcessor;
+    private StopWatch myStopWatch;
 
-    public PlayerVisualization(Stage stage, Timeline timeline, ActionsProcessor actionsProcessor) {
+    public PlayerVisualization(Stage stage, Timeline timeline, UIActionsProcessor uiActionsProcessor) {
         this.stage = stage;
         this.timeline = timeline;
-        this.actionsProcessor = actionsProcessor;
+        this.uiActionsProcessor = uiActionsProcessor;
+        this.myStopWatch = new StopWatch();
         initialize();
     }
 
@@ -65,19 +64,20 @@ public class PlayerVisualization extends BorderPane {
 
     private void initialize() {
         ButtonCreator buttonCreator = new ButtonCreator(new ButtonController(this));
-        statusBar = new StatusBar();
         accordionCreator = new AccordionCreator();
-        panelBox = new VBox(PANEL_SPACING);
-        panelBox.getChildren().addAll(buttonCreator,showInstructions(),accordionCreator,backToGAE());
-        this.setTop(statusBar);
+        statusBar = new StatusBar();
+        panelBox = new VBox(10);
+        panelBox.getChildren().add(buttonCreator);
+        panelBox.getChildren().add(accordionCreator);
         this.setRight(panelBox);
+        this.setTop(statusBar);
         scene = new Scene(this, SCENE_WIDTH, SCENE_HEIGHT);
         displayGameScreenAndAttachToAccordion();
         showStage();
     }
 
     private void displayGameScreenAndAttachToAccordion() {
-        displayScreen = new DisplayScreen(actionsProcessor);
+        displayScreen = new DisplayScreen(uiActionsProcessor);
         displayScreen.setMinWidth(SCENE_WIDTH - (SCENE_WIDTH - PANEL_POSITION));
         displayScreen.setMinHeight(SCENE_HEIGHT - this.getTop().getLayoutY());
         accordionCreator.attachDisplayScreen(displayScreen);
@@ -92,31 +92,10 @@ public class PlayerVisualization extends BorderPane {
 
     }
 
-    private VBox backToGAE() {
-        VBox buttonHolder = new VBox();
-        Button button = new Button("Return to GAE");
-        buttonHolder.getChildren().add(button);
-        buttonHolder.setAlignment(Pos.CENTER);
-        return buttonHolder;
-    }
-
     private void setBackgroundImage(String backgroundImagePath){
         backgroundImage = new BackgroundImage(new Image(backgroundImagePath), BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(SCENE_WIDTH - (SCENE_WIDTH - PANEL_POSITION), SCENE_HEIGHT, false, false, false, false));
         displayScreen.setBackground(new Background(backgroundImage));
     }
-
-    private Text showInstructions() {
-        DropShadow shadow = new DropShadow();
-        shadow.setOffsetY(Y_SHADOW);
-        shadow.setColor(Color.color(INS_COLOR, INS_COLOR, INS_COLOR));
-        Text instructions = new Text();
-        instructions.setText(INSTRUCTIONS);
-        instructions.setFill(Color.BLACK);
-        instructions.setEffect(shadow);
-        return instructions;
-    }
-
-
 
     public void startButtonAction() {
         timeline.play();
