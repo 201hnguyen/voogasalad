@@ -5,10 +5,12 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
 public class RuleLine extends HBox {
+    ConditionActionComboBox conditionActionComboBox;
 
     public RuleLine(){
         super(10);
-        this.getChildren().addAll(new Label("Condition: "), new ComboBox(), new Label("  --->   Action: "), new ComboBox());
+        conditionActionComboBox = new ConditionActionComboBox();
+        this.getChildren().addAll(new Label("Condition: "), conditionActionComboBox.getConditions(), new Label("  --->   Action: "), conditionActionComboBox.getActions());
     }
 
 }
