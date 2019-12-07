@@ -13,6 +13,8 @@ import voogasalad.gameauthoringenvironment.gui.levelconfig.nodes.VBoxCreator;
 import voogasalad.gameauthoringenvironment.gui.levelconfig.nodes.RuleLine;
 import voogasalad.gameauthoringenvironment.gui.levelconfig.nodes.SubmitButton;
 
+import java.util.Map;
+
 public class LevelConfigPane extends BorderPane{
     private int width = 500;
     private int height = 500;
@@ -22,9 +24,11 @@ public class LevelConfigPane extends BorderPane{
     private VBoxCreator towersVBox;
     private VBoxCreator enemiesVBox;
     private VBoxCreator obstaclesVBox;
+    private Map<String, Map<String, Map<String, String>>> allActiveObjectMap;
 
 
-    public LevelConfigPane(AddToXML sendToXMLParam, Document createdXMLParam, Bus busInstanceParam){
+    public LevelConfigPane(AddToXML sendToXMLParam, Document createdXMLParam, Bus busInstanceParam, Map<String, Map<String, Map<String, String>>> allActiveObjectMapParam){
+        allActiveObjectMap = allActiveObjectMapParam;
         sendToXML = sendToXMLParam;
         createdXML = createdXMLParam;
         busInstance = busInstanceParam;
@@ -91,7 +95,7 @@ public class LevelConfigPane extends BorderPane{
 
     private VBox createConditionActionVBox(){
         VBox conditionAction = new VBox(10);
-        conditionAction.getChildren().addAll(new RuleLine(), new RuleLine());
+        conditionAction.getChildren().addAll(new RuleLine(allActiveObjectMap), new RuleLine(allActiveObjectMap));
         return conditionAction;
     }
 
@@ -104,7 +108,7 @@ public class LevelConfigPane extends BorderPane{
     private Button createAddRuleLineButton(VBox conditionAction){
         Button addRuleLine = new Button("+");
         addRuleLine.setOnMouseClicked(event -> {
-            conditionAction.getChildren().add(new RuleLine());
+            conditionAction.getChildren().add(new RuleLine(allActiveObjectMap));
         });
         return addRuleLine;
     }
