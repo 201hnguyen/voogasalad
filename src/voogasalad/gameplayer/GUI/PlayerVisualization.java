@@ -3,6 +3,7 @@ import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
+import javafx.geometry.NodeOrientation;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -14,6 +15,7 @@ import javafx.stage.Stage;
 import voogasalad.gameengine.api.GameSceneObject;
 import voogasalad.gameengine.api.ActionsProcessor;
 import voogasalad.gameengine.executors.sprites.Sprite;
+import voogasalad.gameplayer.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,11 +41,13 @@ public class PlayerVisualization extends BorderPane {
     private ActionsProcessor uiActionsProcessor;
     private StopWatch myStopWatch;
     private Text myStopWatchDisplay;
+    private Player myPlayer;
 
-    public PlayerVisualization(Stage stage, Timeline timeline, ActionsProcessor uiActionsProcessor) {
+    public PlayerVisualization(Stage stage, Timeline timeline, ActionsProcessor uiActionsProcessor, Player player) {
         this.stage = stage;
         this.timeline = timeline;
         this.uiActionsProcessor = uiActionsProcessor;
+        this.myPlayer = player;
         initialize();
     }
 
@@ -84,7 +88,7 @@ public class PlayerVisualization extends BorderPane {
     }
 
     private void displayGameScreenAndAttachToAccordion() {
-        displayScreen = new DisplayScreen(uiActionsProcessor);
+        displayScreen = new DisplayScreen(uiActionsProcessor, myPlayer);
         displayScreen.setMinWidth(SCENE_WIDTH - (SCENE_WIDTH - PANEL_POSITION));
         displayScreen.setMinHeight(SCENE_HEIGHT - this.getTop().getLayoutY());
         accordionCreator.attachDisplayScreen(displayScreen);
@@ -100,7 +104,7 @@ public class PlayerVisualization extends BorderPane {
     }
 
     private void createStopWatchDisplay(){
-        myStopWatchDisplay = new Text("\n0 : 0");
+        myStopWatchDisplay = new Text("\n 0 : 0");
         myStopWatchDisplay.setFont(new Font(20));
     }
 

@@ -7,14 +7,17 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.*;
 import voogasalad.gameengine.api.ActionsProcessor;
 import voogasalad.gameengine.executors.sprites.Sprite;
+import voogasalad.gameplayer.Player;
 
 import java.util.List;
 
 public class DisplayScreen extends Pane {
     private ActionsProcessor actionsProcessor;
     private int currentImageID;
+    private Player myPlayer;
 
-    public DisplayScreen(ActionsProcessor actionsProcessor) {
+    public DisplayScreen(ActionsProcessor actionsProcessor, Player player) {
+        this.myPlayer = player;
         this.actionsProcessor = actionsProcessor;
         this.setOnDragOver((DragEvent event) -> {
             Dragboard db = event.getDragboard();
@@ -29,6 +32,7 @@ public class DisplayScreen extends Pane {
             if (db.hasImage()) {
                 success = true;
                 this.actionsProcessor.processAddSpriteAction(currentImageID, event.getX(), event.getY());
+                player.executeEngineWithZeroElapsedTime();
             }
             event.setDropCompleted(success);
             event.consume();

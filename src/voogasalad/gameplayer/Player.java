@@ -6,6 +6,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.w3c.dom.Document;
 import voogasalad.gameengine.api.GameSceneObject;
+import voogasalad.gameengine.executors.control.gamecontrol.Game;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.api.Engine;
 import voogasalad.gameengine.executors.utils.SpriteArchetype;
@@ -44,9 +45,9 @@ public class Player {
         startGame();
     }
 
-    public void startGame() throws GameEngineException {
+    private void startGame() {
         myTimeline = new Timeline();
-        myPlayerVisualization = new PlayerVisualization(myStage, myTimeline, myEngine.getActionsProcessor());
+        myPlayerVisualization = new PlayerVisualization(myStage, myTimeline, myEngine.getActionsProcessor(), this);
         setGameLoop();
     }
 
@@ -78,6 +79,15 @@ public class Player {
         myTimeline.setCycleCount(Timeline.INDEFINITE);
         myTimeline.getKeyFrames().add(frame);
         myTimeline.play();
+    }
+
+    public void executeEngineWithZeroElapsedTime() {
+        try {
+            myEngine.execute(0);
+        }
+        catch (GameEngineException ex){
+            ex.printStackTrace(); //TODO: Fix
+        }
     }
 
 }
