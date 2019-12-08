@@ -179,4 +179,9 @@ public class JavaFXSprite implements Sprite {
         return myImageView.getBoundsInParent().intersects(otherImage.getBoundsInParent());
     }
 
+    @Override
+    public void applyEffect(Sprite other) throws GameEngineException {
+        myEffectStrategy.apply(other);
+    }
+
 }
