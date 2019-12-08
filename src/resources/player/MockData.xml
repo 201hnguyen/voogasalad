@@ -12,11 +12,6 @@
             <Archetype>PROJECTILE</Archetype>
         </Properties>
         <Strategies>
-            <AttackStrategy>
-                <Type>NoAttack</Type>
-                <Parameters>
-                </Parameters>
-            </AttackStrategy>
             <HealthStrategy>
                 <Type>NoHealth</Type>
                 <Parameters>
@@ -25,15 +20,11 @@
             <MovementStrategy>
                 <Type>PathMovement</Type>
                 <Parameters>
-                    <Path>0,200;300,200</Path>
+                    <Path>190,150; 37,140</Path>
+<!--                    <Path>0,200;300,200</Path>-->
                     <Speed>300</Speed>
                 </Parameters>
             </MovementStrategy>
-            <RotationStrategy>
-                <Type>NoRotation</Type>
-                <Parameters>
-                </Parameters>
-            </RotationStrategy>
             <EffectStrategy>
                 <Type>ChunkHealthEffect</Type>
                 <Parameters>
@@ -51,33 +42,12 @@
             <Archetype>ENEMY</Archetype>
         </Properties>
         <Strategies>
-            <AttackStrategy>
-                <Type>NoAttack</Type>
-                <Parameters>
-                </Parameters>
-            </AttackStrategy>
             <HealthStrategy>
                 <Type>Health</Type>
                 <Parameters>
                     <HealthValue>5</HealthValue>
                 </Parameters>
             </HealthStrategy>
-            <MovementStrategy>
-                <Type>NoMovement</Type>
-                <Parameters>
-                </Parameters>
-            </MovementStrategy>
-            <RotationStrategy>
-                <Type>NoRotation</Type>
-                <Parameters>
-                    <RotationSpeed>100</RotationSpeed>
-                </Parameters>
-            </RotationStrategy>
-            <EffectStrategy>
-                <Type>NoEffect</Type>
-                <Parameters>
-                </Parameters>
-            </EffectStrategy>
         </Strategies>
     </SpritePrototype>
 
@@ -119,7 +89,7 @@
             <ConditionId>1</ConditionId>
             <Type>TemporalCondition</Type>
             <Parameters>
-                <MarkedTime>2</MarkedTime>
+                <MarkedTime>1</MarkedTime>
             </Parameters>
             <Actions>
                 <Action>
