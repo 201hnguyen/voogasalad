@@ -24,10 +24,19 @@ public class LevelConfigPane extends BorderPane{
     private VBoxCreator towersVBox;
     private VBoxCreator enemiesVBox;
     private VBoxCreator obstaclesVBox;
+    private static int gameLevel;
     private Map<String, Map<String, Map<String, String>>> allActiveObjectMap;
+    private HBox title;
+    private GridPane gridPane;
+    private HBox allObjects;
+    private ScrollPane rules;
+    private Label selectActiveLabel;
+    private Button createMapButton;
+    private HBox createSubmitNewLevelButtons;
 
 
     public LevelConfigPane(AddToXML sendToXMLParam, Document createdXMLParam, Bus busInstanceParam, Map<String, Map<String, Map<String, String>>> allActiveObjectMapParam){
+        gameLevel = 1;
         allActiveObjectMap = allActiveObjectMapParam;
         sendToXML = sendToXMLParam;
         createdXML = createdXMLParam;
@@ -35,14 +44,18 @@ public class LevelConfigPane extends BorderPane{
         setBorderPane();
     }
 
-    public void setBorderPane(){
-        GridPane gridPane = new GridPane();
-        HBox title = createTitleHBox();
-        HBox allObjects = createAllObjectHBox();
-        ScrollPane rules = createRulesVBox();
-        Label selectActiveLabel = createSelectActiveLabel();
-        Button createMapButton = new MapButton(width, height);
-        HBox createSubmitNewLevelButtons = createSubmitNewLevelButtons();
+    private void setBorderPane(){
+        title = createTitleHBox();
+        allObjects = createAllObjectHBox();
+        rules = createRulesVBox();
+        selectActiveLabel = createSelectActiveLabel();
+        createMapButton = new MapButton(width, height);
+        createSubmitNewLevelButtons = createSubmitNewLevelButtons();
+        addToGridPane();
+    }
+
+    private void addToGridPane(){
+        gridPane = new GridPane();
         gridPane.addRow(0, title);
         gridPane.addRow(1, allObjects);
         gridPane.addRow(2, selectActiveLabel);
@@ -55,7 +68,7 @@ public class LevelConfigPane extends BorderPane{
 
     private HBox createTitleHBox(){
         HBox titleHBox = new HBox();
-        Label levelLabel = new Label("Level 1 Configuration");
+        Label levelLabel = new Label("Level " + gameLevel + " Configuration");
         levelLabel.setFont(Font.font(30));
         levelLabel.setPrefHeight(height/10);
         levelLabel.setMaxHeight(levelLabel.getPrefHeight());
@@ -128,7 +141,7 @@ public class LevelConfigPane extends BorderPane{
         HBox h = new HBox();
         h.setPrefWidth(width);
         h.setPrefHeight(height/10);
-        Button newLevel = new Button("Create New Level");
+        Button newLevel = newLevelButton();
         SubmitButton submit = new SubmitButton(createdXML, sendToXML, busInstance);
         newLevel.setPrefWidth(width/2);
         newLevel.setPrefHeight(h.getPrefHeight());
@@ -149,6 +162,23 @@ public class LevelConfigPane extends BorderPane{
             obstaclesVBox.addToObjectHBox(icon);
         }
 
+    }
+
+    public Button newLevelButton(){
+        Button newLevel = new Button("Create New Level");
+        newLevel.setOnMouseClicked(event -> {
+            gameLevel++;
+            //Save in map linking level to all active objects
+            updateLevelConfigPane();
+        });
+        return newLevel;
+    }
+
+    public void updateLevelConfigPane(){
+        title = createTitleHBox();
+        rules = createRulesVBox();
+        createMapButton = new MapButton(width, height);
+        addToGridPane();
     }
 
 
