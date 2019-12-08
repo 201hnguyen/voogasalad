@@ -189,7 +189,7 @@ public class SpriteBuilder {
 
     private void checkParametersAndAssignDefault() throws GameEngineException {
         if (myMovementStrategy == null) {
-            myMovementStrategy = new MovementBuilder().setMovementType("NoMovement").build();
+            myMovementStrategy = new MovementBuilder().setType("NoMovement").build();
         }
         if (myHealthStrategy == null) {
             myHealthStrategy = new HealthBuilder().build();

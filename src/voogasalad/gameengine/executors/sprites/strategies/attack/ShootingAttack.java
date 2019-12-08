@@ -28,12 +28,11 @@ public class ShootingAttack implements AttackStrategy {
         if(elapsedTimeSinceLastAttack >= attackRate){
             elapsedTimeSinceLastAttack = 0;
             shootBullet(currentAngle, actionsRequester, currentPos);
-            //TODO: spawn this bullet
         }
     }
 
     private void shootBullet(double currentAngle, LevelActionsRequester actionsRequester, Point2D.Double currentPos){
-        LevelAction action = new AddSpriteAction(bulletPrototypeID, currentPos.getX() + Math.cos(currentAngle)*30, currentPos.getY() + Math.sin(currentAngle)*30, currentAngle);
+        LevelAction action = new AddSpriteAction(bulletPrototypeID, currentPos.getX() + Math.cos(currentAngle), currentPos.getY() + Math.sin(currentAngle), Math.toRadians(currentAngle));
         actionsRequester.requestAction(action);
     }
 
