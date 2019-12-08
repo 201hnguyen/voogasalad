@@ -1,10 +1,11 @@
-package voogasalad.gameauthoringenvironment.gui.tabconfig.parameterfields;
+package voogasalad.gameauthoringenvironment.gui.utils;
 
 
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import voogasalad.gameauthoringenvironment.gui.AddToXML;
 import voogasalad.gameauthoringenvironment.gui.SaveGUIParameters;
+import voogasalad.gameauthoringenvironment.gui.tabconfig.parameterfields.ParameterCreator;
 
 import java.util.List;
 
