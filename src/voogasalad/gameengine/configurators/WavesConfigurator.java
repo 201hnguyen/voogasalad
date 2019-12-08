@@ -5,6 +5,7 @@ import org.w3c.dom.NodeList;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.control.levelcontrol.Wave;
 import voogasalad.gameengine.executors.sprites.Sprite;
+import voogasalad.gameengine.executors.utils.ConfigurationTool;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -70,14 +71,6 @@ public class WavesConfigurator {
 
     private LinkedList<Point2D.Double> parsePath() {
         String pathString = myDefinedWave.getElementsByTagName(PATH_TAG).item(0).getTextContent();
-        LinkedList<Point2D.Double> parsedPath = new LinkedList<>();
-        String[] pointStrings = pathString.strip().split(";");
-        for(String pointString : pointStrings) {
-            Point2D.Double toAdd = new Point2D.Double();
-            String[] coordinateStrings = pointString.split(",");
-            toAdd.setLocation(Double.parseDouble(coordinateStrings[0]), Double.parseDouble(coordinateStrings[1]));
-            parsedPath.add(toAdd);
-        }
-        return parsedPath;
+        return ConfigurationTool.convertPathStringToPath(pathString);
     }
 }

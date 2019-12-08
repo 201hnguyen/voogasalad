@@ -21,6 +21,8 @@ public interface SpriteManager {
 
     Sprite removeSpriteById(int spriteId);
 
+    Sprite getSpriteById(int spriteId);
+
     List<Sprite> getCopyPrototypesForArchetype(SpriteArchetype archetype) throws GameEngineException;
 
     void executeSpriteNextState(double elapsedTime) throws GameEngineException;
