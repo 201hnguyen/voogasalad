@@ -7,27 +7,27 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.File;
+import java.io.*;
+import java.util.Properties;
 
 public class FileChooserButton extends Button {
 
-    private Stage newStage = new Stage();
-    private ImageView imageView;
-    private String selectedImage = "";
+    private static final String PROPERTIES_PATH = "resources.gae.tabcreation.;";
+    private static Stage newStage = new Stage();
+    private static String imageString;
+    private Properties imageProp;
 
-    public FileChooserButton(){
+
+    public FileChooserButton() {
         super("Select Image");
-        //this.imageView = getImageView();
         createButton();
-
     }
 
     /**
      *
-     * @return
      */
-    public ImageView getImageView() {
-        return imageView;
+    public String getImageString() {
+        return imageString;
     }
 
     //TODO: add exception
@@ -35,13 +35,46 @@ public class FileChooserButton extends Button {
         final FileChooser imageChooser = new FileChooser();
         this.setOnAction((final ActionEvent e) -> {
             File file = imageChooser.showOpenDialog(newStage);
-            if (file != null) {
-                Image image = new Image(file.toURI().toString());
-                imageView = new ImageView(image);
-                //imageView.setFitWidth(500);
-                //imageView.setFitHeight(500);
-            }
+            imageString = file.toURI().toString();
+            System.out.println("FileChooserButton " + imageString);
+            createPropertiesFile();
+//            if (file != null) {
+//                Image image = new Image(selectedImage);
+//                imageView = new ImageView(image);
+//                imageView.setFitWidth(500);
+//                imageView.setFitHeight(500);
+//           }
         });
     }
 
+
+    private void createPropertiesFile() {
+        try (OutputStream writer = new FileOutputStream(PROPERTIES_PATH)) {
+
+            imageProp = new Properties();
+
+            //clearPropertiesFile(writer);
+
+            // set the properties value
+            imageProp.setProperty("image.url", imageString);
+
+            // save properties to project root folder
+            imageProp.store(writer, null);
+
+            System.out.println(imageProp);
+
+        } catch (IOException io) {
+            io.printStackTrace();
+        }
+    }
+
+    private void clearPropertiesFile(OutputStream writer) throws IOException {
+        InputStream reader = new FileInputStream(PROPERTIES_PATH);
+        imageProp.load(reader);
+        imageProp.remove("image.url");
+        imageProp.store(writer, null);
+    }
 }
+
+
+

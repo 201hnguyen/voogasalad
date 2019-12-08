@@ -5,6 +5,9 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -12,9 +15,13 @@ import javafx.stage.Stage;
 import voogasalad.gameauthoringenvironment.gui.AddToXML;
 import voogasalad.gameauthoringenvironment.gui.SaveGUIParameters;
 import voogasalad.gameauthoringenvironment.gui.levelconfig.LevelConfigPane;
+import voogasalad.gameauthoringenvironment.gui.utils.FileChooserButton;
+import voogasalad.gameauthoringenvironment.gui.utils.PreviewImageButton;
 import voogasalad.gameauthoringenvironment.gui.utils.SubmitButton;
+import voogasalad.gameauthoringenvironment.gui.utils.TabVBoxCreator;
 
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
@@ -23,6 +30,10 @@ public class ParameterCreator extends BorderPane{
     private static final int window_WIDTH = 300;
     private static final int window_HEIGHT = 300;
     private static final String SUBMITBUTTONCLASS = new SubmitButton().getClass().toString().split("class ")[1];
+    private static final String FILECHOOSERBUTTONCLASS = "class voogasalad.gameauthoringenvironment.gui.utils.FileChooserButton";
+    private static final String PREVIEWIMAGEBUTTONCLASS = "class voogasalad.gameauthoringenvironment.gui.utils.PreviewImageButton";
+    private static final String PROPERTIES_PATH = "resources.gae.tabcreation.;";
+
     private BorderPane root;
     private ObjectPreviewAndActive objectSpecificRoot;
     private Stage newStage;
@@ -42,6 +53,12 @@ public class ParameterCreator extends BorderPane{
     private Map<String, Map<String, String>> activeObjects;
     private ClearFieldsFactory clearFieldsFactory;
     private Map<String, Map<String, Map<String, String>>> allActiveObjectMap;
+    private Properties imageProp;
+    private String imageString;
+    private ImageView imageView;
+    double imageViewWidth = 0;
+    double imageViewHeight = 0;
+
     //private static Map<String, Map<String,String>> sendToXML;
 
 
@@ -65,13 +82,11 @@ public class ParameterCreator extends BorderPane{
         storeAllFieldTypes();
         addInputFields();
         addImagePreview();
-        this.setLeft(previewVBox);
+        //createImagePreview();
         this.setRight(configVBox);
+        this.setLeft(previewVBox);
     }
 
-    /**
-     *
-     */
     public void createSubmitButton(){
         allNodes
                 .stream()
@@ -84,12 +99,7 @@ public class ParameterCreator extends BorderPane{
     }
 
     private void addInputFields() {
-        configVBox = new VBox();
-        Label header = new Label("Set Parameters");
-        header.setFont(Font.font(14));
-        configVBox.getChildren().add(header);
-        configVBox.setPrefWidth(200);
-        configVBox.setPadding(new Insets(50, 50, 50, 50));
+        configVBox = new TabVBoxCreator("Configure Parameters");
 
         for (int j = 0; j < properties.length; j++) {
             Label label = new Label(properties[j]); //for SaveGuiParameters
@@ -101,14 +111,62 @@ public class ParameterCreator extends BorderPane{
     }
 
     private void addImagePreview() {
-        previewVBox = new VBox();
-        Label header = new Label("Image Preview");
-        header.setFont(Font.font(14));
-        previewVBox.getChildren().add(header);
-        previewVBox.setPrefWidth(200);
-        previewVBox.setPadding(new Insets(50, 50, 50, 50));
+        previewVBox = new TabVBoxCreator("Image Preview");
+        //load properties file
+        try (InputStream reader = new FileInputStream(PROPERTIES_PATH)) {
+
+            imageProp = new Properties();
+
+            clearPropertiesFile(reader);
+
+            // load a properties file
+            imageProp.load(reader);
+
+            imageString = imageProp.getProperty("image.url");
+            System.out.println(imageString);
+
+            imageView = new ImageView(imageString);
+            previewVBox.getChildren().add(imageView);
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
 
     }
+
+    private void clearPropertiesFile(InputStream reader) throws IOException {
+        OutputStream writer = new FileOutputStream(PROPERTIES_PATH);
+        imageProp.load(reader);
+        imageProp.remove("image.url");
+        imageProp.store(writer, null);
+    }
+
+
+//
+//    private void createImagePreview() {
+//        previewVBox = new TabVBoxCreator("Image Preview");
+//        FileChooserButton fileChooserButton = new FileChooserButton();
+//        PreviewImageButton previewImageButton = new PreviewImageButton();
+//
+//        for (int i = 0; i < allNodes.size(); i++) {
+//            String whichClass = allNodes.get(i).getClass().toString();
+//            if (whichClass.equals(FILECHOOSERBUTTONCLASS)) {
+//                fileChooserButton = (FileChooserButton) allNodes.get(i);
+//            }
+//            if (whichClass.equals(PREVIEWIMAGEBUTTONCLASS)) {
+//                previewImageButton = new PreviewImageButton(fileChooserButton);
+//                imageString = previewImageButton.getImageString();
+//                System.out.println("ParameterCreator" + imageString);
+//                //imageView = new ImageView(imageString);
+//            }
+//
+//        }
+//
+////        previewImageButton.setOnAction(e -> {
+////            previewVBox.getChildren().add(imageView);
+////        });
+//    }
+
 
 
     private Node createObjectFromString(String type){
