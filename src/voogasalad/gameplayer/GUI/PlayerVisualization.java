@@ -31,9 +31,14 @@ public class PlayerVisualization extends BorderPane {
     private static final double SCENE_WIDTH = 1000;
     private static final double SCENE_HEIGHT = 800;
     private static final double PANEL_POSITION = 800;
+    private static final double PANEL_SPACING = 10;
+    private static final double TIME_SIZE = 20;
+    private static final double SHADOW_COLOR = 0.3f;
+    private static final double SHADOW_ySET= 3.0f;
+    private static final String BACKtoGAE = "Return to GAE";
     private static final String TITLE = "Player";
     private static final String INSTRUCTIONS = " Instructions: Drag and drop \n towers onto display screen.";
-    private static final String TIMER_TITLE = "Elapsed Time:";
+    private static final String TIMER_INFO = "Elapsed Time:"+ "\n 0 : 0";
 
     private Scene scene;
     private Stage stage;
@@ -55,7 +60,7 @@ public class PlayerVisualization extends BorderPane {
         this.actionsProcessor = uiActionsProcessor;
         this.myPlayer = player;
         this.isGameRunning = false;
-        currentTime = TIMER_TITLE + "\n 0 : 0";
+        currentTime = TIMER_INFO;
         initialize();
     }
 
@@ -90,7 +95,7 @@ public class PlayerVisualization extends BorderPane {
         accordionCreator = new AccordionCreator();
         statusBar = new StatusBar();
         selectedTowerPane = new SelectedTowerPane(actionsProcessor, myPlayer, this);
-        panelBox = new VBox(10);
+        panelBox = new VBox(PANEL_SPACING);
         panelBox.getChildren().addAll(buttonCreator, showInstructions(), accordionCreator, selectedTowerPane, backToGAE());
         createStopWatchDisplay();
         statusBar.getChildren().add(myStopWatchDisplay);
@@ -119,7 +124,7 @@ public class PlayerVisualization extends BorderPane {
 
     private VBox backToGAE() {
         VBox buttonHolder = new VBox();
-        Button button = new Button("Return to GAE");
+        Button button = new Button(BACKtoGAE);
         buttonHolder.getChildren().add(button);
         buttonHolder.setAlignment(Pos.CENTER);
         return buttonHolder;
@@ -137,15 +142,15 @@ public class PlayerVisualization extends BorderPane {
 
     private void createStopWatchDisplay(){
         DropShadow shadow = getDropShadow();
-        myStopWatchDisplay = new Text(TIMER_TITLE + "\n 0 : 0");
+        myStopWatchDisplay = new Text(TIMER_INFO);
         myStopWatchDisplay.setEffect(shadow);
-        myStopWatchDisplay.setFont(new Font(20));
+        myStopWatchDisplay.setFont(new Font(TIME_SIZE));
     }
 
     private DropShadow getDropShadow() {
         DropShadow shadow = new DropShadow();
-        shadow.setOffsetY(3.0f);
-        shadow.setColor(Color.color(0.4f, 0.4f, 0.4f));
+        shadow.setOffsetY(SHADOW_ySET);
+        shadow.setColor(Color.color(SHADOW_COLOR, SHADOW_COLOR, SHADOW_COLOR));
         return shadow;
     }
 
