@@ -58,19 +58,17 @@ public class DisplayScreen extends Pane {
     }
 
     private void loadInSprite(Sprite sprite) {
-        Sprite toLoad = sprite;
-//        ImageView toDisplay = new ImageView(new Image(toLoad.getImagePath()));
-        ImageView toDisplay = (ImageView) toLoad.getImage();
+        //        ImageView toDisplay = new ImageView(new Image(toLoad.getImagePath()));
+        ImageView toDisplay = (ImageView) sprite.getImage();
         int xPos = (int) sprite.getX();
         int yPos = (int) sprite.getY();
         addImageToScreen(toDisplay, xPos, yPos);
         if (sprite.getSpriteArchetype() == SpriteArchetype.TOWER) {
-            AtomicBoolean clicked = new AtomicBoolean(false);
             toDisplay.setOnMouseClicked(e -> {
-                if(!clicked.get()) {
+                if(!sprite.getHasBeenClicked()) {
                     myPlayerVisualization.pauseButtonAction();
-                    selectedTowerPane.removeTower(toLoad, xPos, yPos);
-                    clicked.set(true);
+                    selectedTowerPane.removeTower(sprite, xPos, yPos);
+                    sprite.setHasBeenClicked(true);
                 }
             });
         }

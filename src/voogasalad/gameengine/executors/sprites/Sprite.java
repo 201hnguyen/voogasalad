@@ -32,4 +32,6 @@ public interface Sprite {
     boolean isColliding(Sprite sprite);
     void updateAttackStrategy(AttackStrategy updatedStrategy);
     void applyEffect(Sprite sprite) throws GameEngineException;
+    void setHasBeenClicked(boolean bool);
+    boolean getHasBeenClicked();
 }
