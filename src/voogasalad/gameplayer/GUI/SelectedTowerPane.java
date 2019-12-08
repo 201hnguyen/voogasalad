@@ -1,0 +1,41 @@
+package voogasalad.gameplayer.GUI;
+
+import javafx.geometry.Insets;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import voogasalad.gameengine.api.ActionsProcessor;
+import voogasalad.gameengine.executors.sprites.Sprite;
+import voogasalad.gameplayer.Player;
+
+public class SelectedTowerPane extends VBox {
+
+    private Player player;
+    private PlayerVisualization playerVisualization;
+    private ActionsProcessor actionsProcessor;
+
+    public SelectedTowerPane(ActionsProcessor actionsProcessor, Player player, PlayerVisualization playerVisualization) {
+        this.actionsProcessor = actionsProcessor;
+        this.player = player;
+        this.playerVisualization = playerVisualization;
+        this.setBackground(new Background(new BackgroundFill(Color.ALICEBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+    }
+
+    public void removeTower(Sprite sprite, int x, int y) {
+        HBox removeTowerBox = new HBox();
+        ImageView towerImage = new ImageView(new Image(sprite.getImagePath()));
+        Label removeTowerButton = new Label("Remove Tower");
+        removeTowerButton.setOnMouseClicked(e -> {
+            actionsProcessor.processSellTowerAction(x,y);
+            this.getChildren().remove(removeTowerBox);
+            player.executeEngineWithZeroElapsedTime();
+        });
+        removeTowerButton.setOnMouseEntered(e -> removeTowerButton.setBackground(new Background(new BackgroundFill(Color.LIMEGREEN, CornerRadii.EMPTY, Insets.EMPTY))));
+        removeTowerButton.setOnMouseExited(e -> removeTowerButton.setBackground(new Background(new BackgroundFill(Color.GHOSTWHITE, CornerRadii.EMPTY, Insets.EMPTY))));
+        removeTowerBox.getChildren().addAll(towerImage, removeTowerButton);
+        this.getChildren().add(removeTowerBox);
+    }
+
+}

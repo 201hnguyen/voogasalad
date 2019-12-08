@@ -1,21 +1,35 @@
 package voogasalad.gameplayer.GUI;
 
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.*;
 import voogasalad.gameengine.api.ActionsProcessor;
+import voogasalad.gameengine.api.Engine;
+import voogasalad.gameengine.api.GameSceneObject;
+import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.sprites.Sprite;
+import voogasalad.gameengine.executors.utils.SpriteArchetype;
+import voogasalad.gameplayer.Player;
 
 import java.util.List;
 
 public class DisplayScreen extends Pane {
+    private SelectedTowerPane selectedTowerPane;
     private ActionsProcessor actionsProcessor;
     private int currentImageID;
+    private Player myPlayer;
+    private PlayerVisualization myPlayerVisualization;
 
-    public DisplayScreen(ActionsProcessor actionsProcessor) {
+
+    public DisplayScreen(ActionsProcessor actionsProcessor, Player player, SelectedTowerPane selectedTowerPane, PlayerVisualization playerVisualization) {
+        this.myPlayer = player;
+        this.myPlayerVisualization = playerVisualization;
         this.actionsProcessor = actionsProcessor;
+        this.selectedTowerPane = selectedTowerPane;
         this.setOnDragOver((DragEvent event) -> {
             Dragboard db = event.getDragboard();
             if (db.hasImage()) {
@@ -29,6 +43,7 @@ public class DisplayScreen extends Pane {
             if (db.hasImage()) {
                 success = true;
                 this.actionsProcessor.processAddSpriteAction(currentImageID, event.getX(), event.getY());
+                myPlayer.executeEngineWithZeroElapsedTime();
             }
             event.setDropCompleted(success);
             event.consume();
@@ -45,12 +60,20 @@ public class DisplayScreen extends Pane {
     public void setImageDraggedID(int id){
         currentImageID = id;
     }
+
     private void loadInSprite(Sprite sprite) {
         Sprite toLoad = sprite;
+//        ImageView toDisplay = new ImageView(new Image(toLoad.getImagePath()));
         ImageView toDisplay = (ImageView) toLoad.getImage();
         int xPos = (int) sprite.getX();
         int yPos = (int) sprite.getY();
         addImageToScreen(toDisplay, xPos, yPos);
+        if (sprite.getSpriteArchetype() == SpriteArchetype.TOWER) {
+            toDisplay.setOnMouseClicked(e -> {
+                myPlayerVisualization.pauseButtonAction();
+                selectedTowerPane.removeTower(toLoad, xPos, yPos);
+            });
+        }
         // TODO: figure out how we will pass in the height and width
     }
 

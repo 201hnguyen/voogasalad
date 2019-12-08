@@ -49,6 +49,7 @@ public class ActionsProcessor {
     public void processSellTowerAction(double xpos, double ypos) {
         LevelAction action = new SellTowerAction(xpos, ypos);
         myLevelActionsRequester.requestAction(action);
+
     }
 
     public void processGameEditingAction(Document doc) throws GameEngineException {

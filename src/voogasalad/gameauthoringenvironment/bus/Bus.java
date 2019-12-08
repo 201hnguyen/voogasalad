@@ -4,15 +4,11 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import org.xml.sax.SAXException;
-import voogasalad.ErrorPane;
+import voogasalad.gameplayer.GUI.ErrorPane;
 import voogasalad.gameauthoringenvironment.gui.*;
-import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.w3c.dom.Document;
@@ -25,7 +21,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class Bus {
     private Stage currentStage;
