@@ -15,7 +15,7 @@ public class ImageFileChooser {
     private Stage currentStage;
     private File selectedFile;
 
-    public ImageFileChooser() {
+    public ImageFileChooser(Stage stage) {
         myButton = createFileChooserButton();
 
     }

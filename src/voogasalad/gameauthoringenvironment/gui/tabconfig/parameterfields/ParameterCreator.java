@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import voogasalad.gameauthoringenvironment.gui.AddToXML;
 import voogasalad.gameauthoringenvironment.gui.SaveGUIParameters;
 import voogasalad.gameauthoringenvironment.gui.levelconfig.LevelConfigPane;
+import voogasalad.gameauthoringenvironment.gui.utils.ImageFileChooser;
 import voogasalad.gameauthoringenvironment.gui.utils.SubmitButton;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -89,8 +90,9 @@ public class ParameterCreator extends BorderPane{
                 SubmitButton myField = new SubmitButton(this);
                 return myField;
             }
-            if (type.equals()) {
-                
+            if (type.equals(FILECHOOSERCLASS)) {
+                ImageFileChooser myField = new ImageFileChooser(newStage);
+                return myField;
             }
             else {
                 Class cls = Class.forName(type);
