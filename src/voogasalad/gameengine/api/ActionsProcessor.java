@@ -55,7 +55,7 @@ public class ActionsProcessor {
     }
 
     public void processGameEditingAction(Document doc) throws GameEngineException {
-        Document document = ConfigurationTool.configureWithTestDocument("src/resources/player/EditedSpriteAttackStrategy.xml");
+        Document document = ConfigurationTool.configureWithTestDocument("src/resources/player/EditedSpriteImageView.xml");
         Element documentRoot = document.getDocumentElement();
         String editGameActionType = documentRoot.getElementsByTagName("EditActionType").item(0).getTextContent();
         Element editableObject = (Element) documentRoot.getElementsByTagName("EditableObject").item(0);
