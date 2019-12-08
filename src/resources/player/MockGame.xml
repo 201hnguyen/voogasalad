@@ -188,14 +188,75 @@
         <AvailablePrototypes>0 4</AvailablePrototypes>
 
         <Wave>
-            <Queue>4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4</Queue>
+            <Queue>4 4 4 4 4 4</Queue>
             <Interval>1</Interval>
             <SpawnPointX>0</SpawnPointX>
             <SpawnPointY>0</SpawnPointY>
             <Path>0,97;109,97;109,229;280,229;288,112;481,112;481,388;300,388;300,679;488,679;488,593;662,553;662,675;753,687</Path>
         </Wave>
         <Wave>
-            <Queue>4 4 4 4 4 4 4 4 4 4</Queue>
+            <Queue>4</Queue>
+            <Interval>2</Interval>
+            <SpawnPointX>0</SpawnPointX>
+            <SpawnPointY>0</SpawnPointY>
+            <Path>0,97;109,97;109,229;280,229;288,112;481,112;481,388;300,388;300,679;488,679;488,593;662,553;662,675;753,687</Path>
+        </Wave>
+
+        <Condition>
+            <ConditionId>0</ConditionId>
+            <Type>OnscreenArchetypeCountCondition</Type>
+            <Parameters>
+                <MarkedCount>0</MarkedCount>
+                <Archetype>ENEMY</Archetype>
+                <Classification>CONTINUOUS</Classification>
+            </Parameters>
+            <Actions>
+                <Action>
+                    <Type>SpawnWaveAction</Type>
+                </Action>
+            </Actions>
+        </Condition>
+        <Condition>
+            <ConditionId>2</ConditionId>
+            <Type>EnemiesClearedCondition</Type>
+            <Parameters>
+            </Parameters>
+            <Actions>
+                <Action>
+                    <Type>WinLevelAction</Type>
+                </Action>
+            </Actions>
+        </Condition>
+        <Condition>
+            <ConditionId>3</ConditionId>
+            <Type>LivesCountCondition</Type>
+            <Parameters>
+                <MarkedCount>0</MarkedCount>
+            </Parameters>
+            <Actions>
+                <Action>
+                    <Type>LoseLevelAction</Type>
+                </Action>
+            </Actions>
+        </Condition>
+    </Level>
+
+    <Level>
+        <LevelId>1</LevelId>
+        <Resources>250</Resources>
+        <Lives>20</Lives>
+        <BackgroundImage>grass1.png</BackgroundImage>
+        <AvailablePrototypes>0 2 4 5</AvailablePrototypes>
+
+        <Wave>
+            <Queue>4 4 5 4 4 5 4 4 5 4 4 5 4 4 5 4 4 5 4 4 5 4 4 5 4 4 5 4 4 5 4 4 5</Queue>
+            <Interval>1</Interval>
+            <SpawnPointX>0</SpawnPointX>
+            <SpawnPointY>0</SpawnPointY>
+            <Path>0,97;109,97;109,229;280,229;288,112;481,112;481,388;300,388;300,679;488,679;488,593;662,553;662,675;753,687</Path>
+        </Wave>
+        <Wave>
+            <Queue>5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5</Queue>
             <Interval>2</Interval>
             <SpawnPointX>0</SpawnPointX>
             <SpawnPointY>0</SpawnPointY>
