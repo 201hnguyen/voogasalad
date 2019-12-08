@@ -119,5 +119,6 @@ public class ObjectPreviewAndActive extends BorderPane{
     public void removeFromActive(){
         allActiveObjects.remove(gameObjectName, objectContentMap);
         icon.setStyle(null);
+        makeActive = styleActivateButton();
     }
 }

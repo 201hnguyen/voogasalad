@@ -190,10 +190,8 @@ public class LevelConfigPane extends BorderPane{
         saveAndClearActive();
     }
 
-    private void saveAndClearActive(){
-        //activeObjectsInLevelTemp = new HashMap<>(allActiveObjectMap);
+    private void saveAndClearActive(){ ;
         saveActiveObjectsForLevel.put(gameLevel, sendToLevelSave(allActiveObjects));
-        //allActiveObjectMap = new HashMap<>();
         for(ObjectPreviewAndActive object : allActiveObjectObjects){
             object.removeFromActive();
         }
