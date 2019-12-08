@@ -77,7 +77,7 @@ public class PlayerVisualization extends BorderPane {
         ButtonCreator buttonCreator = new ButtonCreator(new ButtonController(this));
         accordionCreator = new AccordionCreator();
         statusBar = new StatusBar();
-        selectedTowerPane = new SelectedTowerPane(actionsProcessor, displayScreen);
+        selectedTowerPane = new SelectedTowerPane(actionsProcessor, myPlayer);
         panelBox = new VBox(10);
 
         panelBox.getChildren().addAll(buttonCreator,accordionCreator, selectedTowerPane);
