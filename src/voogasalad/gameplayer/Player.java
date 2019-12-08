@@ -45,7 +45,7 @@ public class Player {
         startGame();
     }
 
-    private void startGame() {
+    private void startGame() throws GameEngineException {
         myTimeline = new Timeline();
         myPlayerVisualization = new PlayerVisualization(myStage, myTimeline, myEngine.getActionsProcessor(), this);
         setGameLoop();
@@ -62,10 +62,14 @@ public class Player {
         }
         else {
             myCurrentGameSceneObject = myEngine.execute(elapsedTime);
-            gameInfo.put("Lives", myCurrentGameSceneObject.getLives());
-            gameInfo.put("Coins", myCurrentGameSceneObject.getResources());
-            myPlayerVisualization.update(myCurrentGameSceneObject.getOnScreenSprites(), gameInfo);
+            updatePlayerVisualization();
         }
+    }
+
+    private void updatePlayerVisualization() {
+        gameInfo.put("Lives", myCurrentGameSceneObject.getLives());
+        gameInfo.put("Coins", myCurrentGameSceneObject.getResources());
+        myPlayerVisualization.update(myCurrentGameSceneObject.getOnScreenSprites(), gameInfo);
     }
 
     private void setGameLoop() {
@@ -83,7 +87,8 @@ public class Player {
 
     public void executeEngineWithZeroElapsedTime() {
         try {
-            myEngine.execute(0);
+            myCurrentGameSceneObject = myEngine.execute(0);
+            updatePlayerVisualization();
         }
         catch (GameEngineException ex){
             ex.printStackTrace(); //TODO: Fix
