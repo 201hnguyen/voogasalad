@@ -20,6 +20,6 @@ public class EnemiesClearedCondition extends LevelCondition {
 
     @Override
     public boolean hasHappened(Level level) {
-        return ((!level.getWaveManager().hasNextWave()) && level.getSpriteManager().getOnsScreenSpritesByArchetype(SpriteArchetype.ENEMY).size()==0);
+        return ((!level.getWaveManager().hasNextWave()) && level.getSpriteManager().getOnScreenSpritesByArchetype(SpriteArchetype.ENEMY).size()==0);
     }
 }

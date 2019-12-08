@@ -5,10 +5,7 @@ import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.control.levelcontrol.LevelActionsRequester;
 import voogasalad.gameengine.executors.utils.SpriteArchetype;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class JavaFXSpriteManager implements SpriteManager {
     private List<Sprite> myOnScreenSprites;
@@ -39,7 +36,7 @@ public class JavaFXSpriteManager implements SpriteManager {
     }
 
     @Override
-    public List<Sprite> getOnsScreenSpritesByArchetype(SpriteArchetype archetype) {
+    public List<Sprite> getOnScreenSpritesByArchetype(SpriteArchetype archetype) {
         List<Sprite> archetypeList = new ArrayList<>();
         for (Sprite sprite : myOnScreenSprites) {
             if (sprite.getSpriteArchetype() == archetype) {
@@ -109,9 +106,12 @@ public class JavaFXSpriteManager implements SpriteManager {
 
     @Override
     public void executeSpriteNextState(double elapsedTime) throws GameEngineException {
-        List<Sprite> spritesToRemove = new ArrayList<>();
+        handleProjectileCollisions();
+        Set<Sprite> spritesToRemove = new HashSet<>();
         for (Sprite sprite : myOnScreenSprites) {
             if(sprite.isMovementFinished()){
+                spritesToRemove.add(sprite);
+            } else if(sprite.isDead()){
                 spritesToRemove.add(sprite);
             }
             sprite.updatePosition(elapsedTime);
@@ -120,5 +120,18 @@ public class JavaFXSpriteManager implements SpriteManager {
         }
         myOnScreenSprites.removeAll(spritesToRemove);
         System.out.println("executed next sprite state");
+    }
+
+    @Override
+    public void handleProjectileCollisions() throws GameEngineException {
+        List<Sprite> projectileList = getOnScreenSpritesByArchetype(SpriteArchetype.PROJECTILE);
+        List<Sprite> enemyList = getOnScreenSpritesByArchetype(SpriteArchetype.ENEMY);
+        for(Sprite projectile : projectileList) {
+            for(Sprite enemy : enemyList) {
+                if(projectile.isColliding(enemy)) {
+                    projectile.applyEffect(enemy);
+                }
+            }
+        }
     }
 }
