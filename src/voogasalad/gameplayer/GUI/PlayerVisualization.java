@@ -126,9 +126,7 @@ public class PlayerVisualization extends BorderPane {
     }
 
     private Text showInstructions() {
-        DropShadow shadow = new DropShadow();
-        shadow.setOffsetY(3.0f);
-        shadow.setColor(Color.color(0.4f, 0.4f, 0.4f));
+        DropShadow shadow = getDropShadow();
         Text instructions = new Text();
         instructions.setText(INSTRUCTIONS);
         instructions.setFill(Color.BLACK);
@@ -138,8 +136,17 @@ public class PlayerVisualization extends BorderPane {
 
 
     private void createStopWatchDisplay(){
+        DropShadow shadow = getDropShadow();
         myStopWatchDisplay = new Text("Elapsed Time:" + "\n 0 : 0");
+        myStopWatchDisplay.setEffect(shadow);
         myStopWatchDisplay.setFont(new Font(20));
+    }
+
+    private DropShadow getDropShadow() {
+        DropShadow shadow = new DropShadow();
+        shadow.setOffsetY(3.0f);
+        shadow.setColor(Color.color(0.4f, 0.4f, 0.4f));
+        return shadow;
     }
 
     private void setBackgroundImage(String backgroundImagePath){
