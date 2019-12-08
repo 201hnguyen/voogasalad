@@ -62,7 +62,7 @@ public class JavaFXSprite implements Sprite {
                 .setImagePath(myImagePath)
                 .setWidth(myWidth)
                 .setArchetype(myArchetype)
-                .setAttackStrategy(myOriginalBuilder.getAttackStrategy().makeClone())
+                .setAttackStrategy(myAttackStrategy.makeClone())
                 .setRotationStrategy(myOriginalBuilder.getRotationStrategy().makeClone())
                 .setMovementStrategy(myOriginalBuilder.getMovementStrategy().makeClone())
                 .setHealthStrategy(myOriginalBuilder.getHealthStrategy().makeClone())
@@ -184,5 +184,7 @@ public class JavaFXSprite implements Sprite {
     public LevelAction getEffectAction(Sprite other) throws GameEngineException {
         return myEffectStrategy.getAction(other.getId());
     }
-
+    public void updateAttackStrategy(AttackStrategy updatedStrategy) {
+        myAttackStrategy = updatedStrategy;
+    }
 }
