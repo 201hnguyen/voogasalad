@@ -55,7 +55,7 @@ public class PlayerVisualization extends BorderPane {
         this.actionsProcessor = uiActionsProcessor;
         this.myPlayer = player;
         this.isRunning = false;
-        currentTime = "\n 0 : 0";
+        currentTime = "Elapsed Time:" + "\n 0 : 0";
         initialize();
     }
 
