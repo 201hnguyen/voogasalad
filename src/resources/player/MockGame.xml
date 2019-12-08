@@ -152,6 +152,13 @@
                     <Speed>70</Speed>
                 </Parameters>
             </MovementStrategy>
+            <CostStrategy>
+                <Type>BasicCost</Type>
+                <Parameters>
+                    <CreateCost>0</CreateCost>
+                    <DestroyCost>5</DestroyCost>
+                </Parameters>
+            </CostStrategy>
         </Strategies>
     </SpritePrototype>
 
@@ -177,6 +184,13 @@
                     <Speed>150</Speed>
                 </Parameters>
             </MovementStrategy>
+            <CostStrategy>
+                <Type>BasicCost</Type>
+                <Parameters>
+                    <CreateCost>0</CreateCost>
+                    <DestroyCost>5</DestroyCost>
+                </Parameters>
+            </CostStrategy>
         </Strategies>
     </SpritePrototype>
 
@@ -191,15 +205,15 @@
             <Queue>4 4 4 4 4 4</Queue>
             <Interval>1</Interval>
             <SpawnPointX>0</SpawnPointX>
-            <SpawnPointY>0</SpawnPointY>
-            <Path>0,97;109,97;109,229;280,229;288,112;481,112;481,388;300,388;300,679;488,679;488,593;662,553;662,675;753,687</Path>
+            <SpawnPointY>97</SpawnPointY>
+            <Path>109,97;109,229;280,229;288,112;481,112;481,388;300,388;300,679;488,679;488,593;662,553;662,675;753,687</Path>
         </Wave>
         <Wave>
             <Queue>4</Queue>
             <Interval>2</Interval>
             <SpawnPointX>0</SpawnPointX>
-            <SpawnPointY>0</SpawnPointY>
-            <Path>0,97;109,97;109,229;280,229;288,112;481,112;481,388;300,388;300,679;488,679;488,593;662,553;662,675;753,687</Path>
+            <SpawnPointY>97</SpawnPointY>
+            <Path>109,97;109,229;280,229;288,112;481,112;481,388;300,388;300,679;488,679;488,593;662,553;662,675;753,687</Path>
         </Wave>
 
         <Condition>
@@ -252,15 +266,15 @@
             <Queue>4 4 5 4 4 5 4 4 5 4 4 5 4 4 5 4 4 5 4 4 5 4 4 5 4 4 5 4 4 5 4 4 5</Queue>
             <Interval>1</Interval>
             <SpawnPointX>0</SpawnPointX>
-            <SpawnPointY>0</SpawnPointY>
-            <Path>0,97;109,97;109,229;280,229;288,112;481,112;481,388;300,388;300,679;488,679;488,593;662,553;662,675;753,687</Path>
+            <SpawnPointY>97</SpawnPointY>
+            <Path>109,97;109,229;280,229;288,112;481,112;481,388;300,388;300,679;488,679;488,593;662,553;662,675;753,687</Path>
         </Wave>
         <Wave>
             <Queue>5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5</Queue>
             <Interval>2</Interval>
             <SpawnPointX>0</SpawnPointX>
-            <SpawnPointY>0</SpawnPointY>
-            <Path>0,97;109,97;109,229;280,229;288,112;481,112;481,388;300,388;300,679;488,679;488,593;662,553;662,675;753,687</Path>
+            <SpawnPointY>97</SpawnPointY>
+            <Path>109,97;109,229;280,229;288,112;481,112;481,388;300,388;300,679;488,679;488,593;662,553;662,675;753,687</Path>
         </Wave>
 
         <Condition>

@@ -1,6 +1,9 @@
 package voogasalad.gameengine.executors.sprites;
 
 import javafx.scene.image.ImageView;
+import voogasalad.gameengine.executors.control.action.level.AlterLivesAction;
+import voogasalad.gameengine.executors.control.action.level.AlterResourcesAction;
+import voogasalad.gameengine.executors.control.action.level.LevelAction;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.control.levelcontrol.LevelActionsRequester;
 import voogasalad.gameengine.executors.utils.SpriteArchetype;
@@ -8,6 +11,9 @@ import voogasalad.gameengine.executors.utils.SpriteArchetype;
 import java.util.*;
 
 public class JavaFXSpriteManager implements SpriteManager {
+
+    private static final int CHUNK_LIVES_VALUE = -1;
+
     private List<Sprite> myOnScreenSprites;
     private Map<Integer, Sprite> mySpritePrototypes;
     private int mySpriteIdGenerator;
@@ -73,6 +79,8 @@ public class JavaFXSpriteManager implements SpriteManager {
             ImageView spriteImageView = (ImageView) sprite.getImage();
             if (sprite.getSpriteArchetype() == SpriteArchetype.TOWER && spriteImageView.getBoundsInParent().contains(xpos,ypos)) {
                 spriteToRemove = sprite;
+                LevelAction action = new AlterResourcesAction(sprite.getDestroyCost());
+                myLevelActionsRequester.requestAction(action);
             }
         }
         myOnScreenSprites.remove(spriteToRemove);
@@ -110,9 +118,17 @@ public class JavaFXSpriteManager implements SpriteManager {
         Set<Sprite> spritesToRemove = new HashSet<>();
         for (Sprite sprite : myOnScreenSprites) {
             if(sprite.isMovementFinished()){
+                if (sprite.getSpriteArchetype() == SpriteArchetype.ENEMY) {
+                    LevelAction action = new AlterLivesAction(CHUNK_LIVES_VALUE);
+                    myLevelActionsRequester.requestAction(action);
+                }
                 spritesToRemove.add(sprite);
                 continue;
             } else if(sprite.isDead()){
+                if (sprite.getSpriteArchetype() == SpriteArchetype.ENEMY) {
+                    LevelAction action = new AlterResourcesAction(sprite.getDestroyCost());
+                    myLevelActionsRequester.requestAction(action);
+                }
                 spritesToRemove.add(sprite);
                 continue;
             }
