@@ -16,6 +16,11 @@ public class NoEffect implements EffectStrategy {
     }
 
     @Override
+    public boolean isFinished() {
+        return false;
+    }
+
+    @Override
     public EffectStrategy makeClone() {
         return new NoEffect(new EffectBuilder());
     }

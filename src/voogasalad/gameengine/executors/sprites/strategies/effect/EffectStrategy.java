@@ -5,5 +5,6 @@ import voogasalad.gameengine.executors.sprites.Sprite;
 
 public interface EffectStrategy {
     void apply(Sprite sprite) throws GameEngineException;
+    boolean isFinished();
     EffectStrategy makeClone() throws GameEngineException;
 }

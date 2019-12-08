@@ -155,7 +155,7 @@ public class JavaFXSprite implements Sprite {
 
     @Override
     public boolean isDead() {
-        return myHealthStrategy.getHealth() != null && myHealthStrategy.getHealth() <= 0;
+        return myEffectStrategy.isFinished() || myHealthStrategy.getHealth() != null && myHealthStrategy.getHealth() <= 0;
     }
 
     public int getCreateCost() {
