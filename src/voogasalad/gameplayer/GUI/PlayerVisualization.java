@@ -31,9 +31,9 @@ public class PlayerVisualization extends BorderPane {
     private static final double SCENE_WIDTH = 1000;
     private static final double SCENE_HEIGHT = 800;
     private static final double PANEL_POSITION = 800;
-    private static final double LAYOUT = 0;
     private static final String TITLE = "Player";
     private static final String INSTRUCTIONS = " Instructions: Drag and drop \n towers onto display screen.";
+    private static final String TIMER_TITLE = "Elapsed Time:";
 
     private Scene scene;
     private Stage stage;
@@ -47,22 +47,22 @@ public class PlayerVisualization extends BorderPane {
     private StopWatch myStopWatch;
     private Text myStopWatchDisplay;
     private Player myPlayer;
-    private boolean isRunning;
+    private boolean isGameRunning;
     private String currentTime;
 
     public PlayerVisualization(Stage stage, ActionsProcessor uiActionsProcessor, Player player) {
         this.stage = stage;
         this.actionsProcessor = uiActionsProcessor;
         this.myPlayer = player;
-        this.isRunning = false;
-        currentTime = "Elapsed Time:" + "\n 0 : 0";
+        this.isGameRunning = false;
+        currentTime = TIMER_TITLE + "\n 0 : 0";
         initialize();
     }
 
     public void update(List<Sprite> sprites, Map<String, Integer> gameInfoMap) {
         displayScreen.updateDisplayScreen(sprites);
         statusBar.updateDisplayedInfo(gameInfoMap);
-        if(isRunning) {
+        if(isGameRunning) {
             currentTime = myStopWatch.getCurrentTime();
             myStopWatchDisplay.setText(currentTime);
         }
@@ -137,7 +137,7 @@ public class PlayerVisualization extends BorderPane {
 
     private void createStopWatchDisplay(){
         DropShadow shadow = getDropShadow();
-        myStopWatchDisplay = new Text("Elapsed Time:" + "\n 0 : 0");
+        myStopWatchDisplay = new Text(TIMER_TITLE + "\n 0 : 0");
         myStopWatchDisplay.setEffect(shadow);
         myStopWatchDisplay.setFont(new Font(20));
     }
@@ -155,13 +155,13 @@ public class PlayerVisualization extends BorderPane {
     }
 
     public void startButtonAction() {
-        isRunning = true;
+        isGameRunning = true;
         myPlayer.startTimeLine();
         myStopWatch.startStopWatch();
     }
 
     public void pauseButtonAction() {
-        isRunning = false;
+        isGameRunning = false;
         myPlayer.pauseTimeline();
         myStopWatch.pauseStopWatch();
     }
