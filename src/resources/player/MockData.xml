@@ -37,7 +37,7 @@
             <EffectStrategy>
                 <Type>ChunkHealthEffect</Type>
                 <Parameters>
-                    <DamageValue>5</DamageValue>
+                    <DamageValue>1</DamageValue>
                 </Parameters>
             </EffectStrategy>
         </Strategies>
@@ -89,7 +89,7 @@
         <AvailablePrototypes>0 1</AvailablePrototypes>
 
         <Wave>
-            <Queue>0 0 0 0</Queue>
+            <Queue>0 0 0 0 0</Queue>
             <Interval>2</Interval>
             <SpawnPointX>0</SpawnPointX>
             <SpawnPointY>300</SpawnPointY>

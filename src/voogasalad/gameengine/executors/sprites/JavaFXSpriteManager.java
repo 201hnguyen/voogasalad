@@ -111,8 +111,10 @@ public class JavaFXSpriteManager implements SpriteManager {
         for (Sprite sprite : myOnScreenSprites) {
             if(sprite.isMovementFinished()){
                 spritesToRemove.add(sprite);
+                continue;
             } else if(sprite.isDead()){
                 spritesToRemove.add(sprite);
+                continue;
             }
             sprite.updatePosition(elapsedTime);
             sprite.updateShootingAngle(elapsedTime);
@@ -126,12 +128,16 @@ public class JavaFXSpriteManager implements SpriteManager {
     public void handleProjectileCollisions() throws GameEngineException {
         List<Sprite> projectileList = getOnScreenSpritesByArchetype(SpriteArchetype.PROJECTILE);
         List<Sprite> enemyList = getOnScreenSpritesByArchetype(SpriteArchetype.ENEMY);
-        for(Sprite projectile : projectileList) {
-            for(Sprite enemy : enemyList) {
-                if(projectile.isColliding(enemy)) {
-                    projectile.applyEffect(enemy);
+        projectileloop:
+            for(Sprite projectile : projectileList) {
+                for(Sprite enemy : enemyList) {
+                    if(projectile.isDead()) {
+                        continue projectileloop;
+                    }
+                    if(projectile.isColliding(enemy)) {
+                        projectile.applyEffect(enemy);
+                    }
                 }
             }
-        }
     }
 }
