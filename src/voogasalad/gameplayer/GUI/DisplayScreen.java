@@ -1,21 +1,17 @@
 package voogasalad.gameplayer.GUI;
 
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.*;
 import voogasalad.gameengine.api.ActionsProcessor;
-import voogasalad.gameengine.api.Engine;
-import voogasalad.gameengine.api.GameSceneObject;
-import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.sprites.Sprite;
 import voogasalad.gameengine.executors.utils.SpriteArchetype;
 import voogasalad.gameplayer.Player;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class DisplayScreen extends Pane {
     private SelectedTowerPane selectedTowerPane;
@@ -69,9 +65,13 @@ public class DisplayScreen extends Pane {
         int yPos = (int) sprite.getY();
         addImageToScreen(toDisplay, xPos, yPos);
         if (sprite.getSpriteArchetype() == SpriteArchetype.TOWER) {
+            AtomicBoolean clicked = new AtomicBoolean(false);
             toDisplay.setOnMouseClicked(e -> {
-                myPlayerVisualization.pauseButtonAction();
-                selectedTowerPane.removeTower(toLoad, xPos, yPos);
+                if(!clicked.get()) {
+                    myPlayerVisualization.pauseButtonAction();
+                    selectedTowerPane.removeTower(toLoad, xPos, yPos);
+                    clicked.set(true);
+                }
             });
         }
         // TODO: figure out how we will pass in the height and width
