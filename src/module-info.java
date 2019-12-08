@@ -7,6 +7,6 @@ module voogasalad_WorksDontTouch {
     requires javafx.media;
     requires javafx.web;
 //    requires org.junit.jupiter.api;
-
+//
     exports voogasalad;
 }
