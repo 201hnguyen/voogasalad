@@ -8,10 +8,7 @@ import javafx.scene.text.Font;
 import org.w3c.dom.Document;
 import voogasalad.gameauthoringenvironment.bus.Bus;
 import voogasalad.gameauthoringenvironment.gui.AddToXML;
-import voogasalad.gameauthoringenvironment.gui.levelconfig.nodes.MapButton;
-import voogasalad.gameauthoringenvironment.gui.levelconfig.nodes.VBoxCreator;
-import voogasalad.gameauthoringenvironment.gui.levelconfig.nodes.RuleLine;
-import voogasalad.gameauthoringenvironment.gui.levelconfig.nodes.SubmitButton;
+import voogasalad.gameauthoringenvironment.gui.levelconfig.nodes.*;
 import voogasalad.gameauthoringenvironment.gui.tabconfig.parameterfields.ObjectPreviewAndActive;
 
 import java.util.ArrayList;
@@ -25,9 +22,6 @@ public class LevelConfigPane extends BorderPane{
     private AddToXML sendToXML;
     private Document createdXML;
     private Bus busInstance;
-    private VBoxCreator towersVBox;
-    private VBoxCreator enemiesVBox;
-    private VBoxCreator obstaclesVBox;
     private List<VBoxCreator> objectVBoxes;
     private int gameLevel;
     private Map<String, Map<String, String>> allActiveObjects;
@@ -41,11 +35,14 @@ public class LevelConfigPane extends BorderPane{
     private Map<Integer, Map<String, Map<String, String>>> saveActiveObjectsForLevel;
     private List<ObjectPreviewAndActive> allActiveObjectObjects;
     private String[] allObjectTypes;
+    private List<Integer> allLevels;
+    private GameLevelComboBox gameLevelComboBox;
 
 
     public LevelConfigPane(AddToXML sendToXMLParam, Document createdXMLParam, Bus busInstanceParam, Map<String, Map<String, String>> allActiveObjectMapParam,
                            List<ObjectPreviewAndActive> allActiveObjectObjectsParam, String[] allObjectTypesParam){
         allActiveObjectObjects = allActiveObjectObjectsParam;
+        allLevels = new ArrayList<>();
         gameLevel = 1;
         saveActiveObjectsForLevel = new HashMap<>();
         allActiveObjects = allActiveObjectMapParam;
@@ -81,13 +78,22 @@ public class LevelConfigPane extends BorderPane{
 
     private HBox createTitleHBox(){
         HBox titleHBox = new HBox();
-        Label levelLabel = new Label("Level " + gameLevel + " Configuration");
+        Label levelLabel = formatTitleLabel("Level ");
+        gameLevelComboBox = new GameLevelComboBox(gameLevel);
+        gameLevelComboBox.setPrefHeight(height/10);
+        Label configLabel = formatTitleLabel(" Configuration");
         //Label levelLabel = new Label("Level " + GameLevelComboBox + " Configuration");
-        levelLabel.setFont(Font.font(30));
-        levelLabel.setPrefHeight(height/10);
-        levelLabel.setMaxHeight(levelLabel.getPrefHeight());
-        titleHBox.getChildren().add(levelLabel);
+
+        titleHBox.getChildren().addAll(levelLabel, gameLevelComboBox, configLabel);
         return titleHBox;
+    }
+
+    private Label formatTitleLabel(String title){
+        Label label = new Label(title);
+        label.setFont(Font.font(30));
+        label.setPrefHeight(height/10);
+        label.setMaxHeight(label.getPrefHeight());
+        return label;
     }
 
     private HBox createAllObjectHBox(){
@@ -177,6 +183,8 @@ public class LevelConfigPane extends BorderPane{
         Button newLevel = new Button("Create New Level");
         newLevel.setOnMouseClicked(event -> {
             saveInfoForLevel();
+            allLevels.add(gameLevel);
+            gameLevelComboBox.addToComboBox(allLevels);
             gameLevel++;
             updateLevelConfigPane();
         });
