@@ -169,4 +169,10 @@ public class JavaFXSprite implements Sprite {
         configureImageView();
     }
 
+    @Override
+    public boolean isColliding(Sprite other) {
+        ImageView otherImage = (ImageView) other.getImage();
+        return myImageView.getBoundsInParent().intersects(otherImage.getBoundsInParent());
+    }
+
 }
