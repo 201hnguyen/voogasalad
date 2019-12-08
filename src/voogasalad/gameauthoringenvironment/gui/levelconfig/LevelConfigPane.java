@@ -14,6 +14,7 @@ import voogasalad.gameauthoringenvironment.gui.levelconfig.nodes.RuleLine;
 import voogasalad.gameauthoringenvironment.gui.levelconfig.nodes.SubmitButton;
 import voogasalad.gameauthoringenvironment.gui.tabconfig.parameterfields.ObjectPreviewAndActive;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,9 +28,8 @@ public class LevelConfigPane extends BorderPane{
     private VBoxCreator towersVBox;
     private VBoxCreator enemiesVBox;
     private VBoxCreator obstaclesVBox;
+    private List<VBoxCreator> objectVBoxes;
     private int gameLevel;
-//    private Map<String, Map<String, Map<String, String>>> allActiveObjectMap;
-//    private Map<String, Map<String, Map<String, String>>> activeObjectsInLevelTemp;
     private Map<String, Map<String, String>> allActiveObjects;
     private HBox title;
     private GridPane gridPane;
@@ -40,10 +40,11 @@ public class LevelConfigPane extends BorderPane{
     private HBox createSubmitNewLevelButtons;
     private Map<Integer, Map<String, Map<String, String>>> saveActiveObjectsForLevel;
     private List<ObjectPreviewAndActive> allActiveObjectObjects;
+    private String[] allObjectTypes;
 
 
     public LevelConfigPane(AddToXML sendToXMLParam, Document createdXMLParam, Bus busInstanceParam, Map<String, Map<String, String>> allActiveObjectMapParam,
-                           List<ObjectPreviewAndActive> allActiveObjectObjectsParam){
+                           List<ObjectPreviewAndActive> allActiveObjectObjectsParam, String[] allObjectTypesParam){
         allActiveObjectObjects = allActiveObjectObjectsParam;
         gameLevel = 1;
         saveActiveObjectsForLevel = new HashMap<>();
@@ -51,6 +52,8 @@ public class LevelConfigPane extends BorderPane{
         sendToXML = sendToXMLParam;
         createdXML = createdXMLParam;
         busInstance = busInstanceParam;
+        allObjectTypes = allObjectTypesParam;
+        objectVBoxes = new ArrayList<>();
         setBorderPane();
     }
 
@@ -89,13 +92,15 @@ public class LevelConfigPane extends BorderPane{
     private HBox createAllObjectHBox(){
         HBox allObjectHBox = new HBox();
         int heightOfBox = 2*height/10;
-        int widthOfBox = width/3;
-        towersVBox = new VBoxCreator("Towers", widthOfBox, heightOfBox);
-        enemiesVBox = new VBoxCreator("Enemies", widthOfBox, heightOfBox);
-        obstaclesVBox = new VBoxCreator("Obstacles", widthOfBox, heightOfBox);
+        //int widthOfBox = width/3;
+        int widthOfBox = width/(allObjectTypes.length);
+        for(String objectType : allObjectTypes){
+            VBoxCreator objectVBox = new VBoxCreator(objectType, widthOfBox, heightOfBox);
+            objectVBoxes.add(objectVBox);
+            allObjectHBox.getChildren().add(objectVBox);
+        }
         allObjectHBox.setPrefHeight(heightOfBox);
         allObjectHBox.setMaxHeight(allObjectHBox.getPrefHeight());
-        allObjectHBox.getChildren().addAll(towersVBox, enemiesVBox, obstaclesVBox);
         return allObjectHBox;
     }
 
@@ -162,16 +167,9 @@ public class LevelConfigPane extends BorderPane{
     }
 
     public void addIconToVBox(String objectType, Button icon){
-        if(objectType.equals("Towers")){
-            towersVBox.addToObjectHBox(icon);
+        for(VBoxCreator objectVBox : objectVBoxes){
+            objectVBox.addToObjectHBox(icon, objectType);
         }
-        if(objectType.equals("Enemies")){
-            enemiesVBox.addToObjectHBox(icon);
-        }
-        if(objectType.equals("Obstacles")){
-            obstaclesVBox.addToObjectHBox(icon);
-        }
-
     }
 
     private Button newLevelButton(){
@@ -179,7 +177,6 @@ public class LevelConfigPane extends BorderPane{
         newLevel.setOnMouseClicked(event -> {
             saveInfoForLevel();
             gameLevel++;
-            //Save in map linking level to all active objects
             updateLevelConfigPane();
         });
         return newLevel;
@@ -194,6 +191,7 @@ public class LevelConfigPane extends BorderPane{
         saveActiveObjectsForLevel.put(gameLevel, sendToLevelSave(allActiveObjects));
         for(ObjectPreviewAndActive object : allActiveObjectObjects){
             object.removeFromActive();
+            //allActiveObjectObjects.remove(object);
         }
         System.out.println(saveActiveObjectsForLevel);
     }

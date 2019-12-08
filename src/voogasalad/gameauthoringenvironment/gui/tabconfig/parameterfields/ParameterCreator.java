@@ -39,9 +39,7 @@ public class ParameterCreator extends BorderPane{
     private LevelConfigPane levelConfigPane;
     private Map<String, Map<String, String>> allActiveObjects;
     private ClearFieldsFactory clearFieldsFactory;
-    //private Map<String, Map<String, Map<String, String>>> allActiveObjectMap;
     private List<ObjectPreviewAndActive> allActiveObjectObjects;
-    //private static Map<String, Map<String,String>> sendToXML;
 
 
     public ParameterCreator(String gameObjectNameParam, String[] propertiesParam, ResourceBundle paramFieldTypeParam,
@@ -49,7 +47,6 @@ public class ParameterCreator extends BorderPane{
                             List<ObjectPreviewAndActive> allActiveObjectObjectsParam) throws ParserConfigurationException {
         allActiveObjectObjects = allActiveObjectObjectsParam;
         allActiveObjects = allActiveObjectMapParam;
-        //allActiveObjectMap = allActiveObjectMapParam;
         clearFieldsFactory = new ClearFieldsFactory();
         fieldFactory = new FieldTextReturnFactory();
         labelList = new ArrayList<>();
@@ -86,7 +83,6 @@ public class ParameterCreator extends BorderPane{
                     .forEach(node -> labelValue.add(fieldFactory.getAppropriateText(node)));
 
             SaveGUIParameters myGuiParameters = new SaveGUIParameters(labelText, labelValue);
-            //allActiveObjectMap.put(activeObjects);
             String myLabel = xmlObject.addToSendToXMLMap(myGuiParameters.getMap(), gameObjectName);
             addToAppropriateField(gameObjectName, createObjectIcon(myGuiParameters.getMap(), myLabel));
     }
@@ -150,9 +146,6 @@ public class ParameterCreator extends BorderPane{
                 .forEach(node -> clearFieldsFactory.clearField(node));
     }
 
-//    public Map<String, Map<String, String>> getActiveObjects() {
-////        return activeObjects;
-////    }
 
 
 
