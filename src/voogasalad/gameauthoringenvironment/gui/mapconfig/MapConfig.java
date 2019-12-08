@@ -1,6 +1,8 @@
 package voogasalad.gameauthoringenvironment.gui.mapconfig;
 
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -49,6 +51,8 @@ public class MapConfig {
 
     private ArrayList<ImageView> spawnPointViewList;
     private ArrayList<ArrayList<ImageView>> pathPointViewList;
+    private ArrayList<ArrayList<ImageView>> pathViewList;
+    private ArrayList<ArrayList<ImageView>> spawnPathViewList;
 
 
     private Pair<Double,Double> spawnPoint;
@@ -95,11 +99,13 @@ public class MapConfig {
         waveButtonList = new ArrayList<>();
         wavePathOptions = new ArrayList<>();
         spawnPointViewList = new ArrayList<>();
+        spawnPathViewList = new ArrayList<>();
         pathPointViewList = new ArrayList<>();
+        pathViewList = new ArrayList<>();
 
         spawnPointImage = new Image(this.getClass().getClassLoader().getResourceAsStream("spawnPoint.jpg"));
         //spawnPointImageView = new ImageView(spawnPointImage);
-        pathPointImage = new Image(this.getClass().getClassLoader().getResourceAsStream("pathPoint.png"));
+        pathPointImage = new Image(this.getClass().getClassLoader().getResourceAsStream("pathUnit.png"));
         defaulBackGroundImage = new Image(this.getClass().getClassLoader().getResourceAsStream("defaultBG.jpg"));
         backgroundImageView = new ImageView(defaulBackGroundImage);
         backgroundImageView.setFitWidth(500);
@@ -149,35 +155,46 @@ public class MapConfig {
             //createdPathList.get(selectedPathIndex).add(new Pair(xCoordinate,yCoordinate));
             enemyPath.add(new Pair(xCoordinate,yCoordinate));
             ImageView pathPointImageView = new ImageView(pathPointImage);
+            ImageView newPathUnit = new ImageView(pathPointImage);
+
 
             pathPointImageView.setFitHeight(20);
             pathPointImageView.setFitWidth(20);
             pathPointImageView.setX(xCoordinate);
             pathPointImageView.setY(yCoordinate);
+
             subRoot.getChildren().add(pathPointImageView);
-            System.out.println("x coordinate " + xCoordinate +" y coordinate " + yCoordinate);
+            //System.out.println("x coordinate " + xCoordinate +" y coordinate " + yCoordinate);
             createdPathLabel.get(selectedPathIndex).setText(enemyPath.toString());
             pathPointViewList.get(selectedPathIndex).add(pathPointImageView);
+            visualizePath();
+
+
 
         }
 
         if (settingSpawnPoint) {
             ImageView spawnPointImageView = new ImageView(spawnPointImage);
-            if (subRoot.getChildren().contains(spawnPointViewList.get(selectedPathIndex))){
-                subRoot.getChildren().remove(spawnPointViewList.get(selectedPathIndex));
-            }
+
             spawnPoint = new Pair(xCoordinate,yCoordinate);
             spawnPointImageView.setX(xCoordinate);
             spawnPointImageView.setY(yCoordinate);
             spawnPointImageView.setFitHeight(20);
             spawnPointImageView.setFitWidth(20);
 
+
+
             if (selectedPathIndex < spawnPointList.size()) {
+                removeSelectedSpawnView(selectedPathIndex);
                 spawnPointList.set(selectedPathIndex, spawnPoint);
                 spawnPointViewList.set(selectedPathIndex,spawnPointImageView);
+
             } else {
                 spawnPointList.add(spawnPoint);
                 spawnPointViewList.add(spawnPointImageView);
+            }
+            if (pathPointViewList.get(selectedPathIndex).size()>0) {
+                visualizeSegment(spawnPointImageView, pathPointViewList.get(selectedPathIndex).get(0),6,true);
             }
             subRoot.getChildren().add(spawnPointImageView);
 
@@ -187,6 +204,91 @@ public class MapConfig {
         }
 
     }
+
+    private void visualizePath() {
+
+
+        if (pathPointViewList.get(selectedPathIndex).size() >= 1) {
+            int startingIndex;
+            if (selectedPathIndex < spawnPointViewList.size()) {
+                if (spawnPointViewList.get(selectedPathIndex) != null) {
+                    startingIndex = 0;
+                } else {
+                    startingIndex = 1;
+                }
+            } else {
+                startingIndex = 1;
+            }
+            System.out.println("Visualization "+ startingIndex);
+
+            System.out.println("if statemen is " + (pathPointViewList.get(selectedPathIndex).size() >= 2|| startingIndex==0));
+
+            if (pathPointViewList.get(selectedPathIndex).size() >= 2|| startingIndex==0) {
+                for (int pathPointIndex = startingIndex; pathPointIndex < pathPointViewList.get(selectedPathIndex).size(); pathPointIndex++) {
+                    ImageView startingPoint;
+                    ImageView endingPoint;
+                    boolean fromSpawn = false;
+                    if (pathPointIndex == 0) {
+                        fromSpawn = true;
+                        startingPoint = spawnPointViewList.get(selectedPathIndex);
+                        endingPoint = pathPointViewList.get(selectedPathIndex).get(0);
+                    } else {
+                        startingPoint = pathPointViewList.get(selectedPathIndex).get(pathPointIndex - 1);
+                        endingPoint = pathPointViewList.get(selectedPathIndex).get(pathPointIndex);
+                    }
+                    System.out.println("checkpoint "+ fromSpawn);
+
+                    visualizeSegment(startingPoint, endingPoint, 6, fromSpawn);
+
+                }
+            }
+
+
+
+
+        }
+    }
+
+    private void visualizeSegment(ImageView startingImage, ImageView endingImage, double distanceIncrement, boolean isFromSpawnPoint) {
+        double initialXCoordinate = startingImage.getX();
+        double initialYCoordinate = startingImage.getY();
+        double finalXCoordinate = endingImage.getX();
+        double finalYCoordinate = endingImage.getY();
+        double xDifference = finalXCoordinate - initialXCoordinate;
+        double yDifference = finalYCoordinate - initialYCoordinate;
+        double distance = Math.sqrt(Math.pow(xDifference,2) + Math.pow(yDifference,2));
+        double myAngle =Math.atan(yDifference/xDifference);
+        System.out.println(initialXCoordinate +" " + initialYCoordinate + " "+ finalXCoordinate+ " " + finalYCoordinate + " "+ distance + " ");
+        for (double distanceTraveled = 6; distanceTraveled < distance; distanceTraveled=distanceTraveled+distanceIncrement) {
+            System.out.println(distanceTraveled);
+            ImageView newPathUnit = new ImageView(pathPointImage);
+            double yCoordinate;
+            double xCoordinate;
+            if (xDifference > 0) {
+                yCoordinate = initialYCoordinate + Math.sin(myAngle) * distanceTraveled; // this is wrong. need to have a field for angle
+                xCoordinate = initialXCoordinate + Math.cos(myAngle) * distanceTraveled;
+            } else {
+                yCoordinate = initialYCoordinate - Math.sin(myAngle) * distanceTraveled;
+                xCoordinate = initialXCoordinate - Math.cos(myAngle) * distanceTraveled;
+            }
+            newPathUnit.setFitWidth(20);
+            newPathUnit.setFitHeight(20);
+            newPathUnit.setX(xCoordinate);
+            newPathUnit.setY(yCoordinate);
+            newPathUnit.toFront();
+            subRoot.getChildren().add(newPathUnit);
+            if (isFromSpawnPoint){
+                spawnPathViewList.get(selectedPathIndex).add(newPathUnit);
+                System.out.println("added to spawn ");
+            } else {
+                pathViewList.get(selectedPathIndex).add(newPathUnit);
+                System.out.println("added to path ");
+            }
+            //nextLocation(initialXCoordinate,initialYCoordinate, myAngle, distanceTraveled);
+
+        }
+    }
+
 
     private void addPathCreationVBox(){
         VBox pathVBox = new VBox(10);
@@ -228,14 +330,16 @@ public class MapConfig {
         HBox newPathHBox = new HBox(75);
         newPathHBox.setId(Integer.toString(numberOfPaths));//Id =number -1
         numberOfPaths ++;
-        selectedPathIndex =numberOfPaths-1;
+
         ArrayList<Pair<Double,Double>> newPath = new ArrayList<>();
         createdPathList.add(newPath);
         Pair<Double,Double> newPoint = new Pair<Double,Double>(0.0,0.0);
         spawnPointList.add(newPoint);
         ArrayList<ImageView> newViewList = new ArrayList<>();
         spawnPointViewList.add(null);
-        pathPointViewList.add(newViewList);
+        spawnPathViewList.add(new ArrayList<>());
+        pathPointViewList.add(new ArrayList<>());
+        pathViewList.add(new ArrayList<>());
 
         Button pathNameButton = new Button("Path " + numberOfPaths);
         pathNameButton.setOnAction(e->changeSelectedPath(newPathHBox));
@@ -258,6 +362,7 @@ public class MapConfig {
 
         pathPane.getChildren().add(newPathHBox);
         pathHBoxList.add(newPathHBox);
+        changeSelectedPath(newPathHBox);
 
         updateAvailablePaths();
 
@@ -265,14 +370,20 @@ public class MapConfig {
     }
 
     private void changeSelectedPath(HBox pathHBox){
-        for (ImageView image : pathPointViewList.get(selectedPathIndex)) {
-            subRoot.getChildren().remove(image);
-        }
+
+        removeSelectedPathView(selectedPathIndex);
         if (!spawnPointViewList.isEmpty()) {
-            subRoot.getChildren().remove(spawnPointViewList.get(selectedPathIndex));
+           removeSelectedSpawnView(selectedPathIndex);
         }
         selectedPathIndex=Integer.parseInt(pathHBox.getId());
         for (ImageView image : pathPointViewList.get(selectedPathIndex)) {
+            subRoot.getChildren().add(image);
+        }
+        for (ImageView image : pathViewList.get(selectedPathIndex)) {
+            subRoot.getChildren().add(image);
+        }
+
+        for (ImageView image : spawnPathViewList.get(selectedPathIndex)) {
             subRoot.getChildren().add(image);
         }
         if (!spawnPointViewList.isEmpty()) {
@@ -293,15 +404,21 @@ public class MapConfig {
 
 
         numberOfPaths--;
+        removeSelectedSpawnView(selectedPathIndex);
+        removeSelectedPathView(selectedPathIndex);
         pathPane.getChildren().remove(pathHBoxList.get(selectedPathIndex));
         pathPointViewList.remove(selectedPathIndex);
+        pathViewList.remove(selectedPathIndex);
         spawnPointViewList.remove(selectedPathIndex);
+        spawnPathViewList.remove(selectedPathIndex);
         createdPathList.remove(selectedPathIndex);
         createdPathLabel.remove(selectedPathIndex);
         createdSpawnPointsLabel.remove(selectedPathIndex);
         spawnPointList.remove(selectedPathIndex);
         pathHBoxList.remove(selectedPathIndex);
         pathButtonList.remove(selectedPathIndex);
+
+
         for (int index = 0; index < pathHBoxList.size();index++) {
 
             int ID = Integer.parseInt(pathHBoxList.get(index).getId());
@@ -319,8 +436,10 @@ public class MapConfig {
 
 
         }
+
+
         updateAvailablePaths();
-        selectedPathIndex = pathButtonList.size()-1;
+        changeSelectedPath( pathHBoxList.get(pathHBoxList.size()-1));
         }
 
 
@@ -328,9 +447,38 @@ public class MapConfig {
 
     }
 
+    private void removeSelectedPathView(int pathIndex){
+        for (ImageView pathImage : pathPointViewList.get(pathIndex)){
+            if (subRoot.getChildren().contains(pathImage)){
+                subRoot.getChildren().remove(pathImage);
+            }
+        }
+        for (ImageView pathImage : pathViewList.get(pathIndex)){
+            if (subRoot.getChildren().contains(pathImage)){
+                subRoot.getChildren().remove(pathImage);
+            }
+        }
+        /*for (ImageView pathImage : spawnPathViewList.get(pathIndex)){
+            if (subRoot.getChildren().contains(pathImage)){
+                subRoot.getChildren().remove(pathImage);
+            }
+        }*/
+    }
+
+    private void removeSelectedSpawnView(int pathIndex) {
+        if (subRoot.getChildren().contains(spawnPointViewList.get(pathIndex))){
+            subRoot.getChildren().remove(spawnPointViewList.get(pathIndex));
+        }
+        for (ImageView pathImage : spawnPathViewList.get(pathIndex)){
+            if (subRoot.getChildren().contains(pathImage)){
+                subRoot.getChildren().remove(pathImage);
+            }
+        }
+    }
+
 
     private void addSpawnPointButton(HBox myHBox){
-        Button newButton = new Button("Edit Spawn Point in Selected Path");
+        Button newButton = new Button("Set Spawn Point in Selected Path");
 
         newButton.setOnAction(e ->settingSpawnPoint = true);
 
@@ -338,9 +486,22 @@ public class MapConfig {
     }
 
     private void addPathSelectionButton(HBox myHBox){
-        Button newButton = new Button("Edit Selected Path");
+        Button newButton = new Button("Define Selected Path");
 
         newButton.setOnAction(e ->turnOnOffPathCreation(newButton));
+        /*BooleanBinding bb = new BooleanBinding() {
+            {
+                super.bind(createdSpawnPointsLabel.get(selectedPathIndex).textProperty());
+            }
+
+            @Override
+            protected boolean computeValue() {
+                return createdSpawnPointsLabel.get(selectedPathIndex).equals("To Be Set");
+            }
+        };
+        */
+
+
         //root.getChildren().add(newButton);
         myHBox.getChildren().add(newButton);
 
@@ -432,7 +593,7 @@ public class MapConfig {
         HBox newWaveHBox = new HBox(70);
         newWaveHBox.setId(Integer.toString(waveCount));//ID = index in array
         waveComposition.add(newWaveEnemyList);
-        selectedPathIndex = waveCount;
+        selectedWaveIndex = waveCount;
         waveCount ++;
 
 
@@ -538,7 +699,9 @@ public class MapConfig {
         pathCreation = !pathCreation;
         if (pathCreation) {
             enemyPath = new ArrayList<>();
+            removeSelectedPathView(selectedPathIndex);
             pathPointViewList.get(selectedPathIndex).clear();
+            pathViewList.get(selectedPathIndex).clear();
             myButton.setText("Stop Editing Path ");
         } else {
             if (selectedPathIndex < createdPathList.size()) {
