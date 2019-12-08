@@ -89,7 +89,9 @@ public class ParameterCreator extends BorderPane{
                 SubmitButton myField = new SubmitButton(this);
                 return myField;
             }
-            if (type.equals())
+            if (type.equals()) {
+                
+            }
             else {
                 Class cls = Class.forName(type);
                 Node myField = (Node) cls.getConstructor().newInstance();
