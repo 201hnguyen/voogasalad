@@ -18,6 +18,7 @@ import javafx.util.Pair;
 import voogasalad.gameauthoringenvironment.gui.levelconfig.nodes.MapButton;
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -45,6 +46,11 @@ public class MapConfig {
 
     private ArrayList<Label> createdPathLabel;
     private ArrayList<Label> createdSpawnPointsLabel;
+
+    private ArrayList<ImageView> spawnPointViewList;
+    private ArrayList<ArrayList<ImageView>> pathPointViewList;
+
+
     private Pair<Double,Double> spawnPoint;
     private int selectedPathIndex = 0;
     private int selectedWaveIndex = 0;
@@ -52,13 +58,18 @@ public class MapConfig {
     private ArrayList<ArrayList<Integer>> waveComposition;
     private ArrayList<Label> waveCompositionLabel;
     private ArrayList<HBox> waveHBoxList;
+    private ArrayList<Button> waveButtonList;
+    private ArrayList<ComboBox> wavePathOptions;
+    private ObservableList<String> availablePathOptions;
+
+
     private HBox mainhbox;
     private VBox controlVBox;
     private int yPosition = 10;
     private int xPosition = window_WIDTH - 160;
     private int spacing = 40;
     private int waveCount = 0;
-    private ImageView spawnPointImageView;
+    //private ImageView spawnPointImageView;
     private Image spawnPointImage;
     private MapButton mapButtonInLevel;
     private Image pathPointImage;
@@ -80,16 +91,20 @@ public class MapConfig {
         pathHBoxList = new ArrayList<>();
         pathButtonList = new ArrayList<>();
 
+        waveHBoxList = new ArrayList<>();
+        waveButtonList = new ArrayList<>();
+        wavePathOptions = new ArrayList<>();
+        spawnPointViewList = new ArrayList<>();
+        pathPointViewList = new ArrayList<>();
+
         spawnPointImage = new Image(this.getClass().getClassLoader().getResourceAsStream("spawnPoint.jpg"));
-        spawnPointImageView = new ImageView(spawnPointImage);
+        //spawnPointImageView = new ImageView(spawnPointImage);
         pathPointImage = new Image(this.getClass().getClassLoader().getResourceAsStream("pathPoint.png"));
         defaulBackGroundImage = new Image(this.getClass().getClassLoader().getResourceAsStream("defaultBG.jpg"));
         backgroundImageView = new ImageView(defaulBackGroundImage);
         backgroundImageView.setFitWidth(500);
         backgroundImageView.setFitHeight(500);
 
-        spawnPointImageView.setFitHeight(20);
-        spawnPointImageView.setFitWidth(20);
         levelConfigPage = new Stage();
         root = new BorderPane();
         //root = new Group();
@@ -134,6 +149,7 @@ public class MapConfig {
             //createdPathList.get(selectedPathIndex).add(new Pair(xCoordinate,yCoordinate));
             enemyPath.add(new Pair(xCoordinate,yCoordinate));
             ImageView pathPointImageView = new ImageView(pathPointImage);
+
             pathPointImageView.setFitHeight(20);
             pathPointImageView.setFitWidth(20);
             pathPointImageView.setX(xCoordinate);
@@ -141,24 +157,32 @@ public class MapConfig {
             subRoot.getChildren().add(pathPointImageView);
             System.out.println("x coordinate " + xCoordinate +" y coordinate " + yCoordinate);
             createdPathLabel.get(selectedPathIndex).setText(enemyPath.toString());
+            pathPointViewList.get(selectedPathIndex).add(pathPointImageView);
 
         }
 
         if (settingSpawnPoint) {
-            if (!subRoot.getChildren().contains(spawnPointImageView)) {
-                subRoot.getChildren().add(spawnPointImageView);
+            ImageView spawnPointImageView = new ImageView(spawnPointImage);
+            if (subRoot.getChildren().contains(spawnPointViewList.get(selectedPathIndex))){
+                subRoot.getChildren().remove(spawnPointViewList.get(selectedPathIndex));
             }
             spawnPoint = new Pair(xCoordinate,yCoordinate);
             spawnPointImageView.setX(xCoordinate);
             spawnPointImageView.setY(yCoordinate);
+            spawnPointImageView.setFitHeight(20);
+            spawnPointImageView.setFitWidth(20);
 
             if (selectedPathIndex < spawnPointList.size()) {
                 spawnPointList.set(selectedPathIndex, spawnPoint);
+                spawnPointViewList.set(selectedPathIndex,spawnPointImageView);
             } else {
                 spawnPointList.add(spawnPoint);
+                spawnPointViewList.add(spawnPointImageView);
             }
+            subRoot.getChildren().add(spawnPointImageView);
 
             createdSpawnPointsLabel.get(selectedPathIndex).setText(spawnPoint.toString());
+
             settingSpawnPoint = false;
         }
 
@@ -209,6 +233,9 @@ public class MapConfig {
         createdPathList.add(newPath);
         Pair<Double,Double> newPoint = new Pair<Double,Double>(0.0,0.0);
         spawnPointList.add(newPoint);
+        ArrayList<ImageView> newViewList = new ArrayList<>();
+        spawnPointViewList.add(null);
+        pathPointViewList.add(newViewList);
 
         Button pathNameButton = new Button("Path " + numberOfPaths);
         pathNameButton.setOnAction(e->changeSelectedPath(newPathHBox));
@@ -232,12 +259,32 @@ public class MapConfig {
         pathPane.getChildren().add(newPathHBox);
         pathHBoxList.add(newPathHBox);
 
+        updateAvailablePaths();
+
 
     }
 
     private void changeSelectedPath(HBox pathHBox){
+        for (ImageView image : pathPointViewList.get(selectedPathIndex)) {
+            subRoot.getChildren().remove(image);
+        }
+        if (!spawnPointViewList.isEmpty()) {
+            subRoot.getChildren().remove(spawnPointViewList.get(selectedPathIndex));
+        }
         selectedPathIndex=Integer.parseInt(pathHBox.getId());
-        //pathHBox.setBorder(highLightBorder);
+        for (ImageView image : pathPointViewList.get(selectedPathIndex)) {
+            subRoot.getChildren().add(image);
+        }
+        if (!spawnPointViewList.isEmpty()) {
+            if (!subRoot.getChildren().isEmpty()) {
+                if (spawnPointViewList.get(selectedPathIndex) != null) {
+                    if (!subRoot.getChildren().contains(spawnPointViewList.get(selectedPathIndex))) {
+                        subRoot.getChildren().add(spawnPointViewList.get(selectedPathIndex));
+                    }
+                }
+                //pathHBox.setBorder(highLightBorder);
+            }
+        }
 
     }
 
@@ -247,6 +294,8 @@ public class MapConfig {
 
         numberOfPaths--;
         pathPane.getChildren().remove(pathHBoxList.get(selectedPathIndex));
+        pathPointViewList.remove(selectedPathIndex);
+        spawnPointViewList.remove(selectedPathIndex);
         createdPathList.remove(selectedPathIndex);
         createdPathLabel.remove(selectedPathIndex);
         createdSpawnPointsLabel.remove(selectedPathIndex);
@@ -256,20 +305,21 @@ public class MapConfig {
         for (int index = 0; index < pathHBoxList.size();index++) {
 
             int ID = Integer.parseInt(pathHBoxList.get(index).getId());
-            System.out.println("selected index " + selectedPathIndex + " ID at index "+ index + " after deletion " + ID);
+            //System.out.println("selected index " + selectedPathIndex + " ID at index "+ index + " after deletion " + ID);
             if (ID > selectedPathIndex) {
                 int newButtonNumber = ID;
                 ID--;
                 pathHBoxList.get(index).setId(Integer.toString(ID));
 
                 pathButtonList.get(index).setText("Path " + newButtonNumber);
-                System.out.println("at Index " + index + " new ID is "+ ID + "Button text is " + pathButtonList.get(index).getText());
+                //System.out.println("at Index " + index + " new ID is "+ ID + "Button text is " + pathButtonList.get(index).getText());
 
 
             }
 
 
         }
+        updateAvailablePaths();
         selectedPathIndex = pathButtonList.size()-1;
         }
 
@@ -311,6 +361,8 @@ public class MapConfig {
         VBox waveVBox = new VBox(10);
         Label vBoxTitle = new Label("Create And Edit Your Wave");
 
+        HBox waveButtonHBox = new HBox(10);
+
 
         ScrollPane waveScrollPane = new ScrollPane();
         FlowPane waveFlowPane = new FlowPane();
@@ -338,7 +390,9 @@ public class MapConfig {
         Label activeEnemyLabel = new Label("List Of Active Enemy");
 
         waveVBox.getChildren().add(vBoxTitle);
-        addWaveButton(waveVBox, waveFlowPane);
+        addWaveButton(waveButtonHBox, waveFlowPane);
+        addDeleteWaveButton(waveButtonHBox,waveFlowPane);
+        waveVBox.getChildren().add(waveButtonHBox);
         waveVBox.getChildren().add(activeEnemyLabel);
         waveVBox.getChildren().add(enemyTypeHBox);
         waveVBox.getChildren().add(waveScrollPane);
@@ -350,7 +404,7 @@ public class MapConfig {
 
 
     }
-    private void addWaveButton(VBox myVBox, FlowPane myWaveFlowPane){
+    private void addWaveButton(HBox myHBox, FlowPane myWaveFlowPane){
 
 
         Button addWaveButton = new Button("Add A New Wave");
@@ -363,7 +417,7 @@ public class MapConfig {
         //root.getChildren().add(addWaveButton);
         //root.getChildren().add(enemyTypeHBox);
         //root.getChildren().add(waveLabelHBox);
-        myVBox.getChildren().add(addWaveButton);
+        myHBox.getChildren().add(addWaveButton);
 
     }
 
@@ -373,6 +427,7 @@ public class MapConfig {
 
     }
     private void addNewWaveField(FlowPane myFlowPane){
+
         ArrayList<Integer> newWaveEnemyList = new ArrayList<>();
         HBox newWaveHBox = new HBox(70);
         newWaveHBox.setId(Integer.toString(waveCount));//ID = index in array
@@ -384,7 +439,7 @@ public class MapConfig {
 
         //Label waveNameLabel = new Label("Wave " + waveCount);
         Button waveNameLabel = new Button("Wave " + waveCount);
-        waveNameLabel.setOnAction(e -> changeSelctedWave(newWaveHBox));
+        waveNameLabel.setOnAction(e -> changeSelectedWave(newWaveHBox));
 
         Label waveEnemyListLabel = new Label("Click Active Enemy Type to Add");
         waveCompositionLabel.add(waveEnemyListLabel);
@@ -397,23 +452,76 @@ public class MapConfig {
         startingTimeField.setMaxWidth(30);
         durationField.setMaxWidth(30);
 
-        ObservableList<String> choices = FXCollections.observableArrayList("a", "b", "c");
-        availablePaths.setItems(choices);
+        waveButtonList.add(waveNameLabel);
+        waveHBoxList.add(newWaveHBox);
+
+        availablePathOptions = FXCollections.observableArrayList("None");
+        availablePaths.setItems(availablePathOptions);
+
+        wavePathOptions.add(availablePaths);
+        updateAvailablePaths();
         newWaveHBox.getChildren().add(waveNameLabel);
         newWaveHBox.getChildren().add(waveSrollList);
         newWaveHBox.getChildren().add(startingTimeField);
         newWaveHBox.getChildren().add(durationField);
         newWaveHBox.getChildren().add(availablePaths);
         //root.getChildren().add(newWaveHBox);
-        newWaveHBox.setOnMouseClicked(e-> changeSelctedWave(newWaveHBox));
+        newWaveHBox.setOnMouseClicked(e-> changeSelectedWave(newWaveHBox));
         myFlowPane.getChildren().add(newWaveHBox);
-        waveHBoxList.add(newWaveHBox);
 
 
     }
 
-    private void changeSelctedWave(HBox waveHBox) {
+    private void updateAvailablePaths() {
+        ArrayList<String> availablePathListLabel = new ArrayList<>();
+        for (int index = 0 ; index < pathHBoxList.size() ; index++){
+            availablePathListLabel.add(pathButtonList.get(index).getText());
+
+        }
+        availablePathOptions = FXCollections.observableArrayList(availablePathListLabel);
+
+        for (ComboBox combo:wavePathOptions) {
+            combo.setItems(availablePathOptions);
+        }
+    }
+
+    private void changeSelectedWave(HBox waveHBox) {
         selectedWaveIndex = Integer.parseInt(waveHBox.getId());
+    }
+
+    private void addDeleteWaveButton(HBox waveButtonHBox, FlowPane wavePane) {
+        Button deleteWaveButton = new Button ("Delete Selected Wave");
+        deleteWaveButton.setOnAction(e->deleteSelectedWave(wavePane));
+        waveButtonHBox.getChildren().add(deleteWaveButton);
+
+    }
+
+    private void deleteSelectedWave(FlowPane wavePane) {
+        if ((selectedWaveIndex < waveCount - 1) && waveCount > 0) {
+            wavePane.getChildren().remove(waveHBoxList.get(selectedWaveIndex));
+            waveCount--;
+            waveHBoxList.remove(selectedWaveIndex);
+            waveButtonList.remove(selectedWaveIndex);
+            waveComposition.remove(selectedWaveIndex);
+            waveCompositionLabel.remove(selectedWaveIndex);
+            wavePathOptions.remove(selectedWaveIndex);
+            for (int index = 0; index< waveHBoxList.size(); index++) {
+                int ID = Integer.parseInt(waveHBoxList.get(index).getId());
+                System.out.println("selected index " + selectedWaveIndex + " ID at index "+ index + " after deletion " + ID);
+                if (ID > selectedWaveIndex) {
+                    int newButtonNumber = ID;
+                    ID--;
+                    waveHBoxList.get(index).setId(Integer.toString(ID));
+
+                    waveButtonList.get(index).setText("Wave " + newButtonNumber);
+                    System.out.println("at Index " + index + " new ID is "+ ID + "Button text is " + waveButtonList.get(index).getText());
+
+
+                }
+
+            }
+            selectedWaveIndex = waveHBoxList.size()-1;
+        }
     }
 
     private TextField createInputField(String fieldName){
@@ -430,6 +538,7 @@ public class MapConfig {
         pathCreation = !pathCreation;
         if (pathCreation) {
             enemyPath = new ArrayList<>();
+            pathPointViewList.get(selectedPathIndex).clear();
             myButton.setText("Stop Editing Path ");
         } else {
             if (selectedPathIndex < createdPathList.size()) {
