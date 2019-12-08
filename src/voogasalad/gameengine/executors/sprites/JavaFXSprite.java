@@ -7,6 +7,7 @@ import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.objectcreators.SpriteBuilder;
 import voogasalad.gameengine.executors.sprites.strategies.attack.AttackStrategy;
 import voogasalad.gameengine.executors.sprites.strategies.cost.CostStrategy;
+import voogasalad.gameengine.executors.sprites.strategies.effect.EffectStrategy;
 import voogasalad.gameengine.executors.sprites.strategies.health.HealthStrategy;
 import voogasalad.gameengine.executors.sprites.strategies.movement.MovementStrategy;
 import voogasalad.gameengine.executors.sprites.strategies.rotation.RotationStrategy;
@@ -24,6 +25,7 @@ public class JavaFXSprite implements Sprite {
     private RotationStrategy myRotationStrategy;
     private AttackStrategy myAttackStrategy;
     private CostStrategy myCostStrategy;
+    private EffectStrategy myEffectStrategy;
     private String myImagePath;
     private ImageView myImageView;
     private SpriteBuilder myOriginalBuilder;
@@ -44,6 +46,7 @@ public class JavaFXSprite implements Sprite {
         myAttackStrategy = builder.getAttackStrategy();
         myRotationStrategy = builder.getRotationStrategy();
         myCostStrategy = builder.getCostStrategy();
+        myEffectStrategy = builder.getEffectStrategy();
         myCurrentAttackAngle = 0.0;
         myImagePath = builder.getImagePath();
         myHeight = builder.getHeight();
@@ -63,6 +66,7 @@ public class JavaFXSprite implements Sprite {
                 .setMovementStrategy(myOriginalBuilder.getMovementStrategy().makeClone())
                 .setHealthStrategy(myOriginalBuilder.getHealthStrategy().makeClone())
                 .setCostStrategy(myOriginalBuilder.getCostStrategy().makeClone())
+                .setEffectStrategy(myOriginalBuilder.getEffectStrategy().makeClone())
                 .setPrototypeId(myPrototypeId)
                 .build();
     }
