@@ -1,6 +1,5 @@
 package voogasalad.gameengine.executors.sprites;
 
-import voogasalad.gameengine.executors.control.action.level.LevelAction;
 import voogasalad.gameengine.executors.control.levelcontrol.LevelActionsRequester;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.sprites.strategies.attack.AttackStrategy;
@@ -31,6 +30,8 @@ public interface Sprite {
     int getDestroyCost();
     void updateImage(String newImagePath);
     boolean isColliding(Sprite sprite);
-    LevelAction getEffectAction(Sprite sprite) throws GameEngineException;
     void updateAttackStrategy(AttackStrategy updatedStrategy);
+    void applyEffect(Sprite sprite) throws GameEngineException;
+    void setHasBeenClicked(boolean bool);
+    boolean getHasBeenClicked();
 }
