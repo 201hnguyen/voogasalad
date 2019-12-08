@@ -1,17 +1,22 @@
 package voogasalad.gameplayer.GUI;
 import javafx.animation.Timeline;
-import javafx.geometry.Pos;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.geometry.Insets;
+import javafx.geometry.NodeOrientation;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import voogasalad.gameengine.api.GameSceneObject;
 import voogasalad.gameengine.api.ActionsProcessor;
 import voogasalad.gameengine.api.Engine;
 import voogasalad.gameengine.executors.sprites.Sprite;
+import voogasalad.gameplayer.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +30,6 @@ public class PlayerVisualization extends BorderPane {
     private static final double PANEL_POSITION = 800;
     private static final double LAYOUT = 0;
     private static final String TITLE = "Player";
-    private static final String INSTRUCTIONS = " Instructions: Drag and drop \n towers onto display screen.";
 
     private Scene scene;
     private Stage stage;
@@ -37,22 +41,27 @@ public class PlayerVisualization extends BorderPane {
     private StatusBar statusBar;
     private SelectedTowerPane selectedTowerPane;
     private ActionsProcessor actionsProcessor;
-    private Engine engine;
+    private StopWatch myStopWatch;
+    private Text myStopWatchDisplay;
+    private Player myPlayer;
 
-    public PlayerVisualization(Stage stage, Timeline timeline, ActionsProcessor actionsProcessor, Engine engine) {
+    public PlayerVisualization(Stage stage, Timeline timeline, ActionsProcessor uiActionsProcessor, Player player) {
         this.stage = stage;
         this.timeline = timeline;
-        this.actionsProcessor = actionsProcessor;
-        this.engine = engine;
+        this.actionsProcessor = uiActionsProcessor;
+        this.myPlayer = player;
         initialize();
     }
 
     public void update(List<Sprite> sprites, Map<String, Integer> gameInfoMap) {
         displayScreen.updateDisplayScreen(sprites);
         statusBar.updateDisplayedInfo(gameInfoMap);
+        myStopWatchDisplay.setText(myStopWatch.getCurrentTime());
     }
 
-    public void setNewLevel(List<Sprite> towers, List<Sprite> enemies, String backgroundImagePath){
+    public void setNewLevel(List<Sprite> towers, List<Sprite> enemies, String backgroundImagePath, Map<String, Integer> gameInfoMap){
+        myStopWatch = new StopWatch();
+        statusBar.updateDisplayedInfo(gameInfoMap);
         displayScreen.updateDisplayScreen(new ArrayList<>());
         int i = 0;
         HashMap<Integer, Integer> idMap = new HashMap<>();
@@ -70,7 +79,10 @@ public class PlayerVisualization extends BorderPane {
         statusBar = new StatusBar();
         selectedTowerPane = new SelectedTowerPane(actionsProcessor, displayScreen);
         panelBox = new VBox(10);
-        panelBox.getChildren().addAll(buttonCreator,showInstructions(),accordionCreator,backToGAE(), selectedTowerPane);
+
+        panelBox.getChildren().addAll(buttonCreator,accordionCreator, selectedTowerPane);
+        createStopWatchDisplay();
+        statusBar.getChildren().add(myStopWatchDisplay);
         this.setRight(panelBox);
         this.setTop(statusBar);
         scene = new Scene(this, SCENE_WIDTH, SCENE_HEIGHT);
@@ -79,7 +91,7 @@ public class PlayerVisualization extends BorderPane {
     }
 
     private void displayGameScreenAndAttachToAccordion() {
-        displayScreen = new DisplayScreen(actionsProcessor, engine, selectedTowerPane);
+        displayScreen = new DisplayScreen(actionsProcessor, myPlayer, selectedTowerPane);
         displayScreen.setMinWidth(SCENE_WIDTH - (SCENE_WIDTH - PANEL_POSITION));
         displayScreen.setMinHeight(SCENE_HEIGHT - this.getTop().getLayoutY());
         accordionCreator.attachDisplayScreen(displayScreen);
@@ -94,12 +106,9 @@ public class PlayerVisualization extends BorderPane {
 
     }
 
-    private VBox backToGAE() {
-        VBox buttonHolder = new VBox();
-        Button button = new Button("Return to GAE");
-        buttonHolder.getChildren().add(button);
-        buttonHolder.setAlignment(Pos.CENTER);
-        return buttonHolder;
+    private void createStopWatchDisplay(){
+        myStopWatchDisplay = new Text("\n 0 : 0");
+        myStopWatchDisplay.setFont(new Font(20));
     }
 
     private void setBackgroundImage(String backgroundImagePath){
@@ -107,22 +116,13 @@ public class PlayerVisualization extends BorderPane {
         displayScreen.setBackground(new Background(backgroundImage));
     }
 
-    private Text showInstructions() {
-        DropShadow shadow = new DropShadow();
-        shadow.setOffsetY(3.0f);
-        shadow.setColor(Color.color(0.4f, 0.4f, 0.4f));
-        Text instructions = new Text();
-        instructions.setText(INSTRUCTIONS);
-        instructions.setFill(Color.BLACK);
-        instructions.setEffect(shadow);
-        return instructions;
-    }
-
     public void startButtonAction() {
         timeline.play();
+        myStopWatch.startStopWatch();
     }
 
     public void pauseButtonAction() {
         timeline.stop();
+        myStopWatch.pauseStopWatch();
     }
 }

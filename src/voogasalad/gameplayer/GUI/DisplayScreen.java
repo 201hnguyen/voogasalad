@@ -13,6 +13,7 @@ import voogasalad.gameengine.api.GameSceneObject;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.sprites.Sprite;
 import voogasalad.gameengine.executors.utils.SpriteArchetype;
+import voogasalad.gameplayer.Player;
 
 import java.util.List;
 
@@ -20,8 +21,11 @@ public class DisplayScreen extends Pane {
     private SelectedTowerPane selectedTowerPane;
     private ActionsProcessor actionsProcessor;
     private int currentImageID;
+    private Player myPlayer;
 
-    public DisplayScreen(ActionsProcessor actionsProcessor, Engine engine, SelectedTowerPane selectedTowerPane) {
+
+    public DisplayScreen(ActionsProcessor actionsProcessor, Player player, SelectedTowerPane selectedTowerPane) {
+        this.myPlayer = player;
         this.actionsProcessor = actionsProcessor;
         this.selectedTowerPane = selectedTowerPane;
         this.setOnDragOver((DragEvent event) -> {
@@ -37,8 +41,7 @@ public class DisplayScreen extends Pane {
             if (db.hasImage()) {
                 success = true;
                 this.actionsProcessor.processAddSpriteAction(currentImageID, event.getX(), event.getY());
-//                GameSceneObject gso = actionsProcessor.processExecuteNoElapsedTimeSceneAction();
-//                updateDisplayScreen(gso.getOnScreenSprites());
+                player.executeEngineWithZeroElapsedTime();
             }
             event.setDropCompleted(success);
             event.consume();
