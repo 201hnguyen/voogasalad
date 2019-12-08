@@ -11,7 +11,6 @@ import voogasalad.gameengine.executors.utils.SpriteArchetype;
 import voogasalad.gameplayer.Player;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class DisplayScreen extends Pane {
     private SelectedTowerPane selectedTowerPane;
