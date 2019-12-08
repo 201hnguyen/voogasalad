@@ -6,12 +6,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import voogasalad.gameauthoringenvironment.gui.AddToXML;
 import voogasalad.gameauthoringenvironment.gui.SaveGUIParameters;
@@ -22,9 +20,9 @@ import voogasalad.gameauthoringenvironment.gui.utils.SubmitButton;
 import voogasalad.gameauthoringenvironment.gui.utils.TabVBoxCreator;
 
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static java.lang.Double.valueOf;
 
@@ -33,10 +31,6 @@ public class ParameterCreator extends BorderPane{
     private static final int window_WIDTH = 300;
     private static final int window_HEIGHT = 300;
     private static final String SUBMITBUTTONCLASS = new SubmitButton().getClass().toString().split("class ")[1];
-    private static final String FILECHOOSERBUTTONCLASS = "class voogasalad.gameauthoringenvironment.gui.utils.FileChooserButton";
-    private static final String PREVIEWIMAGEBUTTONCLASS = "class voogasalad.gameauthoringenvironment.gui.utils.PreviewImageButton";
-    private static final String PROPERTIES_PATH = "resources.gae.tabcreation";
-
     private BorderPane root;
     private ObjectPreviewAndActive objectSpecificRoot;
     private Stage newStage;
@@ -102,7 +96,7 @@ public class ParameterCreator extends BorderPane{
     }
 
     private void addInputFields() {
-        configVBox = new TabVBoxCreator("Configure Parameters");
+        configVBox = new TabVBoxCreator("Configure Parameters", 200, 50, 50, 50, 10);
 
         for (int j = 0; j < properties.length; j++) {
             Label label = new Label(properties[j]); //for SaveGuiParameters
@@ -114,38 +108,23 @@ public class ParameterCreator extends BorderPane{
     }
 
     private void addImagePreview() {
-        previewVBox = new TabVBoxCreator("Image Preview");
+        previewVBox = new TabVBoxCreator("Image Preview", 200, 50, 10, 50, 50);
         for (int i = 0; i < allNodes.size(); i++) {
             Node currentNode = allNodes.get(i);
             String nodeLabel = labelText.get(i);
             if (nodeLabel.equals("ImageHeight")) {
                 ((TextField) currentNode).setOnAction(e -> {
-                    imageViewHeight = Double.parseDouble((new FieldTextReturnFactory()).getAppropriateText(nodeLabel));
+                    imageViewHeight = Double.parseDouble((new FieldTextReturnFactory()).getAppropriateText(currentNode));
                     System.out.println(imageViewHeight);
                 });
             };
             if (nodeLabel.equals("ImageWidth")) {
                 ((TextField) currentNode).setOnAction(e -> {
-                    imageViewWidth = Double.parseDouble((new FieldTextReturnFactory()).getAppropriateText(nodeLabel));
+                    imageViewWidth = Double.parseDouble((new FieldTextReturnFactory()).getAppropriateText(currentNode));
                     System.out.println(imageViewWidth);
                 });
             };
-//
-//            if (nodeLabel.equals("ImageHeight")) {
-//                currentNode.setOnKeyPressed((event) -> {
-//                    if (event.getCode() == KeyCode.ENTER) {
-//                        imageViewHeight = Double.parseDouble((new FieldTextReturnFactory()).getAppropriateText(nodeLabel));
-//                    }
-//                });
-//            }
-//            if (nodeLabel.equals("ImageWidth")) {
-//                currentNode.setOnKeyPressed((event) -> {
-//                    if (event.getCode() == KeyCode.ENTER) {
-//                        imageViewWidth = Double.parseDouble((new FieldTextReturnFactory()).getAppropriateText(nodeLabel));
-//                    }
-//                });
-//            }
-//
+
 //            imageViewHeight = accessImageSpecs(nodeLabel, currentNode,"ImageHeight");
 //            System.out.println(imageViewHeight);
 //
@@ -158,23 +137,38 @@ public class ParameterCreator extends BorderPane{
             if (currentNode instanceof PreviewImageButton) {
                 PreviewImageButton button = (PreviewImageButton) currentNode;
                 button.setOnAction(event -> {
-                    imageString = fileChooserButton.getImageString();
-                    imageView = new ImageView(imageString);
-                    previewVBox.getChildren().add(imageView);
+                    if (imageString == null) {
+                        setImageSpecs();
+                    }
+                    else {
+                        imageView.setImage(null);
+                        setImageSpecs();
+                    }
                 });
             }
         }
     }
 
+    private void setImageSpecs() {
+        imageString = fileChooserButton.getImageString();
+        imageView = new ImageView(imageString);
+        imageView.setX(50);
+        imageView.setY(100);
+        imageView.setPreserveRatio(true);
+        imageView.setFitHeight(imageViewHeight);
+        imageView.setFitWidth(imageViewWidth);
+        previewVBox.getChildren().add(imageView);
+    }
+
+    //TODO: fix this
     private double accessImageSpecs(String nodeLabel, Node currentNode, String s) {
-        final double[] d = {0.0};
+        AtomicReference<Double> d = new AtomicReference<>(0.0);
         if (nodeLabel.equals(s)) {
-            currentNode.setOnKeyPressed((event) -> {
-                if (event.getCode() == KeyCode.ENTER) {
-                    d[0] = valueOf((new FieldTextReturnFactory()).getAppropriateText(nodeLabel)); }
+            ((TextField) currentNode).setOnAction((event) -> {
+                    d.set(valueOf((new FieldTextReturnFactory()).getAppropriateText(currentNode)));
             });
         }
-        return d[0];
+        return d.get();
     }
 
 

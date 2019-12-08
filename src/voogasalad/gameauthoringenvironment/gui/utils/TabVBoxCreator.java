@@ -7,11 +7,11 @@ import javafx.scene.text.Font;
 
 public class TabVBoxCreator extends VBox{
 
-    public TabVBoxCreator(String vBoxName) {
+    public TabVBoxCreator(String vBoxName, double width, double top, double right, double bottom, double left) {
         Label header = new Label(vBoxName);
         header.setFont(Font.font(14));
         this.getChildren().add(header);
-        this.setPrefWidth(200);
-        this.setPadding(new Insets(50, 50, 50, 50));
+        this.setPrefWidth(width);
+        this.setPadding(new Insets(top, right, bottom, left));
     }
 }
