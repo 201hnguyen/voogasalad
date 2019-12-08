@@ -14,8 +14,8 @@ import java.util.ResourceBundle;
  */
 public class SceneCreator {
 
-    public static final String SPRITE_OPTIONS_RESOURCE = "resources.gae.SpriteOptions";
-    public static final String PARAM_FIELD_TYPE_RESOURCE = "resources.gae.ParamToInputType";
+    public static final String SPRITE_OPTIONS_RESOURCE = "resources.gae.tabcreation.SpriteOptions";
+    public static final String PARAM_FIELD_TYPE_RESOURCE = "resources.gae.tabcreation.ParamToInputType";
     private ResourceBundle typeToParams;
     private ResourceBundle paramFieldType;
     private int width;
