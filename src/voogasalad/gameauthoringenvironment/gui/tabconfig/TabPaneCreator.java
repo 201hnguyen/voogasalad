@@ -1,23 +1,24 @@
-package voogasalad.everything_gae.gae_gui.tab_config;
+package voogasalad.gameauthoringenvironment.gui.tabconfig;
 
 
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 import org.w3c.dom.Document;
-import voogasalad.everything_gae.bus.Bus;
-import voogasalad.everything_gae.gae_gui.AddToXML;
-import voogasalad.everything_gae.gae_gui.level_map_config.level_config.LevelConfigPane;
-import voogasalad.everything_gae.gae_gui.tab_config.object_param_creation.CreateObjectParams;
+import voogasalad.gameauthoringenvironment.bus.Bus;
+import voogasalad.gameauthoringenvironment.gui.AddToXML;
+import voogasalad.gameauthoringenvironment.gui.levelconfig.LevelConfigPane;
+import voogasalad.gameauthoringenvironment.gui.tabconfig.parameterfields.ParameterCreator;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.util.ResourceBundle;
 
 public class TabPaneCreator {
-//public class TabCreator<label> {
-    public static final String SPRITE_OPTIONS_RESOURCE = "voogasalad/everything_gae/resources/SpriteOptions";
-    public static final String PARAM_FIELD_TYPE_RESOURCE = "voogasalad/everything_gae/resources/ParamToInputType";
-    private static final String TAB_NAMES = "voogasalad/everything_gae/resources/TabNames";
+    private static final String SPRITE_OPTIONS_RESOURCE = "resources.gae.SpriteOptions";
+    private static final String PARAM_FIELD_TYPE_RESOURCE = "resources.gae.ParamToInputType";
+    private static final String TAB_NAMES = "resources.gae.TabNames";
+    private static final String ENEMY_ATTRIBUTES = "resources.gae.EnemyAttributes";
+
     private ResourceBundle myTabNames;
     private TabPane myTabPane;
     private int height = 500;
@@ -33,11 +34,10 @@ public class TabPaneCreator {
         sendToXML = sendToXMLParam;
         createdXML = createdXMLParam;
         busInstance = busInstanceParam;
-        defaultProperties = ResourceBundle.getBundle("voogasalad/everything_gae/resources/EnemyAttributes");
+        defaultProperties = ResourceBundle.getBundle(ENEMY_ATTRIBUTES);
         typeToParams = ResourceBundle.getBundle(SPRITE_OPTIONS_RESOURCE);
         paramFieldType = ResourceBundle.getBundle(PARAM_FIELD_TYPE_RESOURCE);
         myTabPane = createTabPane();
-
     }
 
     /**
@@ -82,7 +82,7 @@ public class TabPaneCreator {
     private BorderPane createPane(TabPane tabPane) {
         typeToParams.getKeys().asIterator().forEachRemaining(key -> {
             try {
-                Tab objectTab = new Tab(key, new CreateObjectParams(key, typeToParams.getString(key).split(","), paramFieldType) );
+                Tab objectTab = new Tab(key, new ParameterCreator(key, typeToParams.getString(key).split(","), paramFieldType) );
                 tabPane.getTabs().add(objectTab);
             } catch (ParserConfigurationException e) {
                 e.printStackTrace();

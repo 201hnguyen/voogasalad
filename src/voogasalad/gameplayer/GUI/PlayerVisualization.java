@@ -6,10 +6,12 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import voogasalad.gameengine.api.GameSceneObject;
 import voogasalad.gameengine.executors.sprites.Sprite;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class PlayerVisualization extends Pane {
 
@@ -18,6 +20,8 @@ public class PlayerVisualization extends Pane {
     private static final double PANEL_POSITION = 700;
     private static final double LAYOUT = 0;
     private static final String TITLE = "Player";
+    private static final int STATUS_BAR_WIDTH = 300;
+    private static final int STATUS_BAR_HEIGHT = 50;
 
     private Scene scene;
     private Stage stage;
@@ -26,6 +30,7 @@ public class PlayerVisualization extends Pane {
     private BackgroundImage backgroundImage;
     private VBox panelBox;
     private AccordionCreator accordionCreator;
+    private StatusBar statusBar;
 
     public PlayerVisualization(Stage stage, Timeline timeline) {
         this.stage = stage;
@@ -33,11 +38,13 @@ public class PlayerVisualization extends Pane {
         initialize();
     }
 
-    public void update(List<Sprite> sprites) {
+    public void update(List<Sprite> sprites, Map<String, Integer> gameInfoMap) {
         displayScreen.updateDisplayScreen(sprites);
+        statusBar.updateDisplayedInfo(gameInfoMap);
     }
 
     public void setNewLevel(List<Sprite> towers, List<Sprite> enemies, String backgroundImagePath){
+        displayScreen.updateDisplayScreen(new ArrayList<>());
         accordionCreator.updateAvailableTowersAndEnemies(towers, enemies);
         setBackgroundImage(backgroundImagePath);
     }
@@ -45,7 +52,11 @@ public class PlayerVisualization extends Pane {
     private void initialize() {
         ButtonCreator buttonCreator = new ButtonCreator(new ButtonController(this));
         accordionCreator = new AccordionCreator();
+        statusBar = new StatusBar();
+        statusBar.setMinWidth(STATUS_BAR_WIDTH);
+        statusBar.setMinHeight(STATUS_BAR_HEIGHT);
         panelBox = new VBox();
+        panelBox.getChildren().add(statusBar);
         panelBox.getChildren().add(buttonCreator);
         panelBox.getChildren().add(accordionCreator);
         panelBox.setLayoutX(PANEL_POSITION);

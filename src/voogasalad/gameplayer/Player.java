@@ -12,6 +12,9 @@ import voogasalad.gameengine.api.Engine;
 import voogasalad.gameengine.executors.utils.SpriteArchetype;
 import voogasalad.gameplayer.GUI.PlayerVisualization;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * PLEASE READ BEFORE MAKING CHANGES TO THE PLAYER PACKAGE:
  * DO NOT INSTANTIATE OR ACCESS ANY ENGINE OBJECT BESIDES THE ENGINE ITSELF WHEN TRYING TO DISPLAY IN THE PLAYER.
@@ -25,38 +28,44 @@ import voogasalad.gameplayer.GUI.PlayerVisualization;
  */
 public class Player {
 
-    public static final int WINDOW_SIZE = 500;
     public static final int FRAMES_PER_SECOND = 40;
     public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     private Stage myStage;
-    private Group myMapRoot;
     private PlayerVisualization myPlayerVisualization;
     private Engine myEngine;
     private Timeline myTimeline;
     private GameSceneObject myCurrentGameSceneObject;
+    private HashMap<String, Integer> gameInfo;
+    private int flag = 0;
 
     //Player expects a javaFX Stage upon instantiation
     public Player(Stage primaryStage, Document doc) throws GameEngineException { //TODO: Don't throw GameEngineException out of Player
         myStage = primaryStage;
-        myMapRoot = new Group();
         myEngine = new Engine(doc);
         startGame();
     }
 
-    public void startGame() {
+    public void startGame() throws GameEngineException {
         myTimeline = new Timeline();
         myPlayerVisualization = new PlayerVisualization(myStage, myTimeline);
+        gameInfo = new HashMap<>();
         setGameLoop();
     }
 
     private void gameLoop(double elapsedTime) throws GameEngineException {
         if(myEngine.didLevelSwitch()) {
-            System.out.println("level switched");
             myPlayerVisualization.setNewLevel(myEngine.getSpritePrototypesByArchetype(SpriteArchetype.TOWER), myEngine.getSpritePrototypesByArchetype(SpriteArchetype.ENEMY), myEngine.getCurrentLevelBackgroundPath());
+            flag = -1;
         }
         myCurrentGameSceneObject = myEngine.execute(elapsedTime);
-        myPlayerVisualization.update(myCurrentGameSceneObject.getOnScreenSprites());
+        gameInfo.put("Lives", myCurrentGameSceneObject.getLives());
+        gameInfo.put("Coins", myCurrentGameSceneObject.getResources());
+        myPlayerVisualization.update(myCurrentGameSceneObject.getOnScreenSprites(), gameInfo);
+        if(flag == -1){
+            myTimeline.pause();
+            flag = 0;
+        }
     }
 
     private void setGameLoop() {
@@ -69,6 +78,7 @@ public class Player {
         });
         myTimeline.setCycleCount(Timeline.INDEFINITE);
         myTimeline.getKeyFrames().add(frame);
+        myTimeline.play();
     }
 
 }

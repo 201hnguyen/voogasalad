@@ -1,4 +1,4 @@
-package voogasalad.everything_gae.gae_gui.level_map_config.level_config;
+package voogasalad.gameauthoringenvironment.gui.levelconfig;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -6,12 +6,12 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import org.w3c.dom.Document;
-import voogasalad.everything_gae.bus.Bus;
-import voogasalad.everything_gae.gae_gui.AddToXML;
-import voogasalad.everything_gae.gae_gui.level_map_config.level_config.nodes.MapButton;
-import voogasalad.everything_gae.gae_gui.level_map_config.level_config.nodes.ObjectVBox;
-import voogasalad.everything_gae.gae_gui.level_map_config.level_config.nodes.RuleLine;
-import voogasalad.everything_gae.gae_gui.level_map_config.level_config.nodes.SubmitButton;
+import voogasalad.gameauthoringenvironment.bus.Bus;
+import voogasalad.gameauthoringenvironment.gui.AddToXML;
+import voogasalad.gameauthoringenvironment.gui.levelconfig.nodes.MapButton;
+import voogasalad.gameauthoringenvironment.gui.levelconfig.nodes.VBoxCreator;
+import voogasalad.gameauthoringenvironment.gui.levelconfig.nodes.RuleLine;
+import voogasalad.gameauthoringenvironment.gui.levelconfig.nodes.SubmitButton;
 
 public class LevelConfigPane extends BorderPane{
     private int width = 500;
@@ -59,9 +59,9 @@ public class LevelConfigPane extends BorderPane{
         HBox allObjectHBox = new HBox();
         int heightOfBox = 2*height/10;
         int widthOfBox = width/3;
-        ObjectVBox towersVBox = new ObjectVBox("Towers", widthOfBox, heightOfBox);
-        ObjectVBox enemiesVBox = new ObjectVBox("Enemies", widthOfBox, heightOfBox);
-        ObjectVBox obstaclesVBox = new ObjectVBox("Obstacles", widthOfBox, heightOfBox);
+        VBoxCreator towersVBox = new VBoxCreator("Towers", widthOfBox, heightOfBox);
+        VBoxCreator enemiesVBox = new VBoxCreator("Enemies", widthOfBox, heightOfBox);
+        VBoxCreator obstaclesVBox = new VBoxCreator("Obstacles", widthOfBox, heightOfBox);
         towersVBox.addToObjectHBox(new Button("test"));
         towersVBox.addToObjectHBox(new Button("test"));
         towersVBox.addToObjectHBox(new Button("test"));

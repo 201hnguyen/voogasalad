@@ -11,7 +11,7 @@ import java.util.List;
 public class DisplayScreen extends Pane {
 
     public void updateDisplayScreen(List<Sprite> sprites){
-        getChildren().clear();
+        this.getChildren().clear();
         for(Sprite sprite: sprites){
             loadInSprite(sprite);
         }

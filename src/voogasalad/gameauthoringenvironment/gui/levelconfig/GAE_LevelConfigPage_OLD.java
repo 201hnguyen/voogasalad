@@ -1,6 +1,6 @@
-package voogasalad.everything_gae.gae_gui.gae_levelcomponents;
+package voogasalad.gameauthoringenvironment.gui.levelconfig;
 
-import voogasalad.everything_gae.gae_gui.AddToXML;
+import voogasalad.gameauthoringenvironment.gui.AddToXML;
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -17,7 +17,10 @@ import javafx.util.Pair;
 import java.io.File;
 import java.util.ArrayList;
 
-public class GAE_LevelConfigPage {
+/**
+ * not in use
+ */
+public class GAE_LevelConfigPage_OLD {
 
     private static final int window_WIDTH = 1000;
     private static final int window_HEIGHT = 600;
@@ -37,7 +40,7 @@ public class GAE_LevelConfigPage {
     private AddToXML addToXML = new AddToXML();
 
 
-    public GAE_LevelConfigPage(){
+    public GAE_LevelConfigPage_OLD(){
 
 
 

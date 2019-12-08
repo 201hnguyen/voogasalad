@@ -1,23 +1,21 @@
-package voogasalad.everything_gae.gae_gui;
+package voogasalad.gameauthoringenvironment.gui;
 
 import javafx.scene.control.TabPane;
-import voogasalad.everything_gae.bus.Bus;
+import voogasalad.gameauthoringenvironment.bus.Bus;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import org.w3c.dom.Document;
-import voogasalad.everything_gae.gae_gui.tab_config.TabPaneCreator;
-import voogasalad.everything_gae.gae_gui.tab_config.object_param_creation.CreateObjectParams;
+import voogasalad.gameauthoringenvironment.gui.tabconfig.TabPaneCreator;
 
-import javax.xml.parsers.ParserConfigurationException;
 import java.util.ResourceBundle;
 
 /**
  *
  */
-public class GUI_SceneMaker{
+public class SceneCreator {
 
-    public static final String SPRITE_OPTIONS_RESOURCE = "voogasalad/everything_gae/resources/SpriteOptions";
-    public static final String PARAM_FIELD_TYPE_RESOURCE = "voogasalad/everything_gae/resources/ParamToInputType";
+    public static final String SPRITE_OPTIONS_RESOURCE = "resources.gae.SpriteOptions";
+    public static final String PARAM_FIELD_TYPE_RESOURCE = "resources.gae.ParamToInputType";
     private ResourceBundle typeToParams;
     private ResourceBundle paramFieldType;
     private int width;
@@ -27,7 +25,7 @@ public class GUI_SceneMaker{
     public Bus busInstance;
 
 
-    public GUI_SceneMaker(int widthParam, int heightParam, Bus myBusInstance){
+    public SceneCreator(int widthParam, int heightParam, Bus myBusInstance){
         sendToXML = new AddToXML();
         busInstance = myBusInstance;
         width = widthParam;

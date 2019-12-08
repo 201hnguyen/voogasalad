@@ -1,4 +1,4 @@
-package voogasalad.everything_gae.gae_gui;
+package voogasalad.gameauthoringenvironment.gui;
 
 import java.util.HashMap;
 import java.util.Iterator;

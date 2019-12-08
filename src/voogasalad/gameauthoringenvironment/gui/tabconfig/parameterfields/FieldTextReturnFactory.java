@@ -1,4 +1,4 @@
-package voogasalad.everything_gae.gae_gui.tab_config.object_param_creation;
+package voogasalad.gameauthoringenvironment.gui.tabconfig.parameterfields;
 
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
