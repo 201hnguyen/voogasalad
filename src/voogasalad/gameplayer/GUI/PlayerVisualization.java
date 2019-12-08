@@ -43,18 +43,28 @@ public class PlayerVisualization extends BorderPane {
     private StopWatch myStopWatch;
     private Text myStopWatchDisplay;
     private Player myPlayer;
+    private boolean isRunning;
+    private String currentTime;
 
     public PlayerVisualization(Stage stage, ActionsProcessor uiActionsProcessor, Player player) {
         this.stage = stage;
         this.actionsProcessor = uiActionsProcessor;
         this.myPlayer = player;
+        this.isRunning = false;
+        currentTime = "\n 0 : 0";
         initialize();
     }
 
     public void update(List<Sprite> sprites, Map<String, Integer> gameInfoMap) {
         displayScreen.updateDisplayScreen(sprites);
         statusBar.updateDisplayedInfo(gameInfoMap);
-        myStopWatchDisplay.setText(myStopWatch.getCurrentTime());
+        if(isRunning) {
+            currentTime = myStopWatch.getCurrentTime();
+            myStopWatchDisplay.setText(currentTime);
+        }
+        else{
+            myStopWatchDisplay.setText(currentTime);
+        }
     }
 
     public void setNewLevel(List<Sprite> towers, List<Sprite> enemies, String backgroundImagePath, Map<String, Integer> gameInfoMap){
@@ -114,13 +124,13 @@ public class PlayerVisualization extends BorderPane {
     }
 
     public void startButtonAction() {
-//        timeline.play();
+        isRunning = true;
         myPlayer.startTimeLine();
         myStopWatch.startStopWatch();
     }
 
     public void pauseButtonAction() {
-//        timeline.stop();
+        isRunning = false;
         myPlayer.pauseTimeline();
         myStopWatch.pauseStopWatch();
     }
