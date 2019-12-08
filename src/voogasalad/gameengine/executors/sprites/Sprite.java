@@ -27,4 +27,5 @@ public interface Sprite {
     boolean isDead();
     int getCreateCost();
     int getDestroyCost();
+    void updateImage(String newImagePath);
 }

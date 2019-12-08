@@ -29,6 +29,8 @@ public class JavaFXSprite implements Sprite {
     private SpriteBuilder myOriginalBuilder;
     private SpriteArchetype myArchetype;
     private int myPrototypeId;
+    private double myHeight;
+    private double myWidth;
 
     public JavaFXSprite(SpriteBuilder builder) throws GameEngineException {
         myPrototypeId = builder.getPrototypeId();
@@ -44,16 +46,18 @@ public class JavaFXSprite implements Sprite {
         myCostStrategy = builder.getCostStrategy();
         myCurrentAttackAngle = 0.0;
         myImagePath = builder.getImagePath();
-        configureImageView(builder.getHeight(), builder.getWidth());
+        myHeight = builder.getHeight();
+        myWidth = builder.getWidth();
+        configureImageView();
     }
 
     @Override
     public Sprite makeClone(double x, double y, int spriteId) throws GameEngineException {
         return new SpriteBuilder().setSpriteId(spriteId).setX(x).setY(y)
-                .setHeight(myOriginalBuilder.getHeight())
-                .setImagePath(myOriginalBuilder.getImagePath())
-                .setWidth(myOriginalBuilder.getWidth())
-                .setArchetype(myOriginalBuilder.getSpriteArchetype())
+                .setHeight(myHeight)
+                .setImagePath(myImagePath)
+                .setWidth(myWidth)
+                .setArchetype(myArchetype)
                 .setAttackStrategy(myOriginalBuilder.getAttackStrategy().makeClone())
                 .setRotationStrategy(myOriginalBuilder.getRotationStrategy().makeClone())
                 .setMovementStrategy(myOriginalBuilder.getMovementStrategy().makeClone())
@@ -128,10 +132,10 @@ public class JavaFXSprite implements Sprite {
         currentPosition = myMovementStrategy.calculateNextPosition(elapsedTime, currentPosition);
     }
 
-    private void configureImageView(double height, double width) {
+    private void configureImageView() {
         myImageView = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream(myImagePath)));
-        myImageView.setFitHeight(height);
-        myImageView.setFitWidth(width);
+        myImageView.setFitHeight(myHeight);
+        myImageView.setFitWidth(myWidth);
         myImageView.setPreserveRatio(true);
     }
 
@@ -157,6 +161,12 @@ public class JavaFXSprite implements Sprite {
     @Override
     public int getDestroyCost() {
         return myCostStrategy.getDestroyCost();
+    }
+
+    @Override
+    public void updateImage(String newImagePath) {
+        myImagePath = newImagePath;
+        configureImageView();
     }
 
 }

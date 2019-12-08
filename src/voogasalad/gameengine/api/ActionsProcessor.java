@@ -24,6 +24,7 @@ import java.util.ResourceBundle;
 public class ActionsProcessor {
     public static final String GAME_ACTIONS_DIRECTORY_ROOT = "voogasalad.gameengine.executors.control.action.game.";
     public static final String LEVEL_ACTIONS_DIRECTORY_ROOT = "voogasalad.gameengine.executors.control.action.level.";
+    public static final String ACTIONS_DIRECTORY_ROOT = "voogasalad.gameengine.executors.control.action.";
     public static final String LIVE_GAME_EDITING_CLASS_PATH = "resources/engine/LiveGameEditing";
     public static final ResourceBundle LIVE_GAME_EDITING_BUNDLE = ResourceBundle.getBundle(LIVE_GAME_EDITING_CLASS_PATH);
 
@@ -83,8 +84,18 @@ public class ActionsProcessor {
         }
     }
 
+    private void processEditPrototypeAction(String editPrototypeActionType, Element editableObject) {
+        try {
+            Object action = Class.forName(ACTIONS_DIRECTORY_ROOT + editPrototypeActionType).getConstructor(Element.class).newInstance(editableObject);
+            myLevelActionsRequester.requestAction((LevelAction) action);
+            myGameActionsRequester.requestAction((GameAction) action);
+        } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace(); //FIXME
+        }
+    }
+
     private Document configureWithTestDocument() throws GameEngineException {
-        File testFile = new File("src/resources/player/EditedLevelConditions.xml");
+        File testFile = new File("src/resources/player/EditedSpriteImageView.xml");
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder ;
         try {

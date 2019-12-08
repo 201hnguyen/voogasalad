@@ -245,7 +245,7 @@
             <ConditionId>0</ConditionId>
             <Type>TemporalCondition</Type>
             <Parameters>
-                <MarkedTime>7</MarkedTime>
+                <MarkedTime>2</MarkedTime>
             </Parameters>
             <Actions>
                 <Action>
@@ -320,7 +320,7 @@
             <ConditionId>0</ConditionId>
             <Type>TemporalCondition</Type>
             <Parameters>
-                <Markedtime>7</Markedtime>
+                <Markedtime>2</Markedtime>
             </Parameters>
             <Actions>
                 <Action>

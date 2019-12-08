@@ -83,7 +83,7 @@ public class JavaFXSpriteManager implements SpriteManager {
     }
 
     @Override
-    public List<Sprite> getOnScreenSprites() {
+    public List<Sprite> getCopyOnScreenSprites() {
         List<Sprite> listCopy = new ArrayList<>();
         for(Sprite sprite: myOnScreenSprites){
             listCopy.add(sprite);
@@ -92,7 +92,12 @@ public class JavaFXSpriteManager implements SpriteManager {
     }
 
     @Override
-    public List<Sprite> getPrototypesForArchetype(SpriteArchetype archetype) throws GameEngineException {
+    public List<Sprite> getOnsScreenSprites() {
+        return myOnScreenSprites;
+    }
+
+    @Override
+    public List<Sprite> getCopyPrototypesForArchetype(SpriteArchetype archetype) throws GameEngineException {
         List<Sprite> spritePrototypesOfArchetype = new ArrayList<>();
         for (Integer key : mySpritePrototypes.keySet()) {
             if (mySpritePrototypes.get(key).getSpriteArchetype()==archetype) {

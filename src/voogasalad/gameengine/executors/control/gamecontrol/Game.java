@@ -87,7 +87,7 @@ public class Game {
     }
 
     public List<Sprite> getSpritePrototypesByArchetype(SpriteArchetype spriteArchetype) throws GameEngineException {
-        return myCurrentLevel.getSpriteManager().getPrototypesForArchetype(spriteArchetype);
+        return myCurrentLevel.getSpriteManager().getCopyPrototypesForArchetype(spriteArchetype);
     }
 
     public String getCurrentLevelBackgroundPath() {
