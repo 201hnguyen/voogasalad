@@ -17,12 +17,12 @@ public interface SpriteManager {
 
     List<Sprite> getOnsScreenSpritesByArchetype(SpriteArchetype archetype);
 
-    void removeSpriteById(int spriteId);
+    Sprite removeSpriteById(int spriteId);
 
     List<Sprite> getPrototypesForArchetype(SpriteArchetype archetype) throws GameEngineException;
 
     void executeSpriteNextState(double elapsedTime) throws GameEngineException;
 
-    void removeSpriteTowerByCoordinates(double xpos, double ypos);
+    Sprite removeSpriteTowerByCoordinates(double xpos, double ypos);
 
 }
