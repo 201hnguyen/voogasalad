@@ -148,7 +148,7 @@ public class JavaFXSpriteManager implements SpriteManager {
                         continue projectileloop;
                     }
                     if(projectile.isColliding(enemy)) {
-                        projectile.applyEffect(enemy);
+                        myLevelActionsRequester.requestAction(projectile.getEffectAction(enemy));
                     }
                 }
             }
