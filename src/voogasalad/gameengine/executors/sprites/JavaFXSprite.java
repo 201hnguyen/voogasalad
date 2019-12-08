@@ -184,6 +184,7 @@ public class JavaFXSprite implements Sprite {
     public void updateAttackStrategy(AttackStrategy updatedStrategy) {
         myAttackStrategy = updatedStrategy;
     }
+
     public void applyEffect(Sprite other) throws GameEngineException {
         myEffectStrategy.apply(other);
     }
