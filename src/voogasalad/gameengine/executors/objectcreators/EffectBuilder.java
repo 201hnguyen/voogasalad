@@ -19,8 +19,8 @@ public class EffectBuilder implements StrategyBuilder {
         return myEffectType;
     }
 
-    public EffectBuilder setDamage(int value) {
-        myDamageValue = value;
+    public EffectBuilder setDamage(String valueString) {
+        myDamageValue = Integer.parseInt(valueString);
         return this;
     }
 
