@@ -1,30 +1,21 @@
 package voogasalad.gameauthoringenvironment.gui.tabconfig.parameterfields;
 
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import voogasalad.gameauthoringenvironment.gui.AddToXML;
 import voogasalad.gameauthoringenvironment.gui.SaveGUIParameters;
 import voogasalad.gameauthoringenvironment.gui.levelconfig.LevelConfigPane;
-import voogasalad.gameauthoringenvironment.gui.utils.FileChooserButton;
-import voogasalad.gameauthoringenvironment.gui.utils.PreviewImageButton;
-import voogasalad.gameauthoringenvironment.gui.utils.SubmitButton;
-import voogasalad.gameauthoringenvironment.gui.utils.TabVBoxCreator;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
-
-import static java.lang.Double.valueOf;
 
 public class ParameterCreator extends BorderPane{
 
@@ -37,7 +28,6 @@ public class ParameterCreator extends BorderPane{
     private String[] properties;
     private ResourceBundle paramFieldType;
     private VBox configVBox;
-    private VBox previewVBox;
     private String gameObjectName;
     private List<Node> allNodes;
     private List<String> fieldTypes;
@@ -50,18 +40,11 @@ public class ParameterCreator extends BorderPane{
     private Map<String, Map<String, String>> activeObjects;
     private ClearFieldsFactory clearFieldsFactory;
     private Map<String, Map<String, Map<String, String>>> allActiveObjectMap;
-    private String imageString;
-    private ImageView imageView;
-    double imageViewWidth = 0;
-    double imageViewHeight = 0;
-    private FileChooserButton fileChooserButton;
-
     //private static Map<String, Map<String,String>> sendToXML;
 
 
     public ParameterCreator(String gameObjectNameParam, String[] propertiesParam, ResourceBundle paramFieldTypeParam,
                             LevelConfigPane levelConfigPaneParam, Map<String, Map<String, Map<String, String>>> allActiveObjectMapParam) throws ParserConfigurationException {
-        fileChooserButton = new FileChooserButton();
         allActiveObjectMap = allActiveObjectMapParam;
         clearFieldsFactory = new ClearFieldsFactory();
         fieldFactory = new FieldTextReturnFactory();
@@ -79,25 +62,12 @@ public class ParameterCreator extends BorderPane{
         levelConfigPane = levelConfigPaneParam;
         storeAllFieldTypes();
         addInputFields();
-        addImagePreview();
-        this.setRight(configVBox);
-        this.setLeft(previewVBox);
-    }
-
-    public void createSubmitButton(){
-        allNodes
-                .stream()
-                .forEach(node -> labelValue.add(fieldFactory.getAppropriateText(node)));
-
-        SaveGUIParameters myGuiParameters = new SaveGUIParameters(labelText, labelValue);
-        allActiveObjectMap.put(gameObjectName, activeObjects);
-        String myLabel = xmlObject.addToSendToXMLMap(myGuiParameters.getMap(), gameObjectName);
-        addToAppropriateField(gameObjectName, createObjectIcon(myGuiParameters.getMap(), myLabel));
+        this.setTop(configVBox);
     }
 
     private void addInputFields() {
-        configVBox = new TabVBoxCreator("Configure Parameters", 200, 50, 50, 50, 10);
 
+        configVBox = new VBox();
         for (int j = 0; j < properties.length; j++) {
             Label label = new Label(properties[j]); //for SaveGuiParameters
             labelList.add(label);
@@ -107,72 +77,16 @@ public class ParameterCreator extends BorderPane{
         }
     }
 
-    private void addImagePreview() {
-        previewVBox = new TabVBoxCreator("Image Preview", 200, 50, 10, 50, 50);
-        for (int i = 0; i < allNodes.size(); i++) {
-            Node currentNode = allNodes.get(i);
-            String nodeLabel = labelText.get(i);
-            if (nodeLabel.equals("ImageHeight")) {
-                ((TextField) currentNode).setOnAction(e -> {
-                    imageViewHeight = Double.parseDouble((new FieldTextReturnFactory()).getAppropriateText(currentNode));
-                    System.out.println(imageViewHeight);
-                });
-            };
-            if (nodeLabel.equals("ImageWidth")) {
-                ((TextField) currentNode).setOnAction(e -> {
-                    imageViewWidth = Double.parseDouble((new FieldTextReturnFactory()).getAppropriateText(currentNode));
-                    System.out.println(imageViewWidth);
-                });
-            };
+    public void createSubmitButton(){
+            allNodes
+                    .stream()
+                    .forEach(node -> labelValue.add(fieldFactory.getAppropriateText(node)));
 
-//            imageViewHeight = accessImageSpecs(nodeLabel, currentNode,"ImageHeight");
-//            System.out.println(imageViewHeight);
-//
-//            imageViewWidth = accessImageSpecs(nodeLabel, currentNode, "ImageWidth");
-//            System.out.println(imageViewWidth);
-
-            if (currentNode instanceof FileChooserButton) {
-                fileChooserButton = (FileChooserButton) currentNode;
-            }
-            if (currentNode instanceof PreviewImageButton) {
-                PreviewImageButton button = (PreviewImageButton) currentNode;
-                button.setOnAction(event -> {
-                    if (imageString == null) {
-                        setImageSpecs();
-                    }
-                    else {
-                        imageView.setImage(null);
-                        setImageSpecs();
-                    }
-                });
-            }
-        }
+            SaveGUIParameters myGuiParameters = new SaveGUIParameters(labelText, labelValue);
+            allActiveObjectMap.put(gameObjectName, activeObjects);
+            String myLabel = xmlObject.addToSendToXMLMap(myGuiParameters.getMap(), gameObjectName);
+            addToAppropriateField(gameObjectName, createObjectIcon(myGuiParameters.getMap(), myLabel));
     }
-
-    private void setImageSpecs() {
-        imageString = fileChooserButton.getImageString();
-        imageView = new ImageView(imageString);
-        imageView.setX(50);
-        imageView.setY(100);
-        imageView.setPreserveRatio(true);
-        imageView.setFitHeight(imageViewHeight);
-        imageView.setFitWidth(imageViewWidth);
-        previewVBox.getChildren().add(imageView);
-    }
-
-    //TODO: fix this
-    private double accessImageSpecs(String nodeLabel, Node currentNode, String s) {
-        AtomicReference<Double> d = new AtomicReference<>(0.0);
-        if (nodeLabel.equals(s)) {
-            ((TextField) currentNode).setOnAction((event) -> {
-                    d.set(valueOf((new FieldTextReturnFactory()).getAppropriateText(currentNode)));
-            });
-        }
-        return d.get();
-    }
-
-
-
 
     private Node createObjectFromString(String type){
         try{
