@@ -29,4 +29,5 @@ public interface Sprite {
     int getDestroyCost();
     void updateImage(String newImagePath);
     boolean isColliding(Sprite sprite);
+    void applyEffect(Sprite sprite) throws GameEngineException;
 }
