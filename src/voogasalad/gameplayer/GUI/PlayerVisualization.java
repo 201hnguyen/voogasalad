@@ -22,7 +22,7 @@ import java.util.*;
 
 public class PlayerVisualization extends BorderPane {
 
-    private static final String RESOURCE_PATH = "resources.player.ButtonResource";
+    private static final String RESOURCE_PATH = "resources.player.PlayerViewOptions";
     private static final ResourceBundle resourceBundle = ResourceBundle.getBundle(RESOURCE_PATH);
     private static final double SCENE_WIDTH = Double.parseDouble(resourceBundle.getString("SceneWidth"));
     private static final double SCENE_HEIGHT = Double.parseDouble(resourceBundle.getString("SceneHeight"));
