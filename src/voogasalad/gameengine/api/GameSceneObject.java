@@ -28,7 +28,7 @@ public class GameSceneObject {
     public int getLevelScore() { return myLevelStatusManager.getScore(); }
 
     public List<Sprite> getOnScreenSprites() {
-        return mySpriteManager.getOnScreenSprites() ;
+        return mySpriteManager.getCopyOnScreenSprites() ;
     }
 
     public String getBackgroundPath() {
