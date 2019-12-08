@@ -1,4 +1,4 @@
-package voogasalad.gameauthoringenvironment.gui.utils;
+package voogasalad.gameauthoringenvironment.gui.utilconfig;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;

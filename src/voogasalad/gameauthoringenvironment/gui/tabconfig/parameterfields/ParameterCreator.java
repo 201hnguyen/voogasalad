@@ -1,23 +1,21 @@
 package voogasalad.gameauthoringenvironment.gui.tabconfig.parameterfields;
 
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import voogasalad.gameauthoringenvironment.gui.AddToXML;
 import voogasalad.gameauthoringenvironment.gui.SaveGUIParameters;
 import voogasalad.gameauthoringenvironment.gui.levelconfig.LevelConfigPane;
-import voogasalad.gameauthoringenvironment.gui.utils.FileChooserButton;
-import voogasalad.gameauthoringenvironment.gui.utils.PreviewImageButton;
-import voogasalad.gameauthoringenvironment.gui.utils.SubmitButton;
-import voogasalad.gameauthoringenvironment.gui.utils.TabVBoxCreator;
+import voogasalad.gameauthoringenvironment.gui.utilconfig.FileChooserButton;
+import voogasalad.gameauthoringenvironment.gui.utilconfig.PreviewImageButton;
+import voogasalad.gameauthoringenvironment.gui.utilconfig.SubmitButton;
+import voogasalad.gameauthoringenvironment.gui.utilconfig.TabVBoxCreator;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.lang.reflect.InvocationTargetException;

@@ -1,9 +1,8 @@
-package voogasalad.gameauthoringenvironment.gui.utils;
+package voogasalad.gameauthoringenvironment.gui.utilconfig;
 
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
 
 public class PreviewImageButton extends Button {
 

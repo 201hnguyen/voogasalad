@@ -1,13 +1,8 @@
-package voogasalad.gameauthoringenvironment.gui.utils;
+package voogasalad.gameauthoringenvironment.gui.utilconfig;
 
 
-import javafx.scene.Node;
 import javafx.scene.control.Button;
-import voogasalad.gameauthoringenvironment.gui.AddToXML;
-import voogasalad.gameauthoringenvironment.gui.SaveGUIParameters;
 import voogasalad.gameauthoringenvironment.gui.tabconfig.parameterfields.ParameterCreator;
-
-import java.util.List;
 
 public class SubmitButton extends Button {
     public SubmitButton(){}
