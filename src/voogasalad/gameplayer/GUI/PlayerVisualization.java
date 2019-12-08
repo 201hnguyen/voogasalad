@@ -37,7 +37,7 @@ public class PlayerVisualization extends BorderPane {
     private static final double SHADOW_YSET = Double.parseDouble(resourceBundle.getString("TimeShadowYOffset"));
     private static final String BACK_TO_GAE = resourceBundle.getString("BackToGAE");
     private static final String INSTRUCTIONS = resourceBundle.getString("Instructions");
-    private static final int PANEL_SPACING = Integer.parseInt(resourceBundle.getString("InfoBoxSpacin"));
+    private static final int PANEL_SPACING = Integer.parseInt(resourceBundle.getString("InfoBoxSpacing"));
 
     private Scene scene;
     private Stage stage;
