@@ -43,7 +43,8 @@ public class JavaFXSpriteManager implements SpriteManager {
                 archetypeList.add(sprite);
             }
         }
-        return archetypeList;    }
+        return archetypeList;
+    }
 
     @Override
     public Sprite makeSpriteFromPrototype(double xPos, double yPos, int prototypeId) throws GameEngineException {
@@ -64,6 +65,18 @@ public class JavaFXSpriteManager implements SpriteManager {
         }
         myOnScreenSprites.remove(toRemove);
         return toRemove;
+    }
+
+    @Override
+    public Sprite getSpriteById(int spriteId) {
+        Sprite toReturn = null;
+        for (Sprite sprite : myOnScreenSprites) {
+            if(sprite.getId() == spriteId) {
+                toReturn = sprite;
+                break;
+            }
+        }
+        return toReturn;
     }
 
     @Override
