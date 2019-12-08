@@ -34,7 +34,6 @@ public class PlayerVisualization extends BorderPane {
     private Scene scene;
     private Stage stage;
     private DisplayScreen displayScreen;
-    private Timeline timeline;
     private BackgroundImage backgroundImage;
     private VBox panelBox;
     private AccordionCreator accordionCreator;
@@ -45,9 +44,8 @@ public class PlayerVisualization extends BorderPane {
     private Text myStopWatchDisplay;
     private Player myPlayer;
 
-    public PlayerVisualization(Stage stage, Timeline timeline, ActionsProcessor uiActionsProcessor, Player player) {
+    public PlayerVisualization(Stage stage, ActionsProcessor uiActionsProcessor, Player player) {
         this.stage = stage;
-        this.timeline = timeline;
         this.actionsProcessor = uiActionsProcessor;
         this.myPlayer = player;
         initialize();
@@ -77,9 +75,8 @@ public class PlayerVisualization extends BorderPane {
         ButtonCreator buttonCreator = new ButtonCreator(new ButtonController(this));
         accordionCreator = new AccordionCreator();
         statusBar = new StatusBar();
-        selectedTowerPane = new SelectedTowerPane(actionsProcessor, myPlayer);
+        selectedTowerPane = new SelectedTowerPane(actionsProcessor, myPlayer, this);
         panelBox = new VBox(10);
-
         panelBox.getChildren().addAll(buttonCreator,accordionCreator, selectedTowerPane);
         createStopWatchDisplay();
         statusBar.getChildren().add(myStopWatchDisplay);
@@ -91,7 +88,7 @@ public class PlayerVisualization extends BorderPane {
     }
 
     private void displayGameScreenAndAttachToAccordion() {
-        displayScreen = new DisplayScreen(actionsProcessor, myPlayer, selectedTowerPane);
+        displayScreen = new DisplayScreen(actionsProcessor, myPlayer, selectedTowerPane, this);
         displayScreen.setMinWidth(SCENE_WIDTH - (SCENE_WIDTH - PANEL_POSITION));
         displayScreen.setMinHeight(SCENE_HEIGHT - this.getTop().getLayoutY());
         accordionCreator.attachDisplayScreen(displayScreen);
@@ -117,12 +114,14 @@ public class PlayerVisualization extends BorderPane {
     }
 
     public void startButtonAction() {
-        timeline.play();
+//        timeline.play();
+        myPlayer.startTimeLine();
         myStopWatch.startStopWatch();
     }
 
     public void pauseButtonAction() {
-        timeline.stop();
+//        timeline.stop();
+        myPlayer.pauseTimeline();
         myStopWatch.pauseStopWatch();
     }
 }

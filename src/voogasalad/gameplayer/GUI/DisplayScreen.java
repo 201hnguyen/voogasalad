@@ -22,10 +22,12 @@ public class DisplayScreen extends Pane {
     private ActionsProcessor actionsProcessor;
     private int currentImageID;
     private Player myPlayer;
+    private PlayerVisualization myPlayerVisualization;
 
 
-    public DisplayScreen(ActionsProcessor actionsProcessor, Player player, SelectedTowerPane selectedTowerPane) {
+    public DisplayScreen(ActionsProcessor actionsProcessor, Player player, SelectedTowerPane selectedTowerPane, PlayerVisualization playerVisualization) {
         this.myPlayer = player;
+        this.myPlayerVisualization = playerVisualization;
         this.actionsProcessor = actionsProcessor;
         this.selectedTowerPane = selectedTowerPane;
         this.setOnDragOver((DragEvent event) -> {
@@ -41,7 +43,7 @@ public class DisplayScreen extends Pane {
             if (db.hasImage()) {
                 success = true;
                 this.actionsProcessor.processAddSpriteAction(currentImageID, event.getX(), event.getY());
-                player.executeEngineWithZeroElapsedTime();
+                myPlayer.executeEngineWithZeroElapsedTime();
             }
             event.setDropCompleted(success);
             event.consume();
@@ -68,6 +70,7 @@ public class DisplayScreen extends Pane {
         addImageToScreen(toDisplay, xPos, yPos);
         if (sprite.getSpriteArchetype() == SpriteArchetype.TOWER) {
             toDisplay.setOnMouseClicked(e -> {
+                myPlayerVisualization.pauseButtonAction();
                 selectedTowerPane.removeTower(toLoad, xPos, yPos);
             });
         }

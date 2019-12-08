@@ -48,7 +48,7 @@ public class Player {
     private void startGame() throws GameEngineException {
         myTimeline = new Timeline();
         gameInfo = new HashMap<>();
-        myPlayerVisualization = new PlayerVisualization(myStage, myTimeline, myEngine.getActionsProcessor(), this);
+        myPlayerVisualization = new PlayerVisualization(myStage, myEngine.getActionsProcessor(), this);
         setGameLoop();
     }
 
@@ -94,6 +94,14 @@ public class Player {
         catch (GameEngineException ex){
             ex.printStackTrace(); //TODO: Fix
         }
+    }
+
+    public void pauseTimeline(){
+        myTimeline.pause();
+    }
+
+    public void startTimeLine(){
+        myTimeline.play();
     }
 
 }

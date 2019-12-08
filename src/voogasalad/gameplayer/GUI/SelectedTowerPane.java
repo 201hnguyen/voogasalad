@@ -14,25 +14,27 @@ import voogasalad.gameplayer.Player;
 public class SelectedTowerPane extends VBox {
 
     private Player player;
+    private PlayerVisualization playerVisualization;
     private ActionsProcessor actionsProcessor;
 
-    public SelectedTowerPane(ActionsProcessor actionsProcessor, Player player) {
+    public SelectedTowerPane(ActionsProcessor actionsProcessor, Player player, PlayerVisualization playerVisualization) {
         setMinWidth(200);
         setMinHeight(400);
         this.actionsProcessor = actionsProcessor;
         this.player = player;
+        this.playerVisualization = playerVisualization;
         this.setBackground(new Background(new BackgroundFill(Color.ALICEBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
     }
 
     public void removeTower(Sprite sprite, int x, int y) {
         HBox removeTowerBox = new HBox();
-
         ImageView towerImage = new ImageView(new Image(sprite.getImagePath()));
         Label removeTowerButton = new Label("Remove Tower");
         removeTowerButton.setOnMouseClicked(e -> {
             actionsProcessor.processSellTowerAction(x,y);
             this.getChildren().remove(removeTowerBox);
             player.executeEngineWithZeroElapsedTime();
+            playerVisualization.startButtonAction();
         });
         removeTowerButton.setOnMouseEntered(e -> removeTowerButton.setBackground(new Background(new BackgroundFill(Color.LIMEGREEN, CornerRadii.EMPTY, Insets.EMPTY))));
         removeTowerButton.setOnMouseExited(e -> removeTowerButton.setBackground(new Background(new BackgroundFill(Color.GHOSTWHITE, CornerRadii.EMPTY, Insets.EMPTY))));
