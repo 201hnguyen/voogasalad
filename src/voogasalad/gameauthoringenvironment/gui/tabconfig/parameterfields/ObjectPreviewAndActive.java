@@ -90,9 +90,11 @@ public class ObjectPreviewAndActive extends BorderPane{
         makeActive.setPrefWidth(windowWidth);
         makeActive.setOnMouseClicked(event -> {
             removeFromActive();
+            windowStage.close();
         });
         return makeActive;
     }
+
 
     private ScrollPane configureScrollPane(){
         ScrollPane scrollPane = new ScrollPane(vBox);
@@ -115,8 +117,7 @@ public class ObjectPreviewAndActive extends BorderPane{
     }
 
     public void removeFromActive(){
-        activeObjects.remove(gameObjectName, objectContentMap);
+//        activeObjects.remove(gameObjectName, objectContentMap);
         icon.setStyle(null);
-        windowStage.close();
     }
 }

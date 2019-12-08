@@ -40,11 +40,14 @@ public class ParameterCreator extends BorderPane{
     private Map<String, Map<String, String>> activeObjects;
     private ClearFieldsFactory clearFieldsFactory;
     private Map<String, Map<String, Map<String, String>>> allActiveObjectMap;
+    private List<ObjectPreviewAndActive> allActiveObjectObjects;
     //private static Map<String, Map<String,String>> sendToXML;
 
 
     public ParameterCreator(String gameObjectNameParam, String[] propertiesParam, ResourceBundle paramFieldTypeParam,
-                            LevelConfigPane levelConfigPaneParam, Map<String, Map<String, Map<String, String>>> allActiveObjectMapParam) throws ParserConfigurationException {
+                            LevelConfigPane levelConfigPaneParam, Map<String, Map<String, Map<String, String>>> allActiveObjectMapParam,
+                            List<ObjectPreviewAndActive> allActiveObjectObjectsParam) throws ParserConfigurationException {
+        allActiveObjectObjects = allActiveObjectObjectsParam;
         allActiveObjectMap = allActiveObjectMapParam;
         clearFieldsFactory = new ClearFieldsFactory();
         fieldFactory = new FieldTextReturnFactory();
@@ -127,7 +130,9 @@ public class ParameterCreator extends BorderPane{
         Button icon = new Button(objectName);
         icon.setOnMouseClicked(event -> {
             newStage = new Stage();
-            objectSpecificRoot = new ObjectPreviewAndActive(objectName, objectContentMap, window_HEIGHT, window_WIDTH, newStage, activeObjects, icon);
+            ObjectPreviewAndActive createdObject = new ObjectPreviewAndActive(objectName, objectContentMap, window_HEIGHT, window_WIDTH, newStage, activeObjects, icon);
+            objectSpecificRoot = createdObject;
+            allActiveObjectObjects.add(createdObject);
             Scene newScene = new Scene(objectSpecificRoot, window_WIDTH, window_HEIGHT);
             newStage.setScene(newScene);
             newStage.show();

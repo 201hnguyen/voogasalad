@@ -12,7 +12,10 @@ import voogasalad.gameauthoringenvironment.gui.levelconfig.nodes.MapButton;
 import voogasalad.gameauthoringenvironment.gui.levelconfig.nodes.VBoxCreator;
 import voogasalad.gameauthoringenvironment.gui.levelconfig.nodes.RuleLine;
 import voogasalad.gameauthoringenvironment.gui.levelconfig.nodes.SubmitButton;
+import voogasalad.gameauthoringenvironment.gui.tabconfig.parameterfields.ObjectPreviewAndActive;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class LevelConfigPane extends BorderPane{
@@ -26,6 +29,7 @@ public class LevelConfigPane extends BorderPane{
     private VBoxCreator obstaclesVBox;
     private int gameLevel;
     private Map<String, Map<String, Map<String, String>>> allActiveObjectMap;
+    private Map<String, Map<String, Map<String, String>>> activeObjectsInLevelTemp;
     private HBox title;
     private GridPane gridPane;
     private HBox allObjects;
@@ -33,10 +37,15 @@ public class LevelConfigPane extends BorderPane{
     private Label selectActiveLabel;
     private Button createMapButton;
     private HBox createSubmitNewLevelButtons;
+    private Map<Integer, Map<String, Map<String, Map<String, String>>>> saveActiveObjectsForLevel;
+    private List<ObjectPreviewAndActive> allActiveObjectObjects;
 
 
-    public LevelConfigPane(AddToXML sendToXMLParam, Document createdXMLParam, Bus busInstanceParam, Map<String, Map<String, Map<String, String>>> allActiveObjectMapParam){
+    public LevelConfigPane(AddToXML sendToXMLParam, Document createdXMLParam, Bus busInstanceParam, Map<String, Map<String, Map<String, String>>> allActiveObjectMapParam,
+                           List<ObjectPreviewAndActive> allActiveObjectObjectsParam){
+        allActiveObjectObjects = allActiveObjectObjectsParam;
         gameLevel = 1;
+        saveActiveObjectsForLevel = new HashMap<>();
         allActiveObjectMap = allActiveObjectMapParam;
         sendToXML = sendToXMLParam;
         createdXML = createdXMLParam;
@@ -164,9 +173,10 @@ public class LevelConfigPane extends BorderPane{
 
     }
 
-    public Button newLevelButton(){
+    private Button newLevelButton(){
         Button newLevel = new Button("Create New Level");
         newLevel.setOnMouseClicked(event -> {
+            saveInfoForLevel();
             gameLevel++;
             //Save in map linking level to all active objects
             updateLevelConfigPane();
@@ -174,17 +184,26 @@ public class LevelConfigPane extends BorderPane{
         return newLevel;
     }
 
-    public void updateLevelConfigPane(){
-        saveInfoForLevel();
+
+    private void saveInfoForLevel(){
+        saveAndClearActive();
+    }
+
+    private void saveAndClearActive(){
+        activeObjectsInLevelTemp = new HashMap<>(allActiveObjectMap);
+        saveActiveObjectsForLevel.put(gameLevel, activeObjectsInLevelTemp);
+        //allActiveObjectMap = new HashMap<>();
+        for(ObjectPreviewAndActive object : allActiveObjectObjects){
+            object.removeFromActive();
+        }
+        System.out.println(saveActiveObjectsForLevel);
+    }
+
+    private void updateLevelConfigPane(){
         title = createTitleHBox();
         rules = createRulesVBox();
         createMapButton = new MapButton(width, height);
         addToGridPane();
     }
-
-    public void saveInfoForLevel(){
-
-    }
-
 
 }
