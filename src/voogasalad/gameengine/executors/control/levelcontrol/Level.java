@@ -35,11 +35,11 @@ public class Level implements GameScene {
     }
 
     public GameSceneObject execute(double elapsedTime) throws GameEngineException {
-        mySpriteManager.executeSpriteNextState(elapsedTime);
         myLevelStatusManager.notifyNewCycle(elapsedTime);
         myLevelActionsManager.addLevelActionsAsCollection(myActionsRequester.getRequestedActions());
         myLevelActionsManager.addLevelActionsAsCollection(myLevelConditionsManager.getLevelActionsToExecute(this));
         myLevelActionsManager.executeLevelActions(this);
+        mySpriteManager.executeSpriteNextState(elapsedTime);
         return new GameSceneObject(myBackgroundPath, myLevelStatusManager.getCopyOfStatusManager(), mySpriteManager);
     }
 

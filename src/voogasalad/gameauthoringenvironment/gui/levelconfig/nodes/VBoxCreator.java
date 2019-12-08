@@ -11,10 +11,8 @@ import javafx.scene.paint.Paint;
 
 public class VBoxCreator extends VBox {
     FlowPane createdObjects;
-    String type;
 
-    public VBoxCreator(String typeParam, int width, int height){
-        type = typeParam;
+    public VBoxCreator(String type, int width, int height){
         Label createdLabel = createLabel(type, Color.CHOCOLATE);
         ScrollPane scrollPane = createScrollWithFlowPane(height);
         createVBoxLayout(width, height);
@@ -45,10 +43,8 @@ public class VBoxCreator extends VBox {
         return createdLabel;
     }
 
-    public void addToObjectHBox(Node icon, String objectType){
-        if(objectType.equals(type)){
-            createdObjects.getChildren().add(icon);
-        }
+    public void addToObjectHBox(Node icon){
+        createdObjects.getChildren().add(icon);
     }
 
 }

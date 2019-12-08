@@ -12,7 +12,6 @@ import voogasalad.gameengine.executors.control.action.level.AddSpriteAction;
 import voogasalad.gameengine.executors.control.action.level.LevelAction;
 import voogasalad.gameengine.executors.control.action.level.RemoveSpriteAction;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
-import voogasalad.gameengine.executors.utils.ConfigurationTool;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -23,11 +22,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ResourceBundle;
 
 public class ActionsProcessor {
+    public static final String GAME_ACTIONS_DIRECTORY_ROOT = "voogasalad.gameengine.executors.control.action.game.";
+    public static final String LEVEL_ACTIONS_DIRECTORY_ROOT = "voogasalad.gameengine.executors.control.action.level.";
     public static final String ACTIONS_DIRECTORY_ROOT = "voogasalad.gameengine.executors.control.action.";
-    public static final String GAME_DIRECTORY_EXTENSION = "game.";
-    public static final String LEVEL_DIRECTORY_EXTENSION = "level.";
-    public static final String PROTOTYPE_EDIT_DIRECTORY_EXTENSION = "editprototype.";
-    public static final String LIVE_GAME_EDITING_CLASS_PATH = "resources.engine.LiveGameEditing";
+    public static final String LIVE_GAME_EDITING_CLASS_PATH = "resources/engine/LiveGameEditing";
     public static final ResourceBundle LIVE_GAME_EDITING_BUNDLE = ResourceBundle.getBundle(LIVE_GAME_EDITING_CLASS_PATH);
 
     private LevelActionsRequester myLevelActionsRequester;
@@ -41,6 +39,7 @@ public class ActionsProcessor {
     public void processAddSpriteAction(int prototypeId, double xPos, double yPos) {
         LevelAction action = new AddSpriteAction(prototypeId, xPos, yPos);
         myLevelActionsRequester.requestAction(action);
+//        myLevelActionsRequester.request
     }
 
     public void processRemoveSpriteAction(int spriteId) {
@@ -55,7 +54,7 @@ public class ActionsProcessor {
     }
 
     public void processGameEditingAction(Document doc) throws GameEngineException {
-        Document document = ConfigurationTool.configureWithTestDocument("src/resources/player/EditedSpriteImageView.xml");
+        Document document = configureWithTestDocument();
         Element documentRoot = document.getDocumentElement();
         String editGameActionType = documentRoot.getElementsByTagName("EditActionType").item(0).getTextContent();
         Element editableObject = (Element) documentRoot.getElementsByTagName("EditableObject").item(0);
@@ -69,7 +68,7 @@ public class ActionsProcessor {
 
     private void processEditOnGameAction(String editGameActionType, Element editableObject) throws GameEngineException {
         try {
-            GameAction action = (GameAction) Class.forName(ACTIONS_DIRECTORY_ROOT + GAME_DIRECTORY_EXTENSION + editGameActionType).getConstructor(Element.class).newInstance(editableObject);
+            GameAction action = (GameAction) Class.forName(GAME_ACTIONS_DIRECTORY_ROOT + editGameActionType).getConstructor(Element.class).newInstance(editableObject);
             myGameActionsRequester.requestAction(action);
         } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace(); //FIXME
@@ -78,16 +77,16 @@ public class ActionsProcessor {
 
     private void processEditOnLevelAction(String editLevelActionType, Element editableObject) {
         try {
-            LevelAction action = (LevelAction) Class.forName(ACTIONS_DIRECTORY_ROOT + LEVEL_DIRECTORY_EXTENSION + editLevelActionType).getConstructor(Element.class).newInstance(editableObject);
+            LevelAction action = (LevelAction) Class.forName(LEVEL_ACTIONS_DIRECTORY_ROOT + editLevelActionType).getConstructor(Element.class).newInstance(editableObject);
             myLevelActionsRequester.requestAction(action);
         } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace(); //FIXME
         }
     }
 
-    private void processEditOnPrototypeAction(String editPrototypeActionType, Element editableObject) {
+    private void processEditPrototypeAction(String editPrototypeActionType, Element editableObject) {
         try {
-            Object action = Class.forName(ACTIONS_DIRECTORY_ROOT + PROTOTYPE_EDIT_DIRECTORY_EXTENSION  + editPrototypeActionType).getConstructor(Element.class).newInstance(editableObject);
+            Object action = Class.forName(ACTIONS_DIRECTORY_ROOT + editPrototypeActionType).getConstructor(Element.class).newInstance(editableObject);
             myLevelActionsRequester.requestAction((LevelAction) action);
             myGameActionsRequester.requestAction((GameAction) action);
         } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
@@ -95,6 +94,18 @@ public class ActionsProcessor {
         }
     }
 
+    private Document configureWithTestDocument() throws GameEngineException {
+        File testFile = new File("src/resources/player/EditedSpriteImageView.xml");
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder ;
+        try {
+            builder = factory.newDocumentBuilder();
+            Document doc = builder.parse(testFile);
+            return doc;
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            throw new GameEngineException(e, "ConfigurationFailedXML");
+        }
+    }
     public void updateLevel(Level level) {
         myLevelActionsRequester = level.getActionsRequester();
     }

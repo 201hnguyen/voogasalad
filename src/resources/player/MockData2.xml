@@ -28,7 +28,7 @@
             <AttackStrategy>
                 <Type>ShootingAttack</Type>
                 <Parameters>
-                    <AttackRate>2</AttackRate>
+                    <AttackRate>0.5</AttackRate>
                     <BulletPrototypeId>4</BulletPrototypeId>
                 </Parameters>
             </AttackStrategy>
@@ -132,15 +132,14 @@
                 <Parameters></Parameters>
             </HealthStrategy>
             <MovementStrategy>
-                <Type>DirectedDistanceMovement</Type>
-                <Parameters>
-                    <Distance>104</Distance>
-                    <Speed>2</Speed>
-                </Parameters>
+                <Type>NoMovement</Type>
+                <Parameters></Parameters>
             </MovementStrategy>
             <AttackStrategy>
-                <Type>NoAttack</Type>
+                <Type>ShootingAttack</Type>
                 <Parameters>
+                    <AttackRate>0.5</AttackRate>
+                    <BulletPrototypeId>4</BulletPrototypeId>
                 </Parameters>
             </AttackStrategy>
             <RotationStrategy>
@@ -272,7 +271,7 @@
             <ConditionId>2</ConditionId>
             <Type>OnscreenArchetypeCountCondition</Type>
             <Parameters>
-                <MarkedCount>256</MarkedCount>
+                <MarkedCount>6</MarkedCount>
                 <Archetype>TOWER</Archetype>
             </Parameters>
             <Actions>

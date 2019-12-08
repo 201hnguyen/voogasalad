@@ -37,21 +37,21 @@ public class ParameterCreator extends BorderPane{
     private List<String> labelValue;
     private AddToXML xmlObject;
     private LevelConfigPane levelConfigPane;
-    private Map<String, Map<String, String>> allActiveObjects;
+    private Map<String, Map<String, String>> activeObjects;
     private ClearFieldsFactory clearFieldsFactory;
-    private List<ObjectPreviewAndActive> allActiveObjectObjects;
+    private Map<String, Map<String, Map<String, String>>> allActiveObjectMap;
+    //private static Map<String, Map<String,String>> sendToXML;
 
 
     public ParameterCreator(String gameObjectNameParam, String[] propertiesParam, ResourceBundle paramFieldTypeParam,
-                            LevelConfigPane levelConfigPaneParam, Map<String, Map<String, String>> allActiveObjectMapParam,
-                            List<ObjectPreviewAndActive> allActiveObjectObjectsParam) throws ParserConfigurationException {
-        allActiveObjectObjects = allActiveObjectObjectsParam;
-        allActiveObjects = allActiveObjectMapParam;
+                            LevelConfigPane levelConfigPaneParam, Map<String, Map<String, Map<String, String>>> allActiveObjectMapParam) throws ParserConfigurationException {
+        allActiveObjectMap = allActiveObjectMapParam;
         clearFieldsFactory = new ClearFieldsFactory();
         fieldFactory = new FieldTextReturnFactory();
         labelList = new ArrayList<>();
         labelText = new ArrayList<>();
         labelValue = new ArrayList<>();
+        activeObjects = new HashMap<>();
         fieldTypes = new ArrayList<>();
         allNodes = new ArrayList<>();
         root = new BorderPane();
@@ -63,10 +63,6 @@ public class ParameterCreator extends BorderPane{
         storeAllFieldTypes();
         addInputFields();
         this.setTop(configVBox);
-    }
-
-    public String getImageString() {
-        return imageString;
     }
 
     private void addInputFields() {
@@ -87,6 +83,7 @@ public class ParameterCreator extends BorderPane{
                     .forEach(node -> labelValue.add(fieldFactory.getAppropriateText(node)));
 
             SaveGUIParameters myGuiParameters = new SaveGUIParameters(labelText, labelValue);
+            allActiveObjectMap.put(gameObjectName, activeObjects);
             String myLabel = xmlObject.addToSendToXMLMap(myGuiParameters.getMap(), gameObjectName);
             addToAppropriateField(gameObjectName, createObjectIcon(myGuiParameters.getMap(), myLabel));
     }
@@ -130,9 +127,7 @@ public class ParameterCreator extends BorderPane{
         Button icon = new Button(objectName);
         icon.setOnMouseClicked(event -> {
             newStage = new Stage();
-            ObjectPreviewAndActive createdObject = new ObjectPreviewAndActive(objectName, objectContentMap, window_HEIGHT, window_WIDTH, newStage, allActiveObjects, icon);
-            objectSpecificRoot = createdObject;
-            allActiveObjectObjects.add(createdObject);
+            objectSpecificRoot = new ObjectPreviewAndActive(objectName, objectContentMap, window_HEIGHT, window_WIDTH, newStage, activeObjects, icon);
             Scene newScene = new Scene(objectSpecificRoot, window_WIDTH, window_HEIGHT);
             newStage.setScene(newScene);
             newStage.show();
@@ -150,6 +145,9 @@ public class ParameterCreator extends BorderPane{
                 .forEach(node -> clearFieldsFactory.clearField(node));
     }
 
+    public Map<String, Map<String, String>> getActiveObjects() {
+        return activeObjects;
+    }
 
 
 
