@@ -62,5 +62,6 @@ public class ConditionActionComboBox extends ComboBox {
         root.setTop(argumentVBox);
         argumentStage.setScene(new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT));
         argumentStage.show();
+        //
     }
 }
