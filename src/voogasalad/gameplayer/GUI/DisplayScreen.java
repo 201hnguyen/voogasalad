@@ -37,12 +37,8 @@ public class DisplayScreen extends Pane {
             if (db.hasImage()) {
                 success = true;
                 this.actionsProcessor.processAddSpriteAction(currentImageID, event.getX(), event.getY());
-                try {
-                    GameSceneObject gso = engine.execute(0);
-                    updateDisplayScreen(gso.getOnScreenSprites());
-                } catch (GameEngineException e) {
-                    e.printStackTrace();
-                }
+//                GameSceneObject gso = actionsProcessor.processExecuteNoElapsedTimeSceneAction();
+//                updateDisplayScreen(gso.getOnScreenSprites());
             }
             event.setDropCompleted(success);
             event.consume();

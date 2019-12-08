@@ -78,5 +78,9 @@ public class Player {
         myTimeline.play();
     }
 
+    public GameSceneObject getGSO() throws GameEngineException {
+        return myEngine.execute(0);
+    }
+
 }
 

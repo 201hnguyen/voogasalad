@@ -7,16 +7,19 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import voogasalad.gameengine.api.ActionsProcessor;
+import voogasalad.gameengine.api.GameSceneObject;
 import voogasalad.gameengine.executors.sprites.Sprite;
 
 public class SelectedTowerPane extends VBox {
 
+    private DisplayScreen displayScreen;
     private ActionsProcessor actionsProcessor;
 
     public SelectedTowerPane(ActionsProcessor actionsProcessor, DisplayScreen display) {
         setMinWidth(200);
         setMinHeight(400);
         this.actionsProcessor = actionsProcessor;
+        this.displayScreen = display;
         this.setBackground(new Background(new BackgroundFill(Color.ALICEBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
     }
 
@@ -28,6 +31,8 @@ public class SelectedTowerPane extends VBox {
         removeTowerButton.setOnMouseClicked(e -> {
             actionsProcessor.processSellTowerAction(x,y);
             this.getChildren().remove(removeTowerBox);
+//            GameSceneObject gso = actionsProcessor.processExecuteNoElapsedTimeSceneAction();
+//            displayScreen.updateDisplayScreen(gso.getOnScreenSprites());
         });
         removeTowerButton.setOnMouseEntered(e -> removeTowerButton.setBackground(new Background(new BackgroundFill(Color.LIMEGREEN, CornerRadii.EMPTY, Insets.EMPTY))));
         removeTowerButton.setOnMouseExited(e -> removeTowerButton.setBackground(new Background(new BackgroundFill(Color.GHOSTWHITE, CornerRadii.EMPTY, Insets.EMPTY))));
