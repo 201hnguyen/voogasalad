@@ -148,6 +148,13 @@
                     <RotationSpeed>100</RotationSpeed>
                 </Parameters>
             </RotationStrategy>
+            <CostStrategy>
+                <Type>BasicCost</Type>
+                <Parameters>
+                    <CreateCost>20</CreateCost>
+                    <DestroyCost>50</DestroyCost>
+                </Parameters>
+            </CostStrategy>
         </Strategies>
     </SpritePrototype>
     <SpritePrototype>

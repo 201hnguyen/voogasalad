@@ -150,4 +150,13 @@ public class JavaFXSprite implements Sprite {
         return myHealthStrategy.getHealth() != null && myHealthStrategy.getHealth() <= 0;
     }
 
+    public int getCreateCost() {
+        return myCostStrategy.getCreateCost();
+    }
+
+    @Override
+    public int getDestroyCost() {
+        return myCostStrategy.getDestroyCost();
+    }
+
 }

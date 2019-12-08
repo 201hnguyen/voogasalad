@@ -1,6 +1,7 @@
 package voogasalad.gameengine.executors.control.action.level;
 
 import voogasalad.gameengine.executors.control.levelcontrol.Level;
+import voogasalad.gameengine.executors.sprites.Sprite;
 
 public class SellTowerAction implements LevelAction {
 
@@ -15,7 +16,8 @@ public class SellTowerAction implements LevelAction {
 
     @Override
     public void execute(Level level) {
-        level.getSpriteManager().removeSpriteTowerByCoordinates(myXPos, myYPos);
+        Sprite removed = level.getSpriteManager().removeSpriteTowerByCoordinates(myXPos, myYPos);
+        level.getStatusManager().alterResourcesByValue(removed.getDestroyCost());
     }
 
     @Override

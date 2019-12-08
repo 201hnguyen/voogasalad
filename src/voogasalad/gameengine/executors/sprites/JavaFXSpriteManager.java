@@ -58,12 +58,19 @@ public class JavaFXSpriteManager implements SpriteManager {
 
 
     @Override
-    public void removeSpriteById(int spriteId) {
-        myOnScreenSprites.stream().filter(sprite -> sprite.getId() == spriteId).forEach(sprite -> myOnScreenSprites.remove(sprite));
+    public Sprite removeSpriteById(int spriteId) {
+        Sprite toRemove=null;
+        for (Sprite sprite : myOnScreenSprites) {
+            if (sprite.getId() == spriteId) {
+                toRemove = sprite;
+            }
+        }
+        myOnScreenSprites.remove(toRemove);
+        return toRemove;
     }
 
     @Override
-    public void removeSpriteTowerByCoordinates(double xpos, double ypos) {
+    public Sprite removeSpriteTowerByCoordinates(double xpos, double ypos) {
         Sprite spriteToRemove=null;
         for (Sprite sprite : myOnScreenSprites) {
             ImageView spriteImageView = (ImageView) sprite.getImage();
@@ -72,6 +79,7 @@ public class JavaFXSpriteManager implements SpriteManager {
             }
         }
         myOnScreenSprites.remove(spriteToRemove);
+        return spriteToRemove;
     }
 
     @Override
