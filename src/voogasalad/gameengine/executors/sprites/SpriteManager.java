@@ -17,7 +17,7 @@ public interface SpriteManager {
 
     List<Sprite> getSpritePrototypes();
 
-    List<Sprite> getOnsScreenSpritesByArchetype(SpriteArchetype archetype);
+    List<Sprite> getOnScreenSpritesByArchetype(SpriteArchetype archetype);
 
     Sprite removeSpriteById(int spriteId);
 
@@ -27,4 +27,5 @@ public interface SpriteManager {
 
     Sprite removeSpriteTowerByCoordinates(double xpos, double ypos);
 
+    void handleProjectileCollisions() throws GameEngineException;
 }

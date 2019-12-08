@@ -95,7 +95,7 @@ public class Game {
     }
 
     private Document configureWithTestDocument() throws GameEngineException {
-        File testFile = new File("src/resources/player/MockData2.xml");
+        File testFile = new File("src/resources/player/MockData.xml");
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder ;
         try {
