@@ -138,7 +138,7 @@ public class PlayerVisualization extends BorderPane {
 
 
     private void createStopWatchDisplay(){
-        myStopWatchDisplay = new Text("\n 0 : 0");
+        myStopWatchDisplay = new Text("Elapsed Time:" + "\n 0 : 0");
         myStopWatchDisplay.setFont(new Font(20));
     }
 

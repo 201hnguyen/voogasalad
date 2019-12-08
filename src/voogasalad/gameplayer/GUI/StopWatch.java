@@ -19,8 +19,7 @@ public class StopWatch extends Text{
         elapsedSeconds = prevElapsedSeconds + elapsedTime / 1000;
         elapsedMinutes = elapsedSeconds / 60;
         long secondsDisplay = elapsedSeconds % 60;
-        String timeDisplay = "\n " + elapsedMinutes + " : " + secondsDisplay;
-        timeDisplay = "Elapsed Time:" + timeDisplay;
+        String timeDisplay = "Elapsed Time:" + "\n " + elapsedMinutes + " : " + secondsDisplay;
         return  timeDisplay;
     }
 
