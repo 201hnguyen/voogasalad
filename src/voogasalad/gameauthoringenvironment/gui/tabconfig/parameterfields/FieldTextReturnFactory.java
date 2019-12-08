@@ -21,8 +21,6 @@ public class FieldTextReturnFactory {
         if(node instanceof PreviewImageButton) {
             return ((PreviewImageButton) node).getImageString();
         }
-
-//        }
         return "Field Type not recognized";
     }
 }
