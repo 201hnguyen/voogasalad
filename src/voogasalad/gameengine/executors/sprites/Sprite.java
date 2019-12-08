@@ -25,4 +25,6 @@ public interface Sprite {
     boolean isMovementFinished();
     void chunkHealth(int damage);
     boolean isDead();
+    int getCreateCost();
+    int getDestroyCost();
 }

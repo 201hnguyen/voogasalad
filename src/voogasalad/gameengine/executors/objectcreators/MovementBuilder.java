@@ -3,7 +3,6 @@ package voogasalad.gameengine.executors.objectcreators;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.sprites.strategies.movement.MovementStrategy;
 
-import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.LinkedList;
 
