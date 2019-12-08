@@ -4,8 +4,11 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -30,6 +33,7 @@ public class PlayerVisualization extends BorderPane {
     private static final double PANEL_POSITION = 800;
     private static final double LAYOUT = 0;
     private static final String TITLE = "Player";
+    private static final String INSTRUCTIONS = " Instructions: Drag and drop \n towers onto display screen.";
 
     private Scene scene;
     private Stage stage;
@@ -87,7 +91,7 @@ public class PlayerVisualization extends BorderPane {
         statusBar = new StatusBar();
         selectedTowerPane = new SelectedTowerPane(actionsProcessor, myPlayer, this);
         panelBox = new VBox(10);
-        panelBox.getChildren().addAll(buttonCreator,accordionCreator, selectedTowerPane);
+        panelBox.getChildren().addAll(buttonCreator, showInstructions(), accordionCreator, selectedTowerPane, backToGAE());
         createStopWatchDisplay();
         statusBar.getChildren().add(myStopWatchDisplay);
         this.setRight(panelBox);
@@ -112,6 +116,26 @@ public class PlayerVisualization extends BorderPane {
         stage.show();
 
     }
+
+    private VBox backToGAE() {
+        VBox buttonHolder = new VBox();
+        Button button = new Button("Return to GAE");
+        buttonHolder.getChildren().add(button);
+        buttonHolder.setAlignment(Pos.CENTER);
+        return buttonHolder;
+    }
+
+    private Text showInstructions() {
+        DropShadow shadow = new DropShadow();
+        shadow.setOffsetY(3.0f);
+        shadow.setColor(Color.color(0.4f, 0.4f, 0.4f));
+        Text instructions = new Text();
+        instructions.setText(INSTRUCTIONS);
+        instructions.setFill(Color.BLACK);
+        instructions.setEffect(shadow);
+        return instructions;
+    }
+
 
     private void createStopWatchDisplay(){
         myStopWatchDisplay = new Text("\n 0 : 0");
