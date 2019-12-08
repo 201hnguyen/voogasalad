@@ -95,19 +95,6 @@ public class Game {
         return myCurrentLevel.getBackgroundPath();
     }
 
-    private Document configureWithTestDocument() throws GameEngineException {
-        File testFile = new File("src/resources/player/MockData2.xml");
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder ;
-        try {
-            builder = factory.newDocumentBuilder();
-            Document doc = builder.parse(testFile);
-            return doc;
-        } catch (ParserConfigurationException | SAXException | IOException e) {
-            throw new GameEngineException(e, "ConfigurationFailedXML");
-        }
-    }
-
     public boolean didLevelSwitch() {
         boolean ret = switchedLevel;
         switchedLevel = false;

@@ -9,8 +9,10 @@ import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
 
 public class ConfigurationTool {
     public static Element convertNodeToElement(Node node) {
@@ -32,5 +34,17 @@ public class ConfigurationTool {
         } catch (ParserConfigurationException | SAXException | IOException e) {
             throw new GameEngineException(e, "ConfigurationFailedXML");
         }
+    }
+
+    public static LinkedList<Point2D.Double> convertPathStringToPath(String pathString) {
+        LinkedList<Point2D.Double> parsedPath = new LinkedList<>();
+        String[] pointStrings = pathString.strip().split(";");
+        for(String pointString : pointStrings) {
+            Point2D.Double toAdd = new Point2D.Double();
+            String[] coordinateStrings = pointString.split(",");
+            toAdd.setLocation(Double.parseDouble(coordinateStrings[0]), Double.parseDouble(coordinateStrings[1]));
+            parsedPath.add(toAdd);
+        }
+        return parsedPath;
     }
 }
