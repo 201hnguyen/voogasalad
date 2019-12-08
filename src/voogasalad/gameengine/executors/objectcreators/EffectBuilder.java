@@ -10,16 +10,18 @@ public class EffectBuilder implements StrategyBuilder {
     private int myDamageValue;
     private String myEffectType;
 
-    public void setType(String effectType) {
+    public EffectBuilder setType(String effectType) {
         myEffectType = effectType;
+        return this;
     }
 
     public String getType() {
         return myEffectType;
     }
 
-    public void setDamage(int value) {
+    public EffectBuilder setDamage(int value) {
         myDamageValue = value;
+        return this;
     }
 
     public int getDamage() {
