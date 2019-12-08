@@ -8,6 +8,7 @@ import voogasalad.gameengine.executors.objectcreators.*;
 import voogasalad.gameengine.executors.sprites.Sprite;
 import voogasalad.gameengine.executors.sprites.strategies.attack.AttackStrategy;
 import voogasalad.gameengine.executors.sprites.strategies.cost.CostStrategy;
+import voogasalad.gameengine.executors.sprites.strategies.effect.EffectStrategy;
 import voogasalad.gameengine.executors.sprites.strategies.health.HealthStrategy;
 import voogasalad.gameengine.executors.sprites.strategies.movement.MovementStrategy;
 import voogasalad.gameengine.executors.sprites.strategies.rotation.RotationStrategy;
@@ -132,5 +133,10 @@ public class PrototypesConfigurator {
     private void setCostStrategy(SpriteBuilder builder, Object strategy) {
         CostStrategy toSet = (CostStrategy) strategy;
         builder.setCostStrategy(toSet);
+    }
+
+    private void setEffectStrategy(SpriteBuilder builder, Object strategy) {
+        EffectStrategy toSet = (EffectStrategy) strategy;
+        builder.setEffectStrategy(toSet);
     }
 }
