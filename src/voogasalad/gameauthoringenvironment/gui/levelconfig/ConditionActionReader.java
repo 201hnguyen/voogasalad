@@ -13,7 +13,7 @@ public class ConditionActionReader {
     private ConditionActionComboBox actionComboBox;
 
 
-    public ConditionActionReader(Map<String, Map<String, String>> allActiveObjectMap){
+    public ConditionActionReader(Map<String, Map<String, Map<String, String>>> allActiveObjectMap){
         conditionComboBox = new ConditionActionComboBox(allActiveObjectMap);
         actionComboBox = new ConditionActionComboBox(allActiveObjectMap);
 
