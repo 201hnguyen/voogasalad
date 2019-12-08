@@ -9,7 +9,7 @@ import java.util.Map;
 public class RuleLine extends HBox {
     ConditionActionReader conditionActionComboBox;
 
-    public RuleLine(Map<String, Map<String, Map<String, String>>> allActiveObjectMapParam){
+    public RuleLine(Map<String, Map<String, String>> allActiveObjectMapParam){
         super(10);
         conditionActionComboBox = new ConditionActionReader(allActiveObjectMapParam);
         this.getChildren().addAll(new Label("Condition: "), conditionActionComboBox.getConditions(), new Label("  --->   Action: "), conditionActionComboBox.getActions());
