@@ -4,14 +4,13 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import voogasalad.gameauthoringenvironment.gui.AddToXML;
 import voogasalad.gameauthoringenvironment.gui.SaveGUIParameters;
 import voogasalad.gameauthoringenvironment.gui.levelconfig.LevelConfigPane;
+import voogasalad.gameauthoringenvironment.gui.utils.SubmitButton;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.lang.reflect.InvocationTargetException;
@@ -90,6 +89,7 @@ public class ParameterCreator extends BorderPane{
                 SubmitButton myField = new SubmitButton(this);
                 return myField;
             }
+            if (type.equals())
             else {
                 Class cls = Class.forName(type);
                 Node myField = (Node) cls.getConstructor().newInstance();
