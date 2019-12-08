@@ -51,6 +51,7 @@ public class LevelConfigPane extends BorderPane{
         busInstance = busInstanceParam;
         allObjectTypes = allObjectTypesParam;
         objectVBoxes = new ArrayList<>();
+        gameLevelComboBox = new GameLevelComboBox();
         setBorderPane();
     }
 
@@ -79,7 +80,6 @@ public class LevelConfigPane extends BorderPane{
     private HBox createTitleHBox(){
         HBox titleHBox = new HBox();
         Label levelLabel = formatTitleLabel("Level ");
-        gameLevelComboBox = new GameLevelComboBox(gameLevel);
         gameLevelComboBox.setPrefHeight(height/10);
         Label configLabel = formatTitleLabel(" Configuration");
         //Label levelLabel = new Label("Level " + GameLevelComboBox + " Configuration");
@@ -184,7 +184,7 @@ public class LevelConfigPane extends BorderPane{
         newLevel.setOnMouseClicked(event -> {
             saveInfoForLevel();
             allLevels.add(gameLevel);
-            gameLevelComboBox.addToComboBox(allLevels);
+            gameLevelComboBox.addToComboBox(gameLevel, gameLevel+1);
             gameLevel++;
             updateLevelConfigPane();
         });
