@@ -82,6 +82,7 @@ public class LevelConfigPane extends BorderPane{
     private HBox createTitleHBox(){
         HBox titleHBox = new HBox();
         Label levelLabel = new Label("Level " + gameLevel + " Configuration");
+        //Label levelLabel = new Label("Level " + GameLevelComboBox + " Configuration");
         levelLabel.setFont(Font.font(30));
         levelLabel.setPrefHeight(height/10);
         levelLabel.setMaxHeight(levelLabel.getPrefHeight());
