@@ -7,15 +7,18 @@ import voogasalad.gameengine.executors.objectcreators.EffectBuilder;
 
 public class TickHealthEffect implements EffectStrategy {
 
-    private boolean isFinished;
+    private EffectBuilder myOriginalBuilder;
     private int myDamageValue;
     private int myTickCount;
     private double myTickDelay;
+    private boolean isFinished;
 
-    public TickHealthEffect(int damageValue, int tickCount, double tickDelay) {
-        myDamageValue = damageValue;
-        myTickCount = tickCount;
-        myTickDelay = tickDelay;
+    public TickHealthEffect(EffectBuilder builder) {
+        myOriginalBuilder = builder;
+        myDamageValue = builder.getDamage();
+        myTickCount = builder.getTickCount();
+        myTickDelay = builder.getTickDelay();
+        isFinished = false;
     }
 
     @Override
@@ -31,6 +34,6 @@ public class TickHealthEffect implements EffectStrategy {
 
     @Override
     public EffectStrategy makeClone() throws GameEngineException {
-        return new TickHealthEffect(myDamageValue, myTickCount, myTickDelay);
+        return new TickHealthEffect(myOriginalBuilder);
     }
 }

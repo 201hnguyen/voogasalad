@@ -35,9 +35,11 @@
                 </Parameters>
             </RotationStrategy>
             <EffectStrategy>
-                <Type>ChunkHealthEffect</Type>
+                <Type>TickHealthEffect</Type>
                 <Parameters>
                     <DamageValue>1</DamageValue>
+                    <TickCount>5</TickCount>
+                    <TickDelay>1</TickDelay>
                 </Parameters>
             </EffectStrategy>
         </Strategies>
@@ -89,7 +91,7 @@
         <AvailablePrototypes>0 1</AvailablePrototypes>
 
         <Wave>
-            <Queue>0 0 0 0 0</Queue>
+            <Queue>0</Queue>
             <Interval>2</Interval>
             <SpawnPointX>0</SpawnPointX>
             <SpawnPointY>300</SpawnPointY>

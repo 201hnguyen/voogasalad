@@ -8,6 +8,8 @@ public class EffectBuilder implements StrategyBuilder {
     private static final String DEFAULT_TYPE = "NoEffect";
 
     private int myDamageValue;
+    private int myTickCount;
+    private double myTickDelay;
     private String myEffectType;
 
     public EffectBuilder setType(String effectType) {
@@ -26,6 +28,24 @@ public class EffectBuilder implements StrategyBuilder {
 
     public int getDamage() {
         return myDamageValue;
+    }
+
+    public EffectBuilder setTickCount(String tickCountString) {
+        myTickCount = Integer.parseInt(tickCountString);
+        return this;
+    }
+
+    public int getTickCount() {
+        return myTickCount;
+    }
+
+    public EffectBuilder setTickDelay(String tickDelayString) {
+        myTickDelay = Double.parseDouble(tickDelayString);
+        return this;
+    }
+
+    public double getTickDelay() {
+        return myTickDelay;
     }
 
     @Override
