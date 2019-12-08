@@ -2,6 +2,7 @@ package voogasalad.gameengine.executors.sprites;
 
 import voogasalad.gameengine.executors.control.levelcontrol.LevelActionsRequester;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
+import voogasalad.gameengine.executors.sprites.strategies.attack.AttackStrategy;
 import voogasalad.gameengine.executors.utils.SpriteArchetype;
 
 import java.awt.geom.Point2D;
@@ -29,5 +30,6 @@ public interface Sprite {
     int getDestroyCost();
     void updateImage(String newImagePath);
     boolean isColliding(Sprite sprite);
+    void updateAttackStrategy(AttackStrategy updatedStrategy);
     void applyEffect(Sprite sprite) throws GameEngineException;
 }

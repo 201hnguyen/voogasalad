@@ -89,7 +89,7 @@ public class PrototypesConfigurator {
         }
     }
 
-    private Object buildStrategy(Element strategy) throws GameEngineException {
+    public Object buildStrategy(Element strategy) throws GameEngineException {
         try {
             String test = STRATEGY_BUILDERS_BUNDLE.getString(strategy.getNodeName());
             var builder = Class.forName(STRATEGY_BUILDER_CLASS_PATH + STRATEGY_BUILDERS_BUNDLE.getString(strategy.getNodeName())).getConstructor().newInstance();

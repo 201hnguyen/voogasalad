@@ -74,6 +74,7 @@ public class PathMovement implements MovementStrategy {
 
     @Override
     public boolean isMovementFinished() {
+//        return reachedEnd;
         return false;
     }
 
