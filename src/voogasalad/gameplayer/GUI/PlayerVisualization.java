@@ -51,7 +51,7 @@ public class PlayerVisualization extends BorderPane {
         this.actionsProcessor = uiActionsProcessor;
         this.myPlayer = player;
         this.isRunning = false;
-        currentTime = "\n 0 : 0";
+        currentTime = "Elapsed Time: \n 0 : 0";
         initialize();
     }
 
@@ -60,11 +60,8 @@ public class PlayerVisualization extends BorderPane {
         statusBar.updateDisplayedInfo(gameInfoMap);
         if(isRunning) {
             currentTime = myStopWatch.getCurrentTime();
-            myStopWatchDisplay.setText(currentTime);
         }
-        else{
-            myStopWatchDisplay.setText(currentTime);
-        }
+        myStopWatchDisplay.setText(currentTime);
     }
 
     public void setNewLevel(List<Sprite> towers, List<Sprite> enemies, String backgroundImagePath, Map<String, Integer> gameInfoMap){
@@ -114,7 +111,7 @@ public class PlayerVisualization extends BorderPane {
     }
 
     private void createStopWatchDisplay(){
-        myStopWatchDisplay = new Text("\n 0 : 0");
+        myStopWatchDisplay = new Text("Elapsed Time: \n 0 : 0");
         myStopWatchDisplay.setFont(new Font(20));
     }
 
