@@ -13,7 +13,7 @@ public class FileChooserButton extends Button {
     private Stage newStage = new Stage();
 
     public FileChooserButton(){
-        super("Select Background Image");
+        super("Select Image");
         final FileChooser imageChooser = new FileChooser();
         this.setOnAction((final ActionEvent e) -> {
             File file = imageChooser.showOpenDialog(newStage);
