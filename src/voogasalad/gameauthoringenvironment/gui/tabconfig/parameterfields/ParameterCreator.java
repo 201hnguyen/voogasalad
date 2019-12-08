@@ -65,6 +65,10 @@ public class ParameterCreator extends BorderPane{
         this.setTop(configVBox);
     }
 
+    public String getImageString() {
+        return imageString;
+    }
+
     private void addInputFields() {
 
         configVBox = new VBox();
