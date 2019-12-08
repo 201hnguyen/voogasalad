@@ -24,7 +24,7 @@ public class LevelConfigPane extends BorderPane{
     private VBoxCreator towersVBox;
     private VBoxCreator enemiesVBox;
     private VBoxCreator obstaclesVBox;
-    private static int gameLevel;
+    private int gameLevel;
     private Map<String, Map<String, Map<String, String>>> allActiveObjectMap;
     private HBox title;
     private GridPane gridPane;
@@ -175,10 +175,15 @@ public class LevelConfigPane extends BorderPane{
     }
 
     public void updateLevelConfigPane(){
+        saveInfoForLevel();
         title = createTitleHBox();
         rules = createRulesVBox();
         createMapButton = new MapButton(width, height);
         addToGridPane();
+    }
+
+    public void saveInfoForLevel(){
+
     }
 
 
