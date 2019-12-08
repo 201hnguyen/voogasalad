@@ -22,6 +22,10 @@ public class PathMovement implements MovementStrategy {
         myPath = builder.getPath();
         myOriginalBuilder = builder;
         nextPositionIndex = 0;
+        resetNextPosition();
+    }
+
+    private void resetNextPosition() {
         if(myPath.size() < 1) {
             reachedEnd = true;
         } else {
@@ -61,7 +65,7 @@ public class PathMovement implements MovementStrategy {
     @Override
     public void updatePath(List<Point2D.Double> path) {
         myPath = (LinkedList<Point2D.Double>) path;
-        //todo: I think we should take in a List instead of a LinkedList for myPath; it's just a linkedlist when we create it; but we shouldn't need to specify within this class
+        resetNextPosition();
     }
 
     @Override
