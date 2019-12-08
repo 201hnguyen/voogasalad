@@ -1,11 +1,13 @@
 package voogasalad.gameauthoringenvironment.gui.tabconfig.parameterfields;
 
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import voogasalad.gameauthoringenvironment.gui.AddToXML;
 import voogasalad.gameauthoringenvironment.gui.SaveGUIParameters;
@@ -27,6 +29,7 @@ public class ParameterCreator extends BorderPane{
     private String[] properties;
     private ResourceBundle paramFieldType;
     private VBox configVBox;
+    private VBox previewVBox;
     private String gameObjectName;
     private List<Node> allNodes;
     private List<String> fieldTypes;
@@ -61,12 +64,33 @@ public class ParameterCreator extends BorderPane{
         levelConfigPane = levelConfigPaneParam;
         storeAllFieldTypes();
         addInputFields();
-        this.setTop(configVBox);
+        addImagePreview();
+        this.setLeft(previewVBox);
+        this.setRight(configVBox);
+    }
+
+    /**
+     *
+     */
+    public void createSubmitButton(){
+        allNodes
+                .stream()
+                .forEach(node -> labelValue.add(fieldFactory.getAppropriateText(node)));
+
+        SaveGUIParameters myGuiParameters = new SaveGUIParameters(labelText, labelValue);
+        allActiveObjectMap.put(gameObjectName, activeObjects);
+        String myLabel = xmlObject.addToSendToXMLMap(myGuiParameters.getMap(), gameObjectName);
+        addToAppropriateField(gameObjectName, createObjectIcon(myGuiParameters.getMap(), myLabel));
     }
 
     private void addInputFields() {
-
         configVBox = new VBox();
+        Label header = new Label("Set Parameters");
+        header.setFont(Font.font(14));
+        configVBox.getChildren().add(header);
+        configVBox.setPrefWidth(200);
+        configVBox.setPadding(new Insets(50, 50, 50, 50));
+
         for (int j = 0; j < properties.length; j++) {
             Label label = new Label(properties[j]); //for SaveGuiParameters
             labelList.add(label);
@@ -76,16 +100,16 @@ public class ParameterCreator extends BorderPane{
         }
     }
 
-    public void createSubmitButton(){
-            allNodes
-                    .stream()
-                    .forEach(node -> labelValue.add(fieldFactory.getAppropriateText(node)));
+    private void addImagePreview() {
+        previewVBox = new VBox();
+        Label header = new Label("Image Preview");
+        header.setFont(Font.font(14));
+        previewVBox.getChildren().add(header);
+        previewVBox.setPrefWidth(200);
+        previewVBox.setPadding(new Insets(50, 50, 50, 50));
 
-            SaveGUIParameters myGuiParameters = new SaveGUIParameters(labelText, labelValue);
-            allActiveObjectMap.put(gameObjectName, activeObjects);
-            String myLabel = xmlObject.addToSendToXMLMap(myGuiParameters.getMap(), gameObjectName);
-            addToAppropriateField(gameObjectName, createObjectIcon(myGuiParameters.getMap(), myLabel));
     }
+
 
     private Node createObjectFromString(String type){
         try{
