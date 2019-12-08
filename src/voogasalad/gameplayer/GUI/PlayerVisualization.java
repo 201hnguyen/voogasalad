@@ -18,18 +18,18 @@ import voogasalad.gameengine.api.Engine;
 import voogasalad.gameengine.executors.sprites.Sprite;
 import voogasalad.gameplayer.Player;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PlayerVisualization extends BorderPane {
 
-    private static final double SCENE_WIDTH = 1000;
-    private static final double SCENE_HEIGHT = 800;
-    private static final double PANEL_POSITION = 800;
-    private static final double LAYOUT = 0;
-    private static final String TITLE = "Player";
+    private static final String RESOURCE_PATH = "resources.player.ButtonResource";
+    private static final ResourceBundle resourceBundle = ResourceBundle.getBundle(RESOURCE_PATH);
+    private static final double SCENE_WIDTH = Double.parseDouble(resourceBundle.getString("SceneWidth"));
+    private static final double SCENE_HEIGHT = Double.parseDouble(resourceBundle.getString("SceneHeight"));
+    private static final double PANEL_POSITION = Double.parseDouble(resourceBundle.getString("RightPanelPosition"));
+    private static final String TITLE = resourceBundle.getString("Title");
+    private static final int STOPWATCH_FONT_SIZE = Integer.parseInt(resourceBundle.getString("StopwatchFontSize"));
+    private static final String INITIAL_TIME = resourceBundle.getString("InitialTime");
 
     private Scene scene;
     private Stage stage;
@@ -51,7 +51,7 @@ public class PlayerVisualization extends BorderPane {
         this.actionsProcessor = uiActionsProcessor;
         this.myPlayer = player;
         this.isRunning = false;
-        currentTime = "Elapsed Time: \n 0 : 0";
+        currentTime = INITIAL_TIME;
         initialize();
     }
 
@@ -111,8 +111,8 @@ public class PlayerVisualization extends BorderPane {
     }
 
     private void createStopWatchDisplay(){
-        myStopWatchDisplay = new Text("Elapsed Time: \n 0 : 0");
-        myStopWatchDisplay.setFont(new Font(20));
+        myStopWatchDisplay = new Text(INITIAL_TIME);
+        myStopWatchDisplay.setFont(new Font(STOPWATCH_FONT_SIZE));
     }
 
     private void setBackgroundImage(String backgroundImagePath){
