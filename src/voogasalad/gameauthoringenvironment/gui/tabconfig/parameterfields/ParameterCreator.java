@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -24,6 +25,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+
+import static java.lang.Double.valueOf;
 
 public class ParameterCreator extends BorderPane{
 
@@ -53,13 +56,11 @@ public class ParameterCreator extends BorderPane{
     private Map<String, Map<String, String>> activeObjects;
     private ClearFieldsFactory clearFieldsFactory;
     private Map<String, Map<String, Map<String, String>>> allActiveObjectMap;
-    private Properties imageProp;
     private String imageString;
     private ImageView imageView;
     double imageViewWidth = 0;
     double imageViewHeight = 0;
-    PreviewImageButton previewImageButton;
-    FileChooserButton fileChooserButton;
+    private FileChooserButton fileChooserButton;
 
     //private static Map<String, Map<String,String>> sendToXML;
 
@@ -84,8 +85,7 @@ public class ParameterCreator extends BorderPane{
         levelConfigPane = levelConfigPaneParam;
         storeAllFieldTypes();
         addInputFields();
-        //addImagePreview();
-        createImagePreview();
+        addImagePreview();
         this.setRight(configVBox);
         this.setLeft(previewVBox);
     }
@@ -113,62 +113,70 @@ public class ParameterCreator extends BorderPane{
         }
     }
 
-    //not in use
     private void addImagePreview() {
         previewVBox = new TabVBoxCreator("Image Preview");
-
-
-        //load properties file
-        try (InputStream reader = new FileInputStream(PROPERTIES_PATH)) {
-
-            imageProp = new Properties();
-
-            clearPropertiesFile(reader);
-
-            // load a properties file
-            imageProp.load(reader);
-
-            imageString = imageProp.getProperty("image.url");
-            System.out.println(imageString);
-
-            imageView = new ImageView(imageString);
-            previewVBox.getChildren().add(imageView);
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-
-    }
-
-    //not in use
-    private void clearPropertiesFile(InputStream reader) throws IOException {
-        //InputStream reader = new FileInputStream(PROPERTIES_PATH);
-        OutputStream writer = new FileOutputStream(PROPERTIES_PATH);
-        imageProp.load(reader);
-        imageProp.remove("image.url");
-        imageProp.store(writer, null);
-    }
-
-
-
-    private void createImagePreview() {
-        previewVBox = new TabVBoxCreator("Image Preview");
-
         for (int i = 0; i < allNodes.size(); i++) {
             Node currentNode = allNodes.get(i);
+            String nodeLabel = labelText.get(i);
+            if (nodeLabel.equals("ImageHeight")) {
+                ((TextField) currentNode).setOnAction(e -> {
+                    imageViewHeight = Double.parseDouble((new FieldTextReturnFactory()).getAppropriateText(nodeLabel));
+                    System.out.println(imageViewHeight);
+                });
+            };
+            if (nodeLabel.equals("ImageWidth")) {
+                ((TextField) currentNode).setOnAction(e -> {
+                    imageViewWidth = Double.parseDouble((new FieldTextReturnFactory()).getAppropriateText(nodeLabel));
+                    System.out.println(imageViewWidth);
+                });
+            };
+//
+//            if (nodeLabel.equals("ImageHeight")) {
+//                currentNode.setOnKeyPressed((event) -> {
+//                    if (event.getCode() == KeyCode.ENTER) {
+//                        imageViewHeight = Double.parseDouble((new FieldTextReturnFactory()).getAppropriateText(nodeLabel));
+//                    }
+//                });
+//            }
+//            if (nodeLabel.equals("ImageWidth")) {
+//                currentNode.setOnKeyPressed((event) -> {
+//                    if (event.getCode() == KeyCode.ENTER) {
+//                        imageViewWidth = Double.parseDouble((new FieldTextReturnFactory()).getAppropriateText(nodeLabel));
+//                    }
+//                });
+//            }
+//
+//            imageViewHeight = accessImageSpecs(nodeLabel, currentNode,"ImageHeight");
+//            System.out.println(imageViewHeight);
+//
+//            imageViewWidth = accessImageSpecs(nodeLabel, currentNode, "ImageWidth");
+//            System.out.println(imageViewWidth);
+
             if (currentNode instanceof FileChooserButton) {
                 fileChooserButton = (FileChooserButton) currentNode;
             }
-            if (allNodes.get(i) instanceof PreviewImageButton) {
+            if (currentNode instanceof PreviewImageButton) {
                 PreviewImageButton button = (PreviewImageButton) currentNode;
                 button.setOnAction(event -> {
                     imageString = fileChooserButton.getImageString();
                     imageView = new ImageView(imageString);
-                    previewVBox.getChildren().add(new ImageView(new Image(imageString)));
+                    previewVBox.getChildren().add(imageView);
                 });
             }
         }
     }
+
+    private double accessImageSpecs(String nodeLabel, Node currentNode, String s) {
+        final double[] d = {0.0};
+        if (nodeLabel.equals(s)) {
+            currentNode.setOnKeyPressed((event) -> {
+                if (event.getCode() == KeyCode.ENTER) {
+                    d[0] = valueOf((new FieldTextReturnFactory()).getAppropriateText(nodeLabel)); }
+            });
+        }
+        return d[0];
+    }
+
 
 
 
