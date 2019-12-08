@@ -50,26 +50,21 @@ public class ParameterCreator extends BorderPane{
     private Map<String, Map<String, String>> allActiveObjects;
     private ClearFieldsFactory clearFieldsFactory;
     private List<ObjectPreviewAndActive> allActiveObjectObjects;
-    private Map<String, Map<String, Map<String, String>>> allActiveObjectMap;
     private String imageString;
     private ImageView imageView;
     double imageViewWidth = 0;
     double imageViewHeight = 0;
     private FileChooserButton fileChooserButton;
 
-    //private static Map<String, Map<String,String>> sendToXML;
 
 
     public ParameterCreator(String gameObjectNameParam, String[] propertiesParam, ResourceBundle paramFieldTypeParam,
                             LevelConfigPane levelConfigPaneParam, Map<String, Map<String, String>> allActiveObjectMapParam,
                             List<ObjectPreviewAndActive> allActiveObjectObjectsParam) throws ParserConfigurationException {
 
-    }
         allActiveObjectObjects = allActiveObjectObjectsParam;
         allActiveObjects = allActiveObjectMapParam;
-        LevelConfigPane levelConfigPaneParam, Map<String, Map<String, Map<String, String>>> allActiveObjectMapParam) throws ParserConfigurationException {
         fileChooserButton = new FileChooserButton();
-        allActiveObjectMap = allActiveObjectMapParam;
         clearFieldsFactory = new ClearFieldsFactory();
         fieldFactory = new FieldTextReturnFactory();
         labelList = new ArrayList<>();
@@ -90,18 +85,6 @@ public class ParameterCreator extends BorderPane{
         this.setLeft(previewVBox);
     }
 
-    private void addInputFields() {
-
-        configVBox = new VBox();
-        for (int j = 0; j < properties.length; j++) {
-            Label label = new Label(properties[j]); //for SaveGuiParameters
-            labelList.add(label);
-            labelText.add(label.getText());
-            configVBox.getChildren().add(label);
-            configVBox.getChildren().add(createObjectFromString(paramFieldType.getString(properties[j])));
-        }
-    }
-
     public void createSubmitButton(){
             allNodes
                     .stream()
@@ -112,13 +95,8 @@ public class ParameterCreator extends BorderPane{
             addToAppropriateField(gameObjectName, createObjectIcon(myGuiParameters.getMap(), myLabel));
     }
 
-    public String getImageString() {
-        return imageString;
-    }
-
     private void addInputFields() {
         configVBox = new TabVBoxCreator("Configure Parameters", 200, 50, 50, 50, 10);
-
         for (int j = 0; j < properties.length; j++) {
             Label label = new Label(properties[j]); //for SaveGuiParameters
             labelList.add(label);
@@ -144,14 +122,7 @@ public class ParameterCreator extends BorderPane{
                     imageViewWidth = Double.parseDouble((new FieldTextReturnFactory()).getAppropriateText(currentNode));
                     System.out.println(imageViewWidth);
                 });
-            };
-
-//            imageViewHeight = accessImageSpecs(nodeLabel, currentNode,"ImageHeight");
-//            System.out.println(imageViewHeight);
-//
-//            imageViewWidth = accessImageSpecs(nodeLabel, currentNode, "ImageWidth");
-//            System.out.println(imageViewWidth);
-
+            }
             if (currentNode instanceof FileChooserButton) {
                 fileChooserButton = (FileChooserButton) currentNode;
             }
@@ -191,7 +162,6 @@ public class ParameterCreator extends BorderPane{
         }
         return d.get();
     }
-
 
 
 
