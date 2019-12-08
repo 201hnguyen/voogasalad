@@ -28,8 +28,9 @@ public class LevelConfigPane extends BorderPane{
     private VBoxCreator enemiesVBox;
     private VBoxCreator obstaclesVBox;
     private int gameLevel;
-    private Map<String, Map<String, Map<String, String>>> allActiveObjectMap;
-    private Map<String, Map<String, Map<String, String>>> activeObjectsInLevelTemp;
+//    private Map<String, Map<String, Map<String, String>>> allActiveObjectMap;
+//    private Map<String, Map<String, Map<String, String>>> activeObjectsInLevelTemp;
+    private Map<String, Map<String, String>> allActiveObjects;
     private HBox title;
     private GridPane gridPane;
     private HBox allObjects;
@@ -37,16 +38,16 @@ public class LevelConfigPane extends BorderPane{
     private Label selectActiveLabel;
     private Button createMapButton;
     private HBox createSubmitNewLevelButtons;
-    private Map<Integer, Map<String, Map<String, Map<String, String>>>> saveActiveObjectsForLevel;
+    private Map<Integer, Map<String, Map<String, String>>> saveActiveObjectsForLevel;
     private List<ObjectPreviewAndActive> allActiveObjectObjects;
 
 
-    public LevelConfigPane(AddToXML sendToXMLParam, Document createdXMLParam, Bus busInstanceParam, Map<String, Map<String, Map<String, String>>> allActiveObjectMapParam,
+    public LevelConfigPane(AddToXML sendToXMLParam, Document createdXMLParam, Bus busInstanceParam, Map<String, Map<String, String>> allActiveObjectMapParam,
                            List<ObjectPreviewAndActive> allActiveObjectObjectsParam){
         allActiveObjectObjects = allActiveObjectObjectsParam;
         gameLevel = 1;
         saveActiveObjectsForLevel = new HashMap<>();
-        allActiveObjectMap = allActiveObjectMapParam;
+        allActiveObjects = allActiveObjectMapParam;
         sendToXML = sendToXMLParam;
         createdXML = createdXMLParam;
         busInstance = busInstanceParam;
@@ -117,7 +118,7 @@ public class LevelConfigPane extends BorderPane{
 
     private VBox createConditionActionVBox(){
         VBox conditionAction = new VBox(10);
-        conditionAction.getChildren().addAll(new RuleLine(allActiveObjectMap), new RuleLine(allActiveObjectMap));
+        conditionAction.getChildren().addAll(new RuleLine(allActiveObjects), new RuleLine(allActiveObjects));
         return conditionAction;
     }
 
@@ -130,7 +131,7 @@ public class LevelConfigPane extends BorderPane{
     private Button createAddRuleLineButton(VBox conditionAction){
         Button addRuleLine = new Button("+");
         addRuleLine.setOnMouseClicked(event -> {
-            conditionAction.getChildren().add(new RuleLine(allActiveObjectMap));
+            conditionAction.getChildren().add(new RuleLine(allActiveObjects));
         });
         return addRuleLine;
     }
@@ -190,8 +191,8 @@ public class LevelConfigPane extends BorderPane{
     }
 
     private void saveAndClearActive(){
-        activeObjectsInLevelTemp = new HashMap<>(allActiveObjectMap);
-        saveActiveObjectsForLevel.put(gameLevel, activeObjectsInLevelTemp);
+        //activeObjectsInLevelTemp = new HashMap<>(allActiveObjectMap);
+        saveActiveObjectsForLevel.put(gameLevel, sendToLevelSave(allActiveObjects));
         //allActiveObjectMap = new HashMap<>();
         for(ObjectPreviewAndActive object : allActiveObjectObjects){
             object.removeFromActive();
@@ -204,6 +205,14 @@ public class LevelConfigPane extends BorderPane{
         rules = createRulesVBox();
         createMapButton = new MapButton(width, height);
         addToGridPane();
+    }
+
+    private Map<String, Map<String, String>> sendToLevelSave(Map<String, Map<String, String>> activeObjects){
+        Map<String, Map<String, String>> copyMap = new HashMap<>();
+        for(String key : activeObjects.keySet()){
+            copyMap.put(key, activeObjects.get(key));
+        }
+        return copyMap;
     }
 
 }

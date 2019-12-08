@@ -27,7 +27,8 @@ public class TabPaneCreator {
     private ResourceBundle paramFieldType;
     private BorderPane bp;
     private LevelConfigPane levelConfigPane;
-    private Map<String, Map<String, Map<String, String>>> allActiveObjects;
+    //private Map<String, Map<String, Map<String, String>>> allActiveObjects;
+    private Map<String, Map<String, String>> allActiveObjects;
     private List<ObjectPreviewAndActive> allActiveObjectObjects;
 
     public TabPaneCreator(AddToXML sendToXMLParam, Document createdXMLParam, Bus busInstanceParam) {
