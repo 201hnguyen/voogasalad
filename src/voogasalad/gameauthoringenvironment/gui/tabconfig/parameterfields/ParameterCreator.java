@@ -95,6 +95,10 @@ public class ParameterCreator extends BorderPane{
         addToAppropriateField(gameObjectName, createObjectIcon(myGuiParameters.getMap(), myLabel));
     }
 
+    public String getImageString() {
+        return imageString;
+    }
+
     private void addInputFields() {
         configVBox = new TabVBoxCreator("Configure Parameters", 200, 50, 50, 50, 10);
 
