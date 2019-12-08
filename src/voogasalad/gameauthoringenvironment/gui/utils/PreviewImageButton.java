@@ -14,12 +14,16 @@ public class PreviewImageButton extends Button {
 
     public PreviewImageButton(){
         super("Preview Image");
-        this.setOnMouseClicked(event ->{
-            imageString = fileChooserButton.getImageString();
-            //imageView = fileChooserButton.getImageView();
-            System.out.println("PreviewImageButton " + imageString);
-        });
+//        this.setOnMouseClicked(event ->{
+//            imageString = fileChooserButton.getImageString();
+//            //imageView = fileChooserButton.getImageView();
+//            System.out.println("PreviewImageButton " + imageString);
+//        });
     };
+
+    public static FileChooserButton getFileChooserButton() {
+        return fileChooserButton;
+    }
 
     public PreviewImageButton(FileChooserButton fileChooserButtonParam) {
         fileChooserButton = fileChooserButtonParam;

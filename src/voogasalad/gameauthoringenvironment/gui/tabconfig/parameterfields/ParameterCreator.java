@@ -32,7 +32,7 @@ public class ParameterCreator extends BorderPane{
     private static final String SUBMITBUTTONCLASS = new SubmitButton().getClass().toString().split("class ")[1];
     private static final String FILECHOOSERBUTTONCLASS = "class voogasalad.gameauthoringenvironment.gui.utils.FileChooserButton";
     private static final String PREVIEWIMAGEBUTTONCLASS = "class voogasalad.gameauthoringenvironment.gui.utils.PreviewImageButton";
-    private static final String PROPERTIES_PATH = "resources.gae.tabcreation.;";
+    private static final String PROPERTIES_PATH = "resources.gae.tabcreation";
 
     private BorderPane root;
     private ObjectPreviewAndActive objectSpecificRoot;
@@ -58,12 +58,15 @@ public class ParameterCreator extends BorderPane{
     private ImageView imageView;
     double imageViewWidth = 0;
     double imageViewHeight = 0;
+    PreviewImageButton previewImageButton;
+    FileChooserButton fileChooserButton;
 
     //private static Map<String, Map<String,String>> sendToXML;
 
 
     public ParameterCreator(String gameObjectNameParam, String[] propertiesParam, ResourceBundle paramFieldTypeParam,
                             LevelConfigPane levelConfigPaneParam, Map<String, Map<String, Map<String, String>>> allActiveObjectMapParam) throws ParserConfigurationException {
+        fileChooserButton = new FileChooserButton();
         allActiveObjectMap = allActiveObjectMapParam;
         clearFieldsFactory = new ClearFieldsFactory();
         fieldFactory = new FieldTextReturnFactory();
@@ -81,8 +84,8 @@ public class ParameterCreator extends BorderPane{
         levelConfigPane = levelConfigPaneParam;
         storeAllFieldTypes();
         addInputFields();
-        addImagePreview();
-        //createImagePreview();
+        //addImagePreview();
+        createImagePreview();
         this.setRight(configVBox);
         this.setLeft(previewVBox);
     }
@@ -110,8 +113,11 @@ public class ParameterCreator extends BorderPane{
         }
     }
 
+    //not in use
     private void addImagePreview() {
         previewVBox = new TabVBoxCreator("Image Preview");
+
+
         //load properties file
         try (InputStream reader = new FileInputStream(PROPERTIES_PATH)) {
 
@@ -134,7 +140,9 @@ public class ParameterCreator extends BorderPane{
 
     }
 
+    //not in use
     private void clearPropertiesFile(InputStream reader) throws IOException {
+        //InputStream reader = new FileInputStream(PROPERTIES_PATH);
         OutputStream writer = new FileOutputStream(PROPERTIES_PATH);
         imageProp.load(reader);
         imageProp.remove("image.url");
@@ -142,30 +150,25 @@ public class ParameterCreator extends BorderPane{
     }
 
 
-//
-//    private void createImagePreview() {
-//        previewVBox = new TabVBoxCreator("Image Preview");
-//        FileChooserButton fileChooserButton = new FileChooserButton();
-//        PreviewImageButton previewImageButton = new PreviewImageButton();
-//
-//        for (int i = 0; i < allNodes.size(); i++) {
-//            String whichClass = allNodes.get(i).getClass().toString();
-//            if (whichClass.equals(FILECHOOSERBUTTONCLASS)) {
-//                fileChooserButton = (FileChooserButton) allNodes.get(i);
-//            }
-//            if (whichClass.equals(PREVIEWIMAGEBUTTONCLASS)) {
-//                previewImageButton = new PreviewImageButton(fileChooserButton);
-//                imageString = previewImageButton.getImageString();
-//                System.out.println("ParameterCreator" + imageString);
-//                //imageView = new ImageView(imageString);
-//            }
-//
-//        }
-//
-////        previewImageButton.setOnAction(e -> {
-////            previewVBox.getChildren().add(imageView);
-////        });
-//    }
+
+    private void createImagePreview() {
+        previewVBox = new TabVBoxCreator("Image Preview");
+
+        for (int i = 0; i < allNodes.size(); i++) {
+            Node currentNode = allNodes.get(i);
+            if (currentNode instanceof FileChooserButton) {
+                fileChooserButton = (FileChooserButton) currentNode;
+            }
+            if (allNodes.get(i) instanceof PreviewImageButton) {
+                PreviewImageButton button = (PreviewImageButton) currentNode;
+                button.setOnAction(event -> {
+                    imageString = fileChooserButton.getImageString();
+                    imageView = new ImageView(imageString);
+                    previewVBox.getChildren().add(new ImageView(new Image(imageString)));
+                });
+            }
+        }
+    }
 
 
 
