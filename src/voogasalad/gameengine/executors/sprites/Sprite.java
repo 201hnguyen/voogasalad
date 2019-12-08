@@ -28,4 +28,5 @@ public interface Sprite {
     int getCreateCost();
     int getDestroyCost();
     void updateImage(String newImagePath);
+    boolean isColliding(Sprite sprite);
 }
