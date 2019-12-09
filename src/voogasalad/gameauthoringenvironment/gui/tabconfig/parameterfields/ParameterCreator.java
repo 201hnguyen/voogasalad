@@ -77,6 +77,7 @@ public class ParameterCreator extends BorderPane{
         addInputFields();
         addImagePreview();
         ScrollPane confirgScroll = new ScrollPane();
+        confirgScroll.setMaxHeight(500);
         confirgScroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         confirgScroll.setContent(configVBox);
         this.setRight(confirgScroll);
