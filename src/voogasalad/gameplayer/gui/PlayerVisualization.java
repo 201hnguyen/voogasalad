@@ -30,6 +30,7 @@ public class PlayerVisualization extends BorderPane {
 
     private static final String RESOURCE_PATH = "resources.player.PlayerViewOptions";
     private static final ResourceBundle resourceBundle = ResourceBundle.getBundle(RESOURCE_PATH);
+    private static final String SOUND_BASE_PATH = "sounds/";
     private static final double SCENE_WIDTH = Double.parseDouble(resourceBundle.getString("SceneWidth"));
     private static final double SCENE_HEIGHT = Double.parseDouble(resourceBundle.getString("SceneHeight"));
     private static final double PANEL_POSITION = Double.parseDouble(resourceBundle.getString("RightPanelPosition"));
@@ -44,7 +45,8 @@ public class PlayerVisualization extends BorderPane {
     private static final double GAEBUTTON_WIDTH = Double.parseDouble(resourceBundle.getString("BackToGAEButtonSize"));
     private static final double TITLE_SIZE = Double.parseDouble(resourceBundle.getString("TitleSize"));
     private static final double TITLEBOX_SIZE = Double.parseDouble(resourceBundle.getString("TitleHolderSize"));
-
+    private static final String START_BUTTON_KEY = "ToggleStart";
+    private static final String MUTE_BUTTON_KEY = "ToggleMute";
 
     private Scene scene;
     private Stage stage;
@@ -54,6 +56,7 @@ public class PlayerVisualization extends BorderPane {
     private Media backgroundSound;
     private VBox panelBox;
     private AccordionCreator accordionCreator;
+    private ButtonCreator myButtonCreator;
     private StatusBar statusBar;
     private SelectedTowerPane selectedTowerPane;
     private ActionsProcessor actionsProcessor;
@@ -70,7 +73,7 @@ public class PlayerVisualization extends BorderPane {
         this.stage = stage;
         this.actionsProcessor = uiActionsProcessor;
         this.myPlayer = player;
-        this.isRunning = false;
+        this.isRunning = true;
         this.gameTitle = title;
         this.gameScore = score;
         currentTime = INITIAL_TIME;
@@ -87,8 +90,6 @@ public class PlayerVisualization extends BorderPane {
     }
 
     public void setNewLevel(List<Sprite> towers, List<Sprite> enemies, String backgroundImagePath, String backgroundSoundPath, Map<String, Integer> gameInfoMap){
-        myPlayer.pauseTimeline();
-        isRunning = false;
         myStopWatch = new StopWatch();
         statusBar.updateDisplayedInfo(gameInfoMap);
         displayScreen.updateDisplayScreen(new ArrayList<>());
@@ -104,13 +105,12 @@ public class PlayerVisualization extends BorderPane {
     }
 
     private void initialize() {
-        ButtonCreator buttonCreator = new ButtonCreator(new ButtonController(this));
+        myButtonCreator = new ButtonCreator(new ButtonController(this));
         accordionCreator = new AccordionCreator();
         statusBar = new StatusBar();
         selectedTowerPane = new SelectedTowerPane(actionsProcessor, myPlayer, this);
         panelBox = new VBox(PANEL_SPACING);
-        panelBox.getChildren().addAll(buttonCreator, backToGAE(), showInstructions(), accordionCreator, selectedTowerPane);
-//        panelBox.getChildren().add(showScore());
+        panelBox.getChildren().addAll(myButtonCreator, backToGAE(), showInstructions(), accordionCreator, selectedTowerPane);
         createStopWatchDisplay();
         statusBar.getChildren().addAll(showTitle(),myStopWatchDisplay);
         this.setRight(panelBox);
@@ -194,31 +194,32 @@ public class PlayerVisualization extends BorderPane {
     }
 
     private void setBackgroundSound(String backgroundSoundPath) {
-        backgroundSound = new Media(new File(backgroundSoundPath).toURI().toString());
+        if(soundPlayer != null) {
+            soundPlayer.pause();
+        }
+        backgroundSound = new Media(new File(SOUND_BASE_PATH + backgroundSoundPath).toURI().toString());
         soundPlayer = new MediaPlayer(backgroundSound);
         soundPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         soundPlayer.setMute(isMuted);
-        if(isRunning) {
-            soundPlayer.play();
-        }
     }
 
-    public void toggleMute() {
+    public void toggleMuteAction() {
         isMuted = !isMuted;
         soundPlayer.setMute(isMuted);
+        myButtonCreator.toggleImage(MUTE_BUTTON_KEY);
     }
 
-    public void startButtonAction() {
-        isRunning = true;
-        myPlayer.startTimeLine();
-        myStopWatch.startStopWatch();
-        soundPlayer.play();
-    }
-
-    public void pauseButtonAction() {
-        isRunning = false;
-        myPlayer.pauseTimeline();
-        myStopWatch.pauseStopWatch();
-        soundPlayer.pause();
+    public void toggleStartAction() {
+        isRunning = !isRunning;
+        myButtonCreator.toggleImage(START_BUTTON_KEY);
+        if(isRunning) {
+            myPlayer.startTimeLine();
+            myStopWatch.startStopWatch();
+            soundPlayer.play();
+        } else {
+            myPlayer.pauseTimeline();
+            myStopWatch.pauseStopWatch();
+            soundPlayer.pause();
+        }
     }
 }

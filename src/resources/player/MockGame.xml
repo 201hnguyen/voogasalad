@@ -218,6 +218,8 @@
             <Path>109,97;109,229;280,229;288,112;481,112;481,388;300,388;300,679;488,679;488,593;662,553;662,675;753,687</Path>
         </Wave>
 
+        <SoundFile>PvZ.mp3</SoundFile>
+
         <Condition>
             <ConditionId>0</ConditionId>
             <Type>OnscreenArchetypeCountCondition</Type>
@@ -263,6 +265,7 @@
         <Lives>20</Lives>
         <BackgroundImage>grass1.png</BackgroundImage>
         <AvailablePrototypes>0 2 4 5</AvailablePrototypes>
+        <SoundFile>CallMeMaybe.mp3</SoundFile>
 
         <Wave>
             <Queue>4 4 5 4 4 5 4 4 5 4 4 5 4 4 5 4 4 5 4 4 5 4 4 5 4 4 5 4 4 5 4 4 5</Queue>
