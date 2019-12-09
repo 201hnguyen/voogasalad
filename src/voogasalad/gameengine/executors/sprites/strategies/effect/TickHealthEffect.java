@@ -34,6 +34,6 @@ public class TickHealthEffect implements EffectStrategy {
 
     @Override
     public EffectStrategy makeClone() throws GameEngineException {
-        return new TickHealthEffect(myOriginalBuilder);
+        return myOriginalBuilder.build();
     }
 }
