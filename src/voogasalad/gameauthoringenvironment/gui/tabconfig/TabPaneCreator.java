@@ -56,6 +56,9 @@ public class TabPaneCreator {
         String[] objectsFromResource = Arrays.copyOf(typeToParams.keySet().toArray(), typeToParams.keySet().toArray().length, String[].class);
         levelConfigPane = new LevelConfigPane(sendToXML, createdXML, busInstance, allActiveObjects, allActiveObjectObjects, objectsFromResource);
         TabPane tabPane = new TabPane();
+        Tab gameTab = new Tab("Game");
+        gameTab.setContent(new GameInfoConfig());
+        tabPane.getTabs().add(gameTab);
         createPane(tabPane, levelConfigPane);
         Tab levelTab = new Tab("Level");
         levelTab.setContent(levelConfigPane);
