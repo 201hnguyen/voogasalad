@@ -17,7 +17,7 @@ public class SpriteProductsFactory {
         String spriteManagerClassSelection = SpriteFrontendSelection.getString("SpriteManager");
         try {
             return (SpriteManager) Class.forName(CLASS_PATH + spriteManagerClassSelection).getConstructor(LevelActionsRequester.class).newInstance(levelActionsRequester);
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | ClassNotFoundException e) {
+        } catch (Exception e) {
             throw new GameEngineException(e, "SpriteManagerProductionFailed");
         }
     }
@@ -28,8 +28,7 @@ public class SpriteProductsFactory {
             return (Sprite) Class.forName(CLASS_PATH + spriteClassSelection)
                     .getConstructor(SpriteBuilder.class)
                     .newInstance(builder);
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | ClassNotFoundException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
             throw new GameEngineException(e, "SpriteProductionFailed");
         }
     }

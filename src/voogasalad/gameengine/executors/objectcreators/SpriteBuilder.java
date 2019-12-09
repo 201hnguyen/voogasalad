@@ -48,7 +48,6 @@ public class SpriteBuilder {
         try {
             Integer id = Integer.parseInt(prototypeId);
             myPrototypeId = id;
-            System.out.println("prototype id set in builder with value: " + myPrototypeId);
             return this;
         } catch (NumberFormatException e) {
             throw new GameEngineException(e, "AttemptedToCreateSpriteWithInvalidPrototypeId");
@@ -196,7 +195,6 @@ public class SpriteBuilder {
             archetype = DEFAULT_ARCHETYPE;
         }
         myArchetype = archetype;
-        System.out.println("archetype set in builder with value: " + myArchetype);
         return this;
     }
 
@@ -215,7 +213,7 @@ public class SpriteBuilder {
             myHealthStrategy = new HealthBuilder().build();
         }
         if (myImagePath == null) {
-            myImagePath = "pandaslogo.png";
+            throw new GameEngineException("SpriteImageUnspecified");
         }
         if (myArchetype == null) {
             myArchetype = SpriteArchetype.UNCLASSIFIED;

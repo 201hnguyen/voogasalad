@@ -7,9 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 
 public class CostBuilder implements StrategyBuilder{
 
-    public static int DEFAULT_CREATE_COST = 0;
-    public static int DEFAULT_DESTROY_COST = 0;
-    public static String DEFAULT_TYPE = "BasicCost";
+    public static final String DEFAULT_TYPE = "BasicCost";
     private static final String CLASS_PATH = "voogasalad.gameengine.executors.sprites.strategies.cost.";
 
     private int myCreateCost;
@@ -17,7 +15,7 @@ public class CostBuilder implements StrategyBuilder{
     private String myType;
 
 
-    public CostBuilder setCost(String cost) {
+    public CostBuilder setCost(String cost) throws GameEngineException {
         setCreateCost(cost);
         setDestroyCost(cost);
         return this;
@@ -28,20 +26,20 @@ public class CostBuilder implements StrategyBuilder{
         return this;
     }
 
-    public CostBuilder setCreateCost(String cost) {
+    public CostBuilder setCreateCost(String cost) throws GameEngineException {
         try {
             myCreateCost = Integer.parseInt(cost);
         } catch (NumberFormatException e) {
-            myCreateCost = DEFAULT_CREATE_COST;
+            throw new GameEngineException(e, "SpriteCostStrategyInitializationFailed");
         }
         return this;
     }
 
-    public CostBuilder setDestroyCost(String cost) {
+    public CostBuilder setDestroyCost(String cost) throws GameEngineException {
         try {
             myDestroyCost = Integer.parseInt(cost);
         } catch (NumberFormatException e) {
-            myDestroyCost = DEFAULT_DESTROY_COST;
+            throw new GameEngineException(e, "SpriteCostStrategyInitializationFailed");
         }
         return this;
     }
@@ -61,9 +59,8 @@ public class CostBuilder implements StrategyBuilder{
         }
         try {
             return (CostStrategy) Class.forName(CLASS_PATH + myType).getConstructor(CostBuilder.class).newInstance(this);
-        } catch (InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException | ClassNotFoundException e) {
-            e.printStackTrace();
-            throw new GameEngineException(e, "SpriteMovementInitializationFailed");
+        } catch (Exception e) {
+            throw new GameEngineException(e, "SpriteCostStrategyInitializationFailed");
         }
     }
 }

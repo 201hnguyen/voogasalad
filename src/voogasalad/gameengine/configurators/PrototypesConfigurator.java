@@ -67,8 +67,8 @@ public class PrototypesConfigurator {
         try {
             String methodName = PROTOTYPE_CONFIG_BUNDLE.getString(property.getNodeName());
             builder.getClass().getMethod(methodName, String.class).invoke(builder, value);
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            throw new GameEngineException(e, "SpriteProductionFailed");
+        } catch (Exception e) {
+            throw new GameEngineException(e, "SpriteProductionFailedDueToPropertiesTag");
         }
     }
 
@@ -81,8 +81,7 @@ public class PrototypesConfigurator {
                     Object builtStrategy = buildStrategy(strategy);
                     String methodName = STRATEGY_CONFIG_BUNDLE.getString(strategy.getNodeName());
                     this.getClass().getDeclaredMethod(methodName, SpriteBuilder.class, Object.class).invoke(this, builder, builtStrategy);
-                } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-                    e.printStackTrace();
+                } catch (Exception e) {
                     throw new GameEngineException(e, "SpriteProductionFailedDueToStrategyTags");
                 }
             }
