@@ -18,8 +18,8 @@ import java.util.List;
 import java.util.concurrent.Flow;
 
 public class AccordionCreator extends Accordion {
-    public static final int ITEM_HEIGHT = 50;
-    public static final int ITEM_WIDTH = 50;
+    public static final int ITEM_HEIGHT = 75;
+    public static final int ITEM_WIDTH = 75;
     public static final int NO_COLUMNS = 3;
     public static final int HORIZONTAL_SPACING = 10;
     public static final int VERTICAL_SPACING = 10;
@@ -54,7 +54,7 @@ public class AccordionCreator extends Accordion {
         hBoxEnemies.getChildren().clear();
         int i = 0;
         for(Sprite tower: towers){
-            Image image = new Image(getClass().getClassLoader().getResourceAsStream(tower.getImagePath()));
+            Image image = new Image(getClass().getClassLoader().getResourceAsStream(tower.getImagePath()), ITEM_HEIGHT, ITEM_WIDTH, true, false);
             ImageView imageView = new ImageView(image);
             hBoxTowers.getChildren().add(imageView);
             imageView.setFitHeight(ITEM_HEIGHT);
