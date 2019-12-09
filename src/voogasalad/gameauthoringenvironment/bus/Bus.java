@@ -1,15 +1,17 @@
 package voogasalad.gameauthoringenvironment.bus;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import org.xml.sax.SAXException;
 import voogasalad.gameplayer.GUI.ErrorPane;
 import voogasalad.gameauthoringenvironment.gui.*;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.w3c.dom.Document;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
@@ -23,7 +25,18 @@ import java.io.IOException;
 import java.util.function.Consumer;
 
 public class Bus {
+
+    private final static double IMAGE_HEIGHT = 50;
+    private final static double LOGO_WIDTH = 370;
+    private final static double LOGO_HEIGHT = 350;
+    private final String ERROR_MESSAGE = "Wrong file type selected for upload: select XML";
+
+  //  private final static int GAE_WIDTH = 800;
+   // private final static int GAE_HEIGHT = 500;
+
+
     private Stage currentStage;
+
     private int width;
     private int height;
     private BorderPane root;
@@ -32,7 +45,7 @@ public class Bus {
     private Scene gamePlayerScene;
     private SceneCreator gaeObject;
     private Document createdXML;
-    private HBox busRoot;
+    private VBox busRoot;
     private ErrorPane errorPane;
 
     public Bus(Stage currentStageParam, BorderPane rootParam, int widthParam, int heightParam){
@@ -52,7 +65,13 @@ public class Bus {
     }
 
     public Scene createBusScene() {
-        busRoot = new HBox();
+        busRoot = new VBox();
+        busRoot.setAlignment(Pos.CENTER);
+        busRoot.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+        ImageView logo = new ImageView("TDLogo.png");
+        logo.setFitWidth(LOGO_WIDTH);
+        logo.setFitHeight(LOGO_HEIGHT);
+        busRoot.getChildren().add(logo);
         busRoot.getChildren().add(createMenuButton("new-game.png", "new-game-hover.png", e -> changeToGAE()));
         busRoot.getChildren().add(createMenuButton("load-game.png", "load-game-hover.png", e -> {
             try {
@@ -62,8 +81,7 @@ public class Bus {
                 //TODO: catch this GameEngineException
             }
         }));
-
-        return new Scene(busRoot, width, height);
+        return new Scene(busRoot,width,height);
     }
 
 //    private Label changeToGAEButton(){
@@ -85,9 +103,9 @@ public class Bus {
         Label myButton = new Label();
         ImageView image = new ImageView(new Image(imagePath));
         ImageView imageHover = new ImageView(new Image(imagePathHover));
-        image.setFitHeight(50);
+        image.setFitHeight(IMAGE_HEIGHT);
         image.setPreserveRatio(true);
-        imageHover.setFitHeight(50);
+        imageHover.setFitHeight(IMAGE_HEIGHT);
         imageHover.setPreserveRatio(true);
         myButton.setGraphic(image);
         myButton.setOnMouseEntered(e -> myButton.setGraphic(imageHover));
@@ -98,7 +116,7 @@ public class Bus {
 
 
     public void goToPlayer(Document createdXML) throws GameEngineException {
-        Player player = new Player(currentStage, createdXML);
+        new Player(currentStage, createdXML);
     }
 
     private void loadGameHandler() throws GameEngineException {
@@ -112,7 +130,7 @@ public class Bus {
             goToPlayer(doc);
         } catch (ParserConfigurationException | SAXException | IOException e) {
 //            throw new GameEngineException(e, "ConfigurationFailedXML");
-            errorPane.errorMessage("Wrong file type selected for upload: select XML");
+            errorPane.errorMessage(ERROR_MESSAGE);
             //TODO: dont hard code the error message -- also figure out how to connect error pane up to game engine exception messages
 
         }
