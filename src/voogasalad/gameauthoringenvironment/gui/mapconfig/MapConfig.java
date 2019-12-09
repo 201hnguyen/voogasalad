@@ -204,7 +204,7 @@ public class MapConfig {
             }
             subRoot.getChildren().add(spawnPointImageView);
 
-            createdSpawnPointsLabel.get(selectedPathIndex).setText(spawnPoint.toString());
+            createdSpawnPointsLabel.get(selectedPathIndex).setText(pointToString(spawnPoint));
 
             settingSpawnPoint = false;
         }
@@ -779,14 +779,21 @@ public class MapConfig {
         StringBuilder newString = new StringBuilder();
         for (int pointIndex = 0 ; pointIndex < pointList.size(); pointIndex++) {
             Pair<Double,Double> pointToAdd = pointList.get(pointIndex);
-            newString.append("(");
-            newString.append(Math.round(pointToAdd.getKey()*100)/100.0);
-            newString.append(",");
-            newString.append(Math.round(pointToAdd.getValue()*100)/100.0);
-            newString.append(") ");
+            newString.append(pointToString(pointToAdd));
         }
         return newString.toString();
     }
+
+    private String pointToString (Pair<Double,Double> newPoint) {
+        StringBuilder newPointString = new StringBuilder();
+        newPointString.append("(");
+        newPointString.append(Math.round(newPoint.getKey()*100)/100.0);
+        newPointString.append(",");
+        newPointString.append(Math.round(newPoint.getValue()*100)/100.0);
+        newPointString.append(") ");
+        return newPointString.toString();
+    }
+
 
 
 }
