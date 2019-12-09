@@ -121,4 +121,13 @@ public class ObjectPreviewAndActive extends BorderPane{
         icon.setStyle(null);
         makeActive = styleActivateButton();
     }
+
+    public String getName(){
+        return gameObjectName;
+    }
+
+    public void reactivate(){
+        icon.setStyle("-fx-background-color: #00ff00; -fx-border-color:black;");
+        makeActive = styleActivateButton();
+    }
 }
