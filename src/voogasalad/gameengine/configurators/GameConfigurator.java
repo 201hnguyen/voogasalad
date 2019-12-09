@@ -78,5 +78,7 @@ public class GameConfigurator {
         return conditionsConfigurator.buildGameConditionsCollection(conditionNodes);
     }
 
-//    public String configureGameTitle()
+    public String configureGameTitle() {
+        return myRoot.getElementsByTagName(GAME_TITLE_TAG).item(0).getTextContent();
+    }
 }

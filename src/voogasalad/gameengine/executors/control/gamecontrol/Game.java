@@ -28,6 +28,7 @@ public class Game {
     private boolean switchedLevel;
     private List<Sprite> myCompletePrototypesCollection;
     private Status myStatus;
+    private String myGameTitle;
 
     public Game(Document gameConfigDocument) throws GameEngineException {
         myStatus = Status.ONGOING;
@@ -35,6 +36,7 @@ public class Game {
         myGameActionsRequester = new GameActionsRequester();
         myGameConfigDocument = ConfigurationTool.configureWithTestDocument("src/resources/player/MockGame.xml");
         GameConfigurator gameConfigurator = new GameConfigurator(myGameConfigDocument);
+        myGameTitle = gameConfigurator.configureGameTitle();
         myCompletePrototypesCollection = gameConfigurator.getGamePrototypesCollection();
         myGameRulesController.addGameConditionsAsCollection(gameConfigurator.configureGameConditions());
         myGameLevelsController = gameConfigurator.loadLevelsFromXML();
@@ -118,5 +120,9 @@ public class Game {
 
     public Status getGameStatus() {
         return myStatus;
+    }
+
+    public String getGameTitle() {
+        return myGameTitle;
     }
 }
