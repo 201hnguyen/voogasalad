@@ -1,11 +1,5 @@
-package voogasalad.gameplayer.GUI;
-import javafx.animation.Timeline;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.geometry.Insets;
-import javafx.geometry.NodeOrientation;
+package voogasalad.gameplayer.gui;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
@@ -15,11 +9,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import voogasalad.gameengine.api.GameSceneObject;
 import voogasalad.gameengine.api.ActionsProcessor;
-import voogasalad.gameengine.api.Engine;
 import voogasalad.gameengine.executors.sprites.Sprite;
+import voogasalad.gameplayer.gui.components.*;
 import voogasalad.gameplayer.Player;
+import voogasalad.gameplayer.gui.components.button.ButtonController;
+import voogasalad.gameplayer.gui.components.button.ButtonCreator;
 
 import java.util.*;
 

@@ -9,7 +9,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import org.xml.sax.SAXException;
-import voogasalad.gameplayer.GUI.ErrorPane;
+import voogasalad.gameplayer.gui.components.ErrorPane;
 import voogasalad.gameauthoringenvironment.gui.*;
 import javafx.scene.Scene;
 import javafx.stage.Stage;

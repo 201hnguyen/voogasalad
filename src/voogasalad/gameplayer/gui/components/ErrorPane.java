@@ -1,4 +1,4 @@
-package voogasalad.gameplayer.GUI;
+package voogasalad.gameplayer.gui.components;
 
 
 import javafx.geometry.Insets;
@@ -9,8 +9,6 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-
-import static javax.swing.text.StyleConstants.setBackground;
 
 public class ErrorPane extends Pane {
 

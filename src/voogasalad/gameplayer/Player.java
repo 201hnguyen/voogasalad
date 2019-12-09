@@ -9,7 +9,7 @@ import voogasalad.gameengine.api.GameSceneObject;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.api.Engine;
 import voogasalad.gameengine.executors.utils.SpriteArchetype;
-import voogasalad.gameplayer.GUI.PlayerVisualization;
+import voogasalad.gameplayer.gui.PlayerVisualization;
 
 import java.util.HashMap;
 
