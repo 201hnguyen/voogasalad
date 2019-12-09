@@ -7,7 +7,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import voogasalad.gameauthoringenvironment.gui.AddToXML;
@@ -24,7 +23,6 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class ParameterCreator extends BorderPane{
-//public class ParameterCreator extends ScrollPane {
 
     private static final int window_WIDTH = 300;
     private static final int window_HEIGHT = 300;
@@ -45,16 +43,14 @@ public class ParameterCreator extends BorderPane{
     private List<String> labelValue;
     private AddToXML xmlObject;
     private LevelConfigPane levelConfigPane;
-    private Map<String, Map<String, String>> activeObjects;
+    private Map<String, Map<String, String>> allActiveObjects;
     private ClearFieldsFactory clearFieldsFactory;
-    private Map<String, Map<String, String>> allActiveObjectMap;
+    private List<ObjectPreviewAndActive> allActiveObjectObjects;
     private String imageString;
     private ImageView imageView;
     double imageViewWidth = 0;
     double imageViewHeight = 0;
     private FileChooserButton fileChooserButton;
-
-    //private static Map<String, Map<String,String>> sendToXML;
 
 
     public ParameterCreator(String gameObjectNameParam, String[] propertiesParam, ResourceBundle paramFieldTypeParam,
@@ -87,39 +83,27 @@ public class ParameterCreator extends BorderPane{
         this.setLeft(previewVBox);
     }
 
-    public void clearFields(){
-        allNodes
-                .stream()
-                .forEach(node -> clearFieldsFactory.clearField(node));
-    }
-
     public void createSubmitButton(){
         allNodes
                 .stream()
                 .forEach(node -> labelValue.add(fieldFactory.getAppropriateText(node)));
 
         SaveGUIParameters myGuiParameters = new SaveGUIParameters(labelText, labelValue);
-        allActiveObjectMap.put(gameObjectName, activeObjects);
         String myLabel = xmlObject.addToSendToXMLMap(myGuiParameters.getMap(), gameObjectName);
         addToAppropriateField(gameObjectName, createObjectIcon(myGuiParameters.getMap(), myLabel));
     }
 
     private void addInputFields() {
-        configVBox = new TabVBoxCreator("Configure Parameters",200, 20, 50, 50, 10);
-        System.out.println(properties.length);
-        System.out.println(allNodes);
+        configVBox = new TabVBoxCreator("Configure Parameters", 200, 50, 50, 50, 10);
         for (int j = 0; j < properties.length; j++) {
             Label label = new Label(properties[j]); //for SaveGuiParameters
             labelList.add(label);
             labelText.add(label.getText());
-            System.out.println(label.getText());
-            //System.out.println(allNodes.get(j));
             configVBox.getChildren().add(label);
-            Node node = createObjectFromString(paramFieldType.getString(properties[j]));
-            //setSliderSpecs(node, label);
-            configVBox.getChildren().add(node);
+            configVBox.getChildren().add(createObjectFromString(paramFieldType.getString(properties[j])));
         }
     }
+
 
     // a helper method to preview an image of a Sprite
     private void addImagePreview() {
@@ -187,6 +171,8 @@ public class ParameterCreator extends BorderPane{
         return d.get();
     }
 
+
+
     private Node createObjectFromString(String type){
         try{
             if (type.equals(SUBMITBUTTONCLASS)) {
@@ -226,7 +212,9 @@ public class ParameterCreator extends BorderPane{
         Button icon = new Button(objectName);
         icon.setOnMouseClicked(event -> {
             newStage = new Stage();
-            objectSpecificRoot = new ObjectPreviewAndActive(objectName, objectContentMap, window_HEIGHT, window_WIDTH, newStage, activeObjects, icon);
+            ObjectPreviewAndActive createdObject = new ObjectPreviewAndActive(objectName, objectContentMap, window_HEIGHT, window_WIDTH, newStage, allActiveObjects, icon);
+            objectSpecificRoot = createdObject;
+            allActiveObjectObjects.add(createdObject);
             Scene newScene = new Scene(objectSpecificRoot, window_WIDTH, window_HEIGHT);
             newStage.setScene(newScene);
             newStage.show();
@@ -238,10 +226,11 @@ public class ParameterCreator extends BorderPane{
         levelConfigPane.addIconToVBox(gameObjectNameParam, icon);
     }
 
-    public Map<String, Map<String, String>> getActiveObjects() {
-        return activeObjects;
+    public void clearFields(){
+        allNodes
+                .stream()
+                .forEach(node -> clearFieldsFactory.clearField(node));
     }
-
 
 
 }
