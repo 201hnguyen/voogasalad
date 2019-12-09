@@ -4,7 +4,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
@@ -23,20 +23,22 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static java.lang.Double.valueOf;
-
 public class ParameterCreator extends BorderPane{
+//public class ParameterCreator extends ScrollPane {
 
     private static final int window_WIDTH = 300;
     private static final int window_HEIGHT = 300;
     private static final String SUBMITBUTTONCLASS = new SubmitButton().getClass().toString().split("class ")[1];
     private BorderPane root;
+    //private ScrollPane root;
     private ObjectPreviewAndActive objectSpecificRoot;
     private Stage newStage;
     private String[] properties;
     private ResourceBundle paramFieldType;
     private VBox configVBox;
     private VBox previewVBox;
+    private ScrollPane configSP;
+    private ScrollPane previewSP;
     private String gameObjectName;
     private List<Node> allNodes;
     private List<String> fieldTypes;
@@ -46,32 +48,32 @@ public class ParameterCreator extends BorderPane{
     private List<String> labelValue;
     private AddToXML xmlObject;
     private LevelConfigPane levelConfigPane;
-    private Map<String, Map<String, String>> allActiveObjects;
+    private Map<String, Map<String, String>> activeObjects;
     private ClearFieldsFactory clearFieldsFactory;
-    private List<ObjectPreviewAndActive> allActiveObjectObjects;
+    private Map<String, Map<String, Map<String, String>>> allActiveObjectMap;
     private String imageString;
     private ImageView imageView;
     double imageViewWidth = 0;
     double imageViewHeight = 0;
     private FileChooserButton fileChooserButton;
 
+    //private static Map<String, Map<String,String>> sendToXML;
 
 
     public ParameterCreator(String gameObjectNameParam, String[] propertiesParam, ResourceBundle paramFieldTypeParam,
-                            LevelConfigPane levelConfigPaneParam, Map<String, Map<String, String>> allActiveObjectMapParam,
-                            List<ObjectPreviewAndActive> allActiveObjectObjectsParam) throws ParserConfigurationException {
-
-        allActiveObjectObjects = allActiveObjectObjectsParam;
-        allActiveObjects = allActiveObjectMapParam;
+                            LevelConfigPane levelConfigPaneParam, Map<String, Map<String, Map<String, String>>> allActiveObjectMapParam) throws ParserConfigurationException {
         fileChooserButton = new FileChooserButton();
+        allActiveObjectMap = allActiveObjectMapParam;
         clearFieldsFactory = new ClearFieldsFactory();
         fieldFactory = new FieldTextReturnFactory();
-        labelList = new ArrayList<>();
-        labelText = new ArrayList<>();
-        labelValue = new ArrayList<>();
-        fieldTypes = new ArrayList<>();
+        labelList = new ArrayList<>(); //a list of input field names as Labels
+        labelText = new ArrayList<>(); // a list of input field names as Strings
+        labelValue = new ArrayList<>(); //a list of the input values
+        activeObjects = new HashMap<>();
+        fieldTypes = new ArrayList<>(); //a list of the field type classes
         allNodes = new ArrayList<>();
         root = new BorderPane();
+        //root = new ScrollPane();
         xmlObject = new AddToXML();
         properties = propertiesParam;
         paramFieldType = paramFieldTypeParam;
@@ -80,8 +82,16 @@ public class ParameterCreator extends BorderPane{
         storeAllFieldTypes();
         addInputFields();
         addImagePreview();
-        this.setRight(configVBox);
-        this.setLeft(previewVBox);
+        //this.setRight(configVBox);
+        //this.setLeft(previewVBox);
+        this.setRight(configSP);
+        this.setLeft(previewSP);
+    }
+
+    public void clearFields(){
+        allNodes
+                .stream()
+                .forEach(node -> clearFieldsFactory.clearField(node));
     }
 
     public void createSubmitButton(){
@@ -90,38 +100,54 @@ public class ParameterCreator extends BorderPane{
                 .forEach(node -> labelValue.add(fieldFactory.getAppropriateText(node)));
 
         SaveGUIParameters myGuiParameters = new SaveGUIParameters(labelText, labelValue);
+        allActiveObjectMap.put(gameObjectName, activeObjects);
         String myLabel = xmlObject.addToSendToXMLMap(myGuiParameters.getMap(), gameObjectName);
         addToAppropriateField(gameObjectName, createObjectIcon(myGuiParameters.getMap(), myLabel));
     }
 
     private void addInputFields() {
-        configVBox = new TabVBoxCreator("Configure Parameters", Priority.SOMETIMES, 200, 50, 50, 50, 10);
+        configVBox = new TabVBoxCreator("Configure Parameters", Priority.SOMETIMES,200, 20, 50, 50, 10);
+        System.out.println(properties.length);
+        System.out.println(allNodes);
         for (int j = 0; j < properties.length; j++) {
             Label label = new Label(properties[j]); //for SaveGuiParameters
             labelList.add(label);
             labelText.add(label.getText());
+            System.out.println(label.getText());
+            //System.out.println(allNodes.get(j));
             configVBox.getChildren().add(label);
-            configVBox.getChildren().add(createObjectFromString(paramFieldType.getString(properties[j])));
+            Node node = createObjectFromString(paramFieldType.getString(properties[j]));
+            //setSliderSpecs(node, label);
+            configVBox.getChildren().add(node);
         }
+        configSP.setContent(configVBox);
     }
 
+    // a helper method to preview an image of a Sprite
     private void addImagePreview() {
-        previewVBox = new TabVBoxCreator("Image Preview", Priority.NEVER,200, 50, 10, 50, 50);
+        previewVBox = new TabVBoxCreator("Image Preview",  Priority.NEVER, 200, 20, 10, 50, 50);
         for (int i = 0; i < allNodes.size(); i++) {
             Node currentNode = allNodes.get(i);
             String nodeLabel = labelText.get(i);
             if (nodeLabel.equals("ImageHeight")) {
-                ((TextField) currentNode).setOnAction(e -> {
+                currentNode.setOnMouseClicked(e -> {
                     imageViewHeight = Double.parseDouble((new FieldTextReturnFactory()).getAppropriateText(currentNode));
                     System.out.println(imageViewHeight);
                 });
             };
             if (nodeLabel.equals("ImageWidth")) {
-                ((TextField) currentNode).setOnAction(e -> {
+                currentNode.setOnMouseClicked(e -> {
                     imageViewWidth = Double.parseDouble((new FieldTextReturnFactory()).getAppropriateText(currentNode));
                     System.out.println(imageViewWidth);
                 });
-            }
+            };
+
+//            imageViewHeight = getImageSpecs(nodeLabel, currentNode,"ImageHeight");
+//            System.out.println(imageViewHeight);
+//
+//            imageViewWidth = getImageSpecs(nodeLabel, currentNode, "ImageWidth");
+//            System.out.println(imageViewWidth);
+
             if (currentNode instanceof FileChooserButton) {
                 fileChooserButton = (FileChooserButton) currentNode;
             }
@@ -138,8 +164,10 @@ public class ParameterCreator extends BorderPane{
                 });
             }
         }
+        configSP.setContent(configVBox);
     }
 
+    // a helper method to format the ImageView
     private void setImageSpecs() {
         imageString = fileChooserButton.getImageString();
         imageView = new ImageView(imageString);
@@ -152,17 +180,15 @@ public class ParameterCreator extends BorderPane{
     }
 
     //TODO: fix this
-    private double accessImageSpecs(String nodeLabel, Node currentNode, String s) {
+    private double getImageSpecs(String nodeLabel, Node currentNode, String s) {
         AtomicReference<Double> d = new AtomicReference<>(0.0);
         if (nodeLabel.equals(s)) {
-            ((TextField) currentNode).setOnAction((event) -> {
-                d.set(valueOf((new FieldTextReturnFactory()).getAppropriateText(currentNode)));
+            currentNode.setOnMouseClicked((event) -> {
+                d.set(Double.parseDouble((new FieldTextReturnFactory()).getAppropriateText(currentNode)));
             });
         }
         return d.get();
     }
-
-
 
     private Node createObjectFromString(String type){
         try{
@@ -203,9 +229,7 @@ public class ParameterCreator extends BorderPane{
         Button icon = new Button(objectName);
         icon.setOnMouseClicked(event -> {
             newStage = new Stage();
-            ObjectPreviewAndActive createdObject = new ObjectPreviewAndActive(objectName, objectContentMap, window_HEIGHT, window_WIDTH, newStage, allActiveObjects, icon);
-            objectSpecificRoot = createdObject;
-            allActiveObjectObjects.add(createdObject);
+            objectSpecificRoot = new ObjectPreviewAndActive(objectName, objectContentMap, window_HEIGHT, window_WIDTH, newStage, activeObjects, icon);
             Scene newScene = new Scene(objectSpecificRoot, window_WIDTH, window_HEIGHT);
             newStage.setScene(newScene);
             newStage.show();
@@ -217,13 +241,11 @@ public class ParameterCreator extends BorderPane{
         levelConfigPane.addIconToVBox(gameObjectNameParam, icon);
     }
 
-    public void clearFields(){
-        allNodes
-                .stream()
-                .forEach(node -> clearFieldsFactory.clearField(node));
+    public Map<String, Map<String, String>> getActiveObjects() {
+        return activeObjects;
     }
 
 
 
-
 }
+
