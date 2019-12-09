@@ -11,6 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -21,6 +23,7 @@ import voogasalad.gameengine.api.Engine;
 import voogasalad.gameengine.executors.sprites.Sprite;
 import voogasalad.gameplayer.Player;
 
+import java.io.File;
 import java.util.*;
 
 public class PlayerVisualization extends BorderPane {
@@ -42,7 +45,9 @@ public class PlayerVisualization extends BorderPane {
     private Scene scene;
     private Stage stage;
     private DisplayScreen displayScreen;
+    private MediaPlayer soundPlayer;
     private BackgroundImage backgroundImage;
+    private Media backgroundSound;
     private VBox panelBox;
     private AccordionCreator accordionCreator;
     private StatusBar statusBar;
@@ -52,6 +57,7 @@ public class PlayerVisualization extends BorderPane {
     private Text myStopWatchDisplay;
     private Player myPlayer;
     private boolean isRunning;
+    private boolean isMuted;
     private String currentTime;
 
     public PlayerVisualization(Stage stage, ActionsProcessor uiActionsProcessor, Player player) {
@@ -72,7 +78,7 @@ public class PlayerVisualization extends BorderPane {
         myStopWatchDisplay.setText(currentTime);
     }
 
-    public void setNewLevel(List<Sprite> towers, List<Sprite> enemies, String backgroundImagePath, Map<String, Integer> gameInfoMap){
+    public void setNewLevel(List<Sprite> towers, List<Sprite> enemies, String backgroundImagePath, String backgroundSoundPath, Map<String, Integer> gameInfoMap){
         myStopWatch = new StopWatch();
         statusBar.updateDisplayedInfo(gameInfoMap);
         displayScreen.updateDisplayScreen(new ArrayList<>());
@@ -84,6 +90,7 @@ public class PlayerVisualization extends BorderPane {
         }
         accordionCreator.updateAvailableTowersAndEnemies(towers, enemies, idMap);
         setBackgroundImage(backgroundImagePath);
+        setBackgroundSound(backgroundSoundPath);
     }
 
     private void initialize() {
@@ -98,6 +105,7 @@ public class PlayerVisualization extends BorderPane {
         this.setRight(panelBox);
         this.setTop(statusBar);
         scene = new Scene(this, SCENE_WIDTH, SCENE_HEIGHT);
+        isMuted = false;
         displayGameScreenAndAttachToAccordion();
         showStage();
     }
@@ -152,15 +160,32 @@ public class PlayerVisualization extends BorderPane {
         displayScreen.setBackground(new Background(backgroundImage));
     }
 
+    private void setBackgroundSound(String backgroundSoundPath) {
+        backgroundSound = new Media(new File(backgroundSoundPath).toURI().toString());
+        soundPlayer = new MediaPlayer(backgroundSound);
+        soundPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        soundPlayer.setMute(isMuted);
+        if(isRunning) {
+            soundPlayer.play();
+        }
+    }
+
+    public void toggleMute() {
+        isMuted = !isMuted;
+        soundPlayer.setMute(isMuted);
+    }
+
     public void startButtonAction() {
         isRunning = true;
         myPlayer.startTimeLine();
         myStopWatch.startStopWatch();
+        soundPlayer.play();
     }
 
     public void pauseButtonAction() {
         isRunning = false;
         myPlayer.pauseTimeline();
         myStopWatch.pauseStopWatch();
+        soundPlayer.pause();
     }
 }
