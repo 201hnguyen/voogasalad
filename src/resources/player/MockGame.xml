@@ -2,6 +2,7 @@
 <GameConfiguration>
 
     <LevelSequence>0 1</LevelSequence>
+    <GameTitle>VOOGASalad Game</GameTitle>
 
     <GameCondition>
         <ConditionId>0</ConditionId>
@@ -202,7 +203,7 @@
         <AvailablePrototypes>0 4</AvailablePrototypes>
 
         <Wave>
-            <Queue>4 4 4 4 4 4</Queue>
+            <Queue>4</Queue>
             <Interval>1</Interval>
             <SpawnPointX>0</SpawnPointX>
             <SpawnPointY>97</SpawnPointY>
