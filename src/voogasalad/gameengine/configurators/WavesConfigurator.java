@@ -68,9 +68,9 @@ public class WavesConfigurator {
         return new Point(x, y);
     }
 
-    private LinkedList<Point2D.Double> parsePath() {
+    private List<Point2D.Double> parsePath() {
         String pathString = myDefinedWave.getElementsByTagName(PATH_TAG).item(0).getTextContent();
-        LinkedList<Point2D.Double> parsedPath = new LinkedList<>();
+        List<Point2D.Double> parsedPath = new ArrayList<>();
         String[] pointStrings = pathString.strip().split(";");
         for(String pointString : pointStrings) {
             Point2D.Double toAdd = new Point2D.Double();
