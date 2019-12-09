@@ -28,6 +28,7 @@ public class Game {
     private boolean switchedLevel;
     private List<Sprite> myCompletePrototypesCollection;
     private Status myStatus;
+    private String myGameTitle;
 
     public Game(Document gameConfigDocument) throws GameEngineException {
         myStatus = Status.ONGOING;
@@ -35,6 +36,11 @@ public class Game {
         myGameActionsRequester = new GameActionsRequester();
         myGameConfigDocument = ConfigurationTool.configureWithTestDocument("src/resources/player/MockData.xml");
         GameConfigurator gameConfigurator = new GameConfigurator(myGameConfigDocument);
+        try {
+            myGameTitle = gameConfigurator.configureGameTitle();
+        } catch (NullPointerException e) {
+            myGameTitle = "";
+        }
         myCompletePrototypesCollection = gameConfigurator.getGamePrototypesCollection();
         myGameRulesController.addGameConditionsAsCollection(gameConfigurator.configureGameConditions());
         myGameLevelsController = gameConfigurator.loadLevelsFromXML();
@@ -82,13 +88,15 @@ public class Game {
         return myCompletePrototypesCollection;
     }
 
-    public List<Sprite> getSpritePrototypesByArchetype(SpriteArchetype spriteArchetype) throws GameEngineException {
+    public List<Sprite> getCopySpritePrototypesByArchetype(SpriteArchetype spriteArchetype) throws GameEngineException {
         return myCurrentLevel.getSpriteManager().getCopyPrototypesForArchetype(spriteArchetype);
     }
 
     public String getCurrentLevelBackgroundPath() {
         return myCurrentLevel.getBackgroundPath();
     }
+
+    public String getCurrentLevelSoundPath() { return myCurrentLevel.getSoundPath(); }
 
     public boolean didLevelSwitch() {
         boolean ret = switchedLevel;
@@ -118,5 +126,9 @@ public class Game {
 
     public Status getGameStatus() {
         return myStatus;
+    }
+
+    public String getGameTitle() {
+        return myGameTitle;
     }
 }

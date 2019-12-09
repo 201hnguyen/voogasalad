@@ -25,6 +25,7 @@ public class LevelBuilder {
     private SpriteProductsFactory mySpriteProductsFactory;
     private int myLevelId;
     private String myBackgroundPath;
+    private String mySoundPath;
     private LevelActionsRequester myLevelActionsRequester;
 
     public LevelBuilder(int id) throws GameEngineException {
@@ -70,6 +71,10 @@ public class LevelBuilder {
         return myLevelId;
     }
 
+    public String getSoundPath() {
+        return mySoundPath;
+    }
+
     public LevelBuilder setBackgroundPath(String backgroundPath) {
         myBackgroundPath = backgroundPath;
         return this;
@@ -102,8 +107,12 @@ public class LevelBuilder {
         return this;
     }
 
+    public LevelBuilder setSoundPath(String soundPath) {
+        mySoundPath = soundPath;
+        return this;
+    }
+
     public Level build() {
         return new Level(this);
     }
-
 }

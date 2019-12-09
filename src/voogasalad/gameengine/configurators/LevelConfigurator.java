@@ -17,13 +17,14 @@ import java.util.List;
 
 public class LevelConfigurator {
 
-    public static final String WAVE_NODES_TAG = "Wave";
-    public static final String RESOURCES_NODE_TAG = "Resources";
-    public static final String LIVES_NODE_TAG = "Lives";
-    public static final String CONDITION_NODES_TAG = "Condition";
-    public static final String LEVEL_ID_NODE_TAG = "LevelId";
-    public static final String BACKGROUND_PATH_TAG = "BackgroundImage";
-    public static final String PROTOTYPE_SPECIFIED_FOR_LEVEL_NODE_TAG = "AvailablePrototypes";
+    public static final String WAVE_NODES_KEY = "WavesNodeTag";
+    public static final String RESOURCES_NODE_KEY = "ResourcesNodeTag";
+    public static final String LIVES_NODE_KEY = "LivesNodeTag";
+    public static final String CONDITION_NODES_KEY = "ConditionsNodeTag";
+    public static final String LEVEL_ID_NODE_KEY = "LevelIdNodeTag";
+    public static final String BACKGROUND_PATH_KEY = "BackgroundImageNodeTag";
+    public static final String SOUND_PATH_KEY = "SoundFileNodeTag";
+    public static final String PROTOTYPE_SPECIFIED_FOR_LEVEL_NODE_KEY = "PrototypesSpecifiedNodeTag";
     public static final String DEFAULT_BACKGROUND_PATH = "whitebackground.jpg";
 
     private Element myCurrentLevelRoot;
@@ -36,21 +37,22 @@ public class LevelConfigurator {
             myCurrentLevelRoot = levelRoot;
             myAvailablePrototypesList = configureLevelPrototypes(gamePrototypes);
             Collection<Wave> wavesCollection = configureWaves();
-            int resources = configureIntProperties(RESOURCES_NODE_TAG);
-            int lives = configureIntProperties(LIVES_NODE_TAG);
-            int levelId = configureIntProperties(LEVEL_ID_NODE_TAG);
+            int resources = configureIntProperties(GameConfigurator.GAME_CONFIGURATION_RESOURCE_BUNDLE.getString(RESOURCES_NODE_KEY));
+            int lives = configureIntProperties(GameConfigurator.GAME_CONFIGURATION_RESOURCE_BUNDLE.getString(LIVES_NODE_KEY));
+            int levelId = configureIntProperties(GameConfigurator.GAME_CONFIGURATION_RESOURCE_BUNDLE.getString(LEVEL_ID_NODE_KEY));
             Collection<LevelCondition> levelConditions = configureLevelConditions();
             String backgroundPath = configureBackgroundPath();
+            String soundPath = configureSoundPath();
             levels.add(new LevelBuilder(levelId).setConditions(levelConditions)
                     .setLives(lives).setResources(resources).setSpritePrototypes(myAvailablePrototypesList)
-                    .setWaves(wavesCollection).setBackgroundPath(backgroundPath).build());
+                    .setWaves(wavesCollection).setBackgroundPath(backgroundPath).setSoundPath(soundPath).build());
         }
         return levels;
     }
 
     private Collection<Wave> configureWaves() throws GameEngineException {
         WavesConfigurator wavesConfigurator = new WavesConfigurator();
-        NodeList waveNodes = myCurrentLevelRoot.getElementsByTagName(WAVE_NODES_TAG);
+        NodeList waveNodes = myCurrentLevelRoot.getElementsByTagName(GameConfigurator.GAME_CONFIGURATION_RESOURCE_BUNDLE.getString(WAVE_NODES_KEY));
         return wavesConfigurator.buildWavesCollection(waveNodes, myAvailablePrototypesList);
     }
 
@@ -64,15 +66,23 @@ public class LevelConfigurator {
 
     private Collection<LevelCondition> configureLevelConditions() throws GameEngineException {
         ConditionsConfigurator conditionsConfigurator = new ConditionsConfigurator();
-        NodeList conditionNodes = myCurrentLevelRoot.getElementsByTagName(CONDITION_NODES_TAG);
+        NodeList conditionNodes = myCurrentLevelRoot.getElementsByTagName(GameConfigurator.GAME_CONFIGURATION_RESOURCE_BUNDLE.getString(CONDITION_NODES_KEY));
         return conditionsConfigurator.buildLevelConditionsCollection(conditionNodes);
     }
 
     private String configureBackgroundPath() {
         try {
-            return myCurrentLevelRoot.getElementsByTagName(BACKGROUND_PATH_TAG).item(0).getTextContent();
+            return myCurrentLevelRoot.getElementsByTagName(GameConfigurator.GAME_CONFIGURATION_RESOURCE_BUNDLE.getString(BACKGROUND_PATH_KEY)).item(0).getTextContent();
         } catch (NullPointerException e) {
             return DEFAULT_BACKGROUND_PATH;
+        }
+    }
+
+    private String configureSoundPath() {
+        try {
+            return myCurrentLevelRoot.getElementsByTagName(GameConfigurator.GAME_CONFIGURATION_RESOURCE_BUNDLE.getString(SOUND_PATH_KEY)).item(0).getTextContent();
+        } catch (NullPointerException e) {
+            return "";
         }
     }
 
@@ -87,7 +97,7 @@ public class LevelConfigurator {
     }
 
     private void configureLevelPrototypesHelper(List<Sprite> gamePrototypes, List<Sprite> prototypesSpecifiedForLevel) {
-        String[] prototypesSpecifiedForLevelAsStrings = myCurrentLevelRoot.getElementsByTagName(PROTOTYPE_SPECIFIED_FOR_LEVEL_NODE_TAG).item(0).getTextContent().split(" ");
+        String[] prototypesSpecifiedForLevelAsStrings = myCurrentLevelRoot.getElementsByTagName(GameConfigurator.GAME_CONFIGURATION_RESOURCE_BUNDLE.getString(PROTOTYPE_SPECIFIED_FOR_LEVEL_NODE_KEY)).item(0).getTextContent().split(" ");
         for (String prototypeString : prototypesSpecifiedForLevelAsStrings) {
             for (Sprite prototype : gamePrototypes) {
                 if (prototype.getPrototypeId() == Integer.parseInt(prototypeString) || prototype.getSpriteArchetype()== SpriteArchetype.PROJECTILE) {

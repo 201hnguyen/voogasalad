@@ -1,4 +1,6 @@
-package voogasalad.gameplayer.GUI;
+package voogasalad.gameplayer.gui.components.button;
+
+import voogasalad.gameplayer.gui.PlayerVisualization;
 
 public class ButtonController {
 
