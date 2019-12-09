@@ -1,7 +1,9 @@
 package voogasalad.gameplayer.gui;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
@@ -13,6 +15,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.converter.IntegerStringConverter;
 import voogasalad.gameengine.api.ActionsProcessor;
 import voogasalad.gameengine.executors.sprites.Sprite;
 import voogasalad.gameplayer.gui.components.*;
@@ -61,13 +64,15 @@ public class PlayerVisualization extends BorderPane {
     private boolean isMuted;
     private String currentTime;
     private String gameTitle;
+    private int gameScore;
 
-    public PlayerVisualization(Stage stage, ActionsProcessor uiActionsProcessor, Player player, String title) {
+    public PlayerVisualization(Stage stage, ActionsProcessor uiActionsProcessor, Player player, String title, Integer score) {
         this.stage = stage;
         this.actionsProcessor = uiActionsProcessor;
         this.myPlayer = player;
         this.isRunning = false;
         this.gameTitle = title;
+        this.gameScore = score;
         currentTime = INITIAL_TIME;
         initialize();
     }
@@ -105,6 +110,7 @@ public class PlayerVisualization extends BorderPane {
         selectedTowerPane = new SelectedTowerPane(actionsProcessor, myPlayer, this);
         panelBox = new VBox(PANEL_SPACING);
         panelBox.getChildren().addAll(buttonCreator, backToGAE(), showInstructions(), accordionCreator, selectedTowerPane);
+//        panelBox.getChildren().add(showScore());
         createStopWatchDisplay();
         statusBar.getChildren().addAll(showTitle(),myStopWatchDisplay);
         this.setRight(panelBox);
@@ -163,6 +169,12 @@ public class PlayerVisualization extends BorderPane {
         return titleBox;
     }
 
+//    private VBox showScore() {
+//        VBox scoreBox = new VBox();
+//        Text score = new Text(String.valueOf(gameScore));
+//        scoreBox.getChildren().add(score);
+//        return scoreBox;
+//    }
 
     private DropShadow getDropShadow() {
         DropShadow shadow = new DropShadow();
