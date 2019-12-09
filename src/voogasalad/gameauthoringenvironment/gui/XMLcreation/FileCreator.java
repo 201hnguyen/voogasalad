@@ -38,7 +38,7 @@ public class FileCreator {
         map.put("Attribute0", "Value0");
         map.put("Attribute1", "Value1");
         f.addStrategyToSpritePrototype(f.createSpritePrototypeElement(), "MovementStrategy", "NoMovement", map);
-        f.printForTesting();
+        f.saveFile();
     }
 
     public FileCreator(String savePath) throws ParserConfigurationException {
@@ -76,11 +76,31 @@ public class FileCreator {
     }
 
     public void addActionToCondition(Element conditionRoot, String actionType){
-
+        Element actionRoot = myDocument.createElement("Action");
+        Element typeRoot = myDocument.createElement("Type");
+        typeRoot.setTextContent(actionType);
+        actionRoot.appendChild(typeRoot);
+        conditionRoot.appendChild(actionRoot);
     }
 
-    public void addWaveToLevel(Element levelRoot, String conditionName, Map<String, String> paramMap){
-
+    public void addWaveToLevel(Element levelRoot, String queue, String interval, String spawnPointX, String spawnPointY, String path){
+        Element waveRoot = myDocument.createElement("Wave");
+        Element queueRoot = myDocument.createElement("Queue");
+        queueRoot.setTextContent(queue);
+        Element intervalRoot = myDocument.createElement("Interval");
+        intervalRoot.setTextContent(interval);
+        Element spawnPointXRoot = myDocument.createElement("SpawnPointX");
+        spawnPointXRoot.setTextContent(spawnPointX);
+        Element spawnPointYRoot = myDocument.createElement("SpawnPointY");
+        spawnPointYRoot.setTextContent(spawnPointY);
+        Element pathRoot = myDocument.createElement("Path");
+        pathRoot.setTextContent(path);
+        waveRoot.appendChild(queueRoot);
+        waveRoot.appendChild(intervalRoot);
+        waveRoot.appendChild(spawnPointXRoot);
+        waveRoot.appendChild(spawnPointYRoot);
+        waveRoot.appendChild(pathRoot);
+        levelRoot.appendChild(waveRoot);
     }
 
     public void addStrategyToSpritePrototype(Element spriteRoot, String strategyName, String strategyType, Map<String, String> paramMap){
@@ -99,7 +119,11 @@ public class FileCreator {
     }
 
     public void addActionToGameCondition(Element gameConditionRoot, String type){
-
+        Element actionRoot = myDocument.createElement("Action");
+        Element typeRoot = myDocument.createElement("Type");
+        typeRoot.setTextContent(type);
+        actionRoot.appendChild(typeRoot);
+        gameConditionRoot.getElementsByTagName("Actions").item(0).appendChild(actionRoot);
     }
 
     private Element createElementByTagType(String tagName, String propertiesPath){
@@ -138,7 +162,7 @@ public class FileCreator {
         return element;
     }
 
-    private void printForTesting() throws TransformerException {
+    public void saveFile() throws TransformerException {
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
         DOMSource domSource = new DOMSource(myDocument);

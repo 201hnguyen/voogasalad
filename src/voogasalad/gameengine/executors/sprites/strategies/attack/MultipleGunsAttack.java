@@ -44,11 +44,6 @@ public class MultipleGunsAttack implements AttackStrategy {
     }
 
     @Override
-    public Double getAttackRate() {
-        return attackRate;
-    }
-
-    @Override
     public AttackStrategy makeClone() throws GameEngineException {
         return new MultipleGunsAttack(myBuilder);
     }

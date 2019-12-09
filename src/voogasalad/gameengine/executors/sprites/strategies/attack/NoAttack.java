@@ -8,17 +8,11 @@ import java.awt.geom.Point2D;
 
 public class NoAttack implements AttackStrategy {
 
-
     public NoAttack(AttackBuilder attackBuilder){ }
 
     @Override
     public void attack(double elapsedTime, double currentAngle, LevelActionsRequester actionsRequester, Point2D.Double currentPos) {
         //will never attack
-    }
-
-    @Override
-    public Double getAttackRate() {
-        return 0.0; //no attack rate
     }
 
     @Override

@@ -30,4 +30,7 @@ public interface SpriteManager {
     Sprite removeSpriteTowerByCoordinates(double xpos, double ypos);
 
     void handleProjectileCollisions() throws GameEngineException;
-}
+
+    Sprite getCopyPrototype(int prototypeId) throws GameEngineException;
+
+    }

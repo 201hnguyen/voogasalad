@@ -32,6 +32,14 @@ public class PreviewImageButton extends Button {
         return imageString;
     }
 
+    /**
+     *
+     * @return
+     */
+    public String clearImageString() {
+        return imageString = "";
+    }
+
     public ImageView getImageView() {
         return imageView;
     }

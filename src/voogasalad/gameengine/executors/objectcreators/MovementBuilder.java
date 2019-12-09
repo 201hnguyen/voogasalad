@@ -13,8 +13,6 @@ public class MovementBuilder implements StrategyBuilder {
 
     private static final String CLASS_PATH = "voogasalad.gameengine.executors.sprites.strategies.movement.";
 
-    public static final double DEFAULT_DISTANCE = 100;
-
     private String myType;
     private double mySpeed;
     private List<Point2D.Double> myPath;
@@ -30,7 +28,6 @@ public class MovementBuilder implements StrategyBuilder {
     }
 
     public MovementBuilder setPath(String pathString) {
-        System.out.println("Set path string in movement builder:" + pathString);
         myPath = ConfigurationTool.parsePath(pathString);
         return this;
     }
@@ -39,17 +36,20 @@ public class MovementBuilder implements StrategyBuilder {
         return myPath;
     }
 
-    public MovementBuilder setSpeed(String speedString) {
-        System.out.println("Set speed string in movement builder:" + speedString);
-        mySpeed = Double.parseDouble(speedString.strip());
+    public MovementBuilder setSpeed(String speedString) throws GameEngineException {
+        try {
+            mySpeed = Double.parseDouble(speedString.strip());
+        } catch (NumberFormatException e) {
+            throw new GameEngineException(e, "SpriteMovementInitializationFailed");
+        }
         return this;
     }
 
-    public MovementBuilder setDistance(String distanceString) {
+    public MovementBuilder setDistance(String distanceString) throws GameEngineException {
         try {
             myDistance = Double.parseDouble(distanceString);
         } catch (NumberFormatException e) {
-            myDistance = DEFAULT_DISTANCE;
+            throw new GameEngineException(e, "SpriteMovementInitializationFailed");
         }
         return this;
     }
@@ -67,7 +67,6 @@ public class MovementBuilder implements StrategyBuilder {
         try {
             return (MovementStrategy) Class.forName(CLASS_PATH + myType).getConstructor(MovementBuilder.class).newInstance(this);
         } catch (Exception e) {
-            e.printStackTrace();
             throw new GameEngineException(e, "SpriteMovementInitializationFailed");
         }
     }

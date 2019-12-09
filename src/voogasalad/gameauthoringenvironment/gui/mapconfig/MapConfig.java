@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
@@ -24,14 +25,16 @@ import java.io.File;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class MapConfig {
 
-    private static final int window_WIDTH = 1000;
-    private static final int window_HEIGHT = 600;
+    private static final int window_WIDTH = 1400;
+    private static final int window_HEIGHT = 900;
     //private Group root;
     private BorderPane root;
     private Group subRoot;
+
     private Scene levelConfigScene;
     private SubScene playerField;
 
@@ -59,7 +62,7 @@ public class MapConfig {
     private Pair<Double,Double> spawnPoint;
     private int selectedPathIndex = 0;
     private int selectedWaveIndex = 0;
-    private ArrayList<Integer> activeEnemyList ;
+    private List<Integer> activeEnemyList ;
     private ArrayList<ArrayList<Integer>> waveComposition;
     private ArrayList<Label> waveCompositionLabel;
     private ArrayList<HBox> waveHBoxList;
@@ -84,10 +87,17 @@ public class MapConfig {
     private final static Font titleFont = new Font("Arial", 18);
     private final static Font subtitleFont = new Font("Arial", 14);
 
+    //saved data
+    ArrayList<WaveInfo> savedWaves;
+    ArrayList<PathInfo> savedPaths;
 
-    public MapConfig(MapButton mapButton){
+    ArrayList<Double> spawningTimeList;
+    ArrayList<Double> durationList;
+    ArrayList<Integer> waveToPathList;
+
+    public MapConfig(MapButton mapButton, List<Integer> listOfActiveEnemies){
         mapButtonInLevel = mapButton;
-        activeEnemyList = new ArrayList<>(Arrays.asList(1,2,3));
+        activeEnemyList = listOfActiveEnemies;
         waveComposition = new ArrayList<>();
         waveCompositionLabel = new ArrayList<>();
 
@@ -105,17 +115,23 @@ public class MapConfig {
         spawnPathViewList = new ArrayList<>();
         pathPointViewList = new ArrayList<>();
         pathViewList = new ArrayList<>();
+        spawningTimeList = new ArrayList<>();
+        durationList = new ArrayList<>();
+        waveToPathList = new ArrayList<>();
 
         spawnPointImage = new Image(this.getClass().getClassLoader().getResourceAsStream("spawnPoint.jpg"));
         //spawnPointImageView = new ImageView(spawnPointImage);
         pathPointImage = new Image(this.getClass().getClassLoader().getResourceAsStream("pathUnit.png"));
         defaulBackGroundImage = new Image(this.getClass().getClassLoader().getResourceAsStream("defaultBG.jpg"));
         backgroundImageView = new ImageView(defaulBackGroundImage);
-        backgroundImageView.setFitWidth(500);
-        backgroundImageView.setFitHeight(500);
+        backgroundImageView.setFitWidth(800);
+        backgroundImageView.setFitHeight(800);
 
         levelConfigPage = new Stage();
         root = new BorderPane();
+        Label previewLabel = new Label("Map and Path Preview");
+        previewLabel.setFont(titleFont);
+        root.setTop(previewLabel);
         //root = new Group();
         mainhbox = new HBox(10);
         controlVBox = new VBox(10);
@@ -130,9 +146,10 @@ public class MapConfig {
 
         //create subscene root
         subRoot = new Group();
+        //subRoot = new HBox(10);
         subRoot.getChildren().add(backgroundImageView);
 
-        playerField = new SubScene(subRoot, 500, 500);
+        playerField = new SubScene(subRoot, 800, 800);
         playerField.setLayoutX(10);
         playerField.setLayoutY(10);
         playerField.setOnMouseClicked(e -> handleMouseClickedSubScene(e.getX(),e.getY()));
@@ -148,7 +165,7 @@ public class MapConfig {
 
 
         levelConfigScene = new Scene(root, window_WIDTH, window_HEIGHT);
-        levelConfigPage.setTitle("New Level Configuration");
+        levelConfigPage.setTitle("New Map Configuration");
         levelConfigPage.setScene(levelConfigScene);
         levelConfigPage.show();
 
@@ -168,7 +185,7 @@ public class MapConfig {
             pathPointImageView.setY(yCoordinate);
 
             subRoot.getChildren().add(pathPointImageView);
-            //System.out.println("x coordinate " + xCoordinate +" y coordinate " + yCoordinate);
+
             createdPathLabel.get(selectedPathIndex).setText(listOfPointsToString(enemyPath));
             pathPointViewList.get(selectedPathIndex).add(pathPointImageView);
             visualizePath();
@@ -225,9 +242,9 @@ public class MapConfig {
             } else {
                 startingIndex = 1;
             }
-            System.out.println("Visualization "+ startingIndex);
+            //System.out.println("Visualization "+ startingIndex);
 
-            System.out.println("if statemen is " + (pathPointViewList.get(selectedPathIndex).size() >= 2|| startingIndex==0));
+            //System.out.println("if statemen is " + (pathPointViewList.get(selectedPathIndex).size() >= 2|| startingIndex==0));
 
             if (pathPointViewList.get(selectedPathIndex).size() >= 2|| startingIndex==0) {
                 for (int pathPointIndex = startingIndex; pathPointIndex < pathPointViewList.get(selectedPathIndex).size(); pathPointIndex++) {
@@ -242,7 +259,7 @@ public class MapConfig {
                         startingPoint = pathPointViewList.get(selectedPathIndex).get(pathPointIndex - 1);
                         endingPoint = pathPointViewList.get(selectedPathIndex).get(pathPointIndex);
                     }
-                    System.out.println("checkpoint "+ fromSpawn);
+                    //System.out.println("checkpoint "+ fromSpawn);
 
                     visualizeSegment(startingPoint, endingPoint, 6, fromSpawn);
 
@@ -264,9 +281,9 @@ public class MapConfig {
         double yDifference = finalYCoordinate - initialYCoordinate;
         double distance = Math.sqrt(Math.pow(xDifference,2) + Math.pow(yDifference,2));
         double myAngle =Math.atan(yDifference/xDifference);
-        System.out.println(initialXCoordinate +" " + initialYCoordinate + " "+ finalXCoordinate+ " " + finalYCoordinate + " "+ distance + " ");
+
         for (double distanceTraveled = 6; distanceTraveled < distance; distanceTraveled=distanceTraveled+distanceIncrement) {
-            System.out.println(distanceTraveled);
+
             ImageView newPathUnit = new ImageView(pathPointImage);
             double yCoordinate;
             double xCoordinate;
@@ -285,10 +302,10 @@ public class MapConfig {
             subRoot.getChildren().add(newPathUnit);
             if (isFromSpawnPoint){
                 spawnPathViewList.get(selectedPathIndex).add(newPathUnit);
-                System.out.println("added to spawn ");
+
             } else {
                 pathViewList.get(selectedPathIndex).add(newPathUnit);
-                System.out.println("added to path ");
+
             }
             //nextLocation(initialXCoordinate,initialYCoordinate, myAngle, distanceTraveled);
 
@@ -342,7 +359,7 @@ public class MapConfig {
             lastActiveButton = waveButtonList.get(selectedWaveIndex);
         }
         lastActiveButton.setStyle(null);
-        nextActivatedButton.setStyle("-fx-background-color: blue; -fx-border-color: red; -fx-border-width: .25px; -fx-padding: 0 20 0 20;");
+        nextActivatedButton.setStyle("-fx-background-color: orange; -fx-border-color: red;");
     }
 
     private void addNewPathField(FlowPane pathPane){
@@ -395,7 +412,7 @@ public class MapConfig {
 
         removeSelectedPathView(selectedPathIndex);
         if (!spawnPointViewList.isEmpty()) {
-           removeSelectedSpawnView(selectedPathIndex);
+            removeSelectedSpawnView(selectedPathIndex);
         }
         int newPathIndex = Integer.parseInt(pathHBox.getId());
         changeHighLightedButton(pathButtonList.get(newPathIndex),true);
@@ -433,43 +450,43 @@ public class MapConfig {
         if ((selectedPathIndex < numberOfPaths-1) && numberOfPaths>0){
 
 
-        numberOfPaths--;
-        removeSelectedSpawnView(selectedPathIndex);
-        removeSelectedPathView(selectedPathIndex);
-        pathPane.getChildren().remove(pathHBoxList.get(selectedPathIndex));
-        pathPointViewList.remove(selectedPathIndex);
-        pathViewList.remove(selectedPathIndex);
-        spawnPointViewList.remove(selectedPathIndex);
-        spawnPathViewList.remove(selectedPathIndex);
-        createdPathList.remove(selectedPathIndex);
-        createdPathLabel.remove(selectedPathIndex);
-        createdSpawnPointsLabel.remove(selectedPathIndex);
-        spawnPointList.remove(selectedPathIndex);
-        pathHBoxList.remove(selectedPathIndex);
-        pathButtonList.remove(selectedPathIndex);
+            numberOfPaths--;
+            removeSelectedSpawnView(selectedPathIndex);
+            removeSelectedPathView(selectedPathIndex);
+            pathPane.getChildren().remove(pathHBoxList.get(selectedPathIndex));
+            pathPointViewList.remove(selectedPathIndex);
+            pathViewList.remove(selectedPathIndex);
+            spawnPointViewList.remove(selectedPathIndex);
+            spawnPathViewList.remove(selectedPathIndex);
+            createdPathList.remove(selectedPathIndex);
+            createdPathLabel.remove(selectedPathIndex);
+            createdSpawnPointsLabel.remove(selectedPathIndex);
+            spawnPointList.remove(selectedPathIndex);
+            pathHBoxList.remove(selectedPathIndex);
+            pathButtonList.remove(selectedPathIndex);
 
 
-        for (int index = 0; index < pathHBoxList.size();index++) {
+            for (int index = 0; index < pathHBoxList.size();index++) {
 
-            int ID = Integer.parseInt(pathHBoxList.get(index).getId());
-            //System.out.println("selected index " + selectedPathIndex + " ID at index "+ index + " after deletion " + ID);
-            if (ID > selectedPathIndex) {
-                int newButtonNumber = ID;
-                ID--;
-                pathHBoxList.get(index).setId(Integer.toString(ID));
+                int ID = Integer.parseInt(pathHBoxList.get(index).getId());
 
-                pathButtonList.get(index).setText("Path " + newButtonNumber);
-                //System.out.println("at Index " + index + " new ID is "+ ID + "Button text is " + pathButtonList.get(index).getText());
+                if (ID > selectedPathIndex) {
+                    int newButtonNumber = ID;
+                    ID--;
+                    pathHBoxList.get(index).setId(Integer.toString(ID));
+
+                    pathButtonList.get(index).setText("Path " + newButtonNumber);
+
+
+
+                }
 
 
             }
 
 
-        }
-
-
-        updateAvailablePaths();
-        changeSelectedPath( pathHBoxList.get(pathHBoxList.size()-1));
+            updateAvailablePaths();
+            changeSelectedPath( pathHBoxList.get(pathHBoxList.size()-1));
         }
 
 
@@ -516,7 +533,7 @@ public class MapConfig {
     }
 
     private void addPathSelectionButton(HBox myHBox){
-         pathEditingButton= new Button("Define Selected Path");
+        pathEditingButton= new Button("Define Selected Path");
 
         pathEditingButton.setOnAction(e ->turnOnOffPathCreation(pathEditingButton));
         /*BooleanBinding bb = new BooleanBinding() {
@@ -624,6 +641,11 @@ public class MapConfig {
         HBox newWaveHBox = new HBox(70);
         newWaveHBox.setId(Integer.toString(waveCount));//ID = index in array
         waveComposition.add(newWaveEnemyList);
+        //default value
+        spawningTimeList.add(0.0);
+        durationList.add(0.0);
+        waveToPathList.add(1);
+
 
         waveCount ++;
 
@@ -632,15 +654,27 @@ public class MapConfig {
         //Label waveNameLabel = new Label("Wave " + waveCount);
         Button waveNameLabel = new Button("Wave " + waveCount);
         waveNameLabel.setOnAction(e -> changeSelectedWave(newWaveHBox));
+        waveNameLabel.setId("Wave "+ waveCount);
 
         Label waveEnemyListLabel = new Label("Click Active Enemy Type to Add");
         waveCompositionLabel.add(waveEnemyListLabel);
 
         ScrollPane waveSrollList = new ScrollPane(waveEnemyListLabel);
         waveSrollList.setMaxWidth(100);
+        waveSrollList.setId("WaveList "+ waveCount);
         TextField startingTimeField = new TextField();
+        startingTimeField.setOnAction(e -> spawningTimeList.set(Integer.parseInt(newWaveHBox.getId().toString()),Double.parseDouble(startingTimeField.getText())) );
+
+        startingTimeField.setId("SpawnTime");
         TextField durationField = new TextField();
+        durationField.setId("Duration");
+        durationField.setOnAction(e -> durationList.set(Integer.parseInt(newWaveHBox.getId().toString()), Double.parseDouble(startingTimeField.getText()))  );
+
         ComboBox availablePaths = new ComboBox();
+        availablePaths.setId("Path");
+        availablePaths.valueProperty().addListener((o, old, neww) -> updateWaveToPath(newWaveHBox,neww.toString()));
+
+
         startingTimeField.setMaxWidth(30);
         durationField.setMaxWidth(30);
 
@@ -662,6 +696,10 @@ public class MapConfig {
         myFlowPane.getChildren().add(newWaveHBox);
         changeSelectedWave(newWaveHBox);
 
+
+    }
+    private void updateWaveToPath(HBox waveHBox, String newText){
+        waveToPathList.set(Integer.parseInt(waveHBox.getId().toString()), Integer.parseInt(newText.split(" ")[1]));
 
     }
 
@@ -698,18 +736,21 @@ public class MapConfig {
             waveHBoxList.remove(selectedWaveIndex);
             waveButtonList.remove(selectedWaveIndex);
             waveComposition.remove(selectedWaveIndex);
+            waveToPathList.remove(selectedWaveIndex);
+            durationList.remove(selectedWaveIndex);
+            spawningTimeList.remove(selectedWaveIndex);
             waveCompositionLabel.remove(selectedWaveIndex);
             wavePathOptions.remove(selectedWaveIndex);
             for (int index = 0; index< waveHBoxList.size(); index++) {
                 int ID = Integer.parseInt(waveHBoxList.get(index).getId());
-                System.out.println("selected index " + selectedWaveIndex + " ID at index "+ index + " after deletion " + ID);
+
                 if (ID > selectedWaveIndex) {
                     int newButtonNumber = ID;
                     ID--;
                     waveHBoxList.get(index).setId(Integer.toString(ID));
 
                     waveButtonList.get(index).setText("Wave " + newButtonNumber);
-                    System.out.println("at Index " + index + " new ID is "+ ID + "Button text is " + waveButtonList.get(index).getText());
+
 
 
                 }
@@ -758,7 +799,7 @@ public class MapConfig {
             File file = imageChooser.showOpenDialog(levelConfigPage);
             if (file != null) {
                 Image image1 = new Image(file.toURI().toString());
-                backgroundImageView = new ImageView(image1);
+                backgroundImageView.setImage(image1);
             }
         });
 
@@ -769,6 +810,45 @@ public class MapConfig {
     private Button createSubmitAndCloseButton(){
         Button submitClose = new Button("Submit Map");
         submitClose.setOnMouseClicked(event -> {
+            savedWaves = new ArrayList<>();
+            savedPaths = new ArrayList<>();
+
+            for (int pathIndex = 0; pathIndex < createdPathList.size(); pathIndex++) {
+                PathInfo newPath = new PathInfo(pathIndex, spawnPointList.get(pathIndex), createdPathList.get(pathIndex));
+                //System.out.println("Save Path " + listOfPointsToString(createdPathList.get(pathIndex)) );
+                savedPaths.add(newPath);
+            }
+
+
+
+            for (int waveIndex = 0; waveIndex < waveHBoxList.size(); waveIndex++) {
+                double spawningTime = spawningTimeList.get(waveIndex);
+                double totalWaveDuration = durationList.get(waveIndex);
+                int pathIndex = waveToPathList.get(waveIndex);
+                /*for (Node inputNode : waveHBoxList.get(waveIndex).getChildren()) {
+                    if (inputNode instanceof TextField){
+                        if (inputNode.getId().equals("SpawnTime")) {
+                            spawningTime = Double.parseDouble(((TextField) inputNode).getText());
+                        }
+                        if (inputNode.getId().equals("Duration")) {
+                            totalWaveDuration = Double.parseDouble(((TextField) inputNode).getText());
+                        }
+                    }
+                    if (inputNode instanceof ComboBox) {
+                        pathIndex =Integer.parseInt(((ComboBox) inputNode).getValue().toString().split(" ")[1]);
+                    }
+
+
+                } */
+                WaveInfo newWave = new WaveInfo(waveIndex, waveComposition.get(waveIndex), spawningTime,totalWaveDuration, pathIndex );
+                savedWaves.add(newWave);
+            }
+            for (PathInfo path : savedPaths) {
+                path.printInfo();
+            }
+            for (WaveInfo wave: savedWaves) {
+                wave.printInfo();
+            }
             mapButtonInLevel.mapSubmitted();
             levelConfigPage.close();
         });
