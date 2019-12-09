@@ -46,21 +46,25 @@ public class ConditionActionComboBox extends ComboBox {
     }
 
     public void openArgumentWindow(Map<String, Map<String, Map<String, String>>> allActiveObjectMap) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        Stage argumentStage = new Stage();
+        boolean isPopulated = true;
         VBox argumentVBox = new VBox();
         String condition = this.getValue().toString();
         String[] arguments = expectedArguments.getString(condition).split(",");
-        Label conditionLabel = new Label(condition);
-        conditionLabel.setFont(Font.font("Verdana", 20));
-        conditionLabel.setPadding(new Insets(0,0,20,0));
-        argumentVBox.getChildren().add(conditionLabel);
         for(String argument : arguments){
             ArgumentHBox argumentHBox = new ArgumentHBox(argument, allActiveObjectMap, condition);
             argumentVBox.getChildren().add(argumentHBox);
+            isPopulated = argumentHBox.getIsPopulated();
         }
-        BorderPane root = new BorderPane();
-        root.setTop(argumentVBox);
-        argumentStage.setScene(new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT));
-        argumentStage.show();
+        if(isPopulated) {
+            Stage argumentStage = new Stage();
+            Label conditionLabel = new Label(condition);
+            conditionLabel.setFont(Font.font("Verdana", 20));
+            conditionLabel.setPadding(new Insets(0,0,20,0));
+            argumentVBox.getChildren().add(conditionLabel);
+            BorderPane root = new BorderPane();
+            root.setTop(argumentVBox);
+            argumentStage.setScene(new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT));
+            argumentStage.show();
+        }
     }
 }
