@@ -50,6 +50,10 @@
                     <HealthValue>5</HealthValue>
                 </Parameters>
             </HealthStrategy>
+            <MovementStrategy>
+                <Type>NoMovement</Type>
+                <Parameters></Parameters>
+            </MovementStrategy>
         </Strategies>
     </SpritePrototype>
 
@@ -91,7 +95,7 @@
             <ConditionId>1</ConditionId>
             <Type>TemporalCondition</Type>
             <Parameters>
-                <MarkedTime>1</MarkedTime>
+                <MarkedTime>2</MarkedTime>
             </Parameters>
             <Actions>
                 <Action>

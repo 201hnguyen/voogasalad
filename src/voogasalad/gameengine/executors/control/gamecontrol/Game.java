@@ -38,7 +38,7 @@ public class Game {
     public Game(Document gameConfigDocument) throws GameEngineException {
         myGameRulesController = new GameRulesController();
         myGameActionsRequester = new GameActionsRequester();
-        myGameConfigDocument = ConfigurationTool.configureWithTestDocument("src/resources/player/MockGame.xml");
+        myGameConfigDocument = ConfigurationTool.configureWithTestDocument("src/resources/player/MockData.xml");
         GameConfigurator gameConfigurator = new GameConfigurator(myGameConfigDocument);
         myCompletePrototypesCollection = gameConfigurator.getGamePrototypesCollection();
         myGameRulesController.addGameConditionsAsCollection(gameConfigurator.configureGameConditions());
