@@ -27,7 +27,7 @@ public class LevelWaveManager {
 
     public boolean hasNextWave() {
 //        System.out.println("Index:" + myIndex + " " + myWaves);
-        return myIndex < myWaves.size()-1;
+        return myIndex < myWaves.size();
     }
 
 }

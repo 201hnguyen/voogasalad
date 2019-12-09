@@ -35,11 +35,10 @@
                 </Parameters>
             </RotationStrategy>
             <EffectStrategy>
-                <Type>TickHealthEffect</Type>
+                <Type>FreezeSpriteEffect</Type>
                 <Parameters>
                     <DamageValue>1</DamageValue>
-                    <TickCount>5</TickCount>
-                    <TickDelay>1</TickDelay>
+                    <Duration>5</Duration>
                 </Parameters>
             </EffectStrategy>
         </Strategies>
@@ -65,8 +64,10 @@
                 </Parameters>
             </HealthStrategy>
             <MovementStrategy>
-                <Type>NoMovement</Type>
+                <Type>PathMovement</Type>
                 <Parameters>
+                    <Path>0,200;300,200</Path>
+                    <Speed>100</Speed>
                 </Parameters>
             </MovementStrategy>
             <RotationStrategy>
@@ -91,37 +92,18 @@
         <AvailablePrototypes>0 1</AvailablePrototypes>
 
         <Wave>
-            <Queue>0</Queue>
+            <Queue>1 0</Queue>
             <Interval>2</Interval>
             <SpawnPointX>0</SpawnPointX>
             <SpawnPointY>300</SpawnPointY>
-            <Path>300,300;200,300</Path>
-        </Wave>
-        <Wave>
-            <Queue>1</Queue>
-            <Interval>3</Interval>
-            <SpawnPointX>200</SpawnPointX>
-            <SpawnPointY>300</SpawnPointY>
-            <Path>200,300</Path>
+            <Path>300,300;200,300;400,300;600,300</Path>
         </Wave>
 
-        <Condition>
-            <ConditionId>0</ConditionId>
-            <Type>TemporalCondition</Type>
-            <Parameters>
-                <MarkedTime>1</MarkedTime>
-            </Parameters>
-            <Actions>
-                <Action>
-                    <Type>SpawnWaveAction</Type>
-                </Action>
-            </Actions>
-        </Condition>
         <Condition>
             <ConditionId>1</ConditionId>
             <Type>TemporalCondition</Type>
             <Parameters>
-                <MarkedTime>2</MarkedTime>
+                <MarkedTime>1</MarkedTime>
             </Parameters>
             <Actions>
                 <Action>
