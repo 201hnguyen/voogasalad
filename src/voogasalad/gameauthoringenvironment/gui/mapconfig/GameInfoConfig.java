@@ -98,12 +98,16 @@ public class GameInfoConfig extends BorderPane {
 
     private void addInputField() {
         VBox inputFieldVBox = new VBox(10);
-        TextField gameName = new TextField("Enter The Name Of The Game Here");
+        TextField gameName = new TextField();
+        gameName.setPromptText("Enter The Name Of The Game Here");
         gameName.setOnAction(e -> title.setText(gameName.getText()));
-        TextField gameAuthor = new TextField("Enter The List of Authors");
+
+        TextField gameAuthor = new TextField();
+        gameAuthor.setPromptText("Enter The List of Authors");
         gameAuthor.setOnAction(e -> authors.setText(gameAuthor.getText()));
 
-        TextArea gameDescription = new TextArea("Describe Your Game");
+        TextArea gameDescription = new TextArea();
+        gameDescription.setPromptText("Describe Your Game");
         gameDescription.setPrefHeight(150);
         gameDescription.setPrefWidth(150);
         //gameDescription.setPrefHeight(150);
