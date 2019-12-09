@@ -9,6 +9,5 @@ module voogasalad_WorksDontTouch {
 
     requires org.junit.jupiter.api;
 
-
     exports voogasalad;
 }
