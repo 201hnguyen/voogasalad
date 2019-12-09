@@ -56,7 +56,7 @@ public class Player {
             gameInfo = new HashMap<>();
             gameInfo.put("Lives", myCurrentGameSceneObject.getLives());
             gameInfo.put("Coins", myCurrentGameSceneObject.getResources());
-            myPlayerVisualization.setNewLevel(myEngine.getSpritePrototypesByArchetype(SpriteArchetype.TOWER), myEngine.getSpritePrototypesByArchetype(SpriteArchetype.ENEMY), myEngine.getCurrentLevelBackgroundPath(), gameInfo);
+            myPlayerVisualization.setNewLevel(myEngine.getSpritePrototypesByArchetype(SpriteArchetype.TOWER), myEngine.getSpritePrototypesByArchetype(SpriteArchetype.ENEMY), myEngine.getCurrentLevelBackgroundPath(), myEngine.getCurrentLevelSoundPath(), gameInfo);
             myTimeline.pause();
         }
         else {
