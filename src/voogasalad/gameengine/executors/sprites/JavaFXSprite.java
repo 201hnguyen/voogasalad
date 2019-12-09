@@ -185,6 +185,10 @@ public class JavaFXSprite implements Sprite {
     public void updateAttackStrategy(AttackStrategy updatedStrategy) {
         myAttackStrategy = updatedStrategy;
     }
+    @Override
+    public LevelAction getEffectAction(Sprite other) throws GameEngineException {
+        return myEffectStrategy.getAction(other.getId());
+    }
 
     @Override
     public void setHasBeenClicked(boolean bool) {
@@ -194,10 +198,5 @@ public class JavaFXSprite implements Sprite {
     @Override
     public boolean getHasBeenClicked() {
         return hasBeenClicked;
-    }
-
-    @Override
-    public LevelAction getEffectAction(Sprite other) throws GameEngineException {
-        return myEffectStrategy.getAction(other.getId());
     }
 }

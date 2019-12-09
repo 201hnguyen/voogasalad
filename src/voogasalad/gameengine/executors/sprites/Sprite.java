@@ -34,5 +34,5 @@ public interface Sprite {
     void updateAttackStrategy(AttackStrategy updatedStrategy);
     void setHasBeenClicked(boolean bool);
     boolean getHasBeenClicked();
-    LevelAction getEffectAction(Sprite enemy) throws GameEngineException;
+    LevelAction getEffectAction(Sprite sprite) throws GameEngineException;
 }

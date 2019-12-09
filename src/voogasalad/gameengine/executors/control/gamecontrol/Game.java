@@ -4,7 +4,6 @@ import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 import voogasalad.gameengine.api.ActionsProcessor;
 import voogasalad.gameengine.api.GameSceneObject;
-//import voogasalad.gameengine.configurators.EngineConfigurator;
 import voogasalad.gameengine.configurators.GameConfigurator;
 import voogasalad.gameengine.executors.control.condition.game.GameCondition;
 import voogasalad.gameengine.executors.control.gamecontrol.controllers.GameLevelsController;
@@ -12,8 +11,8 @@ import voogasalad.gameengine.executors.control.gamecontrol.controllers.GameRules
 import voogasalad.gameengine.executors.control.levelcontrol.GameSceneStatus;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.control.levelcontrol.Level;
-import voogasalad.gameengine.executors.sprites.Sprite;
 import voogasalad.gameengine.executors.utils.ConfigurationTool;
+import voogasalad.gameengine.executors.sprites.Sprite;
 import voogasalad.gameengine.executors.utils.SpriteArchetype;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -38,7 +37,7 @@ public class Game {
     public Game(Document gameConfigDocument) throws GameEngineException {
         myGameRulesController = new GameRulesController();
         myGameActionsRequester = new GameActionsRequester();
-        myGameConfigDocument = ConfigurationTool.configureWithTestDocument("src/resources/player/MockData.xml");
+        myGameConfigDocument = ConfigurationTool.configureWithTestDocument("src/resources/player/MockGame.xml");
         GameConfigurator gameConfigurator = new GameConfigurator(myGameConfigDocument);
         myCompletePrototypesCollection = gameConfigurator.getGamePrototypesCollection();
         myGameRulesController.addGameConditionsAsCollection(gameConfigurator.configureGameConditions());
