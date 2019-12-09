@@ -23,7 +23,7 @@ public class ArgumentHBox extends HBox {
 
 
     public Node appropriateNode(Map<String, Map<String, Map<String, String>>> allActiveObjectMap) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        ActiveObjectComboBox activeObjectComboBox = new ActiveObjectComboBox(allActiveObjectMap);
+//        ActiveObjectComboBox activeObjectComboBox = new ActiveObjectComboBox(allActiveObjectMap);
         Class cls = Class.forName(conditionArgumentTypes.getString(condition));
         Node myField = (Node) cls.getConstructor().newInstance();
         return myField;
