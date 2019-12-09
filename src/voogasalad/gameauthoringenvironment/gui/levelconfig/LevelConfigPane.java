@@ -23,7 +23,7 @@ public class LevelConfigPane extends BorderPane{
     private Document createdXML;
     private Bus busInstance;
     private List<VBoxCreator> objectVBoxes;
-    private int gameLevel;
+    private int highestGameLevel;
     private Map<String, Map<String, String>> allActiveObjects;
     private HBox title;
     private GridPane gridPane;
@@ -32,18 +32,20 @@ public class LevelConfigPane extends BorderPane{
     private Label selectActiveLabel;
     private Button createMapButton;
     private HBox createSubmitNewLevelButtons;
-    private Map<Integer, Map<String, Map<String, String>>> saveActiveObjectsForLevel;
+    private Map<Integer, List<Map<String, Map<String, String>>>> saveActiveObjectsForLevel;
     private List<ObjectPreviewAndActive> allActiveObjectObjects;
     private String[] allObjectTypes;
     private List<Integer> allLevels;
     private GameLevelComboBox gameLevelComboBox;
+    private int levelLookingAt;
 
 
     public LevelConfigPane(AddToXML sendToXMLParam, Document createdXMLParam, Bus busInstanceParam, Map<String, Map<String, String>> allActiveObjectMapParam,
                            List<ObjectPreviewAndActive> allActiveObjectObjectsParam, String[] allObjectTypesParam){
         allActiveObjectObjects = allActiveObjectObjectsParam;
         allLevels = new ArrayList<>();
-        gameLevel = 1;
+        highestGameLevel = 1;
+        levelLookingAt = 1;
         saveActiveObjectsForLevel = new HashMap<>();
         allActiveObjects = allActiveObjectMapParam;
         sendToXML = sendToXMLParam;
@@ -60,7 +62,7 @@ public class LevelConfigPane extends BorderPane{
         allObjects = createAllObjectHBox();
         rules = createRulesVBox();
         selectActiveLabel = createSelectActiveLabel();
-        createMapButton = new MapButton(width, height);
+        createMapButton = new MapButton(width, height, allActiveObjects);
         createSubmitNewLevelButtons = createSubmitNewLevelButtons();
         addToGridPane();
     }
@@ -82,8 +84,6 @@ public class LevelConfigPane extends BorderPane{
         Label levelLabel = formatTitleLabel("Level ");
         gameLevelComboBox.setPrefHeight(height/10);
         Label configLabel = formatTitleLabel(" Configuration");
-        //Label levelLabel = new Label("Level " + GameLevelComboBox + " Configuration");
-
         titleHBox.getChildren().addAll(levelLabel, gameLevelComboBox, configLabel);
         return titleHBox;
     }
@@ -130,7 +130,7 @@ public class LevelConfigPane extends BorderPane{
 
     private VBox createConditionActionVBox(){
         VBox conditionAction = new VBox(10);
-//        conditionAction.getChildren().addAll(new RuleLine(allActiveObjects), new RuleLine(allActiveObjects));
+        conditionAction.getChildren().addAll(new RuleLine(allActiveObjects), new RuleLine(allActiveObjects));
         return conditionAction;
     }
 
@@ -143,7 +143,7 @@ public class LevelConfigPane extends BorderPane{
     private Button createAddRuleLineButton(VBox conditionAction){
         Button addRuleLine = new Button("+");
         addRuleLine.setOnMouseClicked(event -> {
-//            conditionAction.getChildren().add(new RuleLine(allActiveObjects));
+            conditionAction.getChildren().add(new RuleLine(allActiveObjects));
         });
         return addRuleLine;
     }
@@ -175,7 +175,7 @@ public class LevelConfigPane extends BorderPane{
 
     public void addIconToVBox(String objectType, Button icon){
         for(VBoxCreator objectVBox : objectVBoxes){
-//            objectVBox.addToObjectHBox(icon, objectType);
+          objectVBox.addToObjectHBox(icon, objectType);
         }
     }
 
@@ -183,51 +183,71 @@ public class LevelConfigPane extends BorderPane{
         Button newLevel = new Button("Create New Level");
         newLevel.setOnMouseClicked(event -> {
             saveInfoForLevel();
-            allLevels.add(gameLevel);
-            gameLevelComboBox.addToComboBox(gameLevel, gameLevel+1);
-            gameLevel++;
+            gameLevelComboBox.addToComboBox(highestGameLevel, highestGameLevel+1);
+            if(allLevels.size() == 0 || (allLevels.get(allLevels.size() - 1) < highestGameLevel)) {
+                allLevels.add(highestGameLevel);
+                highestGameLevel++;
+            }
             updateLevelConfigPane();
         });
         return newLevel;
     }
 
 
-    private void saveInfoForLevel(){
+    public void saveInfoForLevel(){
         saveActive();
         //saveMap();
         //saveConditionAction;
     }
 
-    private void saveActive(){ ;
-        saveActiveObjectsForLevel.put(gameLevel, sendToLevelSave(allActiveObjects));
+    private void saveActive(){
+        addToCorrectGameLevel();
         for(ObjectPreviewAndActive object : allActiveObjectObjects){
             object.removeFromActive();
-            //allActiveObjectObjects.remove(object);
         }
         System.out.println(saveActiveObjectsForLevel);
     }
 
-    private void updateLevelConfigPane(){
+    private void addToCorrectGameLevel(){
+        if(gameLevelComboBox.getSelectedLevel() != highestGameLevel){
+            levelLookingAt = gameLevelComboBox.getSelectedLevel();
+        }else{
+            levelLookingAt = highestGameLevel;
+        }
+        sendToLevelSave(allActiveObjects, levelLookingAt);
+
+    }
+    public void updateLevelConfigPane(){
         title = createTitleHBox();
         rules = createRulesVBox();
-        createMapButton = new MapButton(width, height);
+        createMapButton = new MapButton(width, height, allActiveObjects);
         addToGridPane();
     }
 
-    private Map<String, Map<String, String>> sendToLevelSave(Map<String, Map<String, String>> activeObjects){
+    private List<Map<String, Map<String, String>>> sendToLevelSave(Map<String, Map<String, String>> activeObjects, int gameLevel){
         Map<String, Map<String, String>> copyMap = new HashMap<>();
         for(String key : activeObjects.keySet()){
             copyMap.put(key, activeObjects.get(key));
         }
-        return copyMap;
+        if(saveActiveObjectsForLevel.get(gameLevel) == null){
+            List<Map<String, Map<String, String>>> listWithMap = new ArrayList<>();
+            listWithMap.add(copyMap);
+            saveActiveObjectsForLevel.put(gameLevel, listWithMap);
+        }
+        else{
+            saveActiveObjectsForLevel.get(gameLevel).add(copyMap);
+        }
+
+        return saveActiveObjectsForLevel.get(gameLevel);
     }
 
-    public Map<Integer, Map<String, Map<String, String>>> getActiveObjectsForLevel(){
-        return saveActiveObjectsForLevel;
+    public List<Map<String, Map<String, String>>> getActiveObjectsForLevel(int selectedLevel){
+        return saveActiveObjectsForLevel.get(selectedLevel);
     }
 
     public List<ObjectPreviewAndActive> getActiveObjectObjects(){
         return allActiveObjectObjects;
     }
+
 
 }

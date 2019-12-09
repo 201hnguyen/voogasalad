@@ -24,8 +24,11 @@ public class ObjectPreviewAndActive extends BorderPane{
     private String gameObjectName;
     private Stage windowStage;
     private Map<String, Map<String, String>> activeObjects;
+    private static Map<String, Map<String, String>> activeObjectsFromReactivate;
     private Button icon;
     private Button makeActive;
+    private static boolean reactivateBoolean;
+
 
     public ObjectPreviewAndActive(String gameObjectNameParam, Map<String, String> objectContentMapParam, int windowHeightParam,
                                   int windowWidthParam, Stage windowStageParam, Map<String, Map<String, String>> activeObjectsParam, Button iconParam){
@@ -118,5 +121,20 @@ public class ObjectPreviewAndActive extends BorderPane{
         activeObjects.remove(gameObjectName, objectContentMap);
         icon.setStyle(null);
         windowStage.close();
+    }
+
+    public String getName(){
+        return gameObjectName;
+    }
+
+    public void reactivate(Map<String, Map<String, String>> activeObjectsParam, String gameObjectNameParam){
+        icon.setStyle("-fx-background-color: #00ff00; -fx-border-color:black;");
+        activeObjects.putIfAbsent(gameObjectNameParam, activeObjectsParam.get(gameObjectNameParam));
+
+
+    }
+
+    public void setReactivateBoolean(boolean tf){
+        reactivateBoolean = tf;
     }
 }
