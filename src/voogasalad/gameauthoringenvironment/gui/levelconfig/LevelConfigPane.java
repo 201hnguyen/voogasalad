@@ -51,7 +51,7 @@ public class LevelConfigPane extends BorderPane{
         busInstance = busInstanceParam;
         allObjectTypes = allObjectTypesParam;
         objectVBoxes = new ArrayList<>();
-        gameLevelComboBox = new GameLevelComboBox();
+        gameLevelComboBox = new GameLevelComboBox(this);
         setBorderPane();
     }
 
@@ -193,10 +193,12 @@ public class LevelConfigPane extends BorderPane{
 
 
     private void saveInfoForLevel(){
-        saveAndClearActive();
+        saveActive();
+        //saveMap();
+        //saveConditionAction;
     }
 
-    private void saveAndClearActive(){ ;
+    private void saveActive(){ ;
         saveActiveObjectsForLevel.put(gameLevel, sendToLevelSave(allActiveObjects));
         for(ObjectPreviewAndActive object : allActiveObjectObjects){
             object.removeFromActive();
@@ -218,6 +220,14 @@ public class LevelConfigPane extends BorderPane{
             copyMap.put(key, activeObjects.get(key));
         }
         return copyMap;
+    }
+
+    public Map<Integer, Map<String, Map<String, String>>> getActiveObjectsForLevel(){
+        return saveActiveObjectsForLevel;
+    }
+
+    public List<ObjectPreviewAndActive> getActiveObjectObjects(){
+        return allActiveObjectObjects;
     }
 
 }
