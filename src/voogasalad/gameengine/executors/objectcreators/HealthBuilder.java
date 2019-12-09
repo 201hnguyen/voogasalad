@@ -5,7 +5,6 @@ import voogasalad.gameengine.executors.sprites.strategies.health.HealthStrategy;
 
 public class HealthBuilder implements StrategyBuilder {
     private static final String CLASS_PATH = "voogasalad.gameengine.executors.sprites.strategies.health.";
-    public static final int DEFAULT_HEALTH_VALUE = 0;
     public static final String DEFAULT_TYPE = "NoHealth";
 
     private int myHealthValue;
@@ -16,11 +15,11 @@ public class HealthBuilder implements StrategyBuilder {
         return this;
     }
 
-    public HealthBuilder setHealthValue(String healthValue) {
+    public HealthBuilder setHealthValue(String healthValue) throws GameEngineException {
         try {
             myHealthValue = Integer.parseInt(healthValue);
         } catch (NumberFormatException e) {
-            myHealthValue = DEFAULT_HEALTH_VALUE;
+            throw new GameEngineException(e, "SpriteHealthInitializationFailed");
         }
         return this;
     }
