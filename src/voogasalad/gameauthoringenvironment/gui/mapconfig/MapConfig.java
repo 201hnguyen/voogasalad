@@ -92,7 +92,7 @@ public class MapConfig {
 
     ArrayList<Double> spawningTimeList;
     ArrayList<Double> durationList;
-    ArrayList<Integer> in;
+    ArrayList<Integer> waveToPathList;
 
     public MapConfig(MapButton mapButton){
         mapButtonInLevel = mapButton;
@@ -114,6 +114,9 @@ public class MapConfig {
         spawnPathViewList = new ArrayList<>();
         pathPointViewList = new ArrayList<>();
         pathViewList = new ArrayList<>();
+        spawningTimeList = new ArrayList<>();
+        durationList = new ArrayList<>();
+        waveToPathList = new ArrayList<>();
 
         spawnPointImage = new Image(this.getClass().getClassLoader().getResourceAsStream("spawnPoint.jpg"));
         //spawnPointImageView = new ImageView(spawnPointImage);
@@ -637,6 +640,11 @@ public class MapConfig {
         HBox newWaveHBox = new HBox(70);
         newWaveHBox.setId(Integer.toString(waveCount));//ID = index in array
         waveComposition.add(newWaveEnemyList);
+        //default value
+        spawningTimeList.add(0.0);
+        durationList.add(0.0);
+        waveToPathList.add(1);
+
 
         waveCount ++;
 
@@ -654,11 +662,17 @@ public class MapConfig {
         waveSrollList.setMaxWidth(100);
         waveSrollList.setId("WaveList "+ waveCount);
         TextField startingTimeField = new TextField();
+        startingTimeField.setOnAction(e -> spawningTimeList.set(Integer.parseInt(newWaveHBox.getId().toString()),Double.parseDouble(startingTimeField.getText())) );
+
         startingTimeField.setId("SpawnTime");
         TextField durationField = new TextField();
-        startingTimeField.setId("Duration");
+        durationField.setId("Duration");
+        durationField.setOnAction(e -> durationList.set(Integer.parseInt(newWaveHBox.getId().toString()), Double.parseDouble(startingTimeField.getText()))  );
+
         ComboBox availablePaths = new ComboBox();
         availablePaths.setId("Path");
+        availablePaths.valueProperty().addListener((o, old, neww) -> updateWaveToPath(newWaveHBox,neww.toString()));
+
 
         startingTimeField.setMaxWidth(30);
         durationField.setMaxWidth(30);
@@ -681,6 +695,10 @@ public class MapConfig {
         myFlowPane.getChildren().add(newWaveHBox);
         changeSelectedWave(newWaveHBox);
 
+
+    }
+    private void updateWaveToPath(HBox waveHBox, String newText){
+        waveToPathList.set(Integer.parseInt(waveHBox.getId().toString()), Integer.parseInt(newText.split(" ")[1]));
 
     }
 
@@ -717,6 +735,9 @@ public class MapConfig {
             waveHBoxList.remove(selectedWaveIndex);
             waveButtonList.remove(selectedWaveIndex);
             waveComposition.remove(selectedWaveIndex);
+            waveToPathList.remove(selectedWaveIndex);
+            durationList.remove(selectedWaveIndex);
+            spawningTimeList.remove(selectedWaveIndex);
             waveCompositionLabel.remove(selectedWaveIndex);
             wavePathOptions.remove(selectedWaveIndex);
             for (int index = 0; index< waveHBoxList.size(); index++) {
@@ -793,16 +814,17 @@ public class MapConfig {
 
             for (int pathIndex = 0; pathIndex < createdPathList.size(); pathIndex++) {
                 PathInfo newPath = new PathInfo(pathIndex, spawnPointList.get(pathIndex), createdPathList.get(pathIndex));
+                System.out.println("Save Path " + listOfPointsToString(createdPathList.get(pathIndex)) );
                 savedPaths.add(newPath);
             }
 
 
 
             for (int waveIndex = 0; waveIndex < waveHBoxList.size(); waveIndex++) {
-                double spawningTime = 0;
-                double totalWaveDuration = 10;
-                int pathIndex = 1;
-                for (Node inputNode : waveHBoxList.get(waveIndex).getChildren()) {
+                double spawningTime = spawningTimeList.get(waveIndex);
+                double totalWaveDuration = durationList.get(waveIndex);
+                int pathIndex = waveToPathList.get(waveIndex);
+                /*for (Node inputNode : waveHBoxList.get(waveIndex).getChildren()) {
                     if (inputNode instanceof TextField){
                         if (inputNode.getId().equals("SpawnTime")) {
                             spawningTime = Double.parseDouble(((TextField) inputNode).getText());
@@ -816,7 +838,7 @@ public class MapConfig {
                     }
 
 
-                }
+                } */
                 WaveInfo newWave = new WaveInfo(waveIndex, waveComposition.get(waveIndex), spawningTime,totalWaveDuration, pathIndex );
                 savedWaves.add(newWave);
             }

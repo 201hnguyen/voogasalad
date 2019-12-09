@@ -17,7 +17,7 @@ public class PathInfo {
     }
 
     public void printInfo() {
-        System.out.println("waveIndex " + pathIndex + " Path Point List " + pathPoints.toString() + " spawning point" + spawnPoint.toString());
+        System.out.println("PathIndex " + pathIndex + " Path Point List " + pathPoints.toString() + " spawning point" + spawnPoint.toString());
 
     }
 }
