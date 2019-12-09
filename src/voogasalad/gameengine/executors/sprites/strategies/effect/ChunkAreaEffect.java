@@ -3,16 +3,19 @@ package voogasalad.gameengine.executors.sprites.strategies.effect;
 import voogasalad.gameengine.executors.control.action.level.ChunkAreaAction;
 import voogasalad.gameengine.executors.control.action.level.LevelAction;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
+import voogasalad.gameengine.executors.objectcreators.EffectBuilder;
 
 public class ChunkAreaEffect implements EffectStrategy {
 
+    private EffectBuilder myOriginalBuilder;
     private int myDamageValue;
     private double myRadius;
     private boolean isFinished;
 
-    public ChunkAreaEffect(int damageValue, double radius) {
-        myDamageValue = damageValue;
-        myRadius = radius;
+    public ChunkAreaEffect(EffectBuilder builder) {
+        myOriginalBuilder = builder;
+        myDamageValue = builder.getDamage();
+        myRadius = builder.getRadius();
         isFinished = false;
     }
 
@@ -29,6 +32,6 @@ public class ChunkAreaEffect implements EffectStrategy {
 
     @Override
     public EffectStrategy makeClone() throws GameEngineException {
-        return new ChunkAreaEffect(myDamageValue, myRadius);
+        return new ChunkAreaEffect(myOriginalBuilder);
     }
 }
