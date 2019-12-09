@@ -53,6 +53,8 @@ public class Engine {
         return myGame.getCurrentLevelId();
     }
 
+    public String getCurrentLevelSound() { return myGame.getCurrentLevelSoundPath(); }
+
     public Status getGameStatus() {
         return myGame.getGameStatus();
     }
