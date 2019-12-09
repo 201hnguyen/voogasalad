@@ -127,14 +127,14 @@
         <Wave>
             <Queue>1</Queue>
             <Interval>1</Interval>
-            <SpawnPointX>200</SpawnPointX>
-            <SpawnPointY>0</SpawnPointY>
-            <Path>200,0</Path>
+            <SpawnPointX>300</SpawnPointX>
+            <SpawnPointY>50</SpawnPointY>
+            <Path>300,50</Path>
         </Wave>
         <Wave>
             <Queue>0</Queue>
             <Interval>1</Interval>
-            <SpawnPointX>0</SpawnPointX>
+            <SpawnPointX>50</SpawnPointX>
             <SpawnPointY>300</SpawnPointY>
             <Path>200,300</Path>
         </Wave>
