@@ -43,6 +43,6 @@ public class ShootingAttack implements AttackStrategy {
 
     @Override
     public AttackStrategy makeClone() throws GameEngineException {
-        return new ShootingAttack(myBuilder);
+        return myBuilder.build();
     }
 }

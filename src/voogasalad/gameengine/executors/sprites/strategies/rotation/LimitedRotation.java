@@ -1,6 +1,7 @@
 package voogasalad.gameengine.executors.sprites.strategies.rotation;
 
 import javafx.util.Pair;
+import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.objectcreators.RotationBuilder;
 
 public class LimitedRotation implements RotationStrategy {
@@ -55,7 +56,7 @@ public class LimitedRotation implements RotationStrategy {
     }
 
     @Override
-    public RotationStrategy makeClone() {
-        return new LimitedRotation(myBuilder);
+    public RotationStrategy makeClone() throws GameEngineException {
+        return myBuilder.build();
     }
 }
