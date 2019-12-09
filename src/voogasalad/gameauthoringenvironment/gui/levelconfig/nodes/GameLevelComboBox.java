@@ -73,7 +73,6 @@ public class GameLevelComboBox extends ComboBox {
         String[] allActiveObjectsInLevel = Arrays.copyOf(activeObjectMapForAppropriateLevel.keySet().toArray(), activeObjectMapForAppropriateLevel.keySet().toArray().length, String[].class);
         for(ObjectPreviewAndActive objectObject : activeObjectObjects){
             if(Arrays.asList(allActiveObjectsInLevel).contains(objectObject.getName())){
-                //objectObject.setReactivateBoolean(true);
                 objectObject.reactivate(activeObjectMapForAppropriateLevel, objectObject.getName());
             }
         }

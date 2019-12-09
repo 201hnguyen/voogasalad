@@ -188,8 +188,6 @@ public class LevelConfigPane extends BorderPane{
                 allLevels.add(highestGameLevel);
                 highestGameLevel++;
             }
-//            ObjectPreviewAndActive objectPreviewAndActive = new ObjectPreviewAndActive();
-//            objectPreviewAndActive.setReactivateBoolean(false);
             updateLevelConfigPane();
         });
         return newLevel;

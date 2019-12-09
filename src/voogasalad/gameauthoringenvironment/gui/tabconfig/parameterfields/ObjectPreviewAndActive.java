@@ -29,7 +29,6 @@ public class ObjectPreviewAndActive extends BorderPane{
     private Button makeActive;
     private static boolean reactivateBoolean;
 
-    public ObjectPreviewAndActive(){};
 
     public ObjectPreviewAndActive(String gameObjectNameParam, Map<String, String> objectContentMapParam, int windowHeightParam,
                                   int windowWidthParam, Stage windowStageParam, Map<String, Map<String, String>> activeObjectsParam, Button iconParam){
