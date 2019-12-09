@@ -76,6 +76,10 @@ public class GameConfigurator {
     }
 
     public String configureGameTitle() {
-        return myRoot.getElementsByTagName(GAME_CONFIGURATION_RESOURCE_BUNDLE.getString(GAME_TITLE_NODE_KEY)).item(0).getTextContent();
+        try {
+            return myRoot.getElementsByTagName(GAME_CONFIGURATION_RESOURCE_BUNDLE.getString(GAME_TITLE_NODE_KEY)).item(0).getTextContent();
+        } catch (NullPointerException e) {
+            return "";
+        }
     }
 }
