@@ -10,9 +10,13 @@ import voogasalad.gameengine.api.ActionsProcessor;
 import voogasalad.gameengine.executors.sprites.Sprite;
 import voogasalad.gameplayer.Player;
 
+import java.util.ResourceBundle;
+
 public class SelectedTowerPane extends VBox {
 
-    private static final int ICON_SIZE = 40;
+    private static final String RESOURCE_PATH = "resources.player.PlayerViewOptions";
+    private static final ResourceBundle resourceBundle = ResourceBundle.getBundle(RESOURCE_PATH);
+    private static final int ICON_SIZE = Integer.parseInt(resourceBundle.getString("DeleteTowerIconSize"));
 
     private Player player;
     private PlayerVisualization playerVisualization;
