@@ -2,6 +2,7 @@ package voogasalad.gameengine.executors.sprites;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import voogasalad.gameengine.executors.control.action.level.LevelAction;
 import voogasalad.gameengine.executors.control.levelcontrol.LevelActionsRequester;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.objectcreators.SpriteBuilder;
@@ -180,10 +181,10 @@ public class JavaFXSprite implements Sprite {
     }
 
     @Override
+    public LevelAction getEffectAction(Sprite other) throws GameEngineException {
+        return myEffectStrategy.getAction(other.getId());
+    }
     public void updateAttackStrategy(AttackStrategy updatedStrategy) {
         myAttackStrategy = updatedStrategy;
-    }
-    public void applyEffect(Sprite other) throws GameEngineException {
-        myEffectStrategy.apply(other);
     }
 }
