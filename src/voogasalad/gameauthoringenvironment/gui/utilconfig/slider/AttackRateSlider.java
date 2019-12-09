@@ -1,16 +1,16 @@
-package voogasalad.gameauthoringenvironment.gui.utilconfig;
+package voogasalad.gameauthoringenvironment.gui.utilconfig.slider;
 
 import javafx.scene.control.Slider;
 
-public class ImageSpecSlider extends Slider {
+public class AttackRateSlider extends Slider implements SliderConfiguration {
 
     private double mySliderValue;
 
-    public ImageSpecSlider() {
-        this.setMin(100);
-        this.setMax(500);
-        this.setValue(200);
-        this.setMajorTickUnit(100);
+    public AttackRateSlider() {
+        this.setMin(0.00);
+        this.setMax(1);
+        this.setValue(0.25);
+        this.setMajorTickUnit(0.25);
         this.setMinorTickCount(3);
         this.setShowTickLabels(true);
         this.setShowTickMarks(true);
@@ -18,8 +18,9 @@ public class ImageSpecSlider extends Slider {
         mySliderValue = this.getValue();
     }
 
+    @Override
     public double getSliderValue() {
         return mySliderValue;
     }
-
 }
+

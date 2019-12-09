@@ -1,16 +1,16 @@
-package voogasalad.gameauthoringenvironment.gui.utilconfig;
+package voogasalad.gameauthoringenvironment.gui.utilconfig.slider;
 
 import javafx.scene.control.Slider;
 
-public class HealthCostSlider extends Slider {
+public class RotationRangeSlider extends Slider implements SliderConfiguration {
 
     private double mySliderValue;
 
-    public HealthCostSlider() {
+    public RotationRangeSlider() {
         this.setMin(0);
-        this.setMax(100);
-        this.setValue(25);
-        this.setMajorTickUnit(25);
+        this.setMax(720);
+        this.setValue(180);
+        this.setMajorTickUnit(180);
         this.setMinorTickCount(3);
         this.setShowTickLabels(true);
         this.setShowTickMarks(true);
@@ -18,6 +18,7 @@ public class HealthCostSlider extends Slider {
         mySliderValue = this.getValue();
     }
 
+    @Override
     public double getSliderValue() {
         return mySliderValue;
     }

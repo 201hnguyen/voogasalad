@@ -94,7 +94,7 @@ public class ParameterCreator extends BorderPane{
     }
 
     private void addInputFields() {
-        configVBox = new TabVBoxCreator("Configure Parameters", 200, 50, 50, 50, 10);
+        configVBox = new TabVBoxCreator("Configure Parameters", 200, 20, 50, 50, 10);
         for (int j = 0; j < properties.length; j++) {
             Label label = new Label(properties[j]); //for SaveGuiParameters
             labelList.add(label);

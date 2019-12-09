@@ -3,7 +3,7 @@ package voogasalad.gameauthoringenvironment.gaeexception;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SpriteInputException extends GaeException {
+public class SpriteInputException extends RuntimeException implements GaeException {
 
     Map<String, String> myMap = new HashMap<String, String>();
 

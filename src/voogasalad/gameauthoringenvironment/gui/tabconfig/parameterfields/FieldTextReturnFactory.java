@@ -3,6 +3,7 @@ package voogasalad.gameauthoringenvironment.gui.tabconfig.parameterfields;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import voogasalad.gameauthoringenvironment.gui.utilconfig.*;
+import voogasalad.gameauthoringenvironment.gui.utilconfig.slider.*;
 
 public class FieldTextReturnFactory {
 
@@ -13,14 +14,23 @@ public class FieldTextReturnFactory {
         if(node instanceof ComboBox){
             return (String) ((ComboBox) node).getValue();
         }
-        if(node instanceof ImageSpecSlider){
-            return Double.toString(((ImageSpecSlider) node).getSliderValue());
+        if(node instanceof AttackRateSlider) {
+            return Double.toString(((AttackRateSlider) node).getSliderValue());
         }
         if(node instanceof HealthCostSlider) {
             return Double.toString(((HealthCostSlider) node).getSliderValue());
         }
-        if(node instanceof AttackRateSlider) {
-            return Double.toString(((HealthCostSlider) node).getSliderValue());
+        if(node instanceof ImageSpecEnemySpeedSlider){
+            return Double.toString(((ImageSpecEnemySpeedSlider) node).getSliderValue());
+        }
+        if(node instanceof ProjectileDistanceSlider) {
+            return Double.toString(((ProjectileDistanceSlider) node).getSliderValue());
+        }
+        if(node instanceof ProjectileSpeedSlider) {
+            return Double.toString(((ProjectileSpeedSlider) node).getSliderValue());
+        }
+        if(node instanceof RotationRangeSlider) {
+            return Double.toString(((RotationRangeSlider) node).getSliderValue());
         }
         if(node instanceof FileChooserButton) {
             return ((FileChooserButton) node).getImageString();
