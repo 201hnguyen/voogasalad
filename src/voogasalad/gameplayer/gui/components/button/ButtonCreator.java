@@ -41,6 +41,8 @@ public class ButtonCreator extends HBox {
             Button button = new Button();
             buttonMap.put(key, button);
             ImageView image = new ImageView(new Image(optionResources[choiceMap.get(key)]));
+            image.setFitWidth(80);
+            image.setFitHeight(80);
             button.setGraphic(image);
             button.setOnAction(e -> {
                 callAction(key);
@@ -67,6 +69,8 @@ public class ButtonCreator extends HBox {
         toggleChoice(key);
         Button toToggle = buttonMap.get(key);
         ImageView newImage = new ImageView(new Image(optionResources[choiceMap.get(key)]));
+        newImage.setFitWidth(80);
+        newImage.setFitHeight(80);
         toToggle.setGraphic(newImage);
     }
 
