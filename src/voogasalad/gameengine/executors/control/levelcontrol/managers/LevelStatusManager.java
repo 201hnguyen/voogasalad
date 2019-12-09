@@ -1,16 +1,16 @@
 package voogasalad.gameengine.executors.control.levelcontrol.managers;
 
-import voogasalad.gameengine.executors.control.levelcontrol.GameSceneStatus;
+import voogasalad.gameengine.executors.control.levelcontrol.Status;
 
 public class LevelStatusManager {
 
-    public static final GameSceneStatus INITIAL_GAME_SCENE_STATUS = GameSceneStatus.INACTIVE;
+    public static final Status INITIAL_GAME_SCENE_STATUS = Status.INACTIVE;
 
     private double myTotalElapsedTime;
     private double myElapsedTimeSinceLastFrame;
     private int myResources;
     private int myLives;
-    private GameSceneStatus myGameSceneStatus;
+    private Status myStatus;
     private int myScore;
 
     public LevelStatusManager() {
@@ -19,24 +19,24 @@ public class LevelStatusManager {
         myTotalElapsedTime = 0;
         myElapsedTimeSinceLastFrame = 0;
         myScore = 0;
-        myGameSceneStatus = INITIAL_GAME_SCENE_STATUS;
+        myStatus = INITIAL_GAME_SCENE_STATUS;
     }
 
-    public LevelStatusManager (int resources, int lives, int score, double totalElapsedTime, double elapsedTimeSinceLastFrame, GameSceneStatus gameSceneStatus) {
+    public LevelStatusManager (int resources, int lives, int score, double totalElapsedTime, double elapsedTimeSinceLastFrame, Status status) {
         myTotalElapsedTime = totalElapsedTime;
         myElapsedTimeSinceLastFrame = elapsedTimeSinceLastFrame;
         myResources = resources;
         myScore = score;
         myLives = lives;
-        myGameSceneStatus = gameSceneStatus;
+        myStatus = status;
     }
 
-    public void setGameSceneStatus(GameSceneStatus status) {
-        myGameSceneStatus = status;
+    public void setGameSceneStatus(Status status) {
+        myStatus = status;
     }
 
-    public GameSceneStatus getGameSceneStatus() {
-        return myGameSceneStatus;
+    public Status getGameSceneStatus() {
+        return myStatus;
     }
 
     public void setResources(int value) {
@@ -88,6 +88,6 @@ public class LevelStatusManager {
     }
 
     public LevelStatusManager getCopyOfStatusManager() {
-        return new LevelStatusManager(myResources, myLives, myScore, myTotalElapsedTime, myElapsedTimeSinceLastFrame, myGameSceneStatus);
+        return new LevelStatusManager(myResources, myLives, myScore, myTotalElapsedTime, myElapsedTimeSinceLastFrame, myStatus);
     }
 }

@@ -1,7 +1,7 @@
 package voogasalad.gameengine.executors.control.condition.game;
 
 import voogasalad.gameengine.executors.control.gamecontrol.Game;
-import voogasalad.gameengine.executors.control.levelcontrol.GameSceneStatus;
+import voogasalad.gameengine.executors.control.levelcontrol.Status;
 import voogasalad.gameengine.executors.control.action.game.GameAction;
 import voogasalad.gameengine.executors.control.condition.ConditionClassification;
 
@@ -20,6 +20,6 @@ public class CurrentLevelLossCondition extends GameCondition {
 
     @Override
     public boolean hasHappened(Game game) {
-        return game.getCurrentLevelStatus() == GameSceneStatus.LOST;
+        return game.getCurrentLevelStatus() == Status.LOST;
     }
 }

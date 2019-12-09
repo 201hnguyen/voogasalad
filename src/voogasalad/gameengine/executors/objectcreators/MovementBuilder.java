@@ -2,9 +2,12 @@ package voogasalad.gameengine.executors.objectcreators;
 
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.sprites.strategies.movement.MovementStrategy;
+import voogasalad.gameengine.executors.utils.ConfigurationTool;
 
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class MovementBuilder implements StrategyBuilder {
 
@@ -14,7 +17,7 @@ public class MovementBuilder implements StrategyBuilder {
 
     private String myType;
     private double mySpeed;
-    private LinkedList<Point2D.Double> myPath;
+    private List<Point2D.Double> myPath;
     private double myDistance;
 
     public MovementBuilder setType(String typeString) {
@@ -28,19 +31,11 @@ public class MovementBuilder implements StrategyBuilder {
 
     public MovementBuilder setPath(String pathString) {
         System.out.println("Set path string in movement builder:" + pathString);
-        LinkedList<Point2D.Double> parsedPath = new LinkedList<>();
-        String[] pointStrings = pathString.strip().split(";");
-        for(String pointString : pointStrings) {
-            Point2D.Double toAdd = new Point2D.Double();
-            String[] coordinateStrings = pointString.split(",");
-            toAdd.setLocation(Double.parseDouble(coordinateStrings[0]), Double.parseDouble(coordinateStrings[1]));
-            parsedPath.add(toAdd);
-        }
-        myPath = parsedPath;
+        myPath = ConfigurationTool.parsePath(pathString);
         return this;
     }
 
-    public LinkedList<Point2D.Double> getPath() {
+    public List<Point2D.Double> getPath() {
         return myPath;
     }
 
