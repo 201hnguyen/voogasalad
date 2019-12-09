@@ -79,7 +79,10 @@ public class ParameterCreator extends BorderPane{
         storeAllFieldTypes();
         addInputFields();
         addImagePreview();
-        this.setRight(configVBox);
+        ScrollPane confirgScroll = new ScrollPane();
+        confirgScroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        confirgScroll.setContent(configVBox);
+        this.setRight(confirgScroll);
         this.setLeft(previewVBox);
     }
 
