@@ -20,12 +20,14 @@ public class StatusBar extends HBox {
     private static final int INFO_BOX_SPACING = Integer.parseInt(resourceBundle.getString("InfoBoxSpacing"));
     private static final int ICON_SIZE = Integer.parseInt(resourceBundle.getString("StatusBarIconSize"));
     private static final int STATUS_BAR_FONT_SIZE = Integer.parseInt(resourceBundle.getString("StatusBarFontSize"));
+    private static final int STATUS_BAR_HEIGHT = Integer.parseInt(resourceBundle.getString("StatusBarHeight"));
 
     private List<HBox> currentDisplayedInfo;
 
     public StatusBar(){
         super(INFO_BOX_SPACING);
         currentDisplayedInfo = new ArrayList<>();
+        this.setMinHeight(STATUS_BAR_HEIGHT);
     }
 
     private HBox infoTrackerBox(String infoName, int infoValue) {
