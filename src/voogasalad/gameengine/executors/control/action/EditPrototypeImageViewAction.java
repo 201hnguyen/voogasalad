@@ -1,4 +1,4 @@
-package voogasalad.gameengine.executors.control.action.editprototype;
+package voogasalad.gameengine.executors.control.action;
 
 import org.w3c.dom.Element;
 import voogasalad.gameengine.executors.control.action.game.GameAction;
@@ -10,17 +10,16 @@ import voogasalad.gameengine.executors.sprites.Sprite;
 
 import java.util.List;
 
-public abstract class EditPrototypeAction implements GameAction, LevelAction {
+public class EditPrototypeImageViewAction implements GameAction, LevelAction {
 
-    public static final String EDITED_FIELD_TAG = "EditedField";
-    public static final String PROTOTYPE_ID_TAG = "PrototypeId";
-
+    private int myPrototypeId;
+    private String myImageViewPath;
     private boolean levelUpdateFinished;
     private boolean gameUpdateFinished;
-    private int myPrototypeId;
 
-    public EditPrototypeAction(Element editableObjectRoot) {
-        myPrototypeId = Integer.parseInt(editableObjectRoot.getElementsByTagName(PROTOTYPE_ID_TAG).item(0).getTextContent());
+    public EditPrototypeImageViewAction(Element editableObjectRoot) {
+        myPrototypeId = Integer.parseInt(editableObjectRoot.getElementsByTagName("PrototypeId").item(0).getTextContent());
+        myImageViewPath = editableObjectRoot.getElementsByTagName("EditedField").item(0).getTextContent();
     }
 
     @Override
@@ -32,15 +31,17 @@ public abstract class EditPrototypeAction implements GameAction, LevelAction {
 
     @Override
     public void execute(Level level) throws GameEngineException {
-        List<Sprite> onsScreenSprites = level.getSpriteManager().getOnsScreenSprites();
-        updateSprites(onsScreenSprites);
+        List<Sprite> onScreenSprites = level.getSpriteManager().getOnsScreenSprites();
+        updateSprites(onScreenSprites);
         levelUpdateFinished = true;
     }
 
-    protected abstract void updateSprites(List<Sprite> sprites) throws GameEngineException;
-
-    protected int getPrototypeId() {
-        return myPrototypeId;
+    private void updateSprites(List<Sprite> spritesList) {
+        for (Sprite sprite : spritesList) {
+            if (sprite.getPrototypeId()== myPrototypeId) {
+                sprite.updateImage(myImageViewPath);
+            }
+        }
     }
 
     @Override

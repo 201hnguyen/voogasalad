@@ -31,6 +31,8 @@ public interface Sprite {
     int getDestroyCost();
     void updateImage(String newImagePath);
     boolean isColliding(Sprite sprite);
-    LevelAction getEffectAction(Sprite sprite) throws GameEngineException;
     void updateAttackStrategy(AttackStrategy updatedStrategy);
+    void setHasBeenClicked(boolean bool);
+    boolean getHasBeenClicked();
+    LevelAction getEffectAction(Sprite sprite) throws GameEngineException;
 }

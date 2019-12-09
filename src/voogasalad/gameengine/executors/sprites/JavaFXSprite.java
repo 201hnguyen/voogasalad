@@ -34,6 +34,7 @@ public class JavaFXSprite implements Sprite {
     private int myPrototypeId;
     private double myHeight;
     private double myWidth;
+    private boolean hasBeenClicked;
 
     public JavaFXSprite(SpriteBuilder builder) throws GameEngineException {
         myPrototypeId = builder.getPrototypeId();
@@ -181,10 +182,21 @@ public class JavaFXSprite implements Sprite {
     }
 
     @Override
+    public void updateAttackStrategy(AttackStrategy updatedStrategy) {
+        myAttackStrategy = updatedStrategy;
+    }
+    @Override
     public LevelAction getEffectAction(Sprite other) throws GameEngineException {
         return myEffectStrategy.getAction(other.getId());
     }
-    public void updateAttackStrategy(AttackStrategy updatedStrategy) {
-        myAttackStrategy = updatedStrategy;
+
+    @Override
+    public void setHasBeenClicked(boolean bool) {
+        hasBeenClicked = bool;
+    }
+
+    @Override
+    public boolean getHasBeenClicked() {
+        return hasBeenClicked;
     }
 }

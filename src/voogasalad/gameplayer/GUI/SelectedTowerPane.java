@@ -12,6 +12,8 @@ import voogasalad.gameplayer.Player;
 
 public class SelectedTowerPane extends VBox {
 
+    private static final int ICON_SIZE = 40;
+
     private Player player;
     private PlayerVisualization playerVisualization;
     private ActionsProcessor actionsProcessor;
@@ -26,6 +28,8 @@ public class SelectedTowerPane extends VBox {
     public void removeTower(Sprite sprite, int x, int y) {
         HBox removeTowerBox = new HBox();
         ImageView towerImage = new ImageView(new Image(sprite.getImagePath()));
+        towerImage.setFitWidth(ICON_SIZE);
+        towerImage.setFitHeight(ICON_SIZE);
         Label removeTowerButton = new Label("Remove Tower");
         removeTowerButton.setOnMouseClicked(e -> {
             actionsProcessor.processSellTowerAction(x,y);
