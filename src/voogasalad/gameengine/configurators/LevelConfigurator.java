@@ -26,7 +26,7 @@ public class LevelConfigurator {
     public static final String SOUND_PATH_KEY = "SoundFileNodeTag";
     public static final String PROTOTYPE_SPECIFIED_FOR_LEVEL_NODE_KEY = "PrototypesSpecifiedNodeTag";
     public static final String DEFAULT_BACKGROUND_PATH = "images/whitebackground.jpg";
-    public static final String DEFAULT_SOUND_PATH = "sounds/PvZ.mp3";
+    public static final String DEFAULT_SOUND_PATH = "BlankNoise.mp3";
 
     private Element myCurrentLevelRoot;
     private List<Sprite> myAvailablePrototypesList;

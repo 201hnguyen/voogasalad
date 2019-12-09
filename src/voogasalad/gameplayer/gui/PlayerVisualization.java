@@ -25,6 +25,7 @@ public class PlayerVisualization extends BorderPane {
 
     private static final String RESOURCE_PATH = "resources.player.PlayerViewOptions";
     private static final ResourceBundle resourceBundle = ResourceBundle.getBundle(RESOURCE_PATH);
+    private static final String SOUND_BASE_PATH = "sounds/";
     private static final double SCENE_WIDTH = Double.parseDouble(resourceBundle.getString("SceneWidth"));
     private static final double SCENE_HEIGHT = Double.parseDouble(resourceBundle.getString("SceneHeight"));
     private static final double PANEL_POSITION = Double.parseDouble(resourceBundle.getString("RightPanelPosition"));
@@ -157,7 +158,7 @@ public class PlayerVisualization extends BorderPane {
     }
 
     private void setBackgroundSound(String backgroundSoundPath) {
-        backgroundSound = new Media(new File(backgroundSoundPath).toURI().toString());
+        backgroundSound = new Media(new File(SOUND_BASE_PATH + backgroundSoundPath).toURI().toString());
         soundPlayer = new MediaPlayer(backgroundSound);
         soundPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         soundPlayer.setMute(isMuted);
