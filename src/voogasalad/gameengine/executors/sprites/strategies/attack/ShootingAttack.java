@@ -37,11 +37,6 @@ public class ShootingAttack implements AttackStrategy {
     }
 
     @Override
-    public Double getAttackRate() {
-        return attackRate;
-    }
-
-    @Override
     public AttackStrategy makeClone() throws GameEngineException {
         return myBuilder.build();
     }

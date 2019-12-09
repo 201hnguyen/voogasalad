@@ -1,7 +1,6 @@
 package voogasalad.gameengine.executors.sprites.strategies.rotation;
 
 import javafx.util.Pair;
-import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.objectcreators.RotationBuilder;
 
 public class LimitedRotation implements RotationStrategy {
@@ -27,8 +26,7 @@ public class LimitedRotation implements RotationStrategy {
         return currentAngle + diffAngle;
     }
 
-    @Override
-    public void determineTargetAngle(Double currentAngle) {
+    private void determineTargetAngle(Double currentAngle) {
         Double lowerBound = validRotationRange.getKey();
         Double upperBound = validRotationRange.getValue();
         if (currentAngle >= upperBound){
@@ -39,8 +37,7 @@ public class LimitedRotation implements RotationStrategy {
         }
     }
 
-    @Override
-    public void determineRotationDirection(Double currentAngle) {
+    private void determineRotationDirection(Double currentAngle) {
         if (currentAngle.equals(targetAngle)) {
             rotationDirection = 0;
         } else if (currentAngle > targetAngle) {
@@ -51,12 +48,7 @@ public class LimitedRotation implements RotationStrategy {
     }
 
     @Override
-    public int getRotationDirection() {
-        return rotationDirection;
-    }
-
-    @Override
-    public RotationStrategy makeClone() throws GameEngineException {
-        return myBuilder.build();
+    public RotationStrategy makeClone() {
+        return new LimitedRotation(myBuilder);
     }
 }
