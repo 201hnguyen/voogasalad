@@ -74,6 +74,7 @@ public class PlayerVisualization extends BorderPane {
     }
 
     public void setNewLevel(List<Sprite> towers, List<Sprite> enemies, String backgroundImagePath, String backgroundSoundPath, Map<String, Integer> gameInfoMap){
+        myPlayer.pauseTimeline();
         isRunning = false;
         myStopWatch = new StopWatch();
         statusBar.updateDisplayedInfo(gameInfoMap);
