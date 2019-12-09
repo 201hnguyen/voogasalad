@@ -1,7 +1,7 @@
-package voogasalad.gameplayer.GUI;
+package voogasalad.gameplayer.gui.components.button;
 import javafx.scene.control.Button;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import voogasalad.gameplayer.gui.components.button.ButtonController;
 
 import java.lang.reflect.Method;
 import java.util.Collections;
