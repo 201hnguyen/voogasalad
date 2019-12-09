@@ -8,13 +8,12 @@ import org.w3c.dom.Document;
 import voogasalad.gameauthoringenvironment.bus.Bus;
 import voogasalad.gameauthoringenvironment.gui.AddToXML;
 import voogasalad.gameauthoringenvironment.gui.levelconfig.LevelConfigPane;
+import voogasalad.gameauthoringenvironment.gui.tabconfig.parameterfields.ObjectPreviewAndActive;
 import voogasalad.gameauthoringenvironment.gui.tabconfig.parameterfields.ParameterCreator;
 import voogasalad.gameengine.executors.control.levelcontrol.Level;
 
 import javax.xml.parsers.ParserConfigurationException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class TabPaneCreator {
     private static final String SPRITE_OPTIONS_RESOURCE = "resources.gae.tabcreation.SpriteOptions";
@@ -26,11 +25,12 @@ public class TabPaneCreator {
     private Bus busInstance;
     private ResourceBundle typeToParams;
     private ResourceBundle paramFieldType;
-    private BorderPane bp;
     private LevelConfigPane levelConfigPane;
-    private Map<String, Map<String, Map<String, String>>> allActiveObjects;
+    private Map<String, Map<String, String>> allActiveObjects;
+    private List<ObjectPreviewAndActive> allActiveObjectObjects;
 
     public TabPaneCreator(AddToXML sendToXMLParam, Document createdXMLParam, Bus busInstanceParam) {
+        allActiveObjectObjects = new ArrayList<>();
         allActiveObjects = new HashMap<>();
         sendToXML = sendToXMLParam;
         createdXML = createdXMLParam;
@@ -50,7 +50,8 @@ public class TabPaneCreator {
     }
 
     private TabPane createTabPane() {
-        levelConfigPane = new LevelConfigPane(sendToXML, createdXML, busInstance, allActiveObjects);
+        String[] objectsFromResource = Arrays.copyOf(typeToParams.keySet().toArray(), typeToParams.keySet().toArray().length, String[].class);
+        levelConfigPane = new LevelConfigPane(sendToXML, createdXML, busInstance, allActiveObjects, allActiveObjectObjects, objectsFromResource);
         TabPane tabPane = new TabPane();
         createPane(tabPane, levelConfigPane);
         Tab levelTab = new Tab("Level");
@@ -60,7 +61,7 @@ public class TabPaneCreator {
         return tabPane;
     }
 
-    private BorderPane createPane(TabPane tabPane, LevelConfigPane levelConfigPane) {
+    private void createPane(TabPane tabPane, LevelConfigPane levelConfigPane) {
         typeToParams.getKeys().asIterator().forEachRemaining(key -> {
             try {
                 Tab objectTab = new Tab(key, new ParameterCreator(key, typeToParams.getString(key).split(","), paramFieldType, levelConfigPane, allActiveObjects));
@@ -69,6 +70,5 @@ public class TabPaneCreator {
                 e.printStackTrace();
             }
         });
-        return bp;
     }
 }

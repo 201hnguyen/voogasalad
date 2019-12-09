@@ -50,7 +50,7 @@ public class ParameterCreator extends BorderPane{
     private LevelConfigPane levelConfigPane;
     private Map<String, Map<String, String>> activeObjects;
     private ClearFieldsFactory clearFieldsFactory;
-    private Map<String, Map<String, Map<String, String>>> allActiveObjectMap;
+    private Map<String, Map<String, String>> allActiveObjectMap;
     private String imageString;
     private ImageView imageView;
     double imageViewWidth = 0;
@@ -61,7 +61,7 @@ public class ParameterCreator extends BorderPane{
 
 
     public ParameterCreator(String gameObjectNameParam, String[] propertiesParam, ResourceBundle paramFieldTypeParam,
-                            LevelConfigPane levelConfigPaneParam, Map<String, Map<String, Map<String, String>>> allActiveObjectMapParam) throws ParserConfigurationException {
+                            LevelConfigPane levelConfigPaneParam, Map<String, Map<String, String>> allActiveObjectMapParam) throws ParserConfigurationException {
         fileChooserButton = new FileChooserButton();
         allActiveObjectMap = allActiveObjectMapParam;
         clearFieldsFactory = new ClearFieldsFactory();
