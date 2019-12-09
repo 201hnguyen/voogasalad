@@ -148,7 +148,7 @@ public class MapConfig {
 
 
         levelConfigScene = new Scene(root, window_WIDTH, window_HEIGHT);
-        levelConfigPage.setTitle("New Level Configuration");
+        levelConfigPage.setTitle("New Map Configuration");
         levelConfigPage.setScene(levelConfigScene);
         levelConfigPage.show();
 

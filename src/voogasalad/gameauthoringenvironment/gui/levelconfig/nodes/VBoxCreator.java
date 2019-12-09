@@ -43,7 +43,7 @@ public class VBoxCreator extends VBox {
         return createdLabel;
     }
 
-    public void addToObjectHBox(Node icon){
+    public void addToObjectHBox(Node icon, String s){
         createdObjects.getChildren().add(icon);
     }
 

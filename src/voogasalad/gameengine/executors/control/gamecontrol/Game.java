@@ -1,24 +1,20 @@
 package voogasalad.gameengine.executors.control.gamecontrol;
 
 import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
+import voogasalad.gameengine.api.ActionsProcessor;
 import voogasalad.gameengine.api.GameSceneObject;
-import voogasalad.gameengine.api.UIActionsProcessor;
-//import voogasalad.gameengine.configurators.EngineConfigurator;
 import voogasalad.gameengine.configurators.GameConfigurator;
+import voogasalad.gameengine.executors.control.condition.game.GameCondition;
 import voogasalad.gameengine.executors.control.gamecontrol.controllers.GameLevelsController;
 import voogasalad.gameengine.executors.control.gamecontrol.controllers.GameRulesController;
-import voogasalad.gameengine.executors.control.levelcontrol.GameSceneStatus;
+import voogasalad.gameengine.executors.control.levelcontrol.Status;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.control.levelcontrol.Level;
+import voogasalad.gameengine.executors.utils.ConfigurationTool;
 import voogasalad.gameengine.executors.sprites.Sprite;
 import voogasalad.gameengine.executors.utils.SpriteArchetype;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
-import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 
 public class Game {
@@ -27,19 +23,23 @@ public class Game {
     private GameLevelsController myGameLevelsController;
     private GameRulesController myGameRulesController;
     private Document myGameConfigDocument;
-    private UIActionsProcessor myCurrentUIActionsProcessor;
+    private ActionsProcessor myCurrentActionsProcessor;
     private GameActionsRequester myGameActionsRequester;
     private boolean switchedLevel;
+    private List<Sprite> myCompletePrototypesCollection;
+    private Status myStatus;
 
     public Game(Document gameConfigDocument) throws GameEngineException {
+        myStatus = Status.ONGOING;
         myGameRulesController = new GameRulesController();
         myGameActionsRequester = new GameActionsRequester();
-        myGameConfigDocument = configureWithTestDocument();
+        myGameConfigDocument = ConfigurationTool.configureWithTestDocument("src/resources/player/MockData.xml");
         GameConfigurator gameConfigurator = new GameConfigurator(myGameConfigDocument);
+        myCompletePrototypesCollection = gameConfigurator.getGamePrototypesCollection();
         myGameRulesController.addGameConditionsAsCollection(gameConfigurator.configureGameConditions());
         myGameLevelsController = gameConfigurator.loadLevelsFromXML();
         myCurrentLevel = myGameLevelsController.loadBaseLevel();
-        myCurrentUIActionsProcessor = new UIActionsProcessor(myCurrentLevel.getActionsRequester(), myGameActionsRequester);
+        myCurrentActionsProcessor = new ActionsProcessor(myCurrentLevel.getActionsRequester(), myGameActionsRequester);
         switchedLevel = false;
         loadNextLevel();
     }
@@ -61,47 +61,62 @@ public class Game {
 
     public void loadNextLevel() {
         myCurrentLevel = myGameLevelsController.getNextLevel(myCurrentLevel);
-        myCurrentLevel.getStatusManager().setGameSceneStatus(GameSceneStatus.ONGOING);
-        myCurrentUIActionsProcessor.updateLevel(myCurrentLevel);
+        myCurrentLevel.getStatusManager().setGameSceneStatus(Status.ONGOING);
+        myCurrentActionsProcessor.updateLevelActionsRequester(myCurrentLevel.getActionsRequester());
         switchedLevel = true;
     }
 
-    public GameSceneStatus getCurrentLevelStatus() {
+    public Status getCurrentLevelStatus() {
         return myCurrentLevel.getStatusManager().getGameSceneStatus();
     }
 
-    public UIActionsProcessor getUIActionProcessor() {
-        return myCurrentUIActionsProcessor;
+    public ActionsProcessor getActionsProcessor() {
+        return myCurrentActionsProcessor;
     }
 
-    public List<Sprite> getSpritePrototypes() {
+    public List<Sprite> getCurrentLevelSpritePrototypes() {
         return myCurrentLevel.getSpriteManager().getSpritePrototypes();
     }
 
+    public List<Sprite> getCompletePrototypesCollection() {
+        return myCompletePrototypesCollection;
+    }
+
     public List<Sprite> getSpritePrototypesByArchetype(SpriteArchetype spriteArchetype) throws GameEngineException {
-        return myCurrentLevel.getSpriteManager().getPrototypesForArchetype(spriteArchetype);
+        return myCurrentLevel.getSpriteManager().getCopyPrototypesForArchetype(spriteArchetype);
     }
 
     public String getCurrentLevelBackgroundPath() {
         return myCurrentLevel.getBackgroundPath();
     }
 
-    private Document configureWithTestDocument() throws GameEngineException {
-        File testFile = new File("src/resources/player/MockData2.xml");
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder ;
-        try {
-            builder = factory.newDocumentBuilder();
-            Document doc = builder.parse(testFile);
-            return doc;
-        } catch (ParserConfigurationException | SAXException | IOException e) {
-            throw new GameEngineException(e, "ConfigurationFailedXML");
-        }
-    }
-
     public boolean didLevelSwitch() {
         boolean ret = switchedLevel;
         switchedLevel = false;
         return ret;
+    }
+
+    public int getCurrentTotalGameScore() {
+        return myGameLevelsController.getTotalScoreForAllLevels();
+    }
+
+    public Collection<GameCondition> getAllGameConditions() {
+        return myGameRulesController.getGameConditions();
+    }
+
+    public List<Level> getLevels() {
+        return myGameLevelsController.getLevels();
+    }
+
+    public int getCurrentLevelId() {
+        return myCurrentLevel.getLevelId();
+    }
+
+    public void setGameStatus(Status status) {
+        myStatus = status;
+    }
+
+    public Status getGameStatus() {
+        return myStatus;
     }
 }

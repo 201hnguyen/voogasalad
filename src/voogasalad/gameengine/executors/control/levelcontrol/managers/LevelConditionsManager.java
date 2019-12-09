@@ -36,4 +36,8 @@ public class LevelConditionsManager {
                 forEach(condition -> myLevelConditions.remove(condition));
         return actionsToExecute;
     }
+
+    public Set<LevelCondition> getLevelConditions() {
+        return myLevelConditions;
+    }
 }

@@ -3,22 +3,27 @@ package voogasalad.gameengine.executors.objectcreators;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.sprites.strategies.movement.MovementStrategy;
 
-import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.LinkedList;
 
-public class MovementBuilder {
-    private String movementType;
+public class MovementBuilder implements StrategyBuilder {
+
+    private static final String CLASS_PATH = "voogasalad.gameengine.executors.sprites.strategies.movement.";
+
+    public static final double DEFAULT_DISTANCE = 100;
+
+    private String myType;
     private double mySpeed;
     private LinkedList<Point2D.Double> myPath;
+    private double myDistance;
 
-    public MovementBuilder setMovementType(String typeString) {
-        movementType = typeString.strip();
+    public MovementBuilder setType(String typeString) {
+        myType = typeString.strip();
         return this;
     }
 
-    public String getMovementType() {
-        return movementType;
+    public String getType() {
+        return myType;
     }
 
     public MovementBuilder setPath(String pathString) {
@@ -45,13 +50,30 @@ public class MovementBuilder {
         return this;
     }
 
+    public MovementBuilder setDistance(String distanceString) {
+        try {
+            myDistance = Double.parseDouble(distanceString);
+        } catch (NumberFormatException e) {
+            myDistance = DEFAULT_DISTANCE;
+        }
+        return this;
+    }
+
     public double getSpeed() {
         return mySpeed;
     }
 
+    public double getDistance() {
+        return myDistance;
+    }
 
+    @Override
     public MovementStrategy build() throws GameEngineException {
-        StrategiesFactory movementStrategyFactory = new StrategiesFactory();
-        return movementStrategyFactory.makeMovement(this);
+        try {
+            return (MovementStrategy) Class.forName(CLASS_PATH + myType).getConstructor(MovementBuilder.class).newInstance(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new GameEngineException(e, "SpriteMovementInitializationFailed");
+        }
     }
 }

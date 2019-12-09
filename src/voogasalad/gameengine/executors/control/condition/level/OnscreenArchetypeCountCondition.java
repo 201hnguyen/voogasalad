@@ -18,14 +18,14 @@ public class OnscreenArchetypeCountCondition extends LevelCondition {
     private int myMarkedCount;
     private SpriteArchetype myArchetype;
 
-    public OnscreenArchetypeCountCondition(SpriteArchetype archetype, int markedCount, ConditionClassification conditionClassification, Set<LevelAction> actions) {
-        super(conditionClassification, actions);
+    public OnscreenArchetypeCountCondition(int levelConditionId, SpriteArchetype archetype, int markedCount, ConditionClassification conditionClassification, Set<LevelAction> actions) {
+        super(levelConditionId, conditionClassification, actions);
         myArchetype = archetype;
         myMarkedCount = markedCount;
     }
 
-    public OnscreenArchetypeCountCondition(Map<String, String> parameters, Set<LevelAction> actions) {
-        super(parameters, actions);
+    public OnscreenArchetypeCountCondition(int levelConditionId, Map<String, String> parameters, Set<LevelAction> actions) {
+        super(levelConditionId, parameters, actions);
         try {
             myArchetype = SpriteArchetype.valueOf(parameters.get(ARCHETYPE_MAP_KEY));
         } catch (NullPointerException | IllegalArgumentException e) {
@@ -40,6 +40,6 @@ public class OnscreenArchetypeCountCondition extends LevelCondition {
 
     @Override
     public boolean hasHappened(Level level) {
-        return level.getSpriteManager().getOnsScreenSpritesByArchetype(myArchetype).size() == myMarkedCount;
+        return level.getSpriteManager().getOnScreenSpritesByArchetype(myArchetype).size() == myMarkedCount;
     }
 }

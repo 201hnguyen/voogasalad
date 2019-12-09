@@ -8,90 +8,77 @@ import org.w3c.dom.Document;
 import voogasalad.gameauthoringenvironment.bus.Bus;
 import voogasalad.gameauthoringenvironment.gui.AddToXML;
 import voogasalad.gameauthoringenvironment.gui.levelconfig.LevelConfigPane;
+
 import voogasalad.gameauthoringenvironment.gui.mapconfig.GameInfoConfig;
+import voogasalad.gameauthoringenvironment.gui.tabconfig.parameterfields.ObjectPreviewAndActive;
 import voogasalad.gameauthoringenvironment.gui.tabconfig.parameterfields.ParameterCreator;
+import voogasalad.gameengine.executors.control.levelcontrol.Level;
 
 import javax.xml.parsers.ParserConfigurationException;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class TabPaneCreator {
-    private static final String SPRITE_OPTIONS_RESOURCE = "resources.gae.SpriteOptions";
-    private static final String PARAM_FIELD_TYPE_RESOURCE = "resources.gae.ParamToInputType";
-    private static final String TAB_NAMES = "resources.gae.TabNames";
-    private static final String ENEMY_ATTRIBUTES = "resources.gae.EnemyAttributes";
+    private static final String SPRITE_OPTIONS_RESOURCE = "resources.gae.tabcreation.SpriteOptions";
+    private static final String PARAM_FIELD_TYPE_RESOURCE = "resources.gae.tabcreation.ParamToInputType";
 
-    private ResourceBundle myTabNames;
-    private TabPane myTabPane;
-    private int height = 500;
-    private AddToXML sendToXML;
-    private Document createdXML;
-    private Bus busInstance;
-    private ResourceBundle defaultProperties;
-    private ResourceBundle typeToParams;
-    private ResourceBundle paramFieldType;
-    private BorderPane bp;
+private TabPane myTabPane;
+private AddToXML sendToXML;
+private Document createdXML;
+private Bus busInstance;
+private ResourceBundle typeToParams;
+private ResourceBundle paramFieldType;
+private LevelConfigPane levelConfigPane;
+private Map<String, Map<String, String>> allActiveObjects;
+private List<ObjectPreviewAndActive> allActiveObjectObjects;
 
-    public TabPaneCreator(AddToXML sendToXMLParam, Document createdXMLParam, Bus busInstanceParam) {
-        sendToXML = sendToXMLParam;
-        createdXML = createdXMLParam;
-        busInstance = busInstanceParam;
-        defaultProperties = ResourceBundle.getBundle(ENEMY_ATTRIBUTES);
-        typeToParams = ResourceBundle.getBundle(SPRITE_OPTIONS_RESOURCE);
-        paramFieldType = ResourceBundle.getBundle(PARAM_FIELD_TYPE_RESOURCE);
-        myTabPane = createTabPane();
-    }
+public TabPaneCreator(AddToXML sendToXMLParam, Document createdXMLParam, Bus busInstanceParam) {
+allActiveObjectObjects = new ArrayList<>();
+allActiveObjects = new HashMap<>();
+sendToXML = sendToXMLParam;
+createdXML = createdXMLParam;
+busInstance = busInstanceParam;
+typeToParams = ResourceBundle.getBundle(SPRITE_OPTIONS_RESOURCE);
+paramFieldType = ResourceBundle.getBundle(PARAM_FIELD_TYPE_RESOURCE);
+myTabPane = createTabPane();
+myTabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+}
 
-    /**
-     * A getter method to return local variable myTabPane
-     * @return a TabPane with tabs already added
-     */
+/**
+  * A getter method to return local variable myTabPane
+  * @return a TabPane with tabs already added
+  */
     public TabPane getTabPane() {
+
         return myTabPane;
     }
 
-    // create a TabPane with tab names from a resource file
-    private TabPane createTabPane() {
 
-        TabPane tabPane = new TabPane();
-        //tabPane.setMaxHeight(height/10);
-        myTabNames = ResourceBundle.getBundle(TAB_NAMES);
+private TabPane createTabPane() {
+String[] objectsFromResource = Arrays.copyOf(typeToParams.keySet().toArray(), typeToParams.keySet().toArray().length, String[].class);
 
-        //refactor to use reflection!!
-//        for (String s : myTabNames.keySet()) {
-//            String tabName = myTabNames.getString(s);
-//            Tab tab = new Tab(s);
-//            tabPane.getTabs().add(tab);
-//        }
+levelConfigPane = new LevelConfigPane(sendToXML, createdXML, busInstance, allActiveObjects, allActiveObjectObjects, objectsFromResource);
+    Tab gameTab = new Tab("Game Info");
+    gameTab.setContent(new GameInfoConfig());
 
+TabPane tabPane = new TabPane();
+tabPane.getTabs().add(gameTab);
+createPane(tabPane, levelConfigPane);
+Tab levelTab = new Tab("Level");
+levelTab.setContent(levelConfigPane);
 
-//        Tab towersTab = new TowerConfigTab().getTab();
-//        Tab obstaclesTab = new ObstacleConfigTab().getTab();
-//        Tab enemiesTab = new Tab("Enemies", new GAE_ObjectConfig("Enemy", defaultProperties));
-        createPane(tabPane);
-        Tab levelTab = new Tab("Level");
-        levelTab.setContent(new LevelConfigPane(sendToXML, createdXML, busInstance));
-//
-//        tabPane.getTabs().add(towersTab);
-//        tabPane.getTabs().add(obstaclesTab);
-//        tabPane.getTabs().add(enemiesTab);
-        tabPane.getTabs().add(levelTab);
-        Tab gameTab = new Tab("Game");
-        gameTab.setContent(new GameInfoConfig());
-        tabPane.getTabs().add(gameTab);
+tabPane.getTabs().add(levelTab);
 
+return tabPane;
+}
 
-        return tabPane;
-    }
-
-    private BorderPane createPane(TabPane tabPane) {
-        typeToParams.getKeys().asIterator().forEachRemaining(key -> {
-            try {
-                Tab objectTab = new Tab(key, new ParameterCreator(key, typeToParams.getString(key).split(","), paramFieldType) );
-                tabPane.getTabs().add(objectTab);
-            } catch (ParserConfigurationException e) {
-                e.printStackTrace();
-            }
-        });
-        return bp;
-    }
+private void createPane(TabPane tabPane, LevelConfigPane levelConfigPane) {
+typeToParams.getKeys().asIterator().forEachRemaining(key -> {
+try {
+Tab objectTab = new Tab(key, new ParameterCreator(key, typeToParams.getString(key).split(","), paramFieldType, levelConfigPane, allActiveObjects, allActiveObjectObjects));
+tabPane.getTabs().add(objectTab);
+} catch (ParserConfigurationException e) {
+e.printStackTrace();
+}
+});
+}
 }

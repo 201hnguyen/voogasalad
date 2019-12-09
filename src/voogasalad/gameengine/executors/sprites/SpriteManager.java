@@ -9,17 +9,25 @@ import java.util.Map;
 public interface SpriteManager {
     void addSpritePrototype(Sprite sprite);
 
-    void makeSpriteFromPrototype(double xPos, double yPos, int prototypeId) throws GameEngineException;
+    Sprite makeSpriteFromPrototype(double xPos, double yPos, int prototypeId) throws GameEngineException;
 
-    List<Sprite> getOnScreenSprites();
+    List<Sprite> getCopyOnScreenSprites();
+
+    List<Sprite> getOnsScreenSprites();
 
     List<Sprite> getSpritePrototypes();
 
-    List<Sprite> getOnsScreenSpritesByArchetype(SpriteArchetype archetype);
+    List<Sprite> getOnScreenSpritesByArchetype(SpriteArchetype archetype);
 
-    void removeSpriteById(int spriteId);
+    Sprite removeSpriteById(int spriteId);
 
-    List<Sprite> getPrototypesForArchetype(SpriteArchetype archetype) throws GameEngineException;
+    Sprite getSpriteById(int spriteId);
 
-    void executeSpriteNextState(double elapsedTime);
+    List<Sprite> getCopyPrototypesForArchetype(SpriteArchetype archetype) throws GameEngineException;
+
+    void executeSpriteNextState(double elapsedTime) throws GameEngineException;
+
+    Sprite removeSpriteTowerByCoordinates(double xpos, double ypos);
+
+    void handleProjectileCollisions() throws GameEngineException;
 }

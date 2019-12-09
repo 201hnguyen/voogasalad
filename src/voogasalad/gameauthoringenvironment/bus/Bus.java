@@ -1,17 +1,42 @@
 package voogasalad.gameauthoringenvironment.bus;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
+import org.xml.sax.SAXException;
+import voogasalad.gameplayer.GUI.ErrorPane;
 import voogasalad.gameauthoringenvironment.gui.*;
-import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.w3c.dom.Document;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameplayer.Player;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
+import java.io.IOException;
+import java.util.function.Consumer;
+
 public class Bus {
+
+    private final static double IMAGE_HEIGHT = 50;
+    private final static double LOGO_WIDTH = 370;
+    private final static double LOGO_HEIGHT = 350;
+    private final String ERROR_MESSAGE = "Wrong file type selected for upload: select XML";
+
+  //  private final static int GAE_WIDTH = 800;
+   // private final static int GAE_HEIGHT = 500;
+
+
     private Stage currentStage;
+
     private int width;
     private int height;
     private BorderPane root;
@@ -20,7 +45,8 @@ public class Bus {
     private Scene gamePlayerScene;
     private SceneCreator gaeObject;
     private Document createdXML;
-    private Group busRoot;
+    private VBox busRoot;
+    private ErrorPane errorPane;
 
     public Bus(Stage currentStageParam, BorderPane rootParam, int widthParam, int heightParam){
         currentStage = currentStageParam;
@@ -28,50 +54,86 @@ public class Bus {
         width = widthParam;
         height = heightParam;
         gaeObject = new SceneCreator(widthParam, heightParam, this);
-
+        errorPane = new ErrorPane();
     }
 
     /**
      * This method should return frontend to chose GAE or GamePlayer
      */
-    public Scene getBusScene(){
+    public Scene getBusScene() {
         return createBusScene();
     }
 
-    public Scene createBusScene(){
-        busRoot = new Group();
-        busRoot.getChildren().add(changeToGAEButton());
-        //busRoot.getChildren().add(changeToGamePlayerButton());
-        return new Scene(busRoot, width, height);
+    public Scene createBusScene() {
+        busRoot = new VBox();
+        busRoot.setAlignment(Pos.CENTER);
+        busRoot.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+        ImageView logo = new ImageView("TDLogo.png");
+        logo.setFitWidth(LOGO_WIDTH);
+        logo.setFitHeight(LOGO_HEIGHT);
+        busRoot.getChildren().add(logo);
+        busRoot.getChildren().add(createMenuButton("new-game.png", "new-game-hover.png", e -> changeToGAE()));
+        busRoot.getChildren().add(createMenuButton("load-game.png", "load-game-hover.png", e -> {
+            try {
+                loadGameHandler();
+            } catch (GameEngineException ex) {
+                System.out.println(ex.getMessage());
+                //TODO: catch this GameEngineException
+            }
+        }));
+        return new Scene(busRoot,width,height);
     }
 
-    private Button changeToGAEButton(){
-        Button myButton = new Button("Enter GAE");
-        myButton.setOnMouseClicked(event -> {
-            changeToGAE();
-            //FOR TESTING
-            //currentStage.setScene(levelConfigScene.getScene(root));
-        });
-        return myButton;
-    }
+//    private Label changeToGAEButton(){
+//
+////        myButton.setOnMouseClicked(event -> {
+////            changeToGAE();
+////            //FOR TESTING
+////            //currentStage.setScene(levelConfigScene.getScene(root));
+////        });
+//        return createMenuButton("newgame.png", "newgame-hover.png", e -> changeToGAE());
+//    }
+
 
     public void changeToGAE(){
         currentStage.setScene(gaeObject.createGAEScene(root));
     }
 
-
-    public void goToPlayer(Document createdXML) throws GameEngineException {
-        Player player = new Player(currentStage, createdXML);
+    private Label createMenuButton(String imagePath, String imagePathHover, Consumer consumer) {
+        Label myButton = new Label();
+        ImageView image = new ImageView(new Image(imagePath));
+        ImageView imageHover = new ImageView(new Image(imagePathHover));
+        image.setFitHeight(IMAGE_HEIGHT);
+        image.setPreserveRatio(true);
+        imageHover.setFitHeight(IMAGE_HEIGHT);
+        imageHover.setPreserveRatio(true);
+        myButton.setGraphic(image);
+        myButton.setOnMouseEntered(e -> myButton.setGraphic(imageHover));
+        myButton.setOnMouseExited(e -> myButton.setGraphic(image));
+        myButton.setOnMouseClicked(consumer::accept);
+        return myButton;
     }
 
 
-    //not doing anything yet
-    private Button changeToGamePlayerButton(){
-        Button myButton = new Button("Load File and Play Game");
-        myButton.setOnMouseClicked(event -> {
-            changeToGAE();
-        });
-        return myButton;
+    public void goToPlayer(Document createdXML) throws GameEngineException {
+        new Player(currentStage, createdXML);
+    }
+
+    private void loadGameHandler() throws GameEngineException {
+        FileChooser fileChooser = new FileChooser();
+        File selectedFile = fileChooser.showOpenDialog(currentStage);
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder;
+        try {
+            builder = factory.newDocumentBuilder();
+            Document doc = builder.parse(selectedFile);
+            goToPlayer(doc);
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+//            throw new GameEngineException(e, "ConfigurationFailedXML");
+            errorPane.errorMessage(ERROR_MESSAGE);
+            //TODO: dont hard code the error message -- also figure out how to connect error pane up to game engine exception messages
+
+        }
     }
 
 }

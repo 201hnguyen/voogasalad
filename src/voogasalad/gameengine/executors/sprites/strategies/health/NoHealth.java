@@ -1,14 +1,14 @@
 package voogasalad.gameengine.executors.sprites.strategies.health;
 
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
-import voogasalad.gameengine.executors.objectcreators.StrategiesFactory;
-
-import java.util.HashMap;
-import java.util.Map;
+import voogasalad.gameengine.executors.objectcreators.HealthBuilder;
 
 public class NoHealth implements HealthStrategy {
 
-    public NoHealth(Map<String, Object> parameters) {}
+
+    public NoHealth(HealthBuilder healthBuilder) {
+        //do nothing
+    }
 
     @Override
     public Integer getHealth() {
@@ -16,13 +16,17 @@ public class NoHealth implements HealthStrategy {
     }
 
     @Override
-    public void alterHealthByAddition(int value) {
+    public void addHealth(int value) {
+        // do nothing
+    }
+
+    @Override
+    public void chunkHealth(int value) {
         // do nothing
     }
 
     @Override
     public HealthStrategy makeClone() throws GameEngineException {
-        StrategiesFactory strategiesFactory = new StrategiesFactory();
-        return strategiesFactory.makeHealth("NoHealth", new HashMap<>());
+        return new NoHealth(new HealthBuilder());
     }
 }

@@ -1,51 +1,88 @@
 package voogasalad.gameplayer.GUI;
 import javafx.animation.Timeline;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
+import javafx.geometry.NodeOrientation;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import voogasalad.gameengine.api.GameSceneObject;
+import voogasalad.gameengine.api.ActionsProcessor;
+import voogasalad.gameengine.api.Engine;
 import voogasalad.gameengine.executors.sprites.Sprite;
+import voogasalad.gameplayer.Player;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-public class PlayerVisualization extends Pane {
+public class PlayerVisualization extends BorderPane {
 
-    private static final double SCENE_WIDTH = 1000;
-    private static final double SCENE_HEIGHT = 630;
-    private static final double PANEL_POSITION = 700;
-    private static final double LAYOUT = 0;
-    private static final String TITLE = "Player";
-    private static final int STATUS_BAR_WIDTH = 300;
-    private static final int STATUS_BAR_HEIGHT = 50;
+    private static final String RESOURCE_PATH = "resources.player.PlayerViewOptions";
+    private static final ResourceBundle resourceBundle = ResourceBundle.getBundle(RESOURCE_PATH);
+    private static final double SCENE_WIDTH = Double.parseDouble(resourceBundle.getString("SceneWidth"));
+    private static final double SCENE_HEIGHT = Double.parseDouble(resourceBundle.getString("SceneHeight"));
+    private static final double PANEL_POSITION = Double.parseDouble(resourceBundle.getString("RightPanelPosition"));
+    private static final String TITLE = resourceBundle.getString("Title");
+    private static final int STOPWATCH_FONT_SIZE = Integer.parseInt(resourceBundle.getString("StatusBarFontSize"));
+    private static final String INITIAL_TIME = resourceBundle.getString("InitialTime");
+    private static final double SHADOW_COLOR = Double.parseDouble(resourceBundle.getString("TimeShadowColor"));
+    private static final double SHADOW_YSET = Double.parseDouble(resourceBundle.getString("TimeShadowYOffset"));
+    private static final String BACK_TO_GAE = resourceBundle.getString("BackToGAE");
+    private static final String INSTRUCTIONS = resourceBundle.getString("Instructions");
+    private static final int PANEL_SPACING = Integer.parseInt(resourceBundle.getString("InfoBoxSpacing"));
 
     private Scene scene;
     private Stage stage;
     private DisplayScreen displayScreen;
-    private Timeline timeline;
     private BackgroundImage backgroundImage;
     private VBox panelBox;
     private AccordionCreator accordionCreator;
     private StatusBar statusBar;
+    private SelectedTowerPane selectedTowerPane;
+    private ActionsProcessor actionsProcessor;
+    private StopWatch myStopWatch;
+    private Text myStopWatchDisplay;
+    private Player myPlayer;
+    private boolean isRunning;
+    private String currentTime;
 
-    public PlayerVisualization(Stage stage, Timeline timeline) {
+    public PlayerVisualization(Stage stage, ActionsProcessor uiActionsProcessor, Player player) {
         this.stage = stage;
-        this.timeline = timeline;
+        this.actionsProcessor = uiActionsProcessor;
+        this.myPlayer = player;
+        this.isRunning = false;
+        currentTime = INITIAL_TIME;
         initialize();
     }
 
     public void update(List<Sprite> sprites, Map<String, Integer> gameInfoMap) {
         displayScreen.updateDisplayScreen(sprites);
         statusBar.updateDisplayedInfo(gameInfoMap);
+        if(isRunning) {
+            currentTime = myStopWatch.getCurrentTime();
+        }
+        myStopWatchDisplay.setText(currentTime);
     }
 
-    public void setNewLevel(List<Sprite> towers, List<Sprite> enemies, String backgroundImagePath){
+    public void setNewLevel(List<Sprite> towers, List<Sprite> enemies, String backgroundImagePath, Map<String, Integer> gameInfoMap){
+        myStopWatch = new StopWatch();
+        statusBar.updateDisplayedInfo(gameInfoMap);
         displayScreen.updateDisplayScreen(new ArrayList<>());
-        accordionCreator.updateAvailableTowersAndEnemies(towers, enemies);
+        int i = 0;
+        HashMap<Integer, Integer> idMap = new HashMap<>();
+        for(Sprite tower : towers){
+            idMap.put(i, tower.getPrototypeId());
+            i++;
+        }
+        accordionCreator.updateAvailableTowersAndEnemies(towers, enemies, idMap);
         setBackgroundImage(backgroundImagePath);
     }
 
@@ -53,46 +90,77 @@ public class PlayerVisualization extends Pane {
         ButtonCreator buttonCreator = new ButtonCreator(new ButtonController(this));
         accordionCreator = new AccordionCreator();
         statusBar = new StatusBar();
-        statusBar.setMinWidth(STATUS_BAR_WIDTH);
-        statusBar.setMinHeight(STATUS_BAR_HEIGHT);
-        panelBox = new VBox();
-        panelBox.getChildren().add(statusBar);
-        panelBox.getChildren().add(buttonCreator);
-        panelBox.getChildren().add(accordionCreator);
-        panelBox.setLayoutX(PANEL_POSITION);
-        this.getChildren().addAll(panelBox);
+        selectedTowerPane = new SelectedTowerPane(actionsProcessor, myPlayer, this);
+        panelBox = new VBox(PANEL_SPACING);
+        panelBox.getChildren().addAll(buttonCreator, showInstructions(), accordionCreator, selectedTowerPane, backToGAE());
+        createStopWatchDisplay();
+        statusBar.getChildren().add(myStopWatchDisplay);
+        this.setRight(panelBox);
+        this.setTop(statusBar);
         scene = new Scene(this, SCENE_WIDTH, SCENE_HEIGHT);
-        displayGameScreen();
+        displayGameScreenAndAttachToAccordion();
         showStage();
     }
 
+
+    private void displayGameScreenAndAttachToAccordion() {
+        displayScreen = new DisplayScreen(actionsProcessor, myPlayer, selectedTowerPane, this);
+        displayScreen.setMinWidth(SCENE_WIDTH - (SCENE_WIDTH - PANEL_POSITION));
+        displayScreen.setMinHeight(SCENE_HEIGHT - this.getTop().getLayoutY());
+        accordionCreator.attachDisplayScreen(displayScreen);
+    }
+
     private void showStage() {
-        this.getChildren().addAll(displayScreen);
+        this.setCenter(displayScreen);
         stage.setScene(scene);
         stage.setResizable(false);
         stage.setTitle(TITLE);
         stage.show();
-
     }
 
-    private void displayGameScreen() {
-        displayScreen = new DisplayScreen();
-        displayScreen.setMinWidth(PANEL_POSITION);
-        displayScreen.setMinHeight(SCENE_HEIGHT);
-        displayScreen.setLayoutX(LAYOUT);
-        displayScreen.setLayoutY(LAYOUT);
+    private VBox backToGAE() {
+        VBox buttonHolder = new VBox();
+        Button button = new Button(BACK_TO_GAE);
+        buttonHolder.getChildren().add(button);
+        buttonHolder.setAlignment(Pos.CENTER);
+        return buttonHolder;
+    }
+
+    private Text showInstructions() {
+        DropShadow shadow = getDropShadow();
+        Text instructions = new Text();
+        instructions.setText(INSTRUCTIONS);
+        instructions.setFill(Color.BLACK);
+        instructions.setEffect(shadow);
+        return instructions;
+    }
+
+    private DropShadow getDropShadow() {
+        DropShadow shadow = new DropShadow();
+        shadow.setOffsetY(SHADOW_YSET);
+        shadow.setColor(Color.color(SHADOW_COLOR, SHADOW_COLOR, SHADOW_COLOR));
+        return shadow;
+    }
+
+    private void createStopWatchDisplay(){
+        myStopWatchDisplay = new Text(INITIAL_TIME);
+        myStopWatchDisplay.setFont(new Font(STOPWATCH_FONT_SIZE));
     }
 
     private void setBackgroundImage(String backgroundImagePath){
-        backgroundImage = new BackgroundImage(new Image(backgroundImagePath), BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(SCENE_WIDTH - panelBox.getMaxWidth(), SCENE_HEIGHT, false, false, true, true));
+        backgroundImage = new BackgroundImage(new Image(backgroundImagePath), BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(SCENE_WIDTH - (SCENE_WIDTH - PANEL_POSITION), SCENE_HEIGHT, false, false, false, false));
         displayScreen.setBackground(new Background(backgroundImage));
     }
 
     public void startButtonAction() {
-        timeline.play();
+        isRunning = true;
+        myPlayer.startTimeLine();
+        myStopWatch.startStopWatch();
     }
 
     public void pauseButtonAction() {
-        timeline.stop();
+        isRunning = false;
+        myPlayer.pauseTimeline();
+        myStopWatch.pauseStopWatch();
     }
 }

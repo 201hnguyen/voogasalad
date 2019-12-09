@@ -41,4 +41,16 @@ public class GameLevelsController {
             return myNextLevelIndex < myLevelsSequence.size();
         }
     }
+
+    public int getTotalScoreForAllLevels() {
+        int totalScore = 0;
+        for (Level level : myLevels) {
+            totalScore+=level.getCurrentScore();
+        }
+        return totalScore;
+    }
+
+    public List<Level> getLevels() {
+        return myLevels;
+    }
 }

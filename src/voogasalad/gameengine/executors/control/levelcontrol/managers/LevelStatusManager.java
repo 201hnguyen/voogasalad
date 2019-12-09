@@ -1,31 +1,42 @@
 package voogasalad.gameengine.executors.control.levelcontrol.managers;
 
-import voogasalad.gameengine.executors.control.levelcontrol.GameSceneStatus;
+import voogasalad.gameengine.executors.control.levelcontrol.Status;
 
 public class LevelStatusManager {
 
-    public static final GameSceneStatus INITIAL_GAME_SCENE_STATUS = GameSceneStatus.INACTIVE;
+    public static final Status INITIAL_GAME_SCENE_STATUS = Status.INACTIVE;
 
     private double myTotalElapsedTime;
     private double myElapsedTimeSinceLastFrame;
     private int myResources;
     private int myLives;
-    private GameSceneStatus myGameSceneStatus;
+    private Status myStatus;
+    private int myScore;
 
     public LevelStatusManager() {
         myResources = 0;
         myLives = 0;
         myTotalElapsedTime = 0;
         myElapsedTimeSinceLastFrame = 0;
-        myGameSceneStatus = INITIAL_GAME_SCENE_STATUS;
+        myScore = 0;
+        myStatus = INITIAL_GAME_SCENE_STATUS;
     }
 
-    public void setGameSceneStatus(GameSceneStatus status) {
-        myGameSceneStatus = status;
+    public LevelStatusManager (int resources, int lives, int score, double totalElapsedTime, double elapsedTimeSinceLastFrame, Status status) {
+        myTotalElapsedTime = totalElapsedTime;
+        myElapsedTimeSinceLastFrame = elapsedTimeSinceLastFrame;
+        myResources = resources;
+        myScore = score;
+        myLives = lives;
+        myStatus = status;
     }
 
-    public GameSceneStatus getGameSceneStatus() {
-        return myGameSceneStatus;
+    public void setGameSceneStatus(Status status) {
+        myStatus = status;
+    }
+
+    public Status getGameSceneStatus() {
+        return myStatus;
     }
 
     public void setResources(int value) {
@@ -39,6 +50,15 @@ public class LevelStatusManager {
     public void notifyNewCycle(double elapsedTime) {
         myElapsedTimeSinceLastFrame = elapsedTime;
         myTotalElapsedTime += elapsedTime;
+    }
+
+    public int alterScoreByValue(int value) {
+        myScore += value;
+        return myScore;
+    }
+
+    public int getScore() {
+        return myScore;
     }
 
     public double getTotalElapsedTime() {
@@ -65,5 +85,9 @@ public class LevelStatusManager {
     public int alterLivesByValue(int value) {
         myLives += value;
         return myLives;
+    }
+
+    public LevelStatusManager getCopyOfStatusManager() {
+        return new LevelStatusManager(myResources, myLives, myScore, myTotalElapsedTime, myElapsedTimeSinceLastFrame, myStatus);
     }
 }

@@ -20,10 +20,13 @@ public class LevelWaveManager {
     }
 
     public Wave getNextWave() {
-        return myWaves.get(myIndex++);
+        int index = myIndex;
+        myIndex++;
+        return myWaves.get(index);
     }
 
     public boolean hasNextWave() {
+//        System.out.println("Index:" + myIndex + " " + myWaves);
         return myIndex < myWaves.size();
     }
 

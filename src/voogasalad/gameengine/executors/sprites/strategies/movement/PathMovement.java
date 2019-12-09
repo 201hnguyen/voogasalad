@@ -1,15 +1,17 @@
 package voogasalad.gameengine.executors.sprites.strategies.movement;
 
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
+import voogasalad.gameengine.executors.objectcreators.MovementBuilder;
 import voogasalad.gameengine.executors.utils.Verifier;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 public class PathMovement implements MovementStrategy {
-    private Map<String, Object> myOriginalParameters;
+    private MovementBuilder myOriginalBuilder;
     private LinkedList<Point2D.Double> myPath;
     private Point2D.Double nextPosition;
     private int nextPositionIndex;
@@ -18,9 +20,10 @@ public class PathMovement implements MovementStrategy {
     private Point2D.Double myDirection;
 
 
-    public PathMovement(double speed, LinkedList<Point2D.Double> path) throws GameEngineException {
-        mySpeed = speed;
-        myPath = path;
+    public PathMovement(MovementBuilder builder) throws GameEngineException {
+        mySpeed = builder.getSpeed();
+        myPath = builder.getPath();
+        myOriginalBuilder = builder;
         nextPositionIndex = 0;
         if(myPath.size() < 1) {
             reachedEnd = true;
@@ -32,7 +35,7 @@ public class PathMovement implements MovementStrategy {
 
     @Override
     public MovementStrategy makeClone() throws GameEngineException {
-        return new PathMovement(mySpeed, myPath);
+        return myOriginalBuilder.build();
     }
 
     @Override
@@ -56,6 +59,22 @@ public class PathMovement implements MovementStrategy {
         } else {
             return updatedPosition;
         }
+    }
+
+    @Override
+    public void updatePath(List<Point2D.Double> path) {
+        myPath = (LinkedList<Point2D.Double>) path;
+        //todo: I think we should take in a List instead of a LinkedList for myPath; it's just a linkedlist when we create it; but we shouldn't need to specify within this class
+    }
+
+    @Override
+    public void updateDirectionalAngle(double angle) {
+        //do nothing
+    }
+
+    @Override
+    public boolean isMovementFinished() {
+        return reachedEnd;
     }
 
     private Point2D.Double calculateDirection(Point2D.Double currentPosition) {

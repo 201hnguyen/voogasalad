@@ -4,6 +4,7 @@
     <LevelSequence>1 0</LevelSequence>
 
     <GameCondition>
+        <ConditionId>0</ConditionId>
         <Type>CurrentLevelWonCondition</Type>
         <Parameters>
             <Classification>CONTINUOUS</Classification>
@@ -21,13 +22,20 @@
             <Width>50</Width>
             <Height>50</Height>
             <ImagePath>bird.png</ImagePath>
-            <Archetype>ENEMY</Archetype>
+            <Archetype>TOWER</Archetype>
         </Properties>
         <Strategies>
+            <AttackStrategy>
+                <Type>ShootingAttack</Type>
+                <Parameters>
+                    <AttackRate>0.5</AttackRate>
+                    <BulletPrototypeId>4</BulletPrototypeId>
+                </Parameters>
+            </AttackStrategy>
             <HealthStrategy>
                 <Type>Health</Type>
                 <Parameters>
-                    <Health>10</Health>
+                    <HealthValue>10</HealthValue>
                 </Parameters>
             </HealthStrategy>
             <MovementStrategy>
@@ -37,6 +45,47 @@
                     <Speed>500</Speed>
                 </Parameters>
             </MovementStrategy>
+            <RotationStrategy>
+                <Type>FullRotation</Type>
+                <Parameters>
+                    <RotationSpeed>100</RotationSpeed>
+                </Parameters>
+            </RotationStrategy>
+        </Strategies>
+    </SpritePrototype>
+    <SpritePrototype>
+        <Properties>
+            <PrototypeId>5</PrototypeId>
+            <Width>50</Width>
+            <Height>50</Height>
+            <ImagePath>bird.png</ImagePath>
+            <Archetype>ENEMY</Archetype>
+        </Properties>
+        <Strategies>
+            <AttackStrategy>
+                <Type>ShootingAttack</Type>
+                <Parameters>
+                    <AttackRate>0.5</AttackRate>
+                    <BulletPrototypeId>4</BulletPrototypeId>
+                </Parameters>
+            </AttackStrategy>
+            <HealthStrategy>
+                <Type>Health</Type>
+                <Parameters>
+                    <HealthValue>10</HealthValue>
+                </Parameters>
+            </HealthStrategy>
+            <MovementStrategy>
+                <Type>NoMovement</Type>
+                <Parameters>
+                </Parameters>
+            </MovementStrategy>
+            <RotationStrategy>
+                <Type>FullRotation</Type>
+                <Parameters>
+                    <RotationSpeed>100</RotationSpeed>
+                </Parameters>
+            </RotationStrategy>
         </Strategies>
     </SpritePrototype>
     <SpritePrototype>
@@ -44,14 +93,14 @@
             <PrototypeId>1</PrototypeId>
             <Width>40</Width>
             <Height>30</Height>
-            <ImagePath>pandaslogo.png</ImagePath>
+            <ImagePath>ghost2.png</ImagePath>
             <Archetype>ENEMY</Archetype>
         </Properties>
         <Strategies>
             <HealthStrategy>
                 <Type>Health</Type>
                 <Parameters>
-                    <Health>20</Health>
+                    <HealthValue>20</HealthValue>
                 </Parameters>
             </HealthStrategy>
             <MovementStrategy>
@@ -61,6 +110,12 @@
                     <Speed>500</Speed>
                 </Parameters>
             </MovementStrategy>
+            <RotationStrategy>
+                <Type>FullRotation</Type>
+                <Parameters>
+                    <RotationSpeed>100</RotationSpeed>
+                </Parameters>
+            </RotationStrategy>
         </Strategies>
     </SpritePrototype>
     <SpritePrototype>
@@ -80,6 +135,26 @@
                 <Type>NoMovement</Type>
                 <Parameters></Parameters>
             </MovementStrategy>
+            <AttackStrategy>
+                <Type>ShootingAttack</Type>
+                <Parameters>
+                    <AttackRate>0.5</AttackRate>
+                    <BulletPrototypeId>4</BulletPrototypeId>
+                </Parameters>
+            </AttackStrategy>
+            <RotationStrategy>
+                <Type>FullRotation</Type>
+                <Parameters>
+                    <RotationSpeed>100</RotationSpeed>
+                </Parameters>
+            </RotationStrategy>
+            <CostStrategy>
+                <Type>BasicCost</Type>
+                <Parameters>
+                    <CreateCost>20</CreateCost>
+                    <DestroyCost>50</DestroyCost>
+                </Parameters>
+            </CostStrategy>
         </Strategies>
     </SpritePrototype>
     <SpritePrototype>
@@ -91,6 +166,13 @@
             <Archetype>TOWER</Archetype>
         </Properties>
         <Strategies>
+            <AttackStrategy>
+                <Type>ShootingAttack</Type>
+                <Parameters>
+                    <AttackRate>0.5</AttackRate>
+                    <BulletPrototypeId>4</BulletPrototypeId>
+                </Parameters>
+            </AttackStrategy>
             <HealthStrategy>
                 <Type>NoHealth</Type>
                 <Parameters></Parameters>
@@ -99,6 +181,41 @@
                 <Type>NoMovement</Type>
                 <Parameters></Parameters>
             </MovementStrategy>
+            <RotationStrategy>
+                <Type>FullRotation</Type>
+                <Parameters>
+                    <RotationSpeed>100</RotationSpeed>
+                </Parameters>
+            </RotationStrategy>
+        </Strategies>
+    </SpritePrototype>
+
+    <SpritePrototype>
+        <Properties>
+            <PrototypeId>4</PrototypeId>
+            <Width>20</Width>
+            <Height>20</Height>
+            <ImagePath>ghost2.png</ImagePath>
+            <Archetype>PROJECTILE</Archetype>
+        </Properties>
+        <Strategies>
+            <HealthStrategy>
+                <Type>NoHealth</Type>
+                <Parameters></Parameters>
+            </HealthStrategy>
+            <MovementStrategy>
+                <Type>DirectedDistanceMovement</Type>
+                <Parameters>
+                    <Distance>77</Distance>
+                    <Speed>2</Speed>
+                </Parameters>
+            </MovementStrategy>
+            <RotationStrategy>
+                <Type>FullRotation</Type>
+                <Parameters>
+                    <RotationSpeed>100</RotationSpeed>
+                </Parameters>
+            </RotationStrategy>
         </Strategies>
     </SpritePrototype>
 
@@ -106,26 +223,29 @@
         <LevelId>1</LevelId>
         <Resources>250</Resources>
         <Lives>20</Lives>
-        <BackgroundImage>whitebackground.jpg</BackgroundImage>
-        <AvailablePrototypes>0 2</AvailablePrototypes>
+        <BackgroundImage>sand-background.jpg</BackgroundImage>
+        <AvailablePrototypes>0 1 2 3 4 5</AvailablePrototypes>
 
         <Wave>
             <Queue>0 0 0 0 0</Queue>
             <Interval>2</Interval>
             <SpawnPointX>0</SpawnPointX>
             <SpawnPointY>0</SpawnPointY>
+            <Path>193,47;140,204;123,193;99,189;74,196;58,213;49,237;52,261;65,279;86,292;113,295;135,282;152,258;201,95;212,127;218,150;213,168;201,185;192,200;203,214;219,205;233,191;242,170;244,149;242,131;233,111</Path>
         </Wave>
         <Wave>
             <Queue>0 0</Queue>
             <Interval>3</Interval>
             <SpawnPointX>0</SpawnPointX>
             <SpawnPointY>0</SpawnPointY>
+            <Path>193,47;140,204;123,193;99,189;74,196;58,213;49,237;52,261;65,279;86,292;113,295;135,282;152,258;201,95;212,127;218,150;213,168;201,185;192,200;203,214;219,205;233,191;242,170;244,149;242,131;233,111</Path>
         </Wave>
 
         <Condition>
+            <ConditionId>0</ConditionId>
             <Type>TemporalCondition</Type>
             <Parameters>
-                <MarkedTime>0</MarkedTime>
+                <MarkedTime>2</MarkedTime>
             </Parameters>
             <Actions>
                 <Action>
@@ -134,10 +254,11 @@
             </Actions>
         </Condition>
         <Condition>
+            <ConditionId>1</ConditionId>
             <Type>OnscreenArchetypeCountCondition</Type>
             <Parameters>
-                <MarkedCount>0</MarkedCount>
-                <Archetype>ENEMY</Archetype>
+                <MarkedCount>15</MarkedCount>
+                <Archetype>TOWER</Archetype>
                 <Classification>CONTINUOUS</Classification>
             </Parameters>
             <Actions>
@@ -147,10 +268,11 @@
             </Actions>
         </Condition>
         <Condition>
+            <ConditionId>2</ConditionId>
             <Type>OnscreenArchetypeCountCondition</Type>
             <Parameters>
-                <MarkedCount>7</MarkedCount>
-                <Archetype>ENEMY</Archetype>
+                <MarkedCount>6</MarkedCount>
+                <Archetype>TOWER</Archetype>
             </Parameters>
             <Actions>
                 <Action>
@@ -159,6 +281,7 @@
             </Actions>
         </Condition>
         <Condition>
+            <ConditionId>3</ConditionId>
             <Type>LivesCountCondition</Type>
             <Parameters>
                 <MarkedCount>0</MarkedCount>
@@ -175,7 +298,7 @@
         <LevelId>0</LevelId>
         <Resources>250</Resources>
         <Lives>20</Lives>
-        <BackgroundImage>pepperonicat.png</BackgroundImage>
+        <BackgroundImage>sand-background.jpg</BackgroundImage>
         <AvailablePrototypes>0 1 2 3</AvailablePrototypes>
 
         <Wave>
@@ -183,18 +306,21 @@
             <Interval>3</Interval>
             <SpawnPointX>0</SpawnPointX>
             <SpawnPointY>0</SpawnPointY>
+            <Path>193,47;140,204;123,193;99,189;74,196;58,213;49,237;52,261;65,279;86,292;113,295;135,282;152,258;201,95;212,127;218,150;213,168;201,185;192,200;203,214;219,205;233,191;242,170;244,149;242,131;233,111</Path>
         </Wave>
         <Wave>
             <Queue>1 1</Queue>
             <Interval>3</Interval>
             <SpawnPointX>0</SpawnPointX>
             <SpawnPointY>0</SpawnPointY>
+            <Path>193,47;140,204;123,193;99,189;74,196;58,213;49,237;52,261;65,279;86,292;113,295;135,282;152,258;201,95;212,127;218,150;213,168;201,185;192,200;203,214;219,205;233,191;242,170;244,149;242,131;233,111</Path>
         </Wave>
 
         <Condition>
+            <ConditionId>0</ConditionId>
             <Type>TemporalCondition</Type>
             <Parameters>
-                <Markedtime>0</Markedtime>
+                <Markedtime>2</Markedtime>
             </Parameters>
             <Actions>
                 <Action>
@@ -203,10 +329,11 @@
             </Actions>
         </Condition>
         <Condition>
+            <ConditionId>1</ConditionId>
             <Type>OnscreenArchetypeCountCondition</Type>
             <Parameters>
                 <MarkedCount>1</MarkedCount>
-                <Archetype>ENEMY</Archetype>
+                <Archetype>TOWER</Archetype>
                 <Classification>CONTINUOUS</Classification>
             </Parameters>
             <Actions>
@@ -216,6 +343,7 @@
             </Actions>
         </Condition>
         <Condition>
+            <ConditionId>2</ConditionId>
             <Type>EnemiesClearedCondition</Type>
             <Parameters></Parameters>
             <Actions>
@@ -225,6 +353,7 @@
             </Actions>
         </Condition>
         <Condition>
+            <ConditionId>3</ConditionId>
             <Type>LivesCountCondition</Type>
             <Parameters>
                 <MarkedCount>0</MarkedCount>

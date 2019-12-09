@@ -1,22 +1,39 @@
 package voogasalad.gameengine.executors.sprites.strategies.movement;
 
-import java.awt.Point;
+import voogasalad.gameengine.executors.exceptions.GameEngineException;
+import voogasalad.gameengine.executors.objectcreators.MovementBuilder;
+
 import java.awt.geom.Point2D;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 public class NoMovement implements MovementStrategy {
 
-    public NoMovement() {
+    public NoMovement(MovementBuilder builder) {
+        //do nothing
     }
 
     @Override
-    public MovementStrategy makeClone() {
-        return new NoMovement();
+    public MovementStrategy makeClone() throws GameEngineException {
+        return new NoMovement(new MovementBuilder());
     }
 
     @Override
     public Point2D.Double calculateNextPosition(double elapsedTime, Point2D.Double currentPosition) {
         return currentPosition;
+    }
+
+    @Override
+    public void updatePath(List<Point2D.Double> path) {
+        //do nothing
+    }
+
+    @Override
+    public void updateDirectionalAngle(double angle) {
+        //do nothing
+    }
+
+    @Override
+    public boolean isMovementFinished() {
+        return false;
     }
 }
