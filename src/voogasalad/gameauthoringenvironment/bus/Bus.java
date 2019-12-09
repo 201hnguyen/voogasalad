@@ -25,6 +25,10 @@ import java.io.IOException;
 import java.util.function.Consumer;
 
 public class Bus {
+
+    private final static double IMAGE_HEIGHT = 50;
+    private final String ERROR_MESSAGE = "Wrong file type selected for upload: select XML";
+
     private Stage currentStage;
     private int width;
     private int height;
@@ -88,9 +92,9 @@ public class Bus {
         Label myButton = new Label();
         ImageView image = new ImageView(new Image(imagePath));
         ImageView imageHover = new ImageView(new Image(imagePathHover));
-        image.setFitHeight(50);
+        image.setFitHeight(IMAGE_HEIGHT);
         image.setPreserveRatio(true);
-        imageHover.setFitHeight(50);
+        imageHover.setFitHeight(IMAGE_HEIGHT);
         imageHover.setPreserveRatio(true);
         myButton.setGraphic(image);
         myButton.setOnMouseEntered(e -> myButton.setGraphic(imageHover));
@@ -115,7 +119,7 @@ public class Bus {
             goToPlayer(doc);
         } catch (ParserConfigurationException | SAXException | IOException e) {
 //            throw new GameEngineException(e, "ConfigurationFailedXML");
-            errorPane.errorMessage("Wrong file type selected for upload: select XML");
+            errorPane.errorMessage(ERROR_MESSAGE);
             //TODO: dont hard code the error message -- also figure out how to connect error pane up to game engine exception messages
 
         }
