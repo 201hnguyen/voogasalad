@@ -10,7 +10,12 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
+import java.util.ResourceBundle;
+
 public class ErrorPane extends Pane {
+
+    private static final String RESOURCE_PATH = "resources.engine.English";
+    private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(RESOURCE_PATH);
 
     private Alert errorPopUp;
 
@@ -25,8 +30,8 @@ public class ErrorPane extends Pane {
      * @param err: the message to display when an error occurs
      */
     public void errorMessage(String err){
-        Text error = new Text(err);
-        errorPopUp.setContentText(err);
+        Text error = new Text();
+        errorPopUp.setContentText(RESOURCE_BUNDLE.getString(err));
         errorPopUp.showAndWait();
         getChildren().add(error);
     }
