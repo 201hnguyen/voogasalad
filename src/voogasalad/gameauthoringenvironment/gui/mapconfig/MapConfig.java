@@ -25,6 +25,7 @@ import java.io.File;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class MapConfig {
 
@@ -61,7 +62,7 @@ public class MapConfig {
     private Pair<Double,Double> spawnPoint;
     private int selectedPathIndex = 0;
     private int selectedWaveIndex = 0;
-    private ArrayList<Integer> activeEnemyList ;
+    private List<Integer> activeEnemyList ;
     private ArrayList<ArrayList<Integer>> waveComposition;
     private ArrayList<Label> waveCompositionLabel;
     private ArrayList<HBox> waveHBoxList;
@@ -94,9 +95,9 @@ public class MapConfig {
     ArrayList<Double> durationList;
     ArrayList<Integer> waveToPathList;
 
-    public MapConfig(MapButton mapButton){
+    public MapConfig(MapButton mapButton, List<Integer> listOfActiveEnemies){
         mapButtonInLevel = mapButton;
-        activeEnemyList = new ArrayList<>(Arrays.asList(1,2,3));
+        activeEnemyList = listOfActiveEnemies;
         waveComposition = new ArrayList<>();
         waveCompositionLabel = new ArrayList<>();
 
@@ -411,7 +412,7 @@ public class MapConfig {
 
         removeSelectedPathView(selectedPathIndex);
         if (!spawnPointViewList.isEmpty()) {
-           removeSelectedSpawnView(selectedPathIndex);
+            removeSelectedSpawnView(selectedPathIndex);
         }
         int newPathIndex = Integer.parseInt(pathHBox.getId());
         changeHighLightedButton(pathButtonList.get(newPathIndex),true);
@@ -449,43 +450,43 @@ public class MapConfig {
         if ((selectedPathIndex < numberOfPaths-1) && numberOfPaths>0){
 
 
-        numberOfPaths--;
-        removeSelectedSpawnView(selectedPathIndex);
-        removeSelectedPathView(selectedPathIndex);
-        pathPane.getChildren().remove(pathHBoxList.get(selectedPathIndex));
-        pathPointViewList.remove(selectedPathIndex);
-        pathViewList.remove(selectedPathIndex);
-        spawnPointViewList.remove(selectedPathIndex);
-        spawnPathViewList.remove(selectedPathIndex);
-        createdPathList.remove(selectedPathIndex);
-        createdPathLabel.remove(selectedPathIndex);
-        createdSpawnPointsLabel.remove(selectedPathIndex);
-        spawnPointList.remove(selectedPathIndex);
-        pathHBoxList.remove(selectedPathIndex);
-        pathButtonList.remove(selectedPathIndex);
+            numberOfPaths--;
+            removeSelectedSpawnView(selectedPathIndex);
+            removeSelectedPathView(selectedPathIndex);
+            pathPane.getChildren().remove(pathHBoxList.get(selectedPathIndex));
+            pathPointViewList.remove(selectedPathIndex);
+            pathViewList.remove(selectedPathIndex);
+            spawnPointViewList.remove(selectedPathIndex);
+            spawnPathViewList.remove(selectedPathIndex);
+            createdPathList.remove(selectedPathIndex);
+            createdPathLabel.remove(selectedPathIndex);
+            createdSpawnPointsLabel.remove(selectedPathIndex);
+            spawnPointList.remove(selectedPathIndex);
+            pathHBoxList.remove(selectedPathIndex);
+            pathButtonList.remove(selectedPathIndex);
 
 
-        for (int index = 0; index < pathHBoxList.size();index++) {
+            for (int index = 0; index < pathHBoxList.size();index++) {
 
-            int ID = Integer.parseInt(pathHBoxList.get(index).getId());
+                int ID = Integer.parseInt(pathHBoxList.get(index).getId());
 
-            if (ID > selectedPathIndex) {
-                int newButtonNumber = ID;
-                ID--;
-                pathHBoxList.get(index).setId(Integer.toString(ID));
+                if (ID > selectedPathIndex) {
+                    int newButtonNumber = ID;
+                    ID--;
+                    pathHBoxList.get(index).setId(Integer.toString(ID));
 
-                pathButtonList.get(index).setText("Path " + newButtonNumber);
+                    pathButtonList.get(index).setText("Path " + newButtonNumber);
 
+
+
+                }
 
 
             }
 
 
-        }
-
-
-        updateAvailablePaths();
-        changeSelectedPath( pathHBoxList.get(pathHBoxList.size()-1));
+            updateAvailablePaths();
+            changeSelectedPath( pathHBoxList.get(pathHBoxList.size()-1));
         }
 
 
@@ -532,7 +533,7 @@ public class MapConfig {
     }
 
     private void addPathSelectionButton(HBox myHBox){
-         pathEditingButton= new Button("Define Selected Path");
+        pathEditingButton= new Button("Define Selected Path");
 
         pathEditingButton.setOnAction(e ->turnOnOffPathCreation(pathEditingButton));
         /*BooleanBinding bb = new BooleanBinding() {

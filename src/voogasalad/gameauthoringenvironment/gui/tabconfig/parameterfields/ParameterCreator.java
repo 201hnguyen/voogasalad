@@ -24,8 +24,8 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class ParameterCreator extends BorderPane{
 
-    private static final int window_WIDTH = 300;
-    private static final int window_HEIGHT = 300;
+    private static final int window_WIDTH = 500;
+    private static final int window_HEIGHT = 500;
     private static final String SUBMITBUTTONCLASS = new SubmitButton().getClass().toString().split("class ")[1];
     private BorderPane root;
     private ObjectPreviewAndActive objectSpecificRoot;
@@ -76,11 +76,13 @@ public class ParameterCreator extends BorderPane{
         storeAllFieldTypes();
         addInputFields();
         addImagePreview();
-        ScrollPane confirgScroll = new ScrollPane();
-        confirgScroll.setMaxHeight(500);
-        confirgScroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-        confirgScroll.setContent(configVBox);
-        this.setRight(confirgScroll);
+
+        ScrollPane configScroll = new ScrollPane();
+        configScroll.setPrefHeight(window_HEIGHT);
+        configScroll.setMaxHeight(configScroll.getPrefHeight());
+        configScroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        configScroll.setContent(configVBox);
+        this.setRight(configScroll);
         this.setLeft(previewVBox);
     }
 
@@ -222,6 +224,7 @@ public class ParameterCreator extends BorderPane{
             newStage.setScene(newScene);
             newStage.show();
         });
+
         return icon;
     }
 
