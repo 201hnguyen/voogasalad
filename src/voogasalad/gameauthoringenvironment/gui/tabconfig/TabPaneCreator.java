@@ -64,7 +64,7 @@ public class TabPaneCreator {
     private void createPane(TabPane tabPane, LevelConfigPane levelConfigPane) {
         typeToParams.getKeys().asIterator().forEachRemaining(key -> {
             try {
-                Tab objectTab = new Tab(key, new ParameterCreator(key, typeToParams.getString(key).split(","), paramFieldType, levelConfigPane, allActiveObjects));
+                Tab objectTab = new Tab(key, new ParameterCreator(key, typeToParams.getString(key).split(","), paramFieldType, levelConfigPane, allActiveObjects, allActiveObjectObjects));
                 tabPane.getTabs().add(objectTab);
             } catch (ParserConfigurationException e) {
                 e.printStackTrace();
