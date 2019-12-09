@@ -32,6 +32,6 @@ public class ChunkAreaEffect implements EffectStrategy {
 
     @Override
     public EffectStrategy makeClone() throws GameEngineException {
-        return new ChunkAreaEffect(myOriginalBuilder);
+        return myOriginalBuilder.build();
     }
 }

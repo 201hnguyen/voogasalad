@@ -4,7 +4,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -21,8 +21,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
-
-import static java.lang.Double.valueOf;
 
 public class ParameterCreator extends BorderPane{
 
@@ -55,7 +53,6 @@ public class ParameterCreator extends BorderPane{
     private FileChooserButton fileChooserButton;
 
 
-
     public ParameterCreator(String gameObjectNameParam, String[] propertiesParam, ResourceBundle paramFieldTypeParam,
                             LevelConfigPane levelConfigPaneParam, Map<String, Map<String, String>> allActiveObjectMapParam,
                             List<ObjectPreviewAndActive> allActiveObjectObjectsParam) throws ParserConfigurationException {
@@ -79,7 +76,10 @@ public class ParameterCreator extends BorderPane{
         storeAllFieldTypes();
         addInputFields();
         addImagePreview();
-        this.setRight(configVBox);
+        ScrollPane confirgScroll = new ScrollPane();
+        confirgScroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        confirgScroll.setContent(configVBox);
+        this.setRight(confirgScroll);
         this.setLeft(previewVBox);
     }
 
@@ -94,7 +94,7 @@ public class ParameterCreator extends BorderPane{
     }
 
     private void addInputFields() {
-        configVBox = new TabVBoxCreator("Configure Parameters", 200, 50, 50, 50, 10);
+        configVBox = new TabVBoxCreator("Configure Parameters", 200, 20, 50, 50, 10);
         for (int j = 0; j < properties.length; j++) {
             Label label = new Label(properties[j]); //for SaveGuiParameters
             labelList.add(label);
@@ -104,23 +104,32 @@ public class ParameterCreator extends BorderPane{
         }
     }
 
+
+    // a helper method to preview an image of a Sprite
     private void addImagePreview() {
-        previewVBox = new TabVBoxCreator("Image Preview", 200, 50, 10, 50, 50);
+        previewVBox = new TabVBoxCreator("Image Preview",200, 20, 10, 50, 50);
         for (int i = 0; i < allNodes.size(); i++) {
             Node currentNode = allNodes.get(i);
             String nodeLabel = labelText.get(i);
             if (nodeLabel.equals("ImageHeight")) {
-                ((TextField) currentNode).setOnAction(e -> {
+                currentNode.setOnMouseClicked(e -> {
                     imageViewHeight = Double.parseDouble((new FieldTextReturnFactory()).getAppropriateText(currentNode));
                     System.out.println(imageViewHeight);
                 });
             };
             if (nodeLabel.equals("ImageWidth")) {
-                ((TextField) currentNode).setOnAction(e -> {
+                currentNode.setOnMouseClicked(e -> {
                     imageViewWidth = Double.parseDouble((new FieldTextReturnFactory()).getAppropriateText(currentNode));
                     System.out.println(imageViewWidth);
                 });
-            }
+            };
+
+//            imageViewHeight = getImageSpecs(nodeLabel, currentNode,"ImageHeight");
+//            System.out.println(imageViewHeight);
+//
+//            imageViewWidth = getImageSpecs(nodeLabel, currentNode, "ImageWidth");
+//            System.out.println(imageViewWidth);
+
             if (currentNode instanceof FileChooserButton) {
                 fileChooserButton = (FileChooserButton) currentNode;
             }
@@ -139,6 +148,7 @@ public class ParameterCreator extends BorderPane{
         }
     }
 
+    // a helper method to format the ImageView
     private void setImageSpecs() {
         imageString = fileChooserButton.getImageString();
         imageView = new ImageView(imageString);
@@ -151,11 +161,11 @@ public class ParameterCreator extends BorderPane{
     }
 
     //TODO: fix this
-    private double accessImageSpecs(String nodeLabel, Node currentNode, String s) {
+    private double getImageSpecs(String nodeLabel, Node currentNode, String s) {
         AtomicReference<Double> d = new AtomicReference<>(0.0);
         if (nodeLabel.equals(s)) {
-            ((TextField) currentNode).setOnAction((event) -> {
-                d.set(valueOf((new FieldTextReturnFactory()).getAppropriateText(currentNode)));
+            currentNode.setOnMouseClicked((event) -> {
+                d.set(Double.parseDouble((new FieldTextReturnFactory()).getAppropriateText(currentNode)));
             });
         }
         return d.get();
@@ -224,6 +234,5 @@ public class ParameterCreator extends BorderPane{
     }
 
 
-
-
 }
+

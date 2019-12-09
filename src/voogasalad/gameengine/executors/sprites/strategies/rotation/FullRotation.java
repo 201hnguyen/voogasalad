@@ -20,23 +20,12 @@ public class FullRotation implements RotationStrategy {
         return (currentAngle + diffAngle) % 360;
     }
 
-    @Override
-    public void determineTargetAngle(Double currentAngle) {
-        //no target angle
-    }
-
-    @Override
-    public void determineRotationDirection(Double currentAngle) {
+    private void determineRotationDirection(Double currentAngle) {
         rotationDirection = 1;
     }
 
     @Override
-    public int getRotationDirection(){ //for testing only
-        return rotationDirection;
-    }
-
-    @Override
-    public RotationStrategy makeClone() throws GameEngineException {
+    public RotationStrategy makeClone(){
         return new FullRotation(myBuilder);
     }
 }

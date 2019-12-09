@@ -32,6 +32,6 @@ public class FreezeSpriteEffect implements EffectStrategy {
 
     @Override
     public EffectStrategy makeClone() throws GameEngineException {
-        return new FreezeSpriteEffect(myOriginalBuilder);
+        return myOriginalBuilder.build();
     }
 }

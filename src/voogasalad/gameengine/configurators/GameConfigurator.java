@@ -9,18 +9,17 @@ import voogasalad.gameengine.executors.control.levelcontrol.Level;
 import voogasalad.gameengine.executors.control.condition.game.GameCondition;
 import voogasalad.gameengine.executors.sprites.Sprite;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class GameConfigurator {
 
-    public static final String LEVELS_NODES_TAG = "Level";
-    public static final String LEVELS_SEQUENCE_NODE_TAG = "LevelSequence";
-    public static final String PROTOTYPES_NODES_TAG = "SpritePrototype";
-    public static final String GAME_CONDITIONS_NODES_TAG = "GameCondition";
-    public static final String GAME_TITLE_TAG = "GameTitle";
+    public static final String GAME_CONFIGURATION_RESOURCE_PATH = "resources/engine/EngineXMLTags";
+    public static final ResourceBundle GAME_CONFIGURATION_RESOURCE_BUNDLE = ResourceBundle.getBundle(GAME_CONFIGURATION_RESOURCE_PATH);
+    public static final String LEVELS_NODES_KEY = "LevelNodeTag";
+    public static final String LEVELS_SEQUENCE_NODE_KEY = "LevelsSequenceNodeTag";
+    public static final String PROTOTYPES_NODES_KEY = "PrototypesNodeTag";
+    public static final String GAME_CONDITIONS_NODES_KEY = "GameConditionsNodeTag";
+    public static final String GAME_TITLE_NODE_KEY = "GameTitleNodeTag";
 
     private Element myRoot;
     private Document myDocument;
@@ -44,41 +43,39 @@ public class GameConfigurator {
 
     private List<Level> loadLevels() throws GameEngineException {
         try {
-            List<Level> levels;
             LevelConfigurator levelConfigurator = new LevelConfigurator();
-            levels = levelConfigurator.configureLevels(myRoot.getElementsByTagName(LEVELS_NODES_TAG), myGamePrototypes);
-            return levels;
+            return levelConfigurator.configureLevels(myRoot.getElementsByTagName(GAME_CONFIGURATION_RESOURCE_BUNDLE.getString(LEVELS_NODES_KEY)), myGamePrototypes);
         } catch (NullPointerException e) {
             throw new GameEngineException(e, "NoLevelsSpecified");
         }
     }
 
     private List<Integer> loadLevelsSequence() {
+        List<Integer> levelsSequence = new ArrayList<>();
         try {
-            List<String> levelsSequenceAsStringList = Arrays.asList(myRoot.getElementsByTagName(LEVELS_SEQUENCE_NODE_TAG).item(0).getTextContent().split(" "));
-            List<Integer> levelsSequence = new ArrayList<>();
+            List<String> levelsSequenceAsStringList = Arrays.asList(myRoot.getElementsByTagName(GAME_CONFIGURATION_RESOURCE_BUNDLE.getString(LEVELS_SEQUENCE_NODE_KEY)).item(0).getTextContent().split(" "));
             for (String levelId : levelsSequenceAsStringList) {
                 levelsSequence.add(Integer.parseInt(levelId));
             }
-            return levelsSequence;
         } catch (NullPointerException e) {
-            return null;
+            // do nothing; empty levels sequence returned
         }
+        return levelsSequence;
     }
 
     private List<Sprite> configurePrototypes() throws GameEngineException {
         PrototypesConfigurator prototypesConfigurator = new PrototypesConfigurator();
-        NodeList prototypeNodes = myRoot.getElementsByTagName(PROTOTYPES_NODES_TAG);
+        NodeList prototypeNodes = myRoot.getElementsByTagName(GAME_CONFIGURATION_RESOURCE_BUNDLE.getString(PROTOTYPES_NODES_KEY));
         return prototypesConfigurator.buildPrototypesList(prototypeNodes);
     }
 
     public Collection<GameCondition> configureGameConditions() throws GameEngineException {
         ConditionsConfigurator conditionsConfigurator = new ConditionsConfigurator();
-        NodeList conditionNodes = myRoot.getElementsByTagName(GAME_CONDITIONS_NODES_TAG);
+        NodeList conditionNodes = myRoot.getElementsByTagName(GAME_CONFIGURATION_RESOURCE_BUNDLE.getString(GAME_CONDITIONS_NODES_KEY));
         return conditionsConfigurator.buildGameConditionsCollection(conditionNodes);
     }
 
     public String configureGameTitle() {
-        return myRoot.getElementsByTagName(GAME_TITLE_TAG).item(0).getTextContent();
+        return myRoot.getElementsByTagName(GAME_CONFIGURATION_RESOURCE_BUNDLE.getString(GAME_TITLE_NODE_KEY)).item(0).getTextContent();
     }
 }

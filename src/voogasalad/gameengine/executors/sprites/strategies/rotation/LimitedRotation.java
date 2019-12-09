@@ -26,8 +26,7 @@ public class LimitedRotation implements RotationStrategy {
         return currentAngle + diffAngle;
     }
 
-    @Override
-    public void determineTargetAngle(Double currentAngle) {
+    private void determineTargetAngle(Double currentAngle) {
         Double lowerBound = validRotationRange.getKey();
         Double upperBound = validRotationRange.getValue();
         if (currentAngle >= upperBound){
@@ -38,8 +37,7 @@ public class LimitedRotation implements RotationStrategy {
         }
     }
 
-    @Override
-    public void determineRotationDirection(Double currentAngle) {
+    private void determineRotationDirection(Double currentAngle) {
         if (currentAngle.equals(targetAngle)) {
             rotationDirection = 0;
         } else if (currentAngle > targetAngle) {
@@ -47,11 +45,6 @@ public class LimitedRotation implements RotationStrategy {
         } else {
             rotationDirection = 1;
         }
-    }
-
-    @Override
-    public int getRotationDirection() {
-        return rotationDirection;
     }
 
     @Override

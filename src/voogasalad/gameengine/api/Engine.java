@@ -12,8 +12,8 @@ import java.util.List;
 public class Engine {
     private Game myGame;
 
-    public Engine(Document doc) throws GameEngineException {
-        myGame = new Game(doc);
+    public Engine(Document gameDocument) throws GameEngineException {
+        myGame = new Game(gameDocument);
     }
 
     public GameSceneObject execute(double elapsedTime) throws GameEngineException {
@@ -24,12 +24,8 @@ public class Engine {
         return myGame.getActionsProcessor();
     }
 
-    public List<Sprite> getSpritePrototypes() {
-        return myGame.getCurrentLevelSpritePrototypes();
-    }
-
     public List<Sprite> getSpritePrototypesByArchetype(SpriteArchetype spriteArchetype) throws GameEngineException {
-        return myGame.getSpritePrototypesByArchetype(spriteArchetype);
+        return myGame.getCopySpritePrototypesByArchetype(spriteArchetype);
     }
 
     public String getCurrentLevelBackgroundPath() {
@@ -51,6 +47,8 @@ public class Engine {
     public int getCurrentLevelId() {
         return myGame.getCurrentLevelId();
     }
+
+    public String getCurrentLevelSoundPath() { return myGame.getCurrentLevelSoundPath(); }
 
     public Status getGameStatus() {
         return myGame.getGameStatus();
