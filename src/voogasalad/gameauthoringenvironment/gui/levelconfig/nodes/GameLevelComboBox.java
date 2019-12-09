@@ -21,13 +21,14 @@ public class GameLevelComboBox extends ComboBox {
     private List<Map<String, Map<String, String>>> activeObjectsForLevel;
     private int selectedLevel;
     private int highestLevel;
-    private boolean alreadyUpdated;
+    private int localHighest;
 
     public GameLevelComboBox(LevelConfigPane levelConfigPaneInstanceParam){
         levelConfigPaneInstance = levelConfigPaneInstanceParam;
         allLevels = new ArrayList<>();
         selectedLevel = 1;
         highestLevel = 1;
+        localHighest = highestLevel;
         this.setValue("1");
         this.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -36,7 +37,12 @@ public class GameLevelComboBox extends ComboBox {
                 String selectedLevel = thisInstance.getValue().toString();
                 if(! (selectedLevel.equals(String.valueOf(highestLevel)))){
                     updateLevelConfigFields(selectedLevel);
+                    if(localHighest == highestLevel - 1 ){
+                        levelConfigPaneInstance.removeOneFromHighestLevel();
+                        highestLevel--;
+                    }
                 }
+
             }
         });
     }
@@ -46,6 +52,7 @@ public class GameLevelComboBox extends ComboBox {
         activeObjectObjects = levelConfigPaneInstance.getActiveObjectObjects();
         levelConfigPaneInstance.saveInfoForLevel();
         if(! (activeObjectsForLevel == null)){
+
             for(Map map : activeObjectsForLevel){
                 getAssociateObjectObject(map);
             }
@@ -57,9 +64,8 @@ public class GameLevelComboBox extends ComboBox {
     }
 
     public void addToComboBox(int previousLevel, int currentLevelParam){
-        alreadyUpdated = false;
+        localHighest = highestLevel;
         highestLevel = currentLevelParam;
-        //currentLevel = String.valueOf(currentLevelParam);
         selectedLevel = highestLevel;
         allLevels.add(previousLevel);
         this.setValue(String.valueOf(highestLevel));
@@ -79,4 +85,5 @@ public class GameLevelComboBox extends ComboBox {
     public int getSelectedLevel(){
         return selectedLevel;
     }
+
 }

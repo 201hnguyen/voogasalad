@@ -252,4 +252,8 @@ public class LevelConfigPane extends BorderPane{
         return allActiveObjectObjects;
     }
 
+    public void removeOneFromHighestLevel(){
+        highestGameLevel--;
+    }
+
 }
