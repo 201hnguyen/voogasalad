@@ -37,6 +37,8 @@ public class PlayerVisualization extends BorderPane {
     private static final String BACK_TO_GAE = resourceBundle.getString("BackToGAE");
     private static final String INSTRUCTIONS = resourceBundle.getString("Instructions");
     private static final int PANEL_SPACING = Integer.parseInt(resourceBundle.getString("InfoBoxSpacing"));
+    private static final String START_BUTTON_KEY = "ToggleStart";
+    private static final String MUTE_BUTTON_KEY = "ToggleMute";
 
     private Scene scene;
     private Stage stage;
@@ -46,6 +48,7 @@ public class PlayerVisualization extends BorderPane {
     private Media backgroundSound;
     private VBox panelBox;
     private AccordionCreator accordionCreator;
+    private ButtonCreator myButtonCreator;
     private StatusBar statusBar;
     private SelectedTowerPane selectedTowerPane;
     private ActionsProcessor actionsProcessor;
@@ -91,12 +94,12 @@ public class PlayerVisualization extends BorderPane {
     }
 
     private void initialize() {
-        ButtonCreator buttonCreator = new ButtonCreator(new ButtonController(this));
+        myButtonCreator = new ButtonCreator(new ButtonController(this));
         accordionCreator = new AccordionCreator();
         statusBar = new StatusBar();
         selectedTowerPane = new SelectedTowerPane(actionsProcessor, myPlayer, this);
         panelBox = new VBox(PANEL_SPACING);
-        panelBox.getChildren().addAll(buttonCreator, showInstructions(), accordionCreator, selectedTowerPane, backToGAE());
+        panelBox.getChildren().addAll(myButtonCreator, showInstructions(), accordionCreator, selectedTowerPane, backToGAE());
         createStopWatchDisplay();
         statusBar.getChildren().add(myStopWatchDisplay);
         this.setRight(panelBox);
@@ -170,10 +173,12 @@ public class PlayerVisualization extends BorderPane {
     public void toggleMuteAction() {
         isMuted = !isMuted;
         soundPlayer.setMute(isMuted);
+        myButtonCreator.toggleImage(MUTE_BUTTON_KEY);
     }
 
     public void toggleStartAction() {
         isRunning = !isRunning;
+        myButtonCreator.toggleImage(START_BUTTON_KEY);
         if(isRunning) {
             myPlayer.startTimeLine();
             myStopWatch.startStopWatch();

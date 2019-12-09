@@ -44,10 +44,7 @@ public class ButtonCreator extends HBox {
             image.setFitWidth(80);
             image.setFitHeight(80);
             button.setGraphic(image);
-            button.setOnAction(e -> {
-                callAction(key);
-                toggleImage(key);
-            });
+            button.setOnAction(e -> callAction(key));
             button.setPrefHeight(getHeight());
             button.setMinWidth(100);
             getChildren().add(button);
@@ -57,14 +54,13 @@ public class ButtonCreator extends HBox {
     private void callAction(String key) {
         String methodName = BUTTON_ACTION_BUNDLE.getString(key);
         try {
-            Method m = myButtonController.getClass().getDeclaredMethod(methodName);
-            m.invoke(myButtonController);
+            myButtonController.getClass().getDeclaredMethod(methodName).invoke(myButtonController);
         } catch (Exception e) {
             // TODO: catch this error
         }
     }
 
-    private void toggleImage(String key) {
+    public void toggleImage(String key) {
         String[] optionResources = BUTTON_RESOURCE_BUNDLE.getString(key).split(";");
         toggleChoice(key);
         Button toToggle = buttonMap.get(key);
