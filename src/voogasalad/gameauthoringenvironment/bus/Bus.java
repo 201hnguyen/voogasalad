@@ -31,6 +31,9 @@ public class Bus {
     private final static double LOGO_HEIGHT = 350;
     private final String ERROR_MESSAGE = "Wrong file type selected for upload: select XML";
 
+  //  private final static int GAE_WIDTH = 800;
+   // private final static int GAE_HEIGHT = 500;
+
 
     private Stage currentStage;
 
