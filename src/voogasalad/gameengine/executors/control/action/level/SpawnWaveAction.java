@@ -13,6 +13,7 @@ public class SpawnWaveAction implements LevelAction {
 
     @Override
     public void execute(Level level) throws GameEngineException {
+        checkAndResetAction();
         SpriteManager spriteManager = level.getSpriteManager();
         LevelWaveManager levelWaveManager = level.getWaveManager();
         double elapsedTime = level.getStatusManager().getElapsedTimeSinceLastFrame();
@@ -21,6 +22,13 @@ public class SpawnWaveAction implements LevelAction {
         }
         if (! isFinished) {
             isFinished = myWave.spawnNextSprite(spriteManager, elapsedTime);
+        }
+    }
+
+    private void checkAndResetAction() {
+        if (isFinished==true) {
+            myWave = null;
+            isFinished = false;
         }
     }
 

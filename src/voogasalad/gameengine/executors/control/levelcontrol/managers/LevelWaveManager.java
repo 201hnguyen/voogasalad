@@ -2,9 +2,7 @@ package voogasalad.gameengine.executors.control.levelcontrol.managers;
 
 import voogasalad.gameengine.executors.control.levelcontrol.Wave;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class LevelWaveManager {
     private List<Wave> myWaves;

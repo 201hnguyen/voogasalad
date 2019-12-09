@@ -20,6 +20,7 @@ public class GameConfigurator {
     public static final String LEVELS_SEQUENCE_NODE_TAG = "LevelSequence";
     public static final String PROTOTYPES_NODES_TAG = "SpritePrototype";
     public static final String GAME_CONDITIONS_NODES_TAG = "GameCondition";
+    public static final String GAME_TITLE_TAG = "GameTitle";
 
     private Element myRoot;
     private Document myDocument;
@@ -76,4 +77,6 @@ public class GameConfigurator {
         NodeList conditionNodes = myRoot.getElementsByTagName(GAME_CONDITIONS_NODES_TAG);
         return conditionsConfigurator.buildGameConditionsCollection(conditionNodes);
     }
+
+//    public String configureGameTitle()
 }
