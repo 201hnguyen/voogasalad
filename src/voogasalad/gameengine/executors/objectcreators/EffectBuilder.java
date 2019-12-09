@@ -8,6 +8,9 @@ public class EffectBuilder implements StrategyBuilder {
     private static final String DEFAULT_TYPE = "NoEffect";
 
     private int myDamageValue;
+    private int myTickCount;
+    private double myTickDelay;
+    private double myDuration;
     private String myEffectType;
 
     public EffectBuilder setType(String effectType) {
@@ -27,6 +30,31 @@ public class EffectBuilder implements StrategyBuilder {
     public int getDamage() {
         return myDamageValue;
     }
+
+    public EffectBuilder setTickCount(String tickCountString) {
+        myTickCount = Integer.parseInt(tickCountString);
+        return this;
+    }
+
+    public int getTickCount() {
+        return myTickCount;
+    }
+
+    public EffectBuilder setTickDelay(String tickDelayString) {
+        myTickDelay = Double.parseDouble(tickDelayString);
+        return this;
+    }
+
+    public double getTickDelay() {
+        return myTickDelay;
+    }
+
+    public EffectBuilder setDuration(String durationString) {
+        myDuration = Double.parseDouble(durationString);
+        return this;
+    }
+
+    public double getDuration() { return myDuration; }
 
     @Override
     public EffectStrategy build() throws GameEngineException {

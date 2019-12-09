@@ -15,7 +15,7 @@ public class ArgumentHBox extends HBox {
     private String condition;
     private boolean isPopulated;
 
-    public ArgumentHBox(String argument, Map<String, Map<String, Map<String, String>>> allActiveObjectMap, String conditionParam) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    public ArgumentHBox(String argument, Map<String, Map<String, String>> allActiveObjectMap, String conditionParam) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         condition = conditionParam;
         conditionArgumentTypes = ResourceBundle.getBundle(CONDITION_ARGUMENT_TYPES);
         if(appropriateNode(allActiveObjectMap) != null) {
@@ -28,7 +28,7 @@ public class ArgumentHBox extends HBox {
     }
 
 
-    public Node appropriateNode(Map<String, Map<String, Map<String, String>>> allActiveObjectMap) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    public Node appropriateNode(Map<String, Map<String, String>> allActiveObjectMap) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         ActiveObjectComboBox activeObjectComboBox = new ActiveObjectComboBox(allActiveObjectMap);
         if (!conditionArgumentTypes.getString(condition).equals("")) {
             Class cls = Class.forName(conditionArgumentTypes.getString(condition));

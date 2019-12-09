@@ -1,10 +1,8 @@
 package voogasalad.gameengine.executors.control.gamecontrol;
 
 import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 import voogasalad.gameengine.api.ActionsProcessor;
 import voogasalad.gameengine.api.GameSceneObject;
-//import voogasalad.gameengine.configurators.EngineConfigurator;
 import voogasalad.gameengine.configurators.GameConfigurator;
 import voogasalad.gameengine.executors.control.condition.game.GameCondition;
 import voogasalad.gameengine.executors.control.gamecontrol.controllers.GameLevelsController;
@@ -12,15 +10,10 @@ import voogasalad.gameengine.executors.control.gamecontrol.controllers.GameRules
 import voogasalad.gameengine.executors.control.levelcontrol.GameSceneStatus;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.control.levelcontrol.Level;
-import voogasalad.gameengine.executors.sprites.Sprite;
 import voogasalad.gameengine.executors.utils.ConfigurationTool;
+import voogasalad.gameengine.executors.sprites.Sprite;
 import voogasalad.gameengine.executors.utils.SpriteArchetype;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
@@ -38,7 +31,7 @@ public class Game {
     public Game(Document gameConfigDocument) throws GameEngineException {
         myGameRulesController = new GameRulesController();
         myGameActionsRequester = new GameActionsRequester();
-        myGameConfigDocument = ConfigurationTool.configureWithTestDocument("src/resources/player/MockGame.xml");
+        myGameConfigDocument = ConfigurationTool.configureWithTestDocument("src/resources/player/MockData.xml");
         GameConfigurator gameConfigurator = new GameConfigurator(myGameConfigDocument);
         myCompletePrototypesCollection = gameConfigurator.getGamePrototypesCollection();
         myGameRulesController.addGameConditionsAsCollection(gameConfigurator.configureGameConditions());
@@ -67,7 +60,7 @@ public class Game {
     public void loadNextLevel() {
         myCurrentLevel = myGameLevelsController.getNextLevel(myCurrentLevel);
         myCurrentLevel.getStatusManager().setGameSceneStatus(GameSceneStatus.ONGOING);
-        myCurrentActionsProcessor.updateLevel(myCurrentLevel);
+        myCurrentActionsProcessor.updateLevelActionsRequester(myCurrentLevel.getActionsRequester());
         switchedLevel = true;
     }
 

@@ -2,6 +2,7 @@ package voogasalad.gameengine.executors.sprites;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import voogasalad.gameengine.executors.control.action.level.LevelAction;
 import voogasalad.gameengine.executors.control.levelcontrol.LevelActionsRequester;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.objectcreators.SpriteBuilder;
@@ -34,6 +35,7 @@ public class JavaFXSprite implements Sprite {
     private double myHeight;
     private double myWidth;
     private boolean hasBeenClicked;
+    private double delayRemaining;
 
     public JavaFXSprite(SpriteBuilder builder) throws GameEngineException {
         myPrototypeId = builder.getPrototypeId();
@@ -52,6 +54,7 @@ public class JavaFXSprite implements Sprite {
         myImagePath = builder.getImagePath();
         myHeight = builder.getHeight();
         myWidth = builder.getWidth();
+        delayRemaining = 0;
         configureImageView();
     }
 
@@ -134,7 +137,12 @@ public class JavaFXSprite implements Sprite {
 
     @Override
     public void updatePosition(double elapsedTime) {
-        currentPosition = myMovementStrategy.calculateNextPosition(elapsedTime, currentPosition);
+        if(delayRemaining <= 0) {
+            delayRemaining = 0;
+            currentPosition = myMovementStrategy.calculateNextPosition(elapsedTime, currentPosition);
+        } else {
+            delayRemaining -= elapsedTime;
+        }
     }
 
     private void configureImageView() {
@@ -184,9 +192,9 @@ public class JavaFXSprite implements Sprite {
     public void updateAttackStrategy(AttackStrategy updatedStrategy) {
         myAttackStrategy = updatedStrategy;
     }
-
-    public void applyEffect(Sprite other) throws GameEngineException {
-        myEffectStrategy.apply(other);
+    @Override
+    public LevelAction getEffectAction(Sprite other) throws GameEngineException {
+        return myEffectStrategy.getAction(other.getId());
     }
 
     @Override
@@ -197,5 +205,10 @@ public class JavaFXSprite implements Sprite {
     @Override
     public boolean getHasBeenClicked() {
         return hasBeenClicked;
+    }
+
+    @Override
+    public void delayMovement(double duration) {
+        delayRemaining = duration;
     }
 }

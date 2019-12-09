@@ -2,10 +2,13 @@ package voogasalad.gameengine.executors.sprites.strategies.movement;
 
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.objectcreators.MovementBuilder;
+import voogasalad.gameengine.executors.utils.Verifier;
 
+import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class PathMovement implements MovementStrategy {
     private MovementBuilder myOriginalBuilder;
@@ -22,10 +25,6 @@ public class PathMovement implements MovementStrategy {
         myPath = builder.getPath();
         myOriginalBuilder = builder;
         nextPositionIndex = 0;
-        resetNextPosition();
-    }
-
-    private void resetNextPosition() {
         if(myPath.size() < 1) {
             reachedEnd = true;
         } else {
@@ -65,7 +64,7 @@ public class PathMovement implements MovementStrategy {
     @Override
     public void updatePath(List<Point2D.Double> path) {
         myPath = (LinkedList<Point2D.Double>) path;
-        resetNextPosition();
+        //todo: I think we should take in a List instead of a LinkedList for myPath; it's just a linkedlist when we create it; but we shouldn't need to specify within this class
     }
 
     @Override
@@ -75,8 +74,7 @@ public class PathMovement implements MovementStrategy {
 
     @Override
     public boolean isMovementFinished() {
-//        return reachedEnd;
-        return false;
+        return reachedEnd;
     }
 
     private Point2D.Double calculateDirection(Point2D.Double currentPosition) {

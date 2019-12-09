@@ -23,12 +23,17 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ResourceBundle;
 
 public class ActionsProcessor {
+    public static final String GAME_ACTIONS_DIRECTORY_ROOT = "voogasalad.gameengine.executors.control.action.game.";
+    public static final String LEVEL_ACTIONS_DIRECTORY_ROOT = "voogasalad.gameengine.executors.control.action.level.";
     public static final String ACTIONS_DIRECTORY_ROOT = "voogasalad.gameengine.executors.control.action.";
-    public static final String GAME_DIRECTORY_EXTENSION = "game.";
-    public static final String LEVEL_DIRECTORY_EXTENSION = "level.";
-    public static final String PROTOTYPE_EDIT_DIRECTORY_EXTENSION = "editprototype.";
-    public static final String LIVE_GAME_EDITING_CLASS_PATH = "resources.engine.LiveGameEditing";
+    public static final String LIVE_GAME_EDITING_CLASS_PATH = "resources/engine/LiveGameEditing";
     public static final ResourceBundle LIVE_GAME_EDITING_BUNDLE = ResourceBundle.getBundle(LIVE_GAME_EDITING_CLASS_PATH);
+    public static final String LIVE_GAME_EDITING_TYPE_ROOT_KEY = "ActionTypeDocumentChildRoot";
+    public static final String LIVE_GAME_EDITING_EDITABLE_ROOT_KEY = "EditableDocumentChildRoot";
+    public static final String PROCESS_LIVE_GAME_EDITING_ACTION_UNSUCCESSFUL = "LiveGameEditingRequestUnsuccessfullyProcessed";
+    public static final String LIVE_GAME_EDITING_ACTION_UNSUCCESSFUL_GAME = "UnsuccessfulLiveGameEditingOnGameLevel";
+    public static final String LIVE_GAME_EDITING_ACTION_UNSUCCESSFUL_LEVEL = "UnsuccessfulLiveGameEditingOnLevelLevel";
+    public static final String LIVE_GAME_EDITING_ACTION_UNSUCCESSFUL_PROTOTYPE = "UnsuccessfulLiveGameEditingOnPrototypeLevel";
 
     private LevelActionsRequester myLevelActionsRequester;
     private GameActionsRequester myGameActionsRequester;
@@ -56,46 +61,47 @@ public class ActionsProcessor {
 
     public void processGameEditingAction(Document doc) throws GameEngineException {
         Document document = ConfigurationTool.configureWithTestDocument("src/resources/player/EditedSpriteImageView.xml");
+//        Document document = doc;
         Element documentRoot = document.getDocumentElement();
-        String editGameActionType = documentRoot.getElementsByTagName("EditActionType").item(0).getTextContent();
-        Element editableObject = (Element) documentRoot.getElementsByTagName("EditableObject").item(0);
+        String editGameActionType = documentRoot.getElementsByTagName(LIVE_GAME_EDITING_BUNDLE.getString(LIVE_GAME_EDITING_TYPE_ROOT_KEY)).item(0).getTextContent();
+        Element editableObject = (Element) documentRoot.getElementsByTagName(LIVE_GAME_EDITING_BUNDLE.getString(LIVE_GAME_EDITING_EDITABLE_ROOT_KEY)).item(0);
         String methodName = LIVE_GAME_EDITING_BUNDLE.getString(editGameActionType);
         try {
             this.getClass().getDeclaredMethod(methodName, String.class, Element.class).invoke(this, editGameActionType, editableObject);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace(); //FIXME
+            throw new GameEngineException(e, PROCESS_LIVE_GAME_EDITING_ACTION_UNSUCCESSFUL);
         }
     }
 
     private void processEditOnGameAction(String editGameActionType, Element editableObject) throws GameEngineException {
         try {
-            GameAction action = (GameAction) Class.forName(ACTIONS_DIRECTORY_ROOT + GAME_DIRECTORY_EXTENSION + editGameActionType).getConstructor(Element.class).newInstance(editableObject);
+            GameAction action = (GameAction) Class.forName(GAME_ACTIONS_DIRECTORY_ROOT + editGameActionType).getConstructor(Element.class).newInstance(editableObject);
             myGameActionsRequester.requestAction(action);
         } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace(); //FIXME
+            throw new GameEngineException(e, LIVE_GAME_EDITING_ACTION_UNSUCCESSFUL_GAME);
         }
     }
 
-    private void processEditOnLevelAction(String editLevelActionType, Element editableObject) {
+    private void processEditOnLevelAction(String editLevelActionType, Element editableObject) throws GameEngineException {
         try {
-            LevelAction action = (LevelAction) Class.forName(ACTIONS_DIRECTORY_ROOT + LEVEL_DIRECTORY_EXTENSION + editLevelActionType).getConstructor(Element.class).newInstance(editableObject);
+            LevelAction action = (LevelAction) Class.forName(LEVEL_ACTIONS_DIRECTORY_ROOT + editLevelActionType).getConstructor(Element.class).newInstance(editableObject);
             myLevelActionsRequester.requestAction(action);
         } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace(); //FIXME
+            throw new GameEngineException(LIVE_GAME_EDITING_ACTION_UNSUCCESSFUL_LEVEL);
         }
     }
 
-    private void processEditOnPrototypeAction(String editPrototypeActionType, Element editableObject) {
+    private void processEditPrototypeAction(String editPrototypeActionType, Element editableObject) throws GameEngineException {
         try {
-            Object action = Class.forName(ACTIONS_DIRECTORY_ROOT + PROTOTYPE_EDIT_DIRECTORY_EXTENSION  + editPrototypeActionType).getConstructor(Element.class).newInstance(editableObject);
+            Object action = Class.forName(ACTIONS_DIRECTORY_ROOT + editPrototypeActionType).getConstructor(Element.class).newInstance(editableObject);
             myLevelActionsRequester.requestAction((LevelAction) action);
             myGameActionsRequester.requestAction((GameAction) action);
         } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace(); //FIXME
+            throw new GameEngineException(LIVE_GAME_EDITING_ACTION_UNSUCCESSFUL_PROTOTYPE);
         }
     }
 
-    public void updateLevel(Level level) {
-        myLevelActionsRequester = level.getActionsRequester();
+    public void updateLevelActionsRequester(LevelActionsRequester levelActionsRequester) {
+        myLevelActionsRequester = levelActionsRequester;
     }
 }

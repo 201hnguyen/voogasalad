@@ -23,7 +23,7 @@ public class ConditionActionComboBox extends ComboBox {
 
     private ResourceBundle expectedArguments;
 
-    public ConditionActionComboBox(Map<String, Map<String, Map<String, String>>> allActiveObjectMap){
+    public ConditionActionComboBox(Map<String, Map<String, String>> allActiveObjectMap){
         expectedArguments = ResourceBundle.getBundle(CONDITION_ARGUMENTS);
         this.valueProperty().addListener(new ChangeListener() {
             @Override
@@ -45,7 +45,7 @@ public class ConditionActionComboBox extends ComboBox {
         });
     }
 
-    public void openArgumentWindow(Map<String, Map<String, Map<String, String>>> allActiveObjectMap) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+    public void openArgumentWindow(Map<String, Map<String, String>> allActiveObjectMap) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         boolean isPopulated = true;
         VBox argumentVBox = new VBox();
         String condition = this.getValue().toString();
