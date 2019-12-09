@@ -9,7 +9,5 @@ public interface AttackStrategy {
     void attack(double elapsedTime, double currentAngle, LevelActionsRequester actionsRequester, Point2D.Double currentPos)
             throws GameEngineException;
 
-    Double getAttackRate();
-
     AttackStrategy makeClone() throws GameEngineException;
 }
