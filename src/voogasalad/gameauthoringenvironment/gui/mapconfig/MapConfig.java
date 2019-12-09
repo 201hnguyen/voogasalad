@@ -120,8 +120,8 @@ public class MapConfig {
         pathPointImage = new Image(this.getClass().getClassLoader().getResourceAsStream("pathUnit.png"));
         defaulBackGroundImage = new Image(this.getClass().getClassLoader().getResourceAsStream("defaultBG.jpg"));
         backgroundImageView = new ImageView(defaulBackGroundImage);
-        backgroundImageView.setFitWidth(500);
-        backgroundImageView.setFitHeight(500);
+        backgroundImageView.setFitWidth(800);
+        backgroundImageView.setFitHeight(800);
 
         levelConfigPage = new Stage();
         root = new BorderPane();
