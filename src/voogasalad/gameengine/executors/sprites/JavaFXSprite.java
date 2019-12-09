@@ -2,10 +2,13 @@ package voogasalad.gameengine.executors.sprites;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import voogasalad.gameengine.executors.control.action.level.LevelAction;
 import voogasalad.gameengine.executors.control.levelcontrol.LevelActionsRequester;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.objectcreators.SpriteBuilder;
 import voogasalad.gameengine.executors.sprites.strategies.attack.AttackStrategy;
+import voogasalad.gameengine.executors.sprites.strategies.cost.CostStrategy;
+import voogasalad.gameengine.executors.sprites.strategies.effect.EffectStrategy;
 import voogasalad.gameengine.executors.sprites.strategies.health.HealthStrategy;
 import voogasalad.gameengine.executors.sprites.strategies.movement.MovementStrategy;
 import voogasalad.gameengine.executors.sprites.strategies.rotation.RotationStrategy;
@@ -22,11 +25,17 @@ public class JavaFXSprite implements Sprite {
     private MovementStrategy myMovementStrategy;
     private RotationStrategy myRotationStrategy;
     private AttackStrategy myAttackStrategy;
+    private CostStrategy myCostStrategy;
+    private EffectStrategy myEffectStrategy;
     private String myImagePath;
     private ImageView myImageView;
     private SpriteBuilder myOriginalBuilder;
     private SpriteArchetype myArchetype;
     private int myPrototypeId;
+    private double myHeight;
+    private double myWidth;
+    private boolean hasBeenClicked;
+    private double delayRemaining;
 
     public JavaFXSprite(SpriteBuilder builder) throws GameEngineException {
         myPrototypeId = builder.getPrototypeId();
@@ -39,22 +48,29 @@ public class JavaFXSprite implements Sprite {
         myMovementStrategy = builder.getMovementStrategy();
         myAttackStrategy = builder.getAttackStrategy();
         myRotationStrategy = builder.getRotationStrategy();
+        myCostStrategy = builder.getCostStrategy();
+        myEffectStrategy = builder.getEffectStrategy();
         myCurrentAttackAngle = 0.0;
         myImagePath = builder.getImagePath();
-        configureImageView(builder.getHeight(), builder.getWidth());
+        myHeight = builder.getHeight();
+        myWidth = builder.getWidth();
+        delayRemaining = 0;
+        configureImageView();
     }
 
     @Override
     public Sprite makeClone(double x, double y, int spriteId) throws GameEngineException {
         return new SpriteBuilder().setSpriteId(spriteId).setX(x).setY(y)
-                .setHealthStrategy(myOriginalBuilder.getHealthStrategy().makeClone())
-                .setHeight(myOriginalBuilder.getHeight())
-                .setImagePath(myOriginalBuilder.getImagePath())
+                .setHeight(myHeight)
+                .setImagePath(myImagePath)
+                .setWidth(myWidth)
+                .setArchetype(myArchetype)
+                .setAttackStrategy(myAttackStrategy.makeClone())
+                .setRotationStrategy(myOriginalBuilder.getRotationStrategy().makeClone())
                 .setMovementStrategy(myOriginalBuilder.getMovementStrategy().makeClone())
-                .setWidth(myOriginalBuilder.getWidth())
-                .setArchetype(myOriginalBuilder.getSpriteArchetype())
-                .setAttackStrategy(myOriginalBuilder.getAttackStrategy())
-                .setRotationStrategy(myOriginalBuilder.getRotationStrategy())
+                .setHealthStrategy(myOriginalBuilder.getHealthStrategy().makeClone())
+                .setCostStrategy(myOriginalBuilder.getCostStrategy().makeClone())
+                .setEffectStrategy(myOriginalBuilder.getEffectStrategy().makeClone())
                 .setPrototypeId(myPrototypeId)
                 .build();
     }
@@ -121,13 +137,18 @@ public class JavaFXSprite implements Sprite {
 
     @Override
     public void updatePosition(double elapsedTime) {
-        currentPosition = myMovementStrategy.calculateNextPosition(elapsedTime, currentPosition);
+        if(delayRemaining <= 0) {
+            delayRemaining = 0;
+            currentPosition = myMovementStrategy.calculateNextPosition(elapsedTime, currentPosition);
+        } else {
+            delayRemaining -= elapsedTime;
+        }
     }
 
-    private void configureImageView(double height, double width) {
+    private void configureImageView() {
         myImageView = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream(myImagePath)));
-        myImageView.setFitHeight(height);
-        myImageView.setFitWidth(width);
+        myImageView.setFitHeight(myHeight);
+        myImageView.setFitWidth(myWidth);
         myImageView.setPreserveRatio(true);
     }
 
@@ -143,7 +164,56 @@ public class JavaFXSprite implements Sprite {
 
     @Override
     public boolean isDead() {
-        return myHealthStrategy.getHealth() != null && myHealthStrategy.getHealth() <= 0;
+        return myEffectStrategy.isFinished() || myHealthStrategy.getHealth() != null && myHealthStrategy.getHealth() <= 0;
     }
 
+    public int getCreateCost() {
+        return myCostStrategy.getCreateCost();
+    }
+
+    @Override
+    public int getDestroyCost() {
+        return myCostStrategy.getDestroyCost();
+    }
+
+    @Override
+    public void updateImage(String newImagePath) {
+        myImagePath = newImagePath;
+        configureImageView();
+    }
+
+    @Override
+    public boolean isColliding(Sprite other) {
+        ImageView otherImage = (ImageView) other.getImage();
+        return myImageView.getBoundsInParent().intersects(otherImage.getBoundsInParent());
+    }
+
+    @Override
+    public void updateAttackStrategy(AttackStrategy updatedStrategy) {
+        myAttackStrategy = updatedStrategy;
+    }
+    @Override
+    public LevelAction getEffectAction(Sprite other) throws GameEngineException {
+        return myEffectStrategy.getAction(other.getId());
+    }
+
+    @Override
+    public void setHasBeenClicked(boolean bool) {
+        hasBeenClicked = bool;
+    }
+
+    @Override
+    public boolean getHasBeenClicked() {
+        return hasBeenClicked;
+    }
+
+    @Override
+    public void delayMovement(double duration) {
+        delayRemaining = duration;
+    }
+
+    @Override
+    public double distanceTo(Sprite other) {
+        return currentPosition.distance(other.getX(), other.getY());
+    }
 }

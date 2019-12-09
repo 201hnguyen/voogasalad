@@ -1,11 +1,6 @@
 package voogasalad.gameengine.executors.exceptions;
 
-import java.util.ResourceBundle;
-
 public class GameEngineException extends Exception {
-
-    private static final String EXCEPTIONS_MESSAGES_RESOURCE_PATH = "resources.engine.English";
-    private static final ResourceBundle EXCEPTION_MESSAGES_BUNDLE = ResourceBundle.getBundle(EXCEPTIONS_MESSAGES_RESOURCE_PATH);
 
     private final Throwable myThrowableEx;
     private final String myMessageKey;
@@ -22,6 +17,10 @@ public class GameEngineException extends Exception {
     }
 
     public String getMessage() {
-        return EXCEPTION_MESSAGES_BUNDLE.getString(myMessageKey) + myThrowableEx.getMessage();
+        return myMessageKey;
+    }
+
+    public Throwable getException() {
+        return myThrowableEx;
     }
 }

@@ -132,7 +132,7 @@ public class LevelConfigPane extends BorderPane{
 
     private VBox createConditionActionVBox(){
         VBox conditionAction = new VBox(10);
-        conditionAction.getChildren().addAll(new RuleLine(allActiveObjects), new RuleLine(allActiveObjects));
+//        conditionAction.getChildren().addAll(new RuleLine(allActiveObjects), new RuleLine(allActiveObjects));
         return conditionAction;
     }
 
@@ -145,7 +145,7 @@ public class LevelConfigPane extends BorderPane{
     private Button createAddRuleLineButton(VBox conditionAction){
         Button addRuleLine = new Button("+");
         addRuleLine.setOnMouseClicked(event -> {
-            conditionAction.getChildren().add(new RuleLine(allActiveObjects));
+//            conditionAction.getChildren().add(new RuleLine(allActiveObjects));
         });
         return addRuleLine;
     }
@@ -177,7 +177,7 @@ public class LevelConfigPane extends BorderPane{
 
     public void addIconToVBox(String objectType, Button icon){
         for(VBoxCreator objectVBox : objectVBoxes){
-            objectVBox.addToObjectHBox(icon, objectType);
+//            objectVBox.addToObjectHBox(icon, objectType);
         }
     }
 

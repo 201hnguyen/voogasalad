@@ -1,11 +1,6 @@
 package voogasalad.gameengine.executors.sprites.strategies.rotation;
 
-import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.objectcreators.RotationBuilder;
-import voogasalad.gameengine.executors.objectcreators.StrategiesFactory;
-import voogasalad.gameengine.executors.utils.Verifier;
-
-import java.util.Map;
 
 public class NoRotation implements RotationStrategy { //TODO: can also be achieved by creating a fullrotation w speed 0
 

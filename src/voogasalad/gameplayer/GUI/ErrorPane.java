@@ -1,4 +1,4 @@
-package voogasalad;
+package voogasalad.gameplayer.GUI;
 
 
 import javafx.geometry.Insets;

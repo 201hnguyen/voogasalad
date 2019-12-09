@@ -6,7 +6,7 @@
             <ConditionId>0</ConditionId>
             <Type>TemporalCondition</Type>
             <Parameters>
-                <MarkedTime>2</MarkedTime>
+                <MarkedTime>0</MarkedTime>
             </Parameters>
             <Actions>
                 <Action>

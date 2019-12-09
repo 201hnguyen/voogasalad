@@ -11,7 +11,6 @@ import voogasalad.gameengine.api.Engine;
 import voogasalad.gameengine.executors.utils.SpriteArchetype;
 import voogasalad.gameplayer.GUI.PlayerVisualization;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -44,9 +43,10 @@ public class Player {
         startGame();
     }
 
-    public void startGame() throws GameEngineException {
+    private void startGame() throws GameEngineException {
         myTimeline = new Timeline();
-        myPlayerVisualization = new PlayerVisualization(myStage, myTimeline, myEngine.getActionsProcessor());
+        gameInfo = new HashMap<>();
+        myPlayerVisualization = new PlayerVisualization(myStage, myEngine.getActionsProcessor(), this);
         setGameLoop();
     }
 
@@ -61,10 +61,14 @@ public class Player {
         }
         else {
             myCurrentGameSceneObject = myEngine.execute(elapsedTime);
-            gameInfo.put("Lives", myCurrentGameSceneObject.getLives());
-            gameInfo.put("Coins", myCurrentGameSceneObject.getResources());
-            myPlayerVisualization.update(myCurrentGameSceneObject.getOnScreenSprites(), gameInfo);
+            updatePlayerVisualization();
         }
+    }
+
+    private void updatePlayerVisualization() {
+        gameInfo.put("Lives", myCurrentGameSceneObject.getLives());
+        gameInfo.put("Coins", myCurrentGameSceneObject.getResources());
+        myPlayerVisualization.update(myCurrentGameSceneObject.getOnScreenSprites(), gameInfo);
     }
 
     private void setGameLoop() {
@@ -77,6 +81,24 @@ public class Player {
         });
         myTimeline.setCycleCount(Timeline.INDEFINITE);
         myTimeline.getKeyFrames().add(frame);
+        myTimeline.play();
+    }
+
+    public void executeEngineWithZeroElapsedTime() {
+        try {
+            myCurrentGameSceneObject = myEngine.execute(0);
+            updatePlayerVisualization();
+        }
+        catch (GameEngineException ex){
+            ex.printStackTrace(); //TODO: Fix
+        }
+    }
+
+    public void pauseTimeline(){
+        myTimeline.pause();
+    }
+
+    public void startTimeLine(){
         myTimeline.play();
     }
 

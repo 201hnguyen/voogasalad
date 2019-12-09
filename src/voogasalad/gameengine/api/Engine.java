@@ -1,6 +1,7 @@
 package voogasalad.gameengine.api;
 
 import org.w3c.dom.Document;
+import voogasalad.gameengine.executors.control.levelcontrol.Status;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.control.gamecontrol.Game;
 import voogasalad.gameengine.executors.sprites.Sprite;
@@ -10,7 +11,6 @@ import java.util.List;
 
 public class Engine {
     private Game myGame;
-    private String gameTitle="Bloons TD5";
 
     public Engine(Document doc) throws GameEngineException {
         myGame = new Game(doc);
@@ -45,11 +45,15 @@ public class Engine {
     }
 
     public String getGameTitle() {
-        return gameTitle;
+        return myGame.getGameTitle();
     }
 
     public int getCurrentLevelId() {
         return myGame.getCurrentLevelId();
+    }
+
+    public Status getGameStatus() {
+        return myGame.getGameStatus();
     }
 
 }
