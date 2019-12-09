@@ -211,4 +211,9 @@ public class JavaFXSprite implements Sprite {
     public void delayMovement(double duration) {
         delayRemaining = duration;
     }
+
+    @Override
+    public double distanceTo(Sprite other) {
+        return currentPosition.distance(other.getX(), other.getY());
+    }
 }
