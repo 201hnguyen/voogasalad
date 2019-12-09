@@ -2,9 +2,7 @@ package voogasalad.gameengine.executors.control.levelcontrol.managers;
 
 import voogasalad.gameengine.executors.control.levelcontrol.Wave;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class LevelWaveManager {
     private List<Wave> myWaves;
@@ -27,7 +25,7 @@ public class LevelWaveManager {
 
     public boolean hasNextWave() {
 //        System.out.println("Index:" + myIndex + " " + myWaves);
-        return myIndex < myWaves.size()-1;
+        return myIndex < myWaves.size();
     }
 
 }

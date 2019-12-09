@@ -3,6 +3,11 @@ package voogasalad.gameengine.executors.objectcreators;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.sprites.strategies.attack.AttackStrategy;
 
+import java.awt.geom.Point2D;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.LinkedList;
+
 public class AttackBuilder implements StrategyBuilder {
 
     private static final String CLASS_PATH = "voogasalad.gameengine.executors.sprites.strategies.attack.";
@@ -15,6 +20,7 @@ public class AttackBuilder implements StrategyBuilder {
     private String myType;
     private Integer myBulletPrototypeId;
     private Double myAttackRate;
+    private ArrayList<Double> myShootingPositions;
 
     public AttackBuilder setBulletPrototypeId(String bulletPrototypeId) {
         try {
@@ -41,6 +47,22 @@ public class AttackBuilder implements StrategyBuilder {
         return this;
     }
 
+    public AttackBuilder setShootingPositions(String shootingPositionsString){
+        ArrayList<Double> gunsParsed = new ArrayList<Double>();
+        System.out.println("set shooting positions in attack builder: " + shootingPositionsString);
+        try{
+            String[] shootingPositionsSplit = shootingPositionsString.strip().split(",");
+            for(String gun : shootingPositionsSplit){
+                gunsParsed.add(Double.parseDouble(gun));
+                System.out.println("valid shooting pos: " + gun);
+            }
+            myShootingPositions = gunsParsed;
+        }catch(NumberFormatException e){
+            myShootingPositions = null;
+        }
+        return this;
+    }
+
     public Integer getBulletPrototypeId() {
         return myBulletPrototypeId;
     }
@@ -53,6 +75,10 @@ public class AttackBuilder implements StrategyBuilder {
         return myType;
     }
 
+    public ArrayList<Double> getMyShootingPositions() {
+        return myShootingPositions;
+    }
+
     @Override
     public AttackStrategy build() throws GameEngineException {
         if (myType==null) {
@@ -63,6 +89,9 @@ public class AttackBuilder implements StrategyBuilder {
         }
         if (myBulletPrototypeId == null) {
             myBulletPrototypeId = DEFAULT_BULLET_PROTOTYPE_ID;
+        }
+        if (myShootingPositions == null){
+            myShootingPositions = new ArrayList<>();
         }
         try{
             return (AttackStrategy) Class.forName(CLASS_PATH + myType).getConstructor(AttackBuilder.class).newInstance(this);

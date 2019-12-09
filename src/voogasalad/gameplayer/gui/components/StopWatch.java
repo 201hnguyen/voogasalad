@@ -1,4 +1,4 @@
-package voogasalad.gameplayer.GUI;
+package voogasalad.gameplayer.gui.components;
 
 import javafx.scene.text.Text;
 

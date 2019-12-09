@@ -1,5 +1,6 @@
 package voogasalad.gameengine.executors.sprites.strategies.cost;
 
+import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.objectcreators.CostBuilder;
 
 public class BasicCost implements CostStrategy {
@@ -25,7 +26,7 @@ public class BasicCost implements CostStrategy {
     }
 
     @Override
-    public CostStrategy makeClone() {
-        return new BasicCost(myBuilder);
+    public CostStrategy makeClone() throws GameEngineException {
+        return myBuilder.build() ;
     }
 }

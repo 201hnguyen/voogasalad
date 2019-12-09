@@ -1,25 +1,19 @@
 package voogasalad.gameengine.executors.control.gamecontrol;
 
 import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 import voogasalad.gameengine.api.ActionsProcessor;
 import voogasalad.gameengine.api.GameSceneObject;
 import voogasalad.gameengine.configurators.GameConfigurator;
 import voogasalad.gameengine.executors.control.condition.game.GameCondition;
 import voogasalad.gameengine.executors.control.gamecontrol.controllers.GameLevelsController;
 import voogasalad.gameengine.executors.control.gamecontrol.controllers.GameRulesController;
-import voogasalad.gameengine.executors.control.levelcontrol.GameSceneStatus;
+import voogasalad.gameengine.executors.control.levelcontrol.Status;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.control.levelcontrol.Level;
 import voogasalad.gameengine.executors.utils.ConfigurationTool;
 import voogasalad.gameengine.executors.sprites.Sprite;
 import voogasalad.gameengine.executors.utils.SpriteArchetype;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
@@ -33,12 +27,20 @@ public class Game {
     private GameActionsRequester myGameActionsRequester;
     private boolean switchedLevel;
     private List<Sprite> myCompletePrototypesCollection;
+    private Status myStatus;
+    private String myGameTitle;
 
     public Game(Document gameConfigDocument) throws GameEngineException {
+        myStatus = Status.ONGOING;
         myGameRulesController = new GameRulesController();
         myGameActionsRequester = new GameActionsRequester();
-        myGameConfigDocument = ConfigurationTool.configureWithTestDocument("src/resources/player/MockGame.xml");
+        myGameConfigDocument = ConfigurationTool.configureWithTestDocument("src/resources/player/MockData.xml");
         GameConfigurator gameConfigurator = new GameConfigurator(myGameConfigDocument);
+        try {
+            myGameTitle = gameConfigurator.configureGameTitle();
+        } catch (NullPointerException e) {
+            myGameTitle = "";
+        }
         myCompletePrototypesCollection = gameConfigurator.getGamePrototypesCollection();
         myGameRulesController.addGameConditionsAsCollection(gameConfigurator.configureGameConditions());
         myGameLevelsController = gameConfigurator.loadLevelsFromXML();
@@ -65,12 +67,12 @@ public class Game {
 
     public void loadNextLevel() {
         myCurrentLevel = myGameLevelsController.getNextLevel(myCurrentLevel);
-        myCurrentLevel.getStatusManager().setGameSceneStatus(GameSceneStatus.ONGOING);
-        myCurrentActionsProcessor.updateLevel(myCurrentLevel);
+        myCurrentLevel.getStatusManager().setGameSceneStatus(Status.ONGOING);
+        myCurrentActionsProcessor.updateLevelActionsRequester(myCurrentLevel.getActionsRequester());
         switchedLevel = true;
     }
 
-    public GameSceneStatus getCurrentLevelStatus() {
+    public Status getCurrentLevelStatus() {
         return myCurrentLevel.getStatusManager().getGameSceneStatus();
     }
 
@@ -86,13 +88,15 @@ public class Game {
         return myCompletePrototypesCollection;
     }
 
-    public List<Sprite> getSpritePrototypesByArchetype(SpriteArchetype spriteArchetype) throws GameEngineException {
+    public List<Sprite> getCopySpritePrototypesByArchetype(SpriteArchetype spriteArchetype) throws GameEngineException {
         return myCurrentLevel.getSpriteManager().getCopyPrototypesForArchetype(spriteArchetype);
     }
 
     public String getCurrentLevelBackgroundPath() {
         return myCurrentLevel.getBackgroundPath();
     }
+
+    public String getCurrentLevelSoundPath() { return myCurrentLevel.getSoundPath(); }
 
     public boolean didLevelSwitch() {
         boolean ret = switchedLevel;
@@ -114,5 +118,17 @@ public class Game {
 
     public int getCurrentLevelId() {
         return myCurrentLevel.getLevelId();
+    }
+
+    public void setGameStatus(Status status) {
+        myStatus = status;
+    }
+
+    public Status getGameStatus() {
+        return myStatus;
+    }
+
+    public String getGameTitle() {
+        return myGameTitle;
     }
 }

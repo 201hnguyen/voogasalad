@@ -2,17 +2,14 @@ package voogasalad.gameengine.executors.sprites.strategies.movement;
 
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.objectcreators.MovementBuilder;
-import voogasalad.gameengine.executors.utils.Verifier;
 
-import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 public class PathMovement implements MovementStrategy {
     private MovementBuilder myOriginalBuilder;
-    private LinkedList<Point2D.Double> myPath;
+    private List<Point2D.Double> myPath;
     private Point2D.Double nextPosition;
     private int nextPositionIndex;
     private boolean reachedEnd;
@@ -25,12 +22,6 @@ public class PathMovement implements MovementStrategy {
         myPath = builder.getPath();
         myOriginalBuilder = builder;
         nextPositionIndex = 0;
-        if(myPath.size() < 1) {
-            reachedEnd = true;
-        } else {
-            reachedEnd = false;
-            nextPosition = myPath.get(nextPositionIndex);
-        }
     }
 
     @Override
@@ -63,8 +54,13 @@ public class PathMovement implements MovementStrategy {
 
     @Override
     public void updatePath(List<Point2D.Double> path) {
-        myPath = (LinkedList<Point2D.Double>) path;
-        //todo: I think we should take in a List instead of a LinkedList for myPath; it's just a linkedlist when we create it; but we shouldn't need to specify within this class
+        myPath = path;
+        if(myPath.size() < 1) {
+            reachedEnd = true;
+        } else {
+            reachedEnd = false;
+            nextPosition = myPath.get(nextPositionIndex);
+        }
     }
 
     @Override

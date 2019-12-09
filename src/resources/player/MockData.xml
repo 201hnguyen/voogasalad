@@ -35,11 +35,10 @@
                 </Parameters>
             </RotationStrategy>
             <EffectStrategy>
-                <Type>TickHealthEffect</Type>
+                <Type>ChunkAreaEffect</Type>
                 <Parameters>
                     <DamageValue>1</DamageValue>
-                    <TickCount>5</TickCount>
-                    <TickDelay>1</TickDelay>
+                    <Radius>100</Radius>
                 </Parameters>
             </EffectStrategy>
         </Strategies>
@@ -61,7 +60,7 @@
             <HealthStrategy>
                 <Type>Health</Type>
                 <Parameters>
-                    <HealthValue>5</HealthValue>
+                    <HealthValue>1</HealthValue>
                 </Parameters>
             </HealthStrategy>
             <MovementStrategy>
@@ -91,22 +90,56 @@
         <AvailablePrototypes>0 1</AvailablePrototypes>
 
         <Wave>
-            <Queue>0</Queue>
-            <Interval>2</Interval>
-            <SpawnPointX>0</SpawnPointX>
-            <SpawnPointY>300</SpawnPointY>
-            <Path>300,300;200,300</Path>
-        </Wave>
-        <Wave>
             <Queue>1</Queue>
-            <Interval>3</Interval>
+            <Interval>1</Interval>
             <SpawnPointX>200</SpawnPointX>
             <SpawnPointY>300</SpawnPointY>
             <Path>200,300</Path>
         </Wave>
-
+        <Wave>
+            <Queue>1</Queue>
+            <Interval>1</Interval>
+            <SpawnPointX>250</SpawnPointX>
+            <SpawnPointY>300</SpawnPointY>
+            <Path>250,300</Path>
+        </Wave>
+        <Wave>
+            <Queue>1</Queue>
+            <Interval>1</Interval>
+            <SpawnPointX>200</SpawnPointX>
+            <SpawnPointY>350</SpawnPointY>
+            <Path>200,350</Path>
+        </Wave>
+        <Wave>
+            <Queue>1</Queue>
+            <Interval>1</Interval>
+            <SpawnPointX>200</SpawnPointX>
+            <SpawnPointY>250</SpawnPointY>
+            <Path>200,250</Path>
+        </Wave>
+        <Wave>
+            <Queue>1</Queue>
+            <Interval>1</Interval>
+            <SpawnPointX>500</SpawnPointX>
+            <SpawnPointY>500</SpawnPointY>
+            <Path>500,500</Path>
+        </Wave>
+        <Wave>
+            <Queue>1</Queue>
+            <Interval>1</Interval>
+            <SpawnPointX>300</SpawnPointX>
+            <SpawnPointY>50</SpawnPointY>
+            <Path>300,50</Path>
+        </Wave>
+        <Wave>
+            <Queue>0</Queue>
+            <Interval>1</Interval>
+            <SpawnPointX>50</SpawnPointX>
+            <SpawnPointY>300</SpawnPointY>
+            <Path>200,300</Path>
+        </Wave>
         <Condition>
-            <ConditionId>0</ConditionId>
+            <ConditionId>1</ConditionId>
             <Type>TemporalCondition</Type>
             <Parameters>
                 <MarkedTime>1</MarkedTime>
@@ -118,10 +151,70 @@
             </Actions>
         </Condition>
         <Condition>
-            <ConditionId>1</ConditionId>
+            <ConditionId>2</ConditionId>
             <Type>TemporalCondition</Type>
             <Parameters>
                 <MarkedTime>2</MarkedTime>
+            </Parameters>
+            <Actions>
+                <Action>
+                    <Type>SpawnWaveAction</Type>
+                </Action>
+            </Actions>
+        </Condition>
+        <Condition>
+            <ConditionId>3</ConditionId>
+            <Type>TemporalCondition</Type>
+            <Parameters>
+                <MarkedTime>3</MarkedTime>
+            </Parameters>
+            <Actions>
+                <Action>
+                    <Type>SpawnWaveAction</Type>
+                </Action>
+            </Actions>
+        </Condition>
+        <Condition>
+            <ConditionId>4</ConditionId>
+            <Type>TemporalCondition</Type>
+            <Parameters>
+                <MarkedTime>4</MarkedTime>
+            </Parameters>
+            <Actions>
+                <Action>
+                    <Type>SpawnWaveAction</Type>
+                </Action>
+            </Actions>
+        </Condition>
+        <Condition>
+            <ConditionId>5</ConditionId>
+            <Type>TemporalCondition</Type>
+            <Parameters>
+                <MarkedTime>5</MarkedTime>
+            </Parameters>
+            <Actions>
+                <Action>
+                    <Type>SpawnWaveAction</Type>
+                </Action>
+            </Actions>
+        </Condition>
+        <Condition>
+            <ConditionId>6</ConditionId>
+            <Type>TemporalCondition</Type>
+            <Parameters>
+                <MarkedTime>6</MarkedTime>
+            </Parameters>
+            <Actions>
+                <Action>
+                    <Type>SpawnWaveAction</Type>
+                </Action>
+            </Actions>
+        </Condition>
+        <Condition>
+            <ConditionId>7</ConditionId>
+            <Type>TemporalCondition</Type>
+            <Parameters>
+                <MarkedTime>7</MarkedTime>
             </Parameters>
             <Actions>
                 <Action>

@@ -1,4 +1,4 @@
-package voogasalad.gameplayer.GUI;
+package voogasalad.gameplayer.gui.components;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
@@ -8,12 +8,13 @@ import javafx.scene.layout.*;
 import voogasalad.gameengine.api.ActionsProcessor;
 import voogasalad.gameengine.executors.sprites.Sprite;
 import voogasalad.gameengine.executors.utils.SpriteArchetype;
+import voogasalad.gameplayer.gui.PlayerVisualization;
 import voogasalad.gameplayer.Player;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class DisplayScreen extends Pane {
+
     private SelectedTowerPane selectedTowerPane;
     private ActionsProcessor actionsProcessor;
     private int currentImageID;
@@ -77,9 +78,14 @@ public class DisplayScreen extends Pane {
 
     private void addImageToScreen(ImageView image, int xPos, int yPos) {
         //TODO: Check why this has to be like this
-        image.setX(xPos);
-        image.setY(yPos);
-        getChildren().add(image);
+        double imageWidth = image.getBoundsInLocal().getWidth();
+        double imageHeight = image.getBoundsInLocal().getHeight();
+        boolean inBounds = (xPos < getBoundsInLocal().getWidth() - imageWidth/2 && yPos < getBoundsInLocal().getHeight() - imageHeight/2 && xPos > imageWidth/2 && yPos > imageHeight/2);
+        if(inBounds) {
+            image.setX(xPos - imageWidth/2);
+            image.setY(yPos - imageHeight/2);
+            getChildren().add(image);
+        }
     }
 
 }

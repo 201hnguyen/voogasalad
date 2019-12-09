@@ -40,6 +40,7 @@ public class OnscreenArchetypeCountCondition extends LevelCondition {
 
     @Override
     public boolean hasHappened(Level level) {
+        System.out.println("ON SCREEN COUNT" + level.getSpriteManager().getOnScreenSpritesByArchetype(myArchetype).size());
         return level.getSpriteManager().getOnScreenSpritesByArchetype(myArchetype).size() == myMarkedCount;
     }
 }

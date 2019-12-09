@@ -10,6 +10,8 @@ public class EffectBuilder implements StrategyBuilder {
     private int myDamageValue;
     private int myTickCount;
     private double myTickDelay;
+    private double myDuration;
+    private double myRadius;
     private String myEffectType;
 
     public EffectBuilder setType(String effectType) {
@@ -46,6 +48,22 @@ public class EffectBuilder implements StrategyBuilder {
 
     public double getTickDelay() {
         return myTickDelay;
+    }
+
+    public EffectBuilder setDuration(String durationString) {
+        myDuration = Double.parseDouble(durationString);
+        return this;
+    }
+
+    public double getDuration() { return myDuration; }
+
+    public EffectBuilder setRadius(String radiusString) {
+        myRadius = Double.parseDouble(radiusString);
+        return this;
+    }
+
+    public double getRadius() {
+        return myRadius;
     }
 
     @Override
