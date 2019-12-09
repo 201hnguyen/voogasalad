@@ -8,6 +8,7 @@ import org.w3c.dom.Document;
 import voogasalad.gameauthoringenvironment.bus.Bus;
 import voogasalad.gameauthoringenvironment.gui.AddToXML;
 import voogasalad.gameauthoringenvironment.gui.levelconfig.LevelConfigPane;
+import voogasalad.gameauthoringenvironment.gui.mapconfig.GameInfoConfig;
 import voogasalad.gameauthoringenvironment.gui.tabconfig.parameterfields.ParameterCreator;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -74,6 +75,9 @@ public class TabPaneCreator {
 //        tabPane.getTabs().add(obstaclesTab);
 //        tabPane.getTabs().add(enemiesTab);
         tabPane.getTabs().add(levelTab);
+        Tab gameTab = new Tab("Game");
+        gameTab.setContent(new GameInfoConfig());
+        tabPane.getTabs().add(gameTab);
 
 
         return tabPane;
