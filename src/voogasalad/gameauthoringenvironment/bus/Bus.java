@@ -1,17 +1,17 @@
 package voogasalad.gameauthoringenvironment.bus;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import org.xml.sax.SAXException;
 import voogasalad.gameplayer.GUI.ErrorPane;
 import voogasalad.gameauthoringenvironment.gui.*;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.w3c.dom.Document;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
@@ -27,7 +27,10 @@ import java.util.function.Consumer;
 public class Bus {
 
     private final static double IMAGE_HEIGHT = 50;
+    private final static double LOGO_WIDTH = 370;
+    private final static double LOGO_HEIGHT = 350;
     private final String ERROR_MESSAGE = "Wrong file type selected for upload: select XML";
+
 
     private Stage currentStage;
     private int width;
@@ -60,6 +63,11 @@ public class Bus {
     public Scene createBusScene() {
         busRoot = new VBox();
         busRoot.setAlignment(Pos.CENTER);
+        busRoot.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+        ImageView logo = new ImageView("TDLogo.png");
+        logo.setFitWidth(LOGO_WIDTH);
+        logo.setFitHeight(LOGO_HEIGHT);
+        busRoot.getChildren().add(logo);
         busRoot.getChildren().add(createMenuButton("new-game.png", "new-game-hover.png", e -> changeToGAE()));
         busRoot.getChildren().add(createMenuButton("load-game.png", "load-game-hover.png", e -> {
             try {
@@ -69,8 +77,8 @@ public class Bus {
                 //TODO: catch this GameEngineException
             }
         }));
-
-        return new Scene(busRoot, width, height);
+        Scene scene = new Scene(busRoot,width,height);
+        return scene;
     }
 
 //    private Label changeToGAEButton(){
