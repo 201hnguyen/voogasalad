@@ -3,6 +3,7 @@ import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
+import javafx.geometry.NodeOrientation;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -13,7 +14,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import voogasalad.gameengine.api.GameSceneObject;
 import voogasalad.gameengine.api.ActionsProcessor;
+import voogasalad.gameengine.api.Engine;
 import voogasalad.gameengine.executors.sprites.Sprite;
+import voogasalad.gameplayer.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,26 +34,37 @@ public class PlayerVisualization extends BorderPane {
     private Scene scene;
     private Stage stage;
     private DisplayScreen displayScreen;
-    private Timeline timeline;
     private BackgroundImage backgroundImage;
     private VBox panelBox;
     private AccordionCreator accordionCreator;
     private StatusBar statusBar;
-    private ActionsProcessor uiActionsProcessor;
+    private SelectedTowerPane selectedTowerPane;
+    private ActionsProcessor actionsProcessor;
     private StopWatch myStopWatch;
     private Text myStopWatchDisplay;
+    private Player myPlayer;
+    private boolean isRunning;
+    private String currentTime;
 
-    public PlayerVisualization(Stage stage, Timeline timeline, ActionsProcessor uiActionsProcessor) {
+    public PlayerVisualization(Stage stage, ActionsProcessor uiActionsProcessor, Player player) {
         this.stage = stage;
-        this.timeline = timeline;
-        this.uiActionsProcessor = uiActionsProcessor;
+        this.actionsProcessor = uiActionsProcessor;
+        this.myPlayer = player;
+        this.isRunning = false;
+        currentTime = "\n 0 : 0";
         initialize();
     }
 
     public void update(List<Sprite> sprites, Map<String, Integer> gameInfoMap) {
         displayScreen.updateDisplayScreen(sprites);
         statusBar.updateDisplayedInfo(gameInfoMap);
-        myStopWatchDisplay.setText(myStopWatch.getCurrentTime());
+        if(isRunning) {
+            currentTime = myStopWatch.getCurrentTime();
+            myStopWatchDisplay.setText(currentTime);
+        }
+        else{
+            myStopWatchDisplay.setText(currentTime);
+        }
     }
 
     public void setNewLevel(List<Sprite> towers, List<Sprite> enemies, String backgroundImagePath, Map<String, Integer> gameInfoMap){
@@ -71,9 +85,9 @@ public class PlayerVisualization extends BorderPane {
         ButtonCreator buttonCreator = new ButtonCreator(new ButtonController(this));
         accordionCreator = new AccordionCreator();
         statusBar = new StatusBar();
+        selectedTowerPane = new SelectedTowerPane(actionsProcessor, myPlayer, this);
         panelBox = new VBox(10);
-        panelBox.getChildren().add(buttonCreator);
-        panelBox.getChildren().add(accordionCreator);
+        panelBox.getChildren().addAll(buttonCreator,accordionCreator, selectedTowerPane);
         createStopWatchDisplay();
         statusBar.getChildren().add(myStopWatchDisplay);
         this.setRight(panelBox);
@@ -84,7 +98,7 @@ public class PlayerVisualization extends BorderPane {
     }
 
     private void displayGameScreenAndAttachToAccordion() {
-        displayScreen = new DisplayScreen(uiActionsProcessor);
+        displayScreen = new DisplayScreen(actionsProcessor, myPlayer, selectedTowerPane, this);
         displayScreen.setMinWidth(SCENE_WIDTH - (SCENE_WIDTH - PANEL_POSITION));
         displayScreen.setMinHeight(SCENE_HEIGHT - this.getTop().getLayoutY());
         accordionCreator.attachDisplayScreen(displayScreen);
@@ -100,7 +114,7 @@ public class PlayerVisualization extends BorderPane {
     }
 
     private void createStopWatchDisplay(){
-        myStopWatchDisplay = new Text("\n0 : 0");
+        myStopWatchDisplay = new Text("\n 0 : 0");
         myStopWatchDisplay.setFont(new Font(20));
     }
 
@@ -110,12 +124,14 @@ public class PlayerVisualization extends BorderPane {
     }
 
     public void startButtonAction() {
-        timeline.play();
+        isRunning = true;
+        myPlayer.startTimeLine();
         myStopWatch.startStopWatch();
     }
 
     public void pauseButtonAction() {
-        timeline.stop();
+        isRunning = false;
+        myPlayer.pauseTimeline();
         myStopWatch.pauseStopWatch();
     }
 }

@@ -7,11 +7,11 @@ import java.util.Map;
 
 public class SaveGUIParameters {
 
-    private Map<String, String> inputMap;
+    private Map<String, String> vBoxMap;
 
     public SaveGUIParameters(List labels, List values) {
-        inputMap = new HashMap<>();
-        this.inputMap = makeMap(labels, values);
+        vBoxMap = new HashMap<>();
+        this.vBoxMap = makeMap(labels, values);
     }
 
     private Map makeMap(List labels, List values) {
@@ -19,18 +19,18 @@ public class SaveGUIParameters {
         Iterator iterLabels = labels.iterator();
         Iterator iterValues = values.iterator();
         while(iterLabels.hasNext() && iterValues.hasNext()) {
-            inputMap.put((String)iterLabels.next(), (String)iterValues.next());
+            vBoxMap.put((String)iterLabels.next(), (String)iterValues.next());
         }
 
-        for (Map.Entry s : inputMap.entrySet()) {
+        for (Map.Entry s : vBoxMap.entrySet()) {
             System.out.println(s);
         }
 
-        return inputMap;
+        return vBoxMap;
     }
 
     public Map<String, String> getMap(){
-        return inputMap;
+        return vBoxMap;
     }
 
 

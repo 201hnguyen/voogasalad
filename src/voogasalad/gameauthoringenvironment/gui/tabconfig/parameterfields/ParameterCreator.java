@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import voogasalad.gameauthoringenvironment.gui.AddToXML;
 import voogasalad.gameauthoringenvironment.gui.SaveGUIParameters;
 import voogasalad.gameauthoringenvironment.gui.levelconfig.LevelConfigPane;
+import voogasalad.gameauthoringenvironment.gui.levelconfig.nodes.SubmitButton;
 import voogasalad.gameauthoringenvironment.gui.utilconfig.FileChooserButton;
 import voogasalad.gameauthoringenvironment.gui.utilconfig.PreviewImageButton;
 import voogasalad.gameauthoringenvironment.gui.utilconfig.SubmitButton;
