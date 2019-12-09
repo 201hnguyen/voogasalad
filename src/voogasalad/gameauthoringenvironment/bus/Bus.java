@@ -33,6 +33,7 @@ public class Bus {
 
 
     private Stage currentStage;
+
     private int width;
     private int height;
     private BorderPane root;
@@ -77,8 +78,7 @@ public class Bus {
                 //TODO: catch this GameEngineException
             }
         }));
-        Scene scene = new Scene(busRoot,width,height);
-        return scene;
+        return new Scene(busRoot,width,height);
     }
 
 //    private Label changeToGAEButton(){
