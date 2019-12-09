@@ -36,8 +36,10 @@ public class GameLevelComboBox extends ComboBox {
     }
 
     public void updateLevelConfigFields(String newValue){
-
         System.out.println("Test: " + newValue);
+        if(activeObjectsForLevel.containsKey(Integer.parseInt(newValue))){
+            System.out.println("RELOAD");
+        }
     }
 
     public void addToComboBox(int previousLevel, int currentLevelParam){
