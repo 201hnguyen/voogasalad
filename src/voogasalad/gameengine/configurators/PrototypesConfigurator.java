@@ -26,10 +26,10 @@ public class PrototypesConfigurator {
     public static final ResourceBundle PROTOTYPE_CONFIG_BUNDLE = ResourceBundle.getBundle(PROTOTYPE_CONFIG_METHOD_CALLS_PATH);
     public static final ResourceBundle STRATEGY_CONFIG_BUNDLE = ResourceBundle.getBundle(STRATEGY_CONFIG_METHOD_CALLS_PATH);
     public static final ResourceBundle STRATEGY_BUILDERS_BUNDLE = ResourceBundle.getBundle(STRATEGY_BUILDERS_PATH);
-    public static final String SPRITE_PROPERTIES_NODE_TAG = "Properties";
-    public static final String SPRITE_STRATEGIES_NODE_TAG = "Strategies";
-    public static final String SPRITE_STRATEGIES_TYPE_NODE_TAG = "Type";
-    public static final String SPRITE_STRATEGIES_PARAMETERS_NODE_TAG = "Parameters";
+    public static final String SPRITE_PROPERTIES_NODE_KEY = "SpritePropertiesNodeTag";
+    public static final String SPRITE_STRATEGIES_NODE_KEY = "SpriteStrategiesNodeTag";
+    public static final String SPRITE_STRATEGIES_TYPE_NODE_KEY = "SpriteStrategiesTypeTag";
+    public static final String SPRITE_STRATEGIES_PARAMETERS_NODE_KEY = "SpriteStrategiesParametersTag";
 
     //TODO: Refactor all the different strategy builders into one builder.
 
@@ -42,8 +42,8 @@ public class PrototypesConfigurator {
             SpriteBuilder spriteBuilder = new SpriteBuilder();
             Element definedPrototype = ConfigurationTool.convertNodeToElement(myPrototypesNodesList.item(i));
 
-            Element propertiesRoot = ConfigurationTool.convertNodeToElement(definedPrototype.getElementsByTagName(SPRITE_PROPERTIES_NODE_TAG).item(0));
-            Element strategiesRoot = ConfigurationTool.convertNodeToElement(definedPrototype.getElementsByTagName(SPRITE_STRATEGIES_NODE_TAG).item(0));
+            Element propertiesRoot = ConfigurationTool.convertNodeToElement(definedPrototype.getElementsByTagName(GameConfigurator.GAME_CONFIGURATION_RESOURCE_BUNDLE.getString(SPRITE_PROPERTIES_NODE_KEY)).item(0));
+            Element strategiesRoot = ConfigurationTool.convertNodeToElement(definedPrototype.getElementsByTagName(GameConfigurator.GAME_CONFIGURATION_RESOURCE_BUNDLE.getString(SPRITE_STRATEGIES_NODE_KEY)).item(0));
 
             setPropertiesForSpriteBuilder(spriteBuilder, propertiesRoot);
             setStrategiesForSpriteBuilder(spriteBuilder, strategiesRoot);
@@ -83,7 +83,7 @@ public class PrototypesConfigurator {
                     this.getClass().getDeclaredMethod(methodName, SpriteBuilder.class, Object.class).invoke(this, builder, builtStrategy);
                 } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
                     e.printStackTrace();
-                    throw new GameEngineException(e, "SpriteProductionFailed");
+                    throw new GameEngineException(e, "SpriteProductionFailedDueToStrategyTags");
                 }
             }
         }
@@ -91,11 +91,10 @@ public class PrototypesConfigurator {
 
     private Object buildStrategy(Element strategy) throws GameEngineException {
         try {
-            String test = STRATEGY_BUILDERS_BUNDLE.getString(strategy.getNodeName());
             var builder = Class.forName(STRATEGY_BUILDER_CLASS_PATH + STRATEGY_BUILDERS_BUNDLE.getString(strategy.getNodeName())).getConstructor().newInstance();
-            String type = strategy.getElementsByTagName(SPRITE_STRATEGIES_TYPE_NODE_TAG).item(0).getTextContent();
-            builder.getClass().getMethod(STRATEGY_CONFIG_BUNDLE.getString(SPRITE_STRATEGIES_TYPE_NODE_TAG), String.class).invoke(builder, type);
-            NodeList parametersNodeList = strategy.getElementsByTagName(SPRITE_STRATEGIES_PARAMETERS_NODE_TAG).item(0).getChildNodes();
+            String type = strategy.getElementsByTagName(GameConfigurator.GAME_CONFIGURATION_RESOURCE_BUNDLE.getString(SPRITE_STRATEGIES_TYPE_NODE_KEY)).item(0).getTextContent();
+            builder.getClass().getMethod(STRATEGY_CONFIG_BUNDLE.getString(GameConfigurator.GAME_CONFIGURATION_RESOURCE_BUNDLE.getString(SPRITE_STRATEGIES_TYPE_NODE_KEY)), String.class).invoke(builder, type);
+            NodeList parametersNodeList = strategy.getElementsByTagName(GameConfigurator.GAME_CONFIGURATION_RESOURCE_BUNDLE.getString(SPRITE_STRATEGIES_PARAMETERS_NODE_KEY)).item(0).getChildNodes();
             for (int i = 0; i < parametersNodeList.getLength(); i++) {
                 Element parameter = ConfigurationTool.convertNodeToElement(parametersNodeList.item(i));
                 if (parameter!= null) {
@@ -106,7 +105,7 @@ public class PrototypesConfigurator {
             return strategyBuilder.build();
         } catch (Exception e) {
             e.printStackTrace();
-            throw new GameEngineException(e, "SpriteProductionFailed");
+            throw new GameEngineException(e, "SpriteProductionFailedDueToStrategyParameters");
         }
     }
 

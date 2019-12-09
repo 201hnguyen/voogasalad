@@ -19,28 +19,28 @@ public class ConditionsConfigurator {
     public static final String GAME_CONDITIONS_PACKAGE_PATH = "voogasalad.gameengine.executors.control.condition.game.";
     public static final String LEVEL_ACTIONS_PACKAGE_PATH = "voogasalad.gameengine.executors.control.action.level.";
     public static final String GAME_ACTIONS_PACKAGE_PATH = "voogasalad.gameengine.executors.control.action.game.";
-    public static final String CONDITION_PARAMETERS_ROOT_TAG = "Parameters";
-    public static final String CONDITION_ACTIONS_ROOT_TAG = "Actions";
-    public static final String CONDITION_TYPE_ROOT_TAG = "Type";
-    public static final String ASSOCIATED_ACTION_TYPE_TAG = "Type";
-    public static final String CONDITION_ID_ROOT_TAG = "ConditionId";
+    public static final String CONDITION_PARAMETERS_ROOT_KEY = "ParametersNodeTag";
+    public static final String CONDITION_ACTIONS_ROOT_KEY = "ActionsNodeTag";
+    public static final String CONDITION_TYPE_ROOT_KEY = "ConditionTypeNodeTag";
+    public static final String ASSOCIATED_ACTION_TYPE_KEY = "ActionTypeNodeTag";
+    public static final String CONDITION_ID_ROOT_KEY = "ConditionIdNodeTag";
 
     public Collection<LevelCondition> buildLevelConditionsCollection(NodeList conditionNodeList) throws GameEngineException {
         Set<LevelCondition> levelConditions = new HashSet<>();
         for (int i=0; i< conditionNodeList.getLength(); i++) {
             if (conditionNodeList.item(i).getNodeType()== Node.ELEMENT_NODE) {
                 Element definedCondition = ConfigurationTool.convertNodeToElement(conditionNodeList.item(i));
-                Element parametersRoot = ConfigurationTool.convertNodeToElement(definedCondition.getElementsByTagName(CONDITION_PARAMETERS_ROOT_TAG).item(0));
-                Element actionsRoot = ConfigurationTool.convertNodeToElement(definedCondition.getElementsByTagName(CONDITION_ACTIONS_ROOT_TAG).item(0));
-                String conditionName = definedCondition.getElementsByTagName(CONDITION_TYPE_ROOT_TAG).item(0).getTextContent();
-                String conditionIdString = definedCondition.getElementsByTagName(CONDITION_ID_ROOT_TAG).item(0).getTextContent();
+                Element parametersRoot = ConfigurationTool.convertNodeToElement(definedCondition.getElementsByTagName(GameConfigurator.GAME_CONFIGURATION_RESOURCE_BUNDLE.getString(CONDITION_PARAMETERS_ROOT_KEY)).item(0));
+                Element actionsRoot = ConfigurationTool.convertNodeToElement(definedCondition.getElementsByTagName(GameConfigurator.GAME_CONFIGURATION_RESOURCE_BUNDLE.getString(CONDITION_ACTIONS_ROOT_KEY)).item(0));
+                String conditionName = definedCondition.getElementsByTagName(GameConfigurator.GAME_CONFIGURATION_RESOURCE_BUNDLE.getString(CONDITION_TYPE_ROOT_KEY)).item(0).getTextContent();
+                String conditionIdString = definedCondition.getElementsByTagName(GameConfigurator.GAME_CONFIGURATION_RESOURCE_BUNDLE.getString(CONDITION_ID_ROOT_KEY)).item(0).getTextContent();
                 try {
                     Map<String, String> parameters = setParameters(parametersRoot);
                     Set<LevelAction> actions = setLevelActions(actionsRoot);
                     int conditionId = Integer.parseInt(conditionIdString);
                     levelConditions.add((LevelCondition) Class.forName(LEVEL_CONDITIONS_PACKAGE_PATH + conditionName).getConstructor(int.class, Map.class, Set.class).newInstance(conditionId, parameters, actions));
                 } catch (InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException | ClassNotFoundException | NumberFormatException e) {
-                    throw new GameEngineException(e, "ConditionsInitializationFailed");
+                    throw new GameEngineException(e, "LevelConditionsInitializationFailed");
                 }
             }
         }
@@ -52,17 +52,17 @@ public class ConditionsConfigurator {
         for (int i=0; i< conditionNodeList.getLength(); i++) {
             if (conditionNodeList.item(i).getNodeType()== Node.ELEMENT_NODE) {
                 Element definedCondition = ConfigurationTool.convertNodeToElement(conditionNodeList.item(i));
-                Element parametersRoot = ConfigurationTool.convertNodeToElement(definedCondition.getElementsByTagName(CONDITION_PARAMETERS_ROOT_TAG).item(0));
-                Element actionsRoot = ConfigurationTool.convertNodeToElement(definedCondition.getElementsByTagName(CONDITION_ACTIONS_ROOT_TAG).item(0));
-                String conditionName = definedCondition.getElementsByTagName(CONDITION_TYPE_ROOT_TAG).item(0).getTextContent();
-                String conditionIdString = definedCondition.getElementsByTagName(CONDITION_ID_ROOT_TAG).item(0).getTextContent();
+                Element parametersRoot = ConfigurationTool.convertNodeToElement(definedCondition.getElementsByTagName(GameConfigurator.GAME_CONFIGURATION_RESOURCE_BUNDLE.getString(CONDITION_PARAMETERS_ROOT_KEY)).item(0));
+                Element actionsRoot = ConfigurationTool.convertNodeToElement(definedCondition.getElementsByTagName(GameConfigurator.GAME_CONFIGURATION_RESOURCE_BUNDLE.getString(CONDITION_ACTIONS_ROOT_KEY)).item(0));
+                String conditionName = definedCondition.getElementsByTagName(GameConfigurator.GAME_CONFIGURATION_RESOURCE_BUNDLE.getString(CONDITION_TYPE_ROOT_KEY)).item(0).getTextContent();
+                String conditionIdString = definedCondition.getElementsByTagName(GameConfigurator.GAME_CONFIGURATION_RESOURCE_BUNDLE.getString(CONDITION_ID_ROOT_KEY)).item(0).getTextContent();
                 try {
                     Map<String, String> parameters = setParameters(parametersRoot);
                     Set<GameAction> actions = setGameActions(actionsRoot);
                     int conditionId = Integer.parseInt(conditionIdString);
                     gameConditions.add((GameCondition) Class.forName(GAME_CONDITIONS_PACKAGE_PATH + conditionName).getConstructor(int.class, Map.class, Set.class).newInstance(conditionId, parameters, actions));
                 } catch (InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException | ClassNotFoundException e) {
-                    throw new GameEngineException(e, "ConditionsInitializationFailed");
+                    throw new GameEngineException(e, "GameConditionsInitializationFailed");
                 }
             }
         }
@@ -88,7 +88,7 @@ public class ConditionsConfigurator {
         for (int j=0; j<childNodes.getLength(); j++) {
             Element action = ConfigurationTool.convertNodeToElement(childNodes.item(j));
             if (action != null) {
-                String actionName = action.getElementsByTagName(ASSOCIATED_ACTION_TYPE_TAG).item(0).getTextContent();
+                String actionName = action.getElementsByTagName(GameConfigurator.GAME_CONFIGURATION_RESOURCE_BUNDLE.getString(ASSOCIATED_ACTION_TYPE_KEY)).item(0).getTextContent();
                 actions.add((LevelAction) Class.forName(LEVEL_ACTIONS_PACKAGE_PATH + actionName).getConstructor().newInstance());
             }
         }
@@ -101,7 +101,7 @@ public class ConditionsConfigurator {
         for (int j=0; j<childNodes.getLength(); j++) {
             Element action = ConfigurationTool.convertNodeToElement(childNodes.item(j));
             if (action != null) {
-                String actionName = action.getElementsByTagName(ASSOCIATED_ACTION_TYPE_TAG).item(0).getTextContent();
+                String actionName = action.getElementsByTagName(GameConfigurator.GAME_CONFIGURATION_RESOURCE_BUNDLE.getString(ASSOCIATED_ACTION_TYPE_KEY)).item(0).getTextContent();
                 actions.add((GameAction) Class.forName(GAME_ACTIONS_PACKAGE_PATH + actionName).getConstructor().newInstance());
             }
         }
