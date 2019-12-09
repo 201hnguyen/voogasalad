@@ -57,6 +57,7 @@ public class Player {
             gameInfo.put("Lives", myCurrentGameSceneObject.getLives());
             gameInfo.put("Coins", myCurrentGameSceneObject.getResources());
             myPlayerVisualization.setNewLevel(myEngine.getSpritePrototypesByArchetype(SpriteArchetype.TOWER), myEngine.getSpritePrototypesByArchetype(SpriteArchetype.ENEMY), myEngine.getCurrentLevelBackgroundPath(), myEngine.getCurrentLevelSoundPath(), gameInfo);
+            myPlayerVisualization.toggleStartAction();
             myTimeline.pause();
         }
         else {

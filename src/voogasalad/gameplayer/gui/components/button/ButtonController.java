@@ -10,7 +10,7 @@ public class ButtonController {
         this.playerVisualization = playerVisualization;
     }
 
-    public void startButtonAction() { playerVisualization.startButtonAction(); }
+    public void toggleStart() { playerVisualization.toggleStartAction(); }
 
-    public void pauseButtonAction() { playerVisualization.pauseButtonAction(); }
+    public void toggleMute() { playerVisualization.toggleMuteAction(); }
 }

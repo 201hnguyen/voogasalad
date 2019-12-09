@@ -67,7 +67,7 @@ public class DisplayScreen extends Pane {
         if (sprite.getSpriteArchetype() == SpriteArchetype.TOWER) {
             toDisplay.setOnMouseClicked(e -> {
                 if(!sprite.getHasBeenClicked()) {
-                    myPlayerVisualization.pauseButtonAction();
+                    myPlayerVisualization.toggleStartAction();
                     selectedTowerPane.removeTower(sprite, xPos, yPos);
                     sprite.setHasBeenClicked(true);
                 }
