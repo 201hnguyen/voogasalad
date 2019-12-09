@@ -1,25 +1,30 @@
 package voogasalad.gameengine.executors.sprites.strategies.effect;
 
-import voogasalad.gameengine.executors.control.action.level.ChunkHealthAction;
 import voogasalad.gameengine.executors.control.action.level.LevelAction;
+import voogasalad.gameengine.executors.control.action.level.TickHealthAction;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.objectcreators.EffectBuilder;
 
-public class ChunkHealthEffect implements EffectStrategy {
+public class TickHealthEffect implements EffectStrategy {
+
     private EffectBuilder myOriginalBuilder;
-    private int damageValue;
+    private int myDamageValue;
+    private int myTickCount;
+    private double myTickDelay;
     private boolean isFinished;
 
-    public ChunkHealthEffect(EffectBuilder builder) {
-        damageValue = builder.getDamage();
+    public TickHealthEffect(EffectBuilder builder) {
         myOriginalBuilder = builder;
+        myDamageValue = builder.getDamage();
+        myTickCount = builder.getTickCount();
+        myTickDelay = builder.getTickDelay();
         isFinished = false;
     }
 
     @Override
     public LevelAction getAction(int spriteId) throws GameEngineException {
         isFinished = true;
-        return new ChunkHealthAction(spriteId, damageValue);
+        return new TickHealthAction(spriteId, myDamageValue, myTickCount, myTickDelay);
     }
 
     @Override
@@ -29,6 +34,6 @@ public class ChunkHealthEffect implements EffectStrategy {
 
     @Override
     public EffectStrategy makeClone() throws GameEngineException {
-        return myOriginalBuilder.build();
+        return new TickHealthEffect(myOriginalBuilder);
     }
 }
