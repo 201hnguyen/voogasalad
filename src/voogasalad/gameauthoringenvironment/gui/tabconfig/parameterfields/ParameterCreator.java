@@ -48,8 +48,8 @@ public class ParameterCreator extends BorderPane{
     private List<ObjectPreviewAndActive> allActiveObjectObjects;
     private String imageString;
     private ImageView imageView;
-    double imageViewWidth = 0;
-    double imageViewHeight = 0;
+    double imageViewWidth = 200;
+    double imageViewHeight = 200;
     private FileChooserButton fileChooserButton;
 
 
@@ -95,6 +95,8 @@ public class ParameterCreator extends BorderPane{
 
     private void addInputFields() {
         configVBox = new TabVBoxCreator("Configure Parameters", 200, 20, 50, 50, 10);
+        configVBox.setMaxHeight(300);
+
         for (int j = 0; j < properties.length; j++) {
             Label label = new Label(properties[j]); //for SaveGuiParameters
             labelList.add(label);
