@@ -58,19 +58,20 @@ public class ParameterCreator extends BorderPane{
 
 
     public ParameterCreator(String gameObjectNameParam, String[] propertiesParam, ResourceBundle paramFieldTypeParam,
-                            LevelConfigPane levelConfigPaneParam, Map<String, Map<String, String>> allActiveObjectMapParam) throws ParserConfigurationException {
+                            LevelConfigPane levelConfigPaneParam, Map<String, Map<String, String>> allActiveObjectMapParam,
+                            List<ObjectPreviewAndActive> allActiveObjectObjectsParam) throws ParserConfigurationException {
+
+        allActiveObjectObjects = allActiveObjectObjectsParam;
+        allActiveObjects = allActiveObjectMapParam;
         fileChooserButton = new FileChooserButton();
-        allActiveObjectMap = allActiveObjectMapParam;
         clearFieldsFactory = new ClearFieldsFactory();
         fieldFactory = new FieldTextReturnFactory();
-        labelList = new ArrayList<>(); //a list of input field names as Labels
-        labelText = new ArrayList<>(); // a list of input field names as Strings
-        labelValue = new ArrayList<>(); //a list of the input values
-        activeObjects = new HashMap<>();
-        fieldTypes = new ArrayList<>(); //a list of the field type classes
+        labelList = new ArrayList<>();
+        labelText = new ArrayList<>();
+        labelValue = new ArrayList<>();
+        fieldTypes = new ArrayList<>();
         allNodes = new ArrayList<>();
         root = new BorderPane();
-        //root = new ScrollPane();
         xmlObject = new AddToXML();
         properties = propertiesParam;
         paramFieldType = paramFieldTypeParam;
