@@ -41,6 +41,15 @@ public class JavaFXSpriteManager implements SpriteManager {
         return spritePrototypes;
     }
 
+    public Sprite getCopyPrototype(int prototypeId) throws GameEngineException {
+        for (Integer index : mySpritePrototypes.keySet()) {
+            if (mySpritePrototypes.get(index).getPrototypeId() == prototypeId) {
+                return mySpritePrototypes.get(index).makeClone(0,0,0);
+            }
+        }
+        return null;
+    }
+
     @Override
     public List<Sprite> getOnScreenSpritesByArchetype(SpriteArchetype archetype) {
         List<Sprite> archetypeList = new ArrayList<>();

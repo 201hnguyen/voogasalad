@@ -43,7 +43,7 @@
             <CostStrategy>
                 <Type>BasicCost</Type>
                 <Parameters>
-                    <CreateCost>15</CreateCost>
+                    <CreateCost>100</CreateCost>
                     <DestroyCost>7</DestroyCost>
                 </Parameters>
             </CostStrategy>
