@@ -157,7 +157,7 @@ public class PlayerVisualization extends BorderPane {
 
     private VBox showTitle() {
         VBox titleBox = new VBox();
-        Text title = new Text("TESTING"); //TODO: Replace "Testing" with "gameTitle"
+        Text title = new Text(gameTitle);
         InnerShadow innerShadow = new InnerShadow();
         title.setFill(Color.SILVER);
         title.setFont(Font.font(null, FontWeight.BOLD, TITLE_SIZE));
