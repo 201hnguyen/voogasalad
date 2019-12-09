@@ -1,6 +1,7 @@
 package voogasalad.gameengine.api;
 
 import org.w3c.dom.Document;
+import voogasalad.gameengine.executors.control.levelcontrol.Status;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.control.gamecontrol.Game;
 import voogasalad.gameengine.executors.sprites.Sprite;
@@ -50,6 +51,10 @@ public class Engine {
 
     public int getCurrentLevelId() {
         return myGame.getCurrentLevelId();
+    }
+
+    public Status getGameStatus() {
+        return myGame.getGameStatus();
     }
 
 }
