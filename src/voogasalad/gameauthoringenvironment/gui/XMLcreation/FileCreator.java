@@ -27,18 +27,17 @@ public class FileCreator {
     public static final String LEVEL_TAG = "Level";
     private static final String SPRITE_PROTOTYPE_TAG = "SpritePrototype";
     public static final String GAME_CONDITION_TAG = "GameCondition";
-    private String[] tag_types = {LEVEL_PROPERTIES, SPRITE_PROTOTYPE_PROPERTIES};
-    private String[] tag_names = {LEVEL_TAG, SPRITE_PROTOTYPE_TAG};
-    private String[] strategies = {"MovementStrategy", "HealthStrategy", "RotationStrategy", "UpgradeStrategy", "CostStrategy", "EffectStrategy", "AttackStrategy"};
     private DocumentBuilder myBuilder;
     private Document myDocument;
     private String myFileSavePath;
 
     public static void main(String[] args) throws ParserConfigurationException, TransformerException {
         FileCreator f = new FileCreator(SAVE_PATH);
-        f.createLevelElement();
-        f.createSpritePrototypeElement();
-        f.createGameConditionElement();
+        //f.createSpritePrototypeElement();
+        HashMap<String, String> map = new HashMap<>();
+        map.put("Attribute0", "Value0");
+        map.put("Attribute1", "Value1");
+        f.addStrategyToSpritePrototype(f.createSpritePrototypeElement(), "MovementStrategy", "NoMovement", map);
         f.printForTesting();
     }
 
@@ -49,27 +48,57 @@ public class FileCreator {
         myDocument.appendChild(myDocument.createElement("GameConfiguration"));
     }
 
-    public void createLevelElement() {
-        Element element = createElementByTagType(LEVEL_TAG, LEVEL_PROPERTIES);
-        NodeList conditionNodes = element.getElementsByTagName("Condition");
-        for (int i = 0; i < conditionNodes.getLength(); i++) {
-            NodeList actionNodes = ((Element) conditionNodes.item(0)).getElementsByTagName("Actions");
-            for (int j = 0; j < actionNodes.getLength(); j++) {
-                actionNodes.item(j).appendChild(createElementByTagType("Action", ACTION_PROPERTIES));
-            }
-        }
+    public Element createLevelElement() {
+        return createElementByTagType(LEVEL_TAG, LEVEL_PROPERTIES);
     }
 
-    public void createSpritePrototypeElement(){
-        Element element = createElementByTagType(SPRITE_PROTOTYPE_TAG, SPRITE_PROTOTYPE_PROPERTIES);
-        for(String strategy : strategies){
-            ((Element) element.getElementsByTagName("Strategies").item(0)).appendChild(createElementByTagType(strategy, STRATEGIES_PROPERTIES));
-        }
-
+    public Element createSpritePrototypeElement(){
+        return createElementByTagType(SPRITE_PROTOTYPE_TAG, SPRITE_PROTOTYPE_PROPERTIES);
     }
 
-    public void createGameConditionElement(){
+    public void createGameConditionElement(String type, int conditionID, Map<String, String> paramMap){
         Element element = createElementByTagType(GAME_CONDITION_TAG, GAME_CONDITION_PROPERTIES);
+    }
+
+    public void addConditionToLevel(Element levelRoot, String conditionName, Map<String, String> paramMap){
+        Element conditionRoot = myDocument.createElement("Condition");
+        Element typeRoot = myDocument.createElement("Type");
+        typeRoot.setTextContent(conditionName);
+        conditionRoot.appendChild(typeRoot);
+        Element parameterRoot = myDocument.createElement("Parameters");
+        conditionRoot.appendChild(parameterRoot);
+        for(String param : paramMap.keySet()){
+            Element element = myDocument.createElement(param);
+            element.setTextContent(paramMap.get(param));
+            parameterRoot.appendChild(element);
+        }
+        levelRoot.appendChild(conditionRoot);
+    }
+
+    public void addActionToCondition(Element conditionRoot, String actionType){
+
+    }
+
+    public void addWaveToLevel(Element levelRoot, String conditionName, Map<String, String> paramMap){
+
+    }
+
+    public void addStrategyToSpritePrototype(Element spriteRoot, String strategyName, String strategyType, Map<String, String> paramMap){
+        Element strategyRoot = myDocument.createElement(strategyName);
+        Element typeRoot = myDocument.createElement("Type");
+        typeRoot.setTextContent(strategyType);
+        strategyRoot.appendChild(typeRoot);
+        Element parameterRoot = myDocument.createElement("Parameters");
+        strategyRoot.appendChild(parameterRoot);
+        for(String param : paramMap.keySet()){
+            Element element = myDocument.createElement(param);
+            element.setTextContent(paramMap.get(param));
+            parameterRoot.appendChild(element);
+        }
+        spriteRoot.getElementsByTagName("Strategies").item(0).appendChild(strategyRoot);
+    }
+
+    public void addActionToGameCondition(Element gameConditionRoot, String type){
 
     }
 
@@ -104,7 +133,6 @@ public class FileCreator {
         myDocument.getDocumentElement().appendChild(element);
         for(String att : attributeMap.keySet()){
             Element toAdd = myDocument.createElement(att);
-            toAdd.setTextContent("Testing");
             element.appendChild(toAdd);
         }
         return element;

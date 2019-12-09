@@ -1,4 +1,4 @@
-package voogasalad.gameplayer.GUI;
+package voogasalad.gameplayer.gui.components;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
@@ -8,6 +8,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import voogasalad.gameengine.api.ActionsProcessor;
 import voogasalad.gameengine.executors.sprites.Sprite;
+import voogasalad.gameplayer.gui.PlayerVisualization;
 import voogasalad.gameplayer.Player;
 
 import java.util.ResourceBundle;

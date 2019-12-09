@@ -37,6 +37,6 @@ public class FullRotation implements RotationStrategy {
 
     @Override
     public RotationStrategy makeClone() throws GameEngineException {
-        return new FullRotation(myBuilder);
+        return myBuilder.build();
     }
 }

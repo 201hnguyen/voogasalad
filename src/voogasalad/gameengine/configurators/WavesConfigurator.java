@@ -5,6 +5,7 @@ import org.w3c.dom.NodeList;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.control.levelcontrol.Wave;
 import voogasalad.gameengine.executors.sprites.Sprite;
+import voogasalad.gameengine.executors.utils.ConfigurationTool;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -13,11 +14,11 @@ import java.util.List;
 
 public class WavesConfigurator {
 
-    public static final String WAVE_QUEUE_TAG = "Queue";
-    public static final String WAVE_INTERVAL_TAG = "Interval";
-    public static final String WAVE_SPAWN_POINT_X_TAG = "SpawnPointX";
-    public static final String WAVE_SPAWN_POINT_Y_TAG = "SpawnPointY";
-    public static final String PATH_TAG = "Path";
+    public static final String WAVE_QUEUE_KEY = "WaveQueueNodeTag";
+    public static final String WAVE_INTERVAL_KEY = "WaveIntervalNodeTag";
+    public static final String WAVE_SPAWN_POINT_X_KEY = "SpawnPointXNodeTag";
+    public static final String WAVE_SPAWN_POINT_Y_KEY = "SpawnPointYNodeTag";
+    public static final String PATH_KEY = "PathNodeTag";
 
     private List<Integer> myAvailablePrototypeIds;
     private Element myDefinedWave;
@@ -46,7 +47,7 @@ public class WavesConfigurator {
     }
 
     private Queue<Integer> parseQueue() throws GameEngineException {
-        String[] spriteQueueAsStrings = myDefinedWave.getElementsByTagName(WAVE_QUEUE_TAG).item(0).getTextContent().split(" ");
+        String[] spriteQueueAsStrings = myDefinedWave.getElementsByTagName(GameConfigurator.GAME_CONFIGURATION_RESOURCE_BUNDLE.getString(WAVE_QUEUE_KEY)).item(0).getTextContent().split(" ");
         Queue<Integer> spriteQueue = new LinkedList<>();
         for (String s : spriteQueueAsStrings) {
             if (myAvailablePrototypeIds.contains(Integer.parseInt(s))) {
@@ -59,25 +60,17 @@ public class WavesConfigurator {
     }
 
     private Double parseInterval() {
-        return Double.parseDouble(myDefinedWave.getElementsByTagName(WAVE_INTERVAL_TAG).item(0).getTextContent());
+        return Double.parseDouble(myDefinedWave.getElementsByTagName(GameConfigurator.GAME_CONFIGURATION_RESOURCE_BUNDLE.getString(WAVE_INTERVAL_KEY)).item(0).getTextContent());
     }
 
     private Point parseSpawnPoint() {
-        Integer x = Integer.parseInt(myDefinedWave.getElementsByTagName(WAVE_SPAWN_POINT_X_TAG).item(0).getTextContent());
-        Integer y = Integer.parseInt(myDefinedWave.getElementsByTagName(WAVE_SPAWN_POINT_Y_TAG).item(0).getTextContent());
+        Integer x = Integer.parseInt(myDefinedWave.getElementsByTagName(GameConfigurator.GAME_CONFIGURATION_RESOURCE_BUNDLE.getString(WAVE_SPAWN_POINT_X_KEY)).item(0).getTextContent());
+        Integer y = Integer.parseInt(myDefinedWave.getElementsByTagName(GameConfigurator.GAME_CONFIGURATION_RESOURCE_BUNDLE.getString(WAVE_SPAWN_POINT_Y_KEY)).item(0).getTextContent());
         return new Point(x, y);
     }
 
-    private LinkedList<Point2D.Double> parsePath() {
-        String pathString = myDefinedWave.getElementsByTagName(PATH_TAG).item(0).getTextContent();
-        LinkedList<Point2D.Double> parsedPath = new LinkedList<>();
-        String[] pointStrings = pathString.strip().split(";");
-        for(String pointString : pointStrings) {
-            Point2D.Double toAdd = new Point2D.Double();
-            String[] coordinateStrings = pointString.split(",");
-            toAdd.setLocation(Double.parseDouble(coordinateStrings[0]), Double.parseDouble(coordinateStrings[1]));
-            parsedPath.add(toAdd);
-        }
-        return parsedPath;
+    private List<Point2D.Double> parsePath() {
+        String pathString = myDefinedWave.getElementsByTagName(GameConfigurator.GAME_CONFIGURATION_RESOURCE_BUNDLE.getString(PATH_KEY)).item(0).getTextContent();
+        return ConfigurationTool.parsePath(pathString);
     }
 }

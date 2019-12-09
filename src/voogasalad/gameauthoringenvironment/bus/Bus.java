@@ -9,7 +9,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import org.xml.sax.SAXException;
-import voogasalad.gameplayer.GUI.ErrorPane;
+import voogasalad.gameplayer.gui.components.ErrorPane;
 import voogasalad.gameauthoringenvironment.gui.*;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -29,7 +29,7 @@ public class Bus {
     private final static double IMAGE_HEIGHT = 50;
     private final static double LOGO_WIDTH = 370;
     private final static double LOGO_HEIGHT = 350;
-    private final String ERROR_MESSAGE = "Wrong file type selected for upload: select XML";
+    private final String WRONG_FILE_TYPE_ERROR = "UploadedWrongFileType";
 
   //  private final static int GAE_WIDTH = 800;
    // private final static int GAE_HEIGHT = 500;
@@ -130,7 +130,7 @@ public class Bus {
             goToPlayer(doc);
         } catch (ParserConfigurationException | SAXException | IOException e) {
 //            throw new GameEngineException(e, "ConfigurationFailedXML");
-            errorPane.errorMessage(ERROR_MESSAGE);
+            errorPane.errorMessage("UploadedWrongFileType");
             //TODO: dont hard code the error message -- also figure out how to connect error pane up to game engine exception messages
 
         }
