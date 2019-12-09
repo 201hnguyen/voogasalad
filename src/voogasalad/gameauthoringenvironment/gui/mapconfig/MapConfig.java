@@ -25,6 +25,7 @@ import java.io.File;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class MapConfig {
 
@@ -61,7 +62,7 @@ public class MapConfig {
     private Pair<Double,Double> spawnPoint;
     private int selectedPathIndex = 0;
     private int selectedWaveIndex = 0;
-    private ArrayList<Integer> activeEnemyList ;
+    private List<Integer> activeEnemyList ;
     private ArrayList<ArrayList<Integer>> waveComposition;
     private ArrayList<Label> waveCompositionLabel;
     private ArrayList<HBox> waveHBoxList;
@@ -94,9 +95,9 @@ public class MapConfig {
     ArrayList<Double> durationList;
     ArrayList<Integer> waveToPathList;
 
-    public MapConfig(MapButton mapButton){
+    public MapConfig(MapButton mapButton, List<Integer> listOfActiveEnemies){
         mapButtonInLevel = mapButton;
-        activeEnemyList = new ArrayList<>(Arrays.asList(1,2,3));
+        activeEnemyList = listOfActiveEnemies;
         waveComposition = new ArrayList<>();
         waveCompositionLabel = new ArrayList<>();
 

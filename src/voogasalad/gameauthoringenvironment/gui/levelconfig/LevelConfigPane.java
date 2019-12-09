@@ -62,7 +62,7 @@ public class LevelConfigPane extends BorderPane{
         allObjects = createAllObjectHBox();
         rules = createRulesVBox();
         selectActiveLabel = createSelectActiveLabel();
-        createMapButton = new MapButton(width, height);
+        createMapButton = new MapButton(width, height, allActiveObjects);
         createSubmitNewLevelButtons = createSubmitNewLevelButtons();
         addToGridPane();
     }
@@ -220,7 +220,7 @@ public class LevelConfigPane extends BorderPane{
     public void updateLevelConfigPane(){
         title = createTitleHBox();
         rules = createRulesVBox();
-        createMapButton = new MapButton(width, height);
+        createMapButton = new MapButton(width, height, allActiveObjects);
         addToGridPane();
     }
 
