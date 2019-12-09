@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class ActiveObjectComboBox extends ComboBox {
 
-    private static Map<String, Map<String, Map<String, String>>> allActiveObjectMap;
+    private static Map<String, Map<String, String>> allActiveObjectMap;
 
     public ActiveObjectComboBox(){
         for(String type : allActiveObjectMap.keySet()){
@@ -16,7 +16,7 @@ public class ActiveObjectComboBox extends ComboBox {
         }
     }
 
-    public ActiveObjectComboBox(Map<String, Map<String, Map<String, String>>> allActiveObjectMapParam){
+    public ActiveObjectComboBox(Map<String, Map<String, String>> allActiveObjectMapParam){
         allActiveObjectMap = allActiveObjectMapParam;
     }
 

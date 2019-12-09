@@ -12,7 +12,6 @@ import javafx.stage.Stage;
 import voogasalad.gameauthoringenvironment.gui.AddToXML;
 import voogasalad.gameauthoringenvironment.gui.SaveGUIParameters;
 import voogasalad.gameauthoringenvironment.gui.levelconfig.LevelConfigPane;
-import voogasalad.gameauthoringenvironment.gui.levelconfig.nodes.SubmitButton;
 import voogasalad.gameauthoringenvironment.gui.utilconfig.FileChooserButton;
 import voogasalad.gameauthoringenvironment.gui.utilconfig.PreviewImageButton;
 import voogasalad.gameauthoringenvironment.gui.utilconfig.SubmitButton;
@@ -85,13 +84,13 @@ public class ParameterCreator extends BorderPane{
     }
 
     public void createSubmitButton(){
-            allNodes
-                    .stream()
-                    .forEach(node -> labelValue.add(fieldFactory.getAppropriateText(node)));
+        allNodes
+                .stream()
+                .forEach(node -> labelValue.add(fieldFactory.getAppropriateText(node)));
 
-            SaveGUIParameters myGuiParameters = new SaveGUIParameters(labelText, labelValue);
-            String myLabel = xmlObject.addToSendToXMLMap(myGuiParameters.getMap(), gameObjectName);
-            addToAppropriateField(gameObjectName, createObjectIcon(myGuiParameters.getMap(), myLabel));
+        SaveGUIParameters myGuiParameters = new SaveGUIParameters(labelText, labelValue);
+        String myLabel = xmlObject.addToSendToXMLMap(myGuiParameters.getMap(), gameObjectName);
+        addToAppropriateField(gameObjectName, createObjectIcon(myGuiParameters.getMap(), myLabel));
     }
 
     private void addInputFields() {
@@ -156,7 +155,7 @@ public class ParameterCreator extends BorderPane{
         AtomicReference<Double> d = new AtomicReference<>(0.0);
         if (nodeLabel.equals(s)) {
             ((TextField) currentNode).setOnAction((event) -> {
-                    d.set(valueOf((new FieldTextReturnFactory()).getAppropriateText(currentNode)));
+                d.set(valueOf((new FieldTextReturnFactory()).getAppropriateText(currentNode)));
             });
         }
         return d.get();
@@ -227,4 +226,3 @@ public class ParameterCreator extends BorderPane{
 
 
 }
-
