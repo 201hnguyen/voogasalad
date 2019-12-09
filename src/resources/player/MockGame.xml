@@ -27,10 +27,11 @@
         </Properties>
         <Strategies>
             <AttackStrategy>
-                <Type>ShootingAttack</Type>
+                <Type>MultipleGunsAttack</Type>
                 <Parameters>
-                    <AttackRate>0.1</AttackRate>
+                    <AttackRate>1</AttackRate>
                     <BulletPrototypeId>1</BulletPrototypeId>
+                    <ShootingPositions>0,180,90,270</ShootingPositions>
                 </Parameters>
             </AttackStrategy>
             <RotationStrategy>
@@ -62,7 +63,7 @@
                 <Type>DirectedDistanceMovement</Type>
                 <Parameters>
                     <Distance>150</Distance>
-                    <Speed>5</Speed>
+                    <Speed>2</Speed>
                 </Parameters>
             </MovementStrategy>
             <EffectStrategy>
