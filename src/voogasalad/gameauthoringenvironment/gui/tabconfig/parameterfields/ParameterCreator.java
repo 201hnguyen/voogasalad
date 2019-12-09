@@ -209,6 +209,7 @@ public class ParameterCreator extends BorderPane{
             newStage.setScene(newScene);
             newStage.show();
         });
+
         return icon;
     }
 

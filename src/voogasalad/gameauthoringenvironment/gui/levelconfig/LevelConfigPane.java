@@ -84,8 +84,6 @@ public class LevelConfigPane extends BorderPane{
         Label levelLabel = formatTitleLabel("Level ");
         gameLevelComboBox.setPrefHeight(height/10);
         Label configLabel = formatTitleLabel(" Configuration");
-        //Label levelLabel = new Label("Level " + GameLevelComboBox + " Configuration");
-
         titleHBox.getChildren().addAll(levelLabel, gameLevelComboBox, configLabel);
         return titleHBox;
     }
@@ -132,7 +130,7 @@ public class LevelConfigPane extends BorderPane{
 
     private VBox createConditionActionVBox(){
         VBox conditionAction = new VBox(10);
-//        conditionAction.getChildren().addAll(new RuleLine(allActiveObjects), new RuleLine(allActiveObjects));
+        conditionAction.getChildren().addAll(new RuleLine(allActiveObjects), new RuleLine(allActiveObjects));
         return conditionAction;
     }
 
@@ -145,7 +143,7 @@ public class LevelConfigPane extends BorderPane{
     private Button createAddRuleLineButton(VBox conditionAction){
         Button addRuleLine = new Button("+");
         addRuleLine.setOnMouseClicked(event -> {
-//            conditionAction.getChildren().add(new RuleLine(allActiveObjects));
+            conditionAction.getChildren().add(new RuleLine(allActiveObjects));
         });
         return addRuleLine;
     }
@@ -177,7 +175,7 @@ public class LevelConfigPane extends BorderPane{
 
     public void addIconToVBox(String objectType, Button icon){
         for(VBoxCreator objectVBox : objectVBoxes){
-//            objectVBox.addToObjectHBox(icon, objectType);
+          objectVBox.addToObjectHBox(icon, objectType);
         }
     }
 
@@ -185,9 +183,13 @@ public class LevelConfigPane extends BorderPane{
         Button newLevel = new Button("Create New Level");
         newLevel.setOnMouseClicked(event -> {
             saveInfoForLevel();
-            allLevels.add(highestGameLevel);
             gameLevelComboBox.addToComboBox(highestGameLevel, highestGameLevel+1);
-            highestGameLevel++;
+            if(allLevels.size() == 0 || (allLevels.get(allLevels.size() - 1) < highestGameLevel)) {
+                allLevels.add(highestGameLevel);
+                highestGameLevel++;
+            }
+//            ObjectPreviewAndActive objectPreviewAndActive = new ObjectPreviewAndActive();
+//            objectPreviewAndActive.setReactivateBoolean(false);
             updateLevelConfigPane();
         });
         return newLevel;
@@ -204,7 +206,6 @@ public class LevelConfigPane extends BorderPane{
         addToCorrectGameLevel();
         for(ObjectPreviewAndActive object : allActiveObjectObjects){
             object.removeFromActive();
-            //allActiveObjectObjects.remove(object);
         }
         System.out.println(saveActiveObjectsForLevel);
     }
@@ -212,10 +213,8 @@ public class LevelConfigPane extends BorderPane{
     private void addToCorrectGameLevel(){
         if(gameLevelComboBox.getSelectedLevel() != highestGameLevel){
             levelLookingAt = gameLevelComboBox.getSelectedLevel();
-            //saveActiveObjectsForLevel.put(gameLevelComboBox.getSelectedLevel(), sendToLevelSave(allActiveObjects, gameLevel));
         }else{
             levelLookingAt = highestGameLevel;
-            //saveActiveObjectsForLevel.put(gameLevel, sendToLevelSave(allActiveObjects, gameLevel));
         }
         sendToLevelSave(allActiveObjects, levelLookingAt);
 
@@ -252,8 +251,5 @@ public class LevelConfigPane extends BorderPane{
         return allActiveObjectObjects;
     }
 
-    public void removeOneFromHighestLevel(){
-        highestGameLevel--;
-    }
 
 }

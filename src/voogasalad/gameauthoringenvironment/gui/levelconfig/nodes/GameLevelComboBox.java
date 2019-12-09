@@ -37,10 +37,6 @@ public class GameLevelComboBox extends ComboBox {
                 String selectedLevel = thisInstance.getValue().toString();
                 if(! (selectedLevel.equals(String.valueOf(highestLevel)))){
                     updateLevelConfigFields(selectedLevel);
-                    if(localHighest == highestLevel - 1 ){
-                        levelConfigPaneInstance.removeOneFromHighestLevel();
-                        highestLevel--;
-                    }
                 }
 
             }
@@ -77,7 +73,8 @@ public class GameLevelComboBox extends ComboBox {
         String[] allActiveObjectsInLevel = Arrays.copyOf(activeObjectMapForAppropriateLevel.keySet().toArray(), activeObjectMapForAppropriateLevel.keySet().toArray().length, String[].class);
         for(ObjectPreviewAndActive objectObject : activeObjectObjects){
             if(Arrays.asList(allActiveObjectsInLevel).contains(objectObject.getName())){
-                objectObject.reactivate();
+                //objectObject.setReactivateBoolean(true);
+                objectObject.reactivate(activeObjectMapForAppropriateLevel, objectObject.getName());
             }
         }
     }
