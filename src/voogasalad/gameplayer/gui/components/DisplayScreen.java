@@ -1,4 +1,4 @@
-package voogasalad.gameplayer.GUI;
+package voogasalad.gameplayer.gui.components;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
@@ -8,10 +8,10 @@ import javafx.scene.layout.*;
 import voogasalad.gameengine.api.ActionsProcessor;
 import voogasalad.gameengine.executors.sprites.Sprite;
 import voogasalad.gameengine.executors.utils.SpriteArchetype;
+import voogasalad.gameplayer.gui.PlayerVisualization;
 import voogasalad.gameplayer.Player;
 
 import java.util.List;
-import java.util.ResourceBundle;
 
 public class DisplayScreen extends Pane {
 
