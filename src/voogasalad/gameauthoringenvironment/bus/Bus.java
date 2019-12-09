@@ -1,9 +1,11 @@
 package voogasalad.gameauthoringenvironment.bus;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import org.xml.sax.SAXException;
 import voogasalad.gameplayer.GUI.ErrorPane;
@@ -32,7 +34,7 @@ public class Bus {
     private Scene gamePlayerScene;
     private SceneCreator gaeObject;
     private Document createdXML;
-    private HBox busRoot;
+    private VBox busRoot;
     private ErrorPane errorPane;
 
     public Bus(Stage currentStageParam, BorderPane rootParam, int widthParam, int heightParam){
@@ -52,7 +54,8 @@ public class Bus {
     }
 
     public Scene createBusScene() {
-        busRoot = new HBox();
+        busRoot = new VBox();
+        busRoot.setAlignment(Pos.CENTER);
         busRoot.getChildren().add(createMenuButton("new-game.png", "new-game-hover.png", e -> changeToGAE()));
         busRoot.getChildren().add(createMenuButton("load-game.png", "load-game-hover.png", e -> {
             try {
