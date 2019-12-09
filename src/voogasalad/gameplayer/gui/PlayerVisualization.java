@@ -1,16 +1,21 @@
 package voogasalad.gameplayer.gui;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.converter.IntegerStringConverter;
 import voogasalad.gameengine.api.ActionsProcessor;
 import voogasalad.gameengine.executors.sprites.Sprite;
 import voogasalad.gameplayer.gui.components.*;
@@ -37,6 +42,9 @@ public class PlayerVisualization extends BorderPane {
     private static final String BACK_TO_GAE = resourceBundle.getString("BackToGAE");
     private static final String INSTRUCTIONS = resourceBundle.getString("Instructions");
     private static final int PANEL_SPACING = Integer.parseInt(resourceBundle.getString("InfoBoxSpacing"));
+    private static final double GAEBUTTON_WIDTH = Double.parseDouble(resourceBundle.getString("BackToGAEButtonSize"));
+    private static final double TITLE_SIZE = Double.parseDouble(resourceBundle.getString("TitleSize"));
+    private static final double TITLEBOX_SIZE = Double.parseDouble(resourceBundle.getString("TitleHolderSize"));
     private static final String START_BUTTON_KEY = "ToggleStart";
     private static final String MUTE_BUTTON_KEY = "ToggleMute";
 
@@ -58,12 +66,16 @@ public class PlayerVisualization extends BorderPane {
     private boolean isRunning;
     private boolean isMuted;
     private String currentTime;
+    private String gameTitle;
+    private int gameScore;
 
-    public PlayerVisualization(Stage stage, ActionsProcessor uiActionsProcessor, Player player) {
+    public PlayerVisualization(Stage stage, ActionsProcessor uiActionsProcessor, Player player, String title, Integer score) {
         this.stage = stage;
         this.actionsProcessor = uiActionsProcessor;
         this.myPlayer = player;
         this.isRunning = true;
+        this.gameTitle = title;
+        this.gameScore = score;
         currentTime = INITIAL_TIME;
         initialize();
     }
@@ -98,9 +110,9 @@ public class PlayerVisualization extends BorderPane {
         statusBar = new StatusBar();
         selectedTowerPane = new SelectedTowerPane(actionsProcessor, myPlayer, this);
         panelBox = new VBox(PANEL_SPACING);
-        panelBox.getChildren().addAll(myButtonCreator, showInstructions(), accordionCreator, selectedTowerPane, backToGAE());
+        panelBox.getChildren().addAll(myButtonCreator, backToGAE(), showInstructions(), accordionCreator, selectedTowerPane);
         createStopWatchDisplay();
-        statusBar.getChildren().add(myStopWatchDisplay);
+        statusBar.getChildren().addAll(showTitle(),myStopWatchDisplay);
         this.setRight(panelBox);
         this.setTop(statusBar);
         scene = new Scene(this, SCENE_WIDTH, SCENE_HEIGHT);
@@ -129,7 +141,8 @@ public class PlayerVisualization extends BorderPane {
         VBox buttonHolder = new VBox();
         Button button = new Button(BACK_TO_GAE);
         buttonHolder.getChildren().add(button);
-        buttonHolder.setAlignment(Pos.CENTER);
+        button.setAlignment(Pos.CENTER);
+        button.setMinWidth(GAEBUTTON_WIDTH);
         return buttonHolder;
     }
 
@@ -141,6 +154,27 @@ public class PlayerVisualization extends BorderPane {
         instructions.setEffect(shadow);
         return instructions;
     }
+
+    private VBox showTitle() {
+        VBox titleBox = new VBox();
+        Text title = new Text("TESTING"); //TODO: Replace "Testing" with "gameTitle"
+        InnerShadow innerShadow = new InnerShadow();
+        title.setFill(Color.SILVER);
+        title.setFont(Font.font(null, FontWeight.BOLD, TITLE_SIZE));
+        title.setEffect(getDropShadow());
+        title.setEffect(innerShadow);
+        titleBox.setMinWidth(TITLEBOX_SIZE);
+        titleBox.getChildren().add(title);
+        titleBox.setAlignment(Pos.CENTER);
+        return titleBox;
+    }
+
+//    private VBox showScore() {
+//        VBox scoreBox = new VBox();
+//        Text score = new Text(String.valueOf(gameScore));
+//        scoreBox.getChildren().add(score);
+//        return scoreBox;
+//    }
 
     private DropShadow getDropShadow() {
         DropShadow shadow = new DropShadow();
