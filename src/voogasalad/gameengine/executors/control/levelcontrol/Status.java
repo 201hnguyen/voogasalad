@@ -1,6 +1,6 @@
 package voogasalad.gameengine.executors.control.levelcontrol;
 
-public enum GameSceneStatus {
+public enum Status {
     INACTIVE,
     WON,
     LOST,
