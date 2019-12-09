@@ -26,7 +26,7 @@ import java.util.HashMap;
  */
 public class Player {
 
-    public static final int FRAMES_PER_SECOND = 10;
+    public static final int FRAMES_PER_SECOND = 40;
     public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     private Stage myStage;
@@ -56,7 +56,7 @@ public class Player {
             gameInfo = new HashMap<>();
             gameInfo.put("Lives", myCurrentGameSceneObject.getLives());
             gameInfo.put("Coins", myCurrentGameSceneObject.getResources());
-            myPlayerVisualization.setNewLevel(myEngine.getSpritePrototypesByArchetype(SpriteArchetype.TOWER), myEngine.getSpritePrototypesByArchetype(SpriteArchetype.ENEMY), myEngine.getCurrentLevelBackgroundPath(), gameInfo);
+            myPlayerVisualization.setNewLevel(myEngine.getSpritePrototypesByArchetype(SpriteArchetype.TOWER), myEngine.getSpritePrototypesByArchetype(SpriteArchetype.ENEMY), myEngine.getCurrentLevelBackgroundPath(), myEngine.getCurrentLevelSoundPath(), gameInfo);
             myTimeline.pause();
         }
         else {
