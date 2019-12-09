@@ -28,8 +28,8 @@ import java.util.Arrays;
 
 public class MapConfig {
 
-    private static final int window_WIDTH = 1100;
-    private static final int window_HEIGHT = 600;
+    private static final int window_WIDTH = 1400;
+    private static final int window_HEIGHT = 900;
     //private Group root;
     private BorderPane root;
     private Group subRoot;
@@ -184,7 +184,7 @@ public class MapConfig {
             pathPointImageView.setY(yCoordinate);
 
             subRoot.getChildren().add(pathPointImageView);
-            //System.out.println("x coordinate " + xCoordinate +" y coordinate " + yCoordinate);
+
             createdPathLabel.get(selectedPathIndex).setText(listOfPointsToString(enemyPath));
             pathPointViewList.get(selectedPathIndex).add(pathPointImageView);
             visualizePath();
@@ -241,9 +241,9 @@ public class MapConfig {
             } else {
                 startingIndex = 1;
             }
-            System.out.println("Visualization "+ startingIndex);
+            //System.out.println("Visualization "+ startingIndex);
 
-            System.out.println("if statemen is " + (pathPointViewList.get(selectedPathIndex).size() >= 2|| startingIndex==0));
+            //System.out.println("if statemen is " + (pathPointViewList.get(selectedPathIndex).size() >= 2|| startingIndex==0));
 
             if (pathPointViewList.get(selectedPathIndex).size() >= 2|| startingIndex==0) {
                 for (int pathPointIndex = startingIndex; pathPointIndex < pathPointViewList.get(selectedPathIndex).size(); pathPointIndex++) {
@@ -258,7 +258,7 @@ public class MapConfig {
                         startingPoint = pathPointViewList.get(selectedPathIndex).get(pathPointIndex - 1);
                         endingPoint = pathPointViewList.get(selectedPathIndex).get(pathPointIndex);
                     }
-                    System.out.println("checkpoint "+ fromSpawn);
+                    //System.out.println("checkpoint "+ fromSpawn);
 
                     visualizeSegment(startingPoint, endingPoint, 6, fromSpawn);
 
@@ -280,9 +280,9 @@ public class MapConfig {
         double yDifference = finalYCoordinate - initialYCoordinate;
         double distance = Math.sqrt(Math.pow(xDifference,2) + Math.pow(yDifference,2));
         double myAngle =Math.atan(yDifference/xDifference);
-        System.out.println(initialXCoordinate +" " + initialYCoordinate + " "+ finalXCoordinate+ " " + finalYCoordinate + " "+ distance + " ");
+
         for (double distanceTraveled = 6; distanceTraveled < distance; distanceTraveled=distanceTraveled+distanceIncrement) {
-            System.out.println(distanceTraveled);
+
             ImageView newPathUnit = new ImageView(pathPointImage);
             double yCoordinate;
             double xCoordinate;
@@ -301,10 +301,10 @@ public class MapConfig {
             subRoot.getChildren().add(newPathUnit);
             if (isFromSpawnPoint){
                 spawnPathViewList.get(selectedPathIndex).add(newPathUnit);
-                System.out.println("added to spawn ");
+
             } else {
                 pathViewList.get(selectedPathIndex).add(newPathUnit);
-                System.out.println("added to path ");
+
             }
             //nextLocation(initialXCoordinate,initialYCoordinate, myAngle, distanceTraveled);
 
@@ -468,14 +468,14 @@ public class MapConfig {
         for (int index = 0; index < pathHBoxList.size();index++) {
 
             int ID = Integer.parseInt(pathHBoxList.get(index).getId());
-            //System.out.println("selected index " + selectedPathIndex + " ID at index "+ index + " after deletion " + ID);
+
             if (ID > selectedPathIndex) {
                 int newButtonNumber = ID;
                 ID--;
                 pathHBoxList.get(index).setId(Integer.toString(ID));
 
                 pathButtonList.get(index).setText("Path " + newButtonNumber);
-                //System.out.println("at Index " + index + " new ID is "+ ID + "Button text is " + pathButtonList.get(index).getText());
+
 
 
             }
@@ -742,14 +742,14 @@ public class MapConfig {
             wavePathOptions.remove(selectedWaveIndex);
             for (int index = 0; index< waveHBoxList.size(); index++) {
                 int ID = Integer.parseInt(waveHBoxList.get(index).getId());
-                System.out.println("selected index " + selectedWaveIndex + " ID at index "+ index + " after deletion " + ID);
+
                 if (ID > selectedWaveIndex) {
                     int newButtonNumber = ID;
                     ID--;
                     waveHBoxList.get(index).setId(Integer.toString(ID));
 
                     waveButtonList.get(index).setText("Wave " + newButtonNumber);
-                    System.out.println("at Index " + index + " new ID is "+ ID + "Button text is " + waveButtonList.get(index).getText());
+
 
 
                 }
@@ -814,7 +814,7 @@ public class MapConfig {
 
             for (int pathIndex = 0; pathIndex < createdPathList.size(); pathIndex++) {
                 PathInfo newPath = new PathInfo(pathIndex, spawnPointList.get(pathIndex), createdPathList.get(pathIndex));
-                System.out.println("Save Path " + listOfPointsToString(createdPathList.get(pathIndex)) );
+                //System.out.println("Save Path " + listOfPointsToString(createdPathList.get(pathIndex)) );
                 savedPaths.add(newPath);
             }
 
