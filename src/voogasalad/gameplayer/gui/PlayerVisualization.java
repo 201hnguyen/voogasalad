@@ -166,22 +166,21 @@ public class PlayerVisualization extends BorderPane {
         }
     }
 
-    public void toggleMute() {
+    public void toggleMuteAction() {
         isMuted = !isMuted;
         soundPlayer.setMute(isMuted);
     }
 
-    public void startButtonAction() {
-        isRunning = true;
-        myPlayer.startTimeLine();
-        myStopWatch.startStopWatch();
-        soundPlayer.play();
-    }
-
-    public void pauseButtonAction() {
-        isRunning = false;
-        myPlayer.pauseTimeline();
-        myStopWatch.pauseStopWatch();
-        soundPlayer.pause();
+    public void toggleStartAction() {
+        isRunning = !isRunning;
+        if(isRunning) {
+            myPlayer.startTimeLine();
+            myStopWatch.startStopWatch();
+            soundPlayer.play();
+        } else {
+            myPlayer.pauseTimeline();
+            myStopWatch.pauseStopWatch();
+            soundPlayer.pause();
+        }
     }
 }
