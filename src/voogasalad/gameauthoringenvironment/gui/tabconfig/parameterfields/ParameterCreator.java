@@ -30,15 +30,12 @@ public class ParameterCreator extends BorderPane{
     private static final int window_HEIGHT = 300;
     private static final String SUBMITBUTTONCLASS = new SubmitButton().getClass().toString().split("class ")[1];
     private BorderPane root;
-    //private ScrollPane root;
     private ObjectPreviewAndActive objectSpecificRoot;
     private Stage newStage;
     private String[] properties;
     private ResourceBundle paramFieldType;
     private VBox configVBox;
     private VBox previewVBox;
-    private ScrollPane configSP;
-    private ScrollPane previewSP;
     private String gameObjectName;
     private List<Node> allNodes;
     private List<String> fieldTypes;
@@ -82,10 +79,8 @@ public class ParameterCreator extends BorderPane{
         storeAllFieldTypes();
         addInputFields();
         addImagePreview();
-        //this.setRight(configVBox);
-        //this.setLeft(previewVBox);
-        this.setRight(configSP);
-        this.setLeft(previewSP);
+        this.setRight(configVBox);
+        this.setLeft(previewVBox);
     }
 
     public void clearFields(){
@@ -106,7 +101,7 @@ public class ParameterCreator extends BorderPane{
     }
 
     private void addInputFields() {
-        configVBox = new TabVBoxCreator("Configure Parameters", Priority.SOMETIMES,200, 20, 50, 50, 10);
+        configVBox = new TabVBoxCreator("Configure Parameters",200, 20, 50, 50, 10);
         System.out.println(properties.length);
         System.out.println(allNodes);
         for (int j = 0; j < properties.length; j++) {
@@ -120,12 +115,11 @@ public class ParameterCreator extends BorderPane{
             //setSliderSpecs(node, label);
             configVBox.getChildren().add(node);
         }
-        configSP.setContent(configVBox);
     }
 
     // a helper method to preview an image of a Sprite
     private void addImagePreview() {
-        previewVBox = new TabVBoxCreator("Image Preview",  Priority.NEVER, 200, 20, 10, 50, 50);
+        previewVBox = new TabVBoxCreator("Image Preview",200, 20, 10, 50, 50);
         for (int i = 0; i < allNodes.size(); i++) {
             Node currentNode = allNodes.get(i);
             String nodeLabel = labelText.get(i);
@@ -164,7 +158,6 @@ public class ParameterCreator extends BorderPane{
                 });
             }
         }
-        configSP.setContent(configVBox);
     }
 
     // a helper method to format the ImageView

@@ -10,19 +10,12 @@ import javafx.scene.text.Font;
 
 public class TabVBoxCreator extends VBox{
 
-    ScrollPane myScrollPane;
-
-    public TabVBoxCreator(String vBoxName, Priority priority, double width, double top, double right, double bottom, double left) {
-        myScrollPane = new ScrollPane();
-        this.setVgrow(myScrollPane, priority);
+    public TabVBoxCreator(String vBoxName, double width, double top, double right, double bottom, double left) {
         Label header = new Label(vBoxName);
         header.setFont(Font.font(14));
-        this.getChildren().addAll(header, myScrollPane);
+        this.getChildren().addAll(header);
         this.setPrefWidth(width);
         this.setPadding(new Insets(top, right, bottom, left));
     }
 
-    public ScrollPane getScrollPane() {
-        return myScrollPane;
-    }
 }
