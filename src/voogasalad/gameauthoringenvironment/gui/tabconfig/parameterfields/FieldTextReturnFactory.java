@@ -2,8 +2,8 @@ package voogasalad.gameauthoringenvironment.gui.tabconfig.parameterfields;
 
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import voogasalad.gameauthoringenvironment.gui.utils.FileChooserButton;
-import voogasalad.gameauthoringenvironment.gui.utils.PreviewImageButton;
+import voogasalad.gameauthoringenvironment.gui.utilconfig.FileChooserButton;
+import voogasalad.gameauthoringenvironment.gui.utilconfig.PreviewImageButton;
 
 
 public class FieldTextReturnFactory {
