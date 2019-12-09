@@ -18,47 +18,65 @@ public class GameLevelComboBox extends ComboBox {
     private String currentLevel;
     private LevelConfigPane levelConfigPaneInstance;
     private List<ObjectPreviewAndActive> activeObjectObjects;
-    private Map<Integer, Map<String, Map<String, String>>> activeObjectsForLevel;
+    private List<Map<String, Map<String, String>>> activeObjectsForLevel;
+    private int selectedLevel;
+    private int highestLevel;
+    private boolean alreadyUpdated;
 
     public GameLevelComboBox(LevelConfigPane levelConfigPaneInstanceParam){
         levelConfigPaneInstance = levelConfigPaneInstanceParam;
         allLevels = new ArrayList<>();
-        activeObjectsForLevel = levelConfigPaneInstance.getActiveObjectsForLevel();
-        activeObjectObjects = levelConfigPaneInstance.getActiveObjectObjects();
+        selectedLevel = 1;
+        highestLevel = 1;
         this.setValue("1");
         this.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 ComboBox thisInstance = (ComboBox) event.getSource();
-                String currentVal = thisInstance.getValue().toString();
-                updateLevelConfigFields(currentVal);
+                String selectedLevel = thisInstance.getValue().toString();
+                if(! (selectedLevel.equals(String.valueOf(highestLevel)))){
+                    updateLevelConfigFields(selectedLevel);
+                }
             }
         });
     }
 
-    private void updateLevelConfigFields(String newValue){
-        System.out.println("Test: " + newValue);
-        if(activeObjectsForLevel.containsKey(Integer.parseInt(newValue))){
-            getAssociateObjectObject(activeObjectsForLevel.get(Integer.parseInt(newValue)), Integer.parseInt(newValue));
+    private void updateLevelConfigFields(String selectedLevelParam){
+        activeObjectsForLevel = levelConfigPaneInstance.getActiveObjectsForLevel(Integer.parseInt(selectedLevelParam));
+        activeObjectObjects = levelConfigPaneInstance.getActiveObjectObjects();
+        levelConfigPaneInstance.saveInfoForLevel();
+        if(! (activeObjectsForLevel == null)){
+            for(Map map : activeObjectsForLevel){
+                getAssociateObjectObject(map);
+            }
         }
+        selectedLevel = Integer.parseInt(selectedLevelParam);
+        this.setValue(selectedLevel);
+
+
     }
 
     public void addToComboBox(int previousLevel, int currentLevelParam){
-        currentLevel = String.valueOf(currentLevelParam);
+        alreadyUpdated = false;
+        highestLevel = currentLevelParam;
+        //currentLevel = String.valueOf(currentLevelParam);
+        selectedLevel = highestLevel;
         allLevels.add(previousLevel);
-        this.setValue(String.valueOf(currentLevel));
+        this.setValue(String.valueOf(highestLevel));
         this.getItems().add(previousLevel);
 
     }
 
-    private void getAssociateObjectObject(Map<String, Map<String, String>> activeObjectMapForAppropriateLevel, int selectedLevel){
+    private void getAssociateObjectObject(Map<String, Map<String, String>> activeObjectMapForAppropriateLevel){
         String[] allActiveObjectsInLevel = Arrays.copyOf(activeObjectMapForAppropriateLevel.keySet().toArray(), activeObjectMapForAppropriateLevel.keySet().toArray().length, String[].class);
         for(ObjectPreviewAndActive objectObject : activeObjectObjects){
             if(Arrays.asList(allActiveObjectsInLevel).contains(objectObject.getName())){
-                //System.out.println("Reactivate " + objectObject.getName());
                 objectObject.reactivate();
-                //makeActiveLevelInMap = selectedLevel
             }
         }
+    }
+
+    public int getSelectedLevel(){
+        return selectedLevel;
     }
 }
