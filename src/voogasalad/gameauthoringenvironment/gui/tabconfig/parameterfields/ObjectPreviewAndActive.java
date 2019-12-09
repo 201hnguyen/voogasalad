@@ -23,14 +23,14 @@ public class ObjectPreviewAndActive extends BorderPane{
     private Map<String, String> objectContentMap;
     private String gameObjectName;
     private Stage windowStage;
-    private Map<String, Map<String, String>> allActiveObjects;
+    private Map<String, Map<String, String>> activeObjects;
     private Button icon;
     private Button makeActive;
 
     public ObjectPreviewAndActive(String gameObjectNameParam, Map<String, String> objectContentMapParam, int windowHeightParam,
-                                  int windowWidthParam, Stage windowStageParam, Map<String, Map<String, String>> allActiveObjectsParam, Button iconParam){
+                                  int windowWidthParam, Stage windowStageParam, Map<String, Map<String, String>> activeObjectsParam, Button iconParam){
         icon = iconParam;
-        allActiveObjects = allActiveObjectsParam;
+        activeObjects = activeObjectsParam;
         windowStage = windowStageParam;
         gameObjectName = gameObjectNameParam;
         objectContentMap = objectContentMapParam;
@@ -46,7 +46,7 @@ public class ObjectPreviewAndActive extends BorderPane{
         Label title = formatTitleLabel();
         vBox.getChildren().add(title);
         addMapProperties();
-        if(allActiveObjects.containsKey(gameObjectName)){
+        if(activeObjects.containsKey(gameObjectName)){
             makeActive = styleDeactivateButton();
         }
         else{
@@ -90,11 +90,9 @@ public class ObjectPreviewAndActive extends BorderPane{
         makeActive.setPrefWidth(windowWidth);
         makeActive.setOnMouseClicked(event -> {
             removeFromActive();
-            windowStage.close();
         });
         return makeActive;
     }
-
 
     private ScrollPane configureScrollPane(){
         ScrollPane scrollPane = new ScrollPane(vBox);
@@ -111,14 +109,14 @@ public class ObjectPreviewAndActive extends BorderPane{
     }
 
     public void addToActive(){
-        allActiveObjects.put(gameObjectName, objectContentMap);
+        activeObjects.put(gameObjectName, objectContentMap);
         icon.setStyle("-fx-background-color: #00ff00; -fx-border-color:black;");
         windowStage.close();
     }
 
     public void removeFromActive(){
-        allActiveObjects.remove(gameObjectName, objectContentMap);
+        activeObjects.remove(gameObjectName, objectContentMap);
         icon.setStyle(null);
-        makeActive = styleActivateButton();
+        windowStage.close();
     }
 }
