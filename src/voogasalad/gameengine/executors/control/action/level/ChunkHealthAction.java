@@ -4,12 +4,12 @@ import voogasalad.gameengine.executors.control.levelcontrol.Level;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.sprites.Sprite;
 
-public class ChunkSpriteHealthAction implements LevelAction {
+public class ChunkHealthAction implements LevelAction {
     private int mySpriteId;
     private int myDamageValue;
     private boolean isFinished;
 
-    public ChunkSpriteHealthAction(int spriteId, int damageValue) {
+    public ChunkHealthAction(int spriteId, int damageValue) {
         mySpriteId = spriteId;
         myDamageValue = damageValue;
         isFinished = false;
@@ -18,7 +18,9 @@ public class ChunkSpriteHealthAction implements LevelAction {
     @Override
     public void execute(Level level) throws GameEngineException {
         Sprite toAct = level.getSpriteManager().getSpriteById(mySpriteId);
-        toAct.chunkHealth(myDamageValue);
+        if(!(toAct == null || toAct.isDead())) {
+            toAct.chunkHealth(myDamageValue);
+        }
         isFinished = true;
     }
 

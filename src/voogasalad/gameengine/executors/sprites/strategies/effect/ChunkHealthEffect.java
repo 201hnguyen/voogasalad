@@ -1,6 +1,6 @@
 package voogasalad.gameengine.executors.sprites.strategies.effect;
 
-import voogasalad.gameengine.executors.control.action.level.ChunkSpriteHealthAction;
+import voogasalad.gameengine.executors.control.action.level.ChunkHealthAction;
 import voogasalad.gameengine.executors.control.action.level.LevelAction;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.objectcreators.EffectBuilder;
@@ -19,7 +19,7 @@ public class ChunkHealthEffect implements EffectStrategy {
     @Override
     public LevelAction getAction(int spriteId) throws GameEngineException {
         isFinished = true;
-        return new ChunkSpriteHealthAction(spriteId, damageValue);
+        return new ChunkHealthAction(spriteId, damageValue);
     }
 
     @Override
