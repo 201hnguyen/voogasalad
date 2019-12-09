@@ -26,6 +26,14 @@ public class FileChooserButton extends Button {
         return imageString;
     }
 
+    /**
+     *
+     * @return
+     */
+    public String clearImageString() {
+        return imageString = "";
+    }
+
     //TODO: add exception
     private void createButton() {
         final FileChooser imageChooser = new FileChooser();
