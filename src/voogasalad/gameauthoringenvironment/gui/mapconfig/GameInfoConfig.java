@@ -19,8 +19,10 @@ public class GameInfoConfig extends BorderPane {
     private VBox titleTextVBox;
     private HBox inputHBox;
     private HBox buttonHBox;
+    private VBox instructionVBox;
     private BorderPane titleBorderPane;
     private BorderPane authorsBorderPane;
+    private Font instructionFont = new Font("Arial", 14);
 
     private Label title;
     private Label authors;
@@ -35,16 +37,20 @@ public class GameInfoConfig extends BorderPane {
         titleBorderPane = new BorderPane();
         authorsBorderPane = new BorderPane();
         buttonHBox = new HBox();
+        instructionVBox = new VBox(10);
         //titleBorderPane.setCenter(titleTextVBox);
         inputHBox = new HBox(10);
         mainVBox.getChildren().add(titleBorderPane);
         mainVBox.getChildren().add(authorsBorderPane);
         mainVBox.getChildren().add(inputHBox);
+        mainVBox.getChildren().add(instructionVBox);
         addTitle();
         addFieldLabel();
         addInputField();
         addButtons();
+        addInstructionLabel();
         this.setCenter(mainVBox);
+
     }
 
     private void addTitle() {
@@ -61,6 +67,19 @@ public class GameInfoConfig extends BorderPane {
 
 
     }
+    private void addInstructionLabel() {
+        Label instructionLabel = new Label("Create Your Global Towers Obstacle Enemy First. ");
+        Label instructionLabel2 = new Label("Then Go To Level Config Tab To Select The Elements active in that Level. " );
+        Label instructionLabel3 = new Label("Finally Configure the Map in that Level, Select Rules and Submit");
+        instructionLabel.setFont(instructionFont);
+        instructionLabel2.setFont(instructionFont);
+        instructionLabel3.setFont(instructionFont);
+        instructionVBox.getChildren().add(instructionLabel);
+        instructionVBox.getChildren().add(instructionLabel2);
+        instructionVBox.getChildren().add(instructionLabel3);
+
+    }
+
 
     private void addFieldLabel(){
         VBox textLabelVBox = new VBox(15);

@@ -8,6 +8,8 @@ import org.w3c.dom.Document;
 import voogasalad.gameauthoringenvironment.bus.Bus;
 import voogasalad.gameauthoringenvironment.gui.AddToXML;
 import voogasalad.gameauthoringenvironment.gui.levelconfig.LevelConfigPane;
+
+import voogasalad.gameauthoringenvironment.gui.mapconfig.GameInfoConfig;
 import voogasalad.gameauthoringenvironment.gui.tabconfig.parameterfields.ObjectPreviewAndActive;
 import voogasalad.gameauthoringenvironment.gui.tabconfig.parameterfields.ParameterCreator;
 import voogasalad.gameengine.executors.control.levelcontrol.Level;
@@ -46,6 +48,7 @@ public class TabPaneCreator {
      * @return a TabPane with tabs already added
      */
     public TabPane getTabPane() {
+
         return myTabPane;
     }
 
@@ -53,6 +56,9 @@ public class TabPaneCreator {
         String[] objectsFromResource = Arrays.copyOf(typeToParams.keySet().toArray(), typeToParams.keySet().toArray().length, String[].class);
         levelConfigPane = new LevelConfigPane(sendToXML, createdXML, busInstance, allActiveObjects, allActiveObjectObjects, objectsFromResource);
         TabPane tabPane = new TabPane();
+        Tab gameTab = new Tab("Game");
+        gameTab.setContent(new GameInfoConfig());
+        tabPane.getTabs().add(gameTab);
         createPane(tabPane, levelConfigPane);
         Tab levelTab = new Tab("Level");
         levelTab.setContent(levelConfigPane);
