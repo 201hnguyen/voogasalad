@@ -36,4 +36,5 @@ public interface Sprite {
     boolean getHasBeenClicked();
     LevelAction getEffectAction(Sprite sprite) throws GameEngineException;
     void delayMovement(double duration);
+    double distanceTo(Sprite sprite);
 }
