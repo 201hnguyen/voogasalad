@@ -21,6 +21,7 @@ public class Level implements GameScene {
     private LevelActionsManager myLevelActionsManager;
     private int myLevelId;
     private String myBackgroundPath;
+    private String mySoundPath;
     private LevelActionsRequester myActionsRequester;
 
     public Level(LevelBuilder levelBuilder) {
@@ -31,6 +32,7 @@ public class Level implements GameScene {
         myLevelConditionsManager = levelBuilder.getConditionsManager();
         myLevelActionsManager = levelBuilder.getActionsManager();
         myBackgroundPath = levelBuilder.getBackgroundPath();
+        mySoundPath = levelBuilder.getSoundPath();
         myActionsRequester = levelBuilder.getLevelActionsRequester();
     }
 
@@ -46,6 +48,8 @@ public class Level implements GameScene {
     public String getBackgroundPath() {
         return myBackgroundPath;
     }
+
+    public String getSoundPath() { return mySoundPath; }
 
     public LevelActionsRequester getActionsRequester() {
         return myActionsRequester;
