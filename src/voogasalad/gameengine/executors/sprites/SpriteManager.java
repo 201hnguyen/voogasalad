@@ -11,18 +11,21 @@ public interface SpriteManager {
 
     Sprite makeSpriteFromPrototype(double xPos, double yPos, int prototypeId) throws GameEngineException;
 
-    List<Sprite> getOnScreenSprites();
+    List<Sprite> getCopyOnScreenSprites();
+
+    List<Sprite> getOnsScreenSprites();
 
     List<Sprite> getSpritePrototypes();
 
-    List<Sprite> getOnsScreenSpritesByArchetype(SpriteArchetype archetype);
+    List<Sprite> getOnScreenSpritesByArchetype(SpriteArchetype archetype);
 
     Sprite removeSpriteById(int spriteId);
 
-    List<Sprite> getPrototypesForArchetype(SpriteArchetype archetype) throws GameEngineException;
+    List<Sprite> getCopyPrototypesForArchetype(SpriteArchetype archetype) throws GameEngineException;
 
     void executeSpriteNextState(double elapsedTime) throws GameEngineException;
 
     Sprite removeSpriteTowerByCoordinates(double xpos, double ypos);
 
+    void handleProjectileCollisions() throws GameEngineException;
 }

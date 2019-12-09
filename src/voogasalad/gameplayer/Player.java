@@ -6,13 +6,11 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.w3c.dom.Document;
 import voogasalad.gameengine.api.GameSceneObject;
-import voogasalad.gameengine.executors.control.gamecontrol.Game;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.api.Engine;
 import voogasalad.gameengine.executors.utils.SpriteArchetype;
 import voogasalad.gameplayer.GUI.PlayerVisualization;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**

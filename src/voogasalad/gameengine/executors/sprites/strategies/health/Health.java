@@ -2,10 +2,6 @@ package voogasalad.gameengine.executors.sprites.strategies.health;
 
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.objectcreators.HealthBuilder;
-import voogasalad.gameengine.executors.objectcreators.StrategiesFactory;
-import voogasalad.gameengine.executors.utils.Verifier;
-
-import java.util.Map;
 
 public class Health implements HealthStrategy {
     private Integer myHealth;

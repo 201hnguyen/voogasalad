@@ -4,6 +4,7 @@ import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.sprites.Sprite;
 import voogasalad.gameengine.executors.sprites.strategies.attack.AttackStrategy;
 import voogasalad.gameengine.executors.sprites.strategies.cost.CostStrategy;
+import voogasalad.gameengine.executors.sprites.strategies.effect.EffectStrategy;
 import voogasalad.gameengine.executors.sprites.strategies.rotation.RotationStrategy;
 import voogasalad.gameengine.executors.utils.SpriteArchetype;
 import voogasalad.gameengine.executors.sprites.strategies.health.HealthStrategy;
@@ -24,6 +25,7 @@ public class SpriteBuilder {
     private AttackStrategy myAttackStrategy;
     private RotationStrategy myRotationStrategy;
     private CostStrategy myCostStrategy;
+    private EffectStrategy myEffectStrategy;
     private String myImagePath;
     private SpriteArchetype myArchetype;
     private int myPrototypeId;
@@ -88,6 +90,13 @@ public class SpriteBuilder {
     public CostStrategy getCostStrategy() {
         return myCostStrategy;
     }
+
+    public SpriteBuilder setEffectStrategy(EffectStrategy effectStrategy) {
+        myEffectStrategy = effectStrategy;
+        return this;
+    }
+
+    public EffectStrategy getEffectStrategy() { return myEffectStrategy; }
 
     public SpriteBuilder setAttackStrategy(AttackStrategy attackStrategy) {
         myAttackStrategy = attackStrategy;
@@ -215,6 +224,10 @@ public class SpriteBuilder {
             myAttackStrategy = new AttackBuilder().build();
         } if (myCostStrategy == null) {
             myCostStrategy = new CostBuilder().build();
+        } if (myEffectStrategy == null) {
+            myEffectStrategy = new EffectBuilder().build();
+        } if (myRotationStrategy == null) {
+            myRotationStrategy = new RotationBuilder().build();
         }
     }
 }

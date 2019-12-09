@@ -98,7 +98,7 @@ public class Bus {
 
 
     public void goToPlayer(Document createdXML) throws GameEngineException {
-        Player player = new Player(currentStage, createdXML);
+        new Player(currentStage, createdXML);
     }
 
     private void loadGameHandler() throws GameEngineException {

@@ -21,24 +21,23 @@ import voogasalad.gameengine.api.Engine;
 import voogasalad.gameengine.executors.sprites.Sprite;
 import voogasalad.gameplayer.Player;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PlayerVisualization extends BorderPane {
 
-    private static final double SCENE_WIDTH = 1000;
-    private static final double SCENE_HEIGHT = 800;
-    private static final double PANEL_POSITION = 800;
-    private static final double PANEL_SPACING = 10;
-    private static final double TIME_SIZE = 20;
-    private static final double SHADOW_COLOR = 0.3f;
-    private static final double SHADOW_ySET= 3.0f;
-    private static final String BACKtoGAE = "Return to GAE";
-    private static final String TITLE = "Player";
-    private static final String INSTRUCTIONS = " Instructions: Drag and drop \n towers onto display screen.";
-    private static final String TIMER_INFO = "Elapsed Time:"+ "\n 0 : 0";
+    private static final String RESOURCE_PATH = "resources.player.PlayerViewOptions";
+    private static final ResourceBundle resourceBundle = ResourceBundle.getBundle(RESOURCE_PATH);
+    private static final double SCENE_WIDTH = Double.parseDouble(resourceBundle.getString("SceneWidth"));
+    private static final double SCENE_HEIGHT = Double.parseDouble(resourceBundle.getString("SceneHeight"));
+    private static final double PANEL_POSITION = Double.parseDouble(resourceBundle.getString("RightPanelPosition"));
+    private static final String TITLE = resourceBundle.getString("Title");
+    private static final int STOPWATCH_FONT_SIZE = Integer.parseInt(resourceBundle.getString("StatusBarFontSize"));
+    private static final String INITIAL_TIME = resourceBundle.getString("InitialTime");
+    private static final double SHADOW_COLOR = Double.parseDouble(resourceBundle.getString("TimeShadowColor"));
+    private static final double SHADOW_YSET = Double.parseDouble(resourceBundle.getString("TimeShadowYOffset"));
+    private static final String BACK_TO_GAE = resourceBundle.getString("BackToGAE");
+    private static final String INSTRUCTIONS = resourceBundle.getString("Instructions");
+    private static final int PANEL_SPACING = Integer.parseInt(resourceBundle.getString("InfoBoxSpacing"));
 
     private Scene scene;
     private Stage stage;
@@ -52,28 +51,25 @@ public class PlayerVisualization extends BorderPane {
     private StopWatch myStopWatch;
     private Text myStopWatchDisplay;
     private Player myPlayer;
-    private boolean isGameRunning;
+    private boolean isRunning;
     private String currentTime;
 
     public PlayerVisualization(Stage stage, ActionsProcessor uiActionsProcessor, Player player) {
         this.stage = stage;
         this.actionsProcessor = uiActionsProcessor;
         this.myPlayer = player;
-        this.isGameRunning = false;
-        currentTime = TIMER_INFO;
+        this.isRunning = false;
+        currentTime = INITIAL_TIME;
         initialize();
     }
 
     public void update(List<Sprite> sprites, Map<String, Integer> gameInfoMap) {
         displayScreen.updateDisplayScreen(sprites);
         statusBar.updateDisplayedInfo(gameInfoMap);
-        if(isGameRunning) {
+        if(isRunning) {
             currentTime = myStopWatch.getCurrentTime();
-            myStopWatchDisplay.setText(currentTime);
         }
-        else{
-            myStopWatchDisplay.setText(currentTime);
-        }
+        myStopWatchDisplay.setText(currentTime);
     }
 
     public void setNewLevel(List<Sprite> towers, List<Sprite> enemies, String backgroundImagePath, Map<String, Integer> gameInfoMap){
@@ -106,6 +102,7 @@ public class PlayerVisualization extends BorderPane {
         showStage();
     }
 
+
     private void displayGameScreenAndAttachToAccordion() {
         displayScreen = new DisplayScreen(actionsProcessor, myPlayer, selectedTowerPane, this);
         displayScreen.setMinWidth(SCENE_WIDTH - (SCENE_WIDTH - PANEL_POSITION));
@@ -119,12 +116,11 @@ public class PlayerVisualization extends BorderPane {
         stage.setResizable(false);
         stage.setTitle(TITLE);
         stage.show();
-
     }
 
     private VBox backToGAE() {
         VBox buttonHolder = new VBox();
-        Button button = new Button(BACKtoGAE);
+        Button button = new Button(BACK_TO_GAE);
         buttonHolder.getChildren().add(button);
         buttonHolder.setAlignment(Pos.CENTER);
         return buttonHolder;
@@ -139,19 +135,16 @@ public class PlayerVisualization extends BorderPane {
         return instructions;
     }
 
-
-    private void createStopWatchDisplay(){
-        DropShadow shadow = getDropShadow();
-        myStopWatchDisplay = new Text(TIMER_INFO);
-        myStopWatchDisplay.setEffect(shadow);
-        myStopWatchDisplay.setFont(new Font(TIME_SIZE));
-    }
-
     private DropShadow getDropShadow() {
         DropShadow shadow = new DropShadow();
-        shadow.setOffsetY(SHADOW_ySET);
+        shadow.setOffsetY(SHADOW_YSET);
         shadow.setColor(Color.color(SHADOW_COLOR, SHADOW_COLOR, SHADOW_COLOR));
         return shadow;
+    }
+
+    private void createStopWatchDisplay(){
+        myStopWatchDisplay = new Text(INITIAL_TIME);
+        myStopWatchDisplay.setFont(new Font(STOPWATCH_FONT_SIZE));
     }
 
     private void setBackgroundImage(String backgroundImagePath){
@@ -160,13 +153,13 @@ public class PlayerVisualization extends BorderPane {
     }
 
     public void startButtonAction() {
-        isGameRunning = true;
+        isRunning = true;
         myPlayer.startTimeLine();
         myStopWatch.startStopWatch();
     }
 
     public void pauseButtonAction() {
-        isGameRunning = false;
+        isRunning = false;
         myPlayer.pauseTimeline();
         myStopWatch.pauseStopWatch();
     }

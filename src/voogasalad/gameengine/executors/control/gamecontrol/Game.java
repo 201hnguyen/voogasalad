@@ -13,6 +13,7 @@ import voogasalad.gameengine.executors.control.levelcontrol.GameSceneStatus;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.control.levelcontrol.Level;
 import voogasalad.gameengine.executors.sprites.Sprite;
+import voogasalad.gameengine.executors.utils.ConfigurationTool;
 import voogasalad.gameengine.executors.utils.SpriteArchetype;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -37,7 +38,7 @@ public class Game {
     public Game(Document gameConfigDocument) throws GameEngineException {
         myGameRulesController = new GameRulesController();
         myGameActionsRequester = new GameActionsRequester();
-        myGameConfigDocument = configureWithTestDocument();
+        myGameConfigDocument = ConfigurationTool.configureWithTestDocument("src/resources/player/MockGame.xml");
         GameConfigurator gameConfigurator = new GameConfigurator(myGameConfigDocument);
         myCompletePrototypesCollection = gameConfigurator.getGamePrototypesCollection();
         myGameRulesController.addGameConditionsAsCollection(gameConfigurator.configureGameConditions());
@@ -87,24 +88,11 @@ public class Game {
     }
 
     public List<Sprite> getSpritePrototypesByArchetype(SpriteArchetype spriteArchetype) throws GameEngineException {
-        return myCurrentLevel.getSpriteManager().getPrototypesForArchetype(spriteArchetype);
+        return myCurrentLevel.getSpriteManager().getCopyPrototypesForArchetype(spriteArchetype);
     }
 
     public String getCurrentLevelBackgroundPath() {
         return myCurrentLevel.getBackgroundPath();
-    }
-
-    private Document configureWithTestDocument() throws GameEngineException {
-        File testFile = new File("src/resources/player/MockData2.xml");
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder ;
-        try {
-            builder = factory.newDocumentBuilder();
-            Document doc = builder.parse(testFile);
-            return doc;
-        } catch (ParserConfigurationException | SAXException | IOException e) {
-            throw new GameEngineException(e, "ConfigurationFailedXML");
-        }
     }
 
     public boolean didLevelSwitch() {

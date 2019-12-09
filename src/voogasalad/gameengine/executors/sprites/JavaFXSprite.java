@@ -7,6 +7,7 @@ import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.objectcreators.SpriteBuilder;
 import voogasalad.gameengine.executors.sprites.strategies.attack.AttackStrategy;
 import voogasalad.gameengine.executors.sprites.strategies.cost.CostStrategy;
+import voogasalad.gameengine.executors.sprites.strategies.effect.EffectStrategy;
 import voogasalad.gameengine.executors.sprites.strategies.health.HealthStrategy;
 import voogasalad.gameengine.executors.sprites.strategies.movement.MovementStrategy;
 import voogasalad.gameengine.executors.sprites.strategies.rotation.RotationStrategy;
@@ -24,11 +25,15 @@ public class JavaFXSprite implements Sprite {
     private RotationStrategy myRotationStrategy;
     private AttackStrategy myAttackStrategy;
     private CostStrategy myCostStrategy;
+    private EffectStrategy myEffectStrategy;
     private String myImagePath;
     private ImageView myImageView;
     private SpriteBuilder myOriginalBuilder;
     private SpriteArchetype myArchetype;
     private int myPrototypeId;
+    private double myHeight;
+    private double myWidth;
+    private boolean hasBeenClicked;
 
     public JavaFXSprite(SpriteBuilder builder) throws GameEngineException {
         myPrototypeId = builder.getPrototypeId();
@@ -42,23 +47,27 @@ public class JavaFXSprite implements Sprite {
         myAttackStrategy = builder.getAttackStrategy();
         myRotationStrategy = builder.getRotationStrategy();
         myCostStrategy = builder.getCostStrategy();
+        myEffectStrategy = builder.getEffectStrategy();
         myCurrentAttackAngle = 0.0;
         myImagePath = builder.getImagePath();
-        configureImageView(builder.getHeight(), builder.getWidth());
+        myHeight = builder.getHeight();
+        myWidth = builder.getWidth();
+        configureImageView();
     }
 
     @Override
     public Sprite makeClone(double x, double y, int spriteId) throws GameEngineException {
         return new SpriteBuilder().setSpriteId(spriteId).setX(x).setY(y)
-                .setHeight(myOriginalBuilder.getHeight())
-                .setImagePath(myOriginalBuilder.getImagePath())
-                .setWidth(myOriginalBuilder.getWidth())
-                .setArchetype(myOriginalBuilder.getSpriteArchetype())
-                .setAttackStrategy(myOriginalBuilder.getAttackStrategy().makeClone())
+                .setHeight(myHeight)
+                .setImagePath(myImagePath)
+                .setWidth(myWidth)
+                .setArchetype(myArchetype)
+                .setAttackStrategy(myAttackStrategy.makeClone())
                 .setRotationStrategy(myOriginalBuilder.getRotationStrategy().makeClone())
                 .setMovementStrategy(myOriginalBuilder.getMovementStrategy().makeClone())
                 .setHealthStrategy(myOriginalBuilder.getHealthStrategy().makeClone())
                 .setCostStrategy(myOriginalBuilder.getCostStrategy().makeClone())
+                .setEffectStrategy(myOriginalBuilder.getEffectStrategy().makeClone())
                 .setPrototypeId(myPrototypeId)
                 .build();
     }
@@ -128,10 +137,10 @@ public class JavaFXSprite implements Sprite {
         currentPosition = myMovementStrategy.calculateNextPosition(elapsedTime, currentPosition);
     }
 
-    private void configureImageView(double height, double width) {
+    private void configureImageView() {
         myImageView = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream(myImagePath)));
-        myImageView.setFitHeight(height);
-        myImageView.setFitWidth(width);
+        myImageView.setFitHeight(myHeight);
+        myImageView.setFitWidth(myWidth);
         myImageView.setPreserveRatio(true);
     }
 
@@ -147,7 +156,7 @@ public class JavaFXSprite implements Sprite {
 
     @Override
     public boolean isDead() {
-        return myHealthStrategy.getHealth() != null && myHealthStrategy.getHealth() <= 0;
+        return myEffectStrategy.isFinished() || myHealthStrategy.getHealth() != null && myHealthStrategy.getHealth() <= 0;
     }
 
     public int getCreateCost() {
@@ -159,4 +168,34 @@ public class JavaFXSprite implements Sprite {
         return myCostStrategy.getDestroyCost();
     }
 
+    @Override
+    public void updateImage(String newImagePath) {
+        myImagePath = newImagePath;
+        configureImageView();
+    }
+
+    @Override
+    public boolean isColliding(Sprite other) {
+        ImageView otherImage = (ImageView) other.getImage();
+        return myImageView.getBoundsInParent().intersects(otherImage.getBoundsInParent());
+    }
+
+    @Override
+    public void updateAttackStrategy(AttackStrategy updatedStrategy) {
+        myAttackStrategy = updatedStrategy;
+    }
+
+    public void applyEffect(Sprite other) throws GameEngineException {
+        myEffectStrategy.apply(other);
+    }
+
+    @Override
+    public void setHasBeenClicked(boolean bool) {
+        hasBeenClicked = bool;
+    }
+
+    @Override
+    public boolean getHasBeenClicked() {
+        return hasBeenClicked;
+    }
 }

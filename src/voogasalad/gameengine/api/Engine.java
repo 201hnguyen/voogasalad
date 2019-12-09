@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Engine {
     private Game myGame;
-    private String gameTitle="Bloons TD5";
+    private String myGameTitle ="Bloons TD5";
 
     public Engine(Document doc) throws GameEngineException {
         myGame = new Game(doc);
@@ -22,10 +22,6 @@ public class Engine {
 
     public ActionsProcessor getActionsProcessor() {
         return myGame.getActionsProcessor();
-    }
-
-    public List<Sprite> getSpritePrototypes() {
-        return myGame.getCurrentLevelSpritePrototypes();
     }
 
     public List<Sprite> getSpritePrototypesByArchetype(SpriteArchetype spriteArchetype) throws GameEngineException {
@@ -45,7 +41,7 @@ public class Engine {
     }
 
     public String getGameTitle() {
-        return gameTitle;
+        return myGameTitle;
     }
 
     public int getCurrentLevelId() {
