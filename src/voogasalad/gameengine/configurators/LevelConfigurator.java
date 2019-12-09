@@ -23,6 +23,7 @@ public class LevelConfigurator {
     public static final String CONDITION_NODES_TAG = "Condition";
     public static final String LEVEL_ID_NODE_TAG = "LevelId";
     public static final String BACKGROUND_PATH_TAG = "BackgroundImage";
+    public static final String SOUND_PATH_TAG = "SoundFile";
     public static final String PROTOTYPE_SPECIFIED_FOR_LEVEL_NODE_TAG = "AvailablePrototypes";
     public static final String DEFAULT_BACKGROUND_PATH = "whitebackground.jpg";
 
@@ -41,9 +42,10 @@ public class LevelConfigurator {
             int levelId = configureIntProperties(LEVEL_ID_NODE_TAG);
             Collection<LevelCondition> levelConditions = configureLevelConditions();
             String backgroundPath = configureBackgroundPath();
+            String soundPath = configureSoundPath();
             levels.add(new LevelBuilder(levelId).setConditions(levelConditions)
                     .setLives(lives).setResources(resources).setSpritePrototypes(myAvailablePrototypesList)
-                    .setWaves(wavesCollection).setBackgroundPath(backgroundPath).build());
+                    .setWaves(wavesCollection).setBackgroundPath(backgroundPath).setSoundPath(soundPath).build());
         }
         return levels;
     }
@@ -73,6 +75,14 @@ public class LevelConfigurator {
             return myCurrentLevelRoot.getElementsByTagName(BACKGROUND_PATH_TAG).item(0).getTextContent();
         } catch (NullPointerException e) {
             return DEFAULT_BACKGROUND_PATH;
+        }
+    }
+
+    private String configureSoundPath() {
+        try {
+            return myCurrentLevelRoot.getElementsByTagName(SOUND_PATH_TAG).item(0).getTextContent();
+        } catch (NullPointerException e) {
+            return "";
         }
     }
 

@@ -96,6 +96,8 @@ public class Game {
         return myCurrentLevel.getBackgroundPath();
     }
 
+    public String getCurrentLevelSoundPath() { return myCurrentLevel.getSoundPath(); }
+
     public boolean didLevelSwitch() {
         boolean ret = switchedLevel;
         switchedLevel = false;
