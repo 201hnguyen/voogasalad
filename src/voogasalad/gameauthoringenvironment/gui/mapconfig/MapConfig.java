@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
@@ -27,11 +28,12 @@ import java.util.Arrays;
 
 public class MapConfig {
 
-    private static final int window_WIDTH = 1000;
+    private static final int window_WIDTH = 1100;
     private static final int window_HEIGHT = 600;
     //private Group root;
     private BorderPane root;
     private Group subRoot;
+
     private Scene levelConfigScene;
     private SubScene playerField;
 
@@ -84,6 +86,13 @@ public class MapConfig {
     private final static Font titleFont = new Font("Arial", 18);
     private final static Font subtitleFont = new Font("Arial", 14);
 
+    //saved data
+    ArrayList<WaveInfo> savedWaves;
+    ArrayList<PathInfo> savedPaths;
+
+    ArrayList<Double> spawningTimeList;
+    ArrayList<Double> durationList;
+    ArrayList<Integer> in;
 
     public MapConfig(MapButton mapButton){
         mapButtonInLevel = mapButton;
@@ -116,6 +125,9 @@ public class MapConfig {
 
         levelConfigPage = new Stage();
         root = new BorderPane();
+        Label previewLabel = new Label("Map and Path Preview");
+        previewLabel.setFont(titleFont);
+        root.setTop(previewLabel);
         //root = new Group();
         mainhbox = new HBox(10);
         controlVBox = new VBox(10);
@@ -130,9 +142,10 @@ public class MapConfig {
 
         //create subscene root
         subRoot = new Group();
+        //subRoot = new HBox(10);
         subRoot.getChildren().add(backgroundImageView);
 
-        playerField = new SubScene(subRoot, 500, 500);
+        playerField = new SubScene(subRoot, 800, 800);
         playerField.setLayoutX(10);
         playerField.setLayoutY(10);
         playerField.setOnMouseClicked(e -> handleMouseClickedSubScene(e.getX(),e.getY()));
@@ -342,7 +355,7 @@ public class MapConfig {
             lastActiveButton = waveButtonList.get(selectedWaveIndex);
         }
         lastActiveButton.setStyle(null);
-        nextActivatedButton.setStyle("-fx-background-color: blue; -fx-border-color: red; -fx-border-width: .25px; -fx-padding: 0 20 0 20;");
+        nextActivatedButton.setStyle("-fx-background-color: orange; -fx-border-color: red;");
     }
 
     private void addNewPathField(FlowPane pathPane){
@@ -632,15 +645,21 @@ public class MapConfig {
         //Label waveNameLabel = new Label("Wave " + waveCount);
         Button waveNameLabel = new Button("Wave " + waveCount);
         waveNameLabel.setOnAction(e -> changeSelectedWave(newWaveHBox));
+        waveNameLabel.setId("Wave "+ waveCount);
 
         Label waveEnemyListLabel = new Label("Click Active Enemy Type to Add");
         waveCompositionLabel.add(waveEnemyListLabel);
 
         ScrollPane waveSrollList = new ScrollPane(waveEnemyListLabel);
         waveSrollList.setMaxWidth(100);
+        waveSrollList.setId("WaveList "+ waveCount);
         TextField startingTimeField = new TextField();
+        startingTimeField.setId("SpawnTime");
         TextField durationField = new TextField();
+        startingTimeField.setId("Duration");
         ComboBox availablePaths = new ComboBox();
+        availablePaths.setId("Path");
+
         startingTimeField.setMaxWidth(30);
         durationField.setMaxWidth(30);
 
@@ -758,7 +777,7 @@ public class MapConfig {
             File file = imageChooser.showOpenDialog(levelConfigPage);
             if (file != null) {
                 Image image1 = new Image(file.toURI().toString());
-                backgroundImageView = new ImageView(image1);
+                backgroundImageView.setImage(image1);
             }
         });
 
@@ -769,6 +788,44 @@ public class MapConfig {
     private Button createSubmitAndCloseButton(){
         Button submitClose = new Button("Submit Map");
         submitClose.setOnMouseClicked(event -> {
+            savedWaves = new ArrayList<>();
+            savedPaths = new ArrayList<>();
+
+            for (int pathIndex = 0; pathIndex < createdPathList.size(); pathIndex++) {
+                PathInfo newPath = new PathInfo(pathIndex, spawnPointList.get(pathIndex), createdPathList.get(pathIndex));
+                savedPaths.add(newPath);
+            }
+
+
+
+            for (int waveIndex = 0; waveIndex < waveHBoxList.size(); waveIndex++) {
+                double spawningTime = 0;
+                double totalWaveDuration = 10;
+                int pathIndex = 1;
+                for (Node inputNode : waveHBoxList.get(waveIndex).getChildren()) {
+                    if (inputNode instanceof TextField){
+                        if (inputNode.getId().equals("SpawnTime")) {
+                            spawningTime = Double.parseDouble(((TextField) inputNode).getText());
+                        }
+                        if (inputNode.getId().equals("Duration")) {
+                            totalWaveDuration = Double.parseDouble(((TextField) inputNode).getText());
+                        }
+                    }
+                    if (inputNode instanceof ComboBox) {
+                        pathIndex =Integer.parseInt(((ComboBox) inputNode).getValue().toString().split(" ")[1]);
+                    }
+
+
+                }
+                WaveInfo newWave = new WaveInfo(waveIndex, waveComposition.get(waveIndex), spawningTime,totalWaveDuration, pathIndex );
+                savedWaves.add(newWave);
+            }
+            for (PathInfo path : savedPaths) {
+                path.printInfo();
+            }
+            for (WaveInfo wave: savedWaves) {
+                wave.printInfo();
+            }
             mapButtonInLevel.mapSubmitted();
             levelConfigPage.close();
         });
