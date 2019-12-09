@@ -63,7 +63,7 @@ public class PlayerVisualization extends BorderPane {
         this.stage = stage;
         this.actionsProcessor = uiActionsProcessor;
         this.myPlayer = player;
-        this.isRunning = false;
+        this.isRunning = true;
         currentTime = INITIAL_TIME;
         initialize();
     }
@@ -78,7 +78,6 @@ public class PlayerVisualization extends BorderPane {
     }
 
     public void setNewLevel(List<Sprite> towers, List<Sprite> enemies, String backgroundImagePath, String backgroundSoundPath, Map<String, Integer> gameInfoMap){
-        isRunning = false;
         myStopWatch = new StopWatch();
         statusBar.updateDisplayedInfo(gameInfoMap);
         displayScreen.updateDisplayScreen(new ArrayList<>());
@@ -161,13 +160,13 @@ public class PlayerVisualization extends BorderPane {
     }
 
     private void setBackgroundSound(String backgroundSoundPath) {
+        if(soundPlayer != null) {
+            soundPlayer.pause();
+        }
         backgroundSound = new Media(new File(SOUND_BASE_PATH + backgroundSoundPath).toURI().toString());
         soundPlayer = new MediaPlayer(backgroundSound);
         soundPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         soundPlayer.setMute(isMuted);
-        if(isRunning) {
-            soundPlayer.play();
-        }
     }
 
     public void toggleMuteAction() {

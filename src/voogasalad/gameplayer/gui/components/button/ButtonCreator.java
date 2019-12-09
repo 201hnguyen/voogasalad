@@ -37,7 +37,7 @@ public class ButtonCreator extends HBox {
         getChildren().clear();
         for(String key : Collections.list(BUTTON_RESOURCE_BUNDLE.getKeys())) {
             String[] optionResources = BUTTON_RESOURCE_BUNDLE.getString(key).split(";");
-            choiceMap.put(key, 0);
+            choiceMap.put(key, 1);
             Button button = new Button();
             buttonMap.put(key, button);
             ImageView image = new ImageView(new Image(optionResources[choiceMap.get(key)]));
