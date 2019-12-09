@@ -25,11 +25,14 @@ public class AddSpriteAction implements LevelAction {
 
     @Override
     public void execute(Level level) throws GameEngineException {
-        Sprite sprite = level.getSpriteManager().makeSpriteFromPrototype(myXPos, myYPos, myPrototypeIndex);
-        int scoreToSubtract = sprite.getCreateCost();
-        level.getStatusManager().alterResourcesByValue(-scoreToSubtract);
-        if (myAngle != null) {
-            sprite.updateMovementAngle(myAngle);
+        Sprite spritePrototype = level.getSpriteManager().getCopyPrototype(myPrototypeIndex);
+        if (spritePrototype.getCreateCost() <= level.getStatusManager().getResources()) {
+            Sprite sprite = level.getSpriteManager().makeSpriteFromPrototype(myXPos, myYPos, myPrototypeIndex);
+            int scoreToSubtract = sprite.getCreateCost();
+            level.getStatusManager().alterResourcesByValue(-scoreToSubtract);
+            if (myAngle != null) {
+                sprite.updateMovementAngle(myAngle);
+            }
         }
     }
 

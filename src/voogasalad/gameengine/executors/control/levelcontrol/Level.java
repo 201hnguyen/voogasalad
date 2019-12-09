@@ -8,6 +8,7 @@ import voogasalad.gameengine.executors.control.levelcontrol.managers.LevelWaveMa
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.control.levelcontrol.managers.LevelActionsManager;
 import voogasalad.gameengine.executors.objectcreators.LevelBuilder;
+import voogasalad.gameengine.executors.sprites.Sprite;
 import voogasalad.gameengine.executors.sprites.SpriteManager;
 
 import java.util.Set;
