@@ -103,7 +103,6 @@ public class PrototypesConfigurator {
             StrategyBuilder strategyBuilder = (StrategyBuilder) builder;
             return strategyBuilder.build();
         } catch (Exception e) {
-            e.printStackTrace();
             throw new GameEngineException(e, "SpriteProductionFailedDueToStrategyParameters");
         }
     }
