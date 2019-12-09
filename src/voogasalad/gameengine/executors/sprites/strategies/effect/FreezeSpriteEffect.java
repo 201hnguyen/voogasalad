@@ -3,16 +3,19 @@ package voogasalad.gameengine.executors.sprites.strategies.effect;
 import voogasalad.gameengine.executors.control.action.level.FreezeSpriteAction;
 import voogasalad.gameengine.executors.control.action.level.LevelAction;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
+import voogasalad.gameengine.executors.objectcreators.EffectBuilder;
 
 public class FreezeSpriteEffect implements EffectStrategy {
 
+    private EffectBuilder myOriginalBuilder;
     private int myDamageValue;
     private double myDuration;
     private boolean isFinished;
 
-    public FreezeSpriteEffect(int damageValue, double duration) {
-        myDamageValue = damageValue;
-        myDuration = duration;
+    public FreezeSpriteEffect(EffectBuilder builder) {
+        myOriginalBuilder = builder;
+        myDamageValue = builder.getDamage();
+        myDuration = builder.getDuration();
         isFinished = false;
     }
 
@@ -29,6 +32,6 @@ public class FreezeSpriteEffect implements EffectStrategy {
 
     @Override
     public EffectStrategy makeClone() throws GameEngineException {
-        return new FreezeSpriteEffect(myDamageValue, myDuration);
+        return new FreezeSpriteEffect(myOriginalBuilder);
     }
 }
