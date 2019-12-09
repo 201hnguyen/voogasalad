@@ -226,6 +226,8 @@ public class SpriteBuilder {
             myCostStrategy = new CostBuilder().build();
         } if (myEffectStrategy == null) {
             myEffectStrategy = new EffectBuilder().build();
+        } if (myRotationStrategy == null) {
+            myRotationStrategy = new RotationBuilder().build();
         }
     }
 }
