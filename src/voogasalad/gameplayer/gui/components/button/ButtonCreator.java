@@ -60,6 +60,11 @@ public class ButtonCreator extends HBox {
         }
     }
 
+    /**
+     * method for toggling the image of one of the buttons upon click
+     *
+     * @param key string key for a button in our button resource bundle
+     */
     public void toggleImage(String key) {
         String[] optionResources = BUTTON_RESOURCE_BUNDLE.getString(key).split(";");
         toggleChoice(key);

@@ -85,6 +85,10 @@ public class Player {
         myTimeline.play();
     }
 
+    /**
+     * method for executing the engine with zero elapsed time
+     * used for updating the game screen after adding or removing a tower without having to start the level
+     */
     public void executeEngineWithZeroElapsedTime() {
         try {
             myCurrentGameSceneObject = myEngine.execute(0);
@@ -95,10 +99,16 @@ public class Player {
         }
     }
 
+    /**
+     * method used for pausing the timeline animation
+     */
     public void pauseTimeline(){
         myTimeline.pause();
     }
 
+    /**
+     * method used for pausing the timeline animation
+     */
     public void startTimeLine(){
         myTimeline.play();
     }

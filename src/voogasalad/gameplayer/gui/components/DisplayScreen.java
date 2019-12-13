@@ -47,19 +47,29 @@ public class DisplayScreen extends Pane {
         });
     }
 
-    public void updateDisplayScreen(List<Sprite> sprites){
+    /**
+     * This method can be called to update the display screen with a list of on screen sprites in their correct position
+     * as driven by the engine
+     *
+     * @param sprites list of updated on screen sprite objects that this method will load into the DisplayScreen
+     */
+    public void updateDisplayScreen(List<Sprite> sprites) {
         this.getChildren().clear();
-        for(Sprite sprite: sprites){
+        for (Sprite sprite : sprites) {
             loadInSprite(sprite);
         }
     }
 
+    /**
+     * This sets an ID for a dragged image so that it can be referenced after it has been dropped
+     *
+     * @param id currentImageID to be set
+     */
     public void setImageDraggedID(int id){
         currentImageID = id;
     }
 
     private void loadInSprite(Sprite sprite) {
-        //        ImageView toDisplay = new ImageView(new Image(toLoad.getImagePath()));
         ImageView toDisplay = (ImageView) sprite.getImage();
         int xPos = (int) sprite.getX();
         int yPos = (int) sprite.getY();
@@ -67,7 +77,7 @@ public class DisplayScreen extends Pane {
         if (sprite.getSpriteArchetype() == SpriteArchetype.TOWER) {
             toDisplay.setOnMouseClicked(e -> {
                 if(!sprite.getHasBeenClicked()) {
-                    myPlayerVisualization.toggleStartAction();
+//                    myPlayerVisualization.toggleStartAction();
                     selectedTowerPane.removeTower(sprite, xPos, yPos);
                     sprite.setHasBeenClicked(true);
                 }

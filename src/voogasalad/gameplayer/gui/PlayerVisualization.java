@@ -26,6 +26,8 @@ import voogasalad.gameplayer.gui.components.button.ButtonCreator;
 import java.io.File;
 import java.util.*;
 
+
+
 public class PlayerVisualization extends BorderPane {
 
     private static final String RESOURCE_PATH = "resources.player.PlayerViewOptions";
@@ -80,6 +82,13 @@ public class PlayerVisualization extends BorderPane {
         initialize();
     }
 
+    /**
+     * Method used for updating the game each keyframe. Updates display screen with current on screen sprites. Updates display
+     * info in the status bar, including resources, lives, and the stopwatch
+     *
+     * @param sprites - current on screen sprites to be updated with
+     * @param gameInfoMap - map of game info, incl. resources and lives count with their icon image path string
+     */
     public void update(List<Sprite> sprites, Map<String, Integer> gameInfoMap) {
         displayScreen.updateDisplayScreen(sprites);
         statusBar.updateDisplayedInfo(gameInfoMap);
@@ -89,6 +98,15 @@ public class PlayerVisualization extends BorderPane {
         myStopWatchDisplay.setText(currentTime);
     }
 
+    /**
+     * method used to set new level upon level change condition specified by user
+     *
+     * @param towers list of tower sprite prototypes available in next level
+     * @param enemies list of enemy sprite prototypes in the next level
+     * @param backgroundImagePath string background image path for next level
+     * @param backgroundSoundPath string background sound path for next level
+     * @param gameInfoMap - map of updated game info for next level, incl. resources and lives
+     */
     public void setNewLevel(List<Sprite> towers, List<Sprite> enemies, String backgroundImagePath, String backgroundSoundPath, Map<String, Integer> gameInfoMap){
         myStopWatch = new StopWatch();
         statusBar.updateDisplayedInfo(gameInfoMap);
@@ -203,12 +221,19 @@ public class PlayerVisualization extends BorderPane {
         soundPlayer.setMute(isMuted);
     }
 
+    /**
+     * method for toggling mute action when mute button is clicked
+     */
     public void toggleMuteAction() {
         isMuted = !isMuted;
         soundPlayer.setMute(isMuted);
         myButtonCreator.toggleImage(MUTE_BUTTON_KEY);
     }
 
+    /**
+     * method for toggling start action when start button is clicked. This will start the timeline, start the stopwatch, and play the sound,
+     * and another click will toggle all of these off
+     */
     public void toggleStartAction() {
         isRunning = !isRunning;
         myButtonCreator.toggleImage(START_BUTTON_KEY);

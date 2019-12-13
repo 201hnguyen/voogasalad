@@ -28,6 +28,21 @@ public class StatusBar extends HBox {
         this.setMinHeight(STATUS_BAR_HEIGHT);
     }
 
+    /**
+     * Used to update the game info features in the status bar -- these include Resources (Coins) and Lives
+     *
+     * @param gameInfoMap map of game info features to be displayed, key = string name of icon image file,
+     *                    value = current value of this info feature
+     */
+    public void updateDisplayedInfo(Map<String, Integer> gameInfoMap) {
+        this.getChildren().removeAll(currentDisplayedInfo);
+        currentDisplayedInfo.clear();
+        for(String key : gameInfoMap.keySet()) {
+            HBox box = infoTrackerBox(key, gameInfoMap.get(key));
+            this.getChildren().add(box);
+        }
+    }
+
     private HBox infoTrackerBox(String infoName, int infoValue) {
         // need to add icon and value
         HBox infoBox = new HBox(INFO_BOX_SPACING);
@@ -39,15 +54,6 @@ public class StatusBar extends HBox {
         infoBox.getChildren().add(value);
         currentDisplayedInfo.add(infoBox);
         return infoBox;
-    }
-
-    public void updateDisplayedInfo(Map<String, Integer> gameInfoMap) {
-        this.getChildren().removeAll(currentDisplayedInfo);
-        currentDisplayedInfo.clear();
-        for(String key : gameInfoMap.keySet()) {
-            HBox box = infoTrackerBox(key, gameInfoMap.get(key));
-            this.getChildren().add(box);
-        }
     }
 
     /**

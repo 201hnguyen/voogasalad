@@ -30,6 +30,12 @@ public class SelectedTowerPane extends VBox {
         this.setBackground(new Background(new BackgroundFill(Color.ALICEBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
     }
 
+    /**
+     *
+     * @param sprite Sprite object to be
+     * @param x
+     * @param y
+     */
     public void removeTower(Sprite sprite, int x, int y) {
         HBox removeTowerBox = new HBox();
         ImageView towerImage = new ImageView(new Image(sprite.getImagePath()));

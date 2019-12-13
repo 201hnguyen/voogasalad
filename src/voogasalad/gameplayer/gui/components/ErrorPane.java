@@ -27,7 +27,8 @@ public class ErrorPane extends Pane {
 
     /**
      * This method displays a pop up message when an error occurs due to the user inputting invalid commands.
-     * @param err: the message to display when an error occurs
+     *
+     * @param err the message to display when an error occurs
      */
     public void errorMessage(String err){
         Text error = new Text();
