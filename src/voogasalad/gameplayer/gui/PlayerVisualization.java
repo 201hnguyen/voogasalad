@@ -27,7 +27,13 @@ import java.io.File;
 import java.util.*;
 
 
-
+/**
+ * @author Ben Keegan - bk142, Sumer Vardhan, Michael Castro
+ *
+ * PlayerVisualization is used to initialize the Player Screen. It needs the stage to build on, a UIActionsProcessor
+ * for processing UI actions, the Player object which contains the Game Loop, as well as the game title and initial score.
+ *
+ */
 public class PlayerVisualization extends BorderPane {
 
     private static final String RESOURCE_PATH = "resources.player.PlayerViewOptions";

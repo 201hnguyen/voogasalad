@@ -11,6 +11,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+/**
+ * @author Ben Keegan - bk142
+ *
+ * Status Bar class for containing all of the game
+ */
 public class StatusBar extends HBox {
 
     private static final String RESOURCE_PATH = "resources.player.PlayerViewOptions";
