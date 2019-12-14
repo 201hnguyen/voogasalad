@@ -52,7 +52,25 @@ public class ParameterCreator extends BorderPane{
     double imageViewHeight = 200;
     private FileChooserButton fileChooserButton;
 
-
+    /**
+     *
+     * Incorrect user input or null input fields would cause instantiation of this class to fail
+     * Depends on FieldTextReturnFactory.java, ClearFieldsFactory.java, SaveGUIParameters.java
+     * Example from TabPaneCreator:
+     * Tab objectTab = new Tab(key, new ParameterCreator(key,
+     *                                                  typeToParams.getString(key).split(","),
+     *                                                  paramFieldType,
+     *                                                  levelConfigPane,
+     *                                                  allActiveObjects,
+     *                                                  allActiveObjectObjects));
+     *
+     * @param gameObjectNameParam
+     * @param propertiesParam
+     * @param paramFieldTypeParam
+     * @param levelConfigPaneParam
+     * @param allActiveObjectMapParam
+     * @param allActiveObjectObjectsParam
+     */
     public ParameterCreator(String gameObjectNameParam, String[] propertiesParam, ResourceBundle paramFieldTypeParam,
                             LevelConfigPane levelConfigPaneParam, Map<String, Map<String, String>> allActiveObjectMapParam,
                             List<ObjectPreviewAndActive> allActiveObjectObjectsParam) throws ParserConfigurationException {
@@ -84,6 +102,13 @@ public class ParameterCreator extends BorderPane{
         configScroll.setContent(configVBox);
         this.setRight(configScroll);
         this.setLeft(previewVBox);
+    }
+
+
+    public void clearFields(){
+        allNodes
+                .stream()
+                .forEach(node -> clearFieldsFactory.clearField(node));
     }
 
     public void createSubmitButton(){
@@ -231,13 +256,6 @@ public class ParameterCreator extends BorderPane{
     private void addToAppropriateField(String gameObjectNameParam, Button icon){
         levelConfigPane.addIconToVBox(gameObjectNameParam, icon);
     }
-
-    public void clearFields(){
-        allNodes
-                .stream()
-                .forEach(node -> clearFieldsFactory.clearField(node));
-    }
-
 
 }
 
