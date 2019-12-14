@@ -70,6 +70,9 @@ public class ParameterCreator extends BorderPane{
      * @param levelConfigPaneParam
      * @param allActiveObjectMapParam
      * @param allActiveObjectObjectsParam
+     *
+     * @author Marc Jabbour
+     * @author Amber Johnson
      */
     public ParameterCreator(String gameObjectNameParam, String[] propertiesParam, ResourceBundle paramFieldTypeParam,
                             LevelConfigPane levelConfigPaneParam, Map<String, Map<String, String>> allActiveObjectMapParam,
@@ -104,13 +107,18 @@ public class ParameterCreator extends BorderPane{
         this.setLeft(previewVBox);
     }
 
-
+    /**
+     * a public method to reset the contents of the Tower, Enemy, and Obstacle tabs
+     */
     public void clearFields(){
         allNodes
                 .stream()
                 .forEach(node -> clearFieldsFactory.clearField(node));
     }
 
+    /**
+     * a public method to set the action of the Submit button in the Tower, Enemy, and Obstacle tabs
+     */
     public void createSubmitButton(){
         allNodes
                 .stream()
@@ -121,6 +129,7 @@ public class ParameterCreator extends BorderPane{
         addToAppropriateField(gameObjectName, createObjectIcon(myGuiParameters.getMap(), myLabel));
     }
 
+    //a helper method to add input fields to the appropriate VBox
     private void addInputFields() {
         configVBox = new TabVBoxCreator("Configure Parameters", 200, 20, 50, 50, 10);
         configVBox.setMaxHeight(300);
@@ -135,7 +144,7 @@ public class ParameterCreator extends BorderPane{
     }
 
 
-    // a helper method to preview an image of a Sprite
+    // a helper method to preview a user-selected image in the GAE GUI
     private void addImagePreview() {
         previewVBox = new TabVBoxCreator("Image Preview",200, 20, 10, 50, 50);
         for (int i = 0; i < allNodes.size(); i++) {
@@ -153,13 +162,6 @@ public class ParameterCreator extends BorderPane{
                     System.out.println(imageViewWidth);
                 });
             };
-
-//            imageViewHeight = getImageSpecs(nodeLabel, currentNode,"ImageHeight");
-//            System.out.println(imageViewHeight);
-//
-//            imageViewWidth = getImageSpecs(nodeLabel, currentNode, "ImageWidth");
-//            System.out.println(imageViewWidth);
-
             if (currentNode instanceof FileChooserButton) {
                 fileChooserButton = (FileChooserButton) currentNode;
             }
@@ -178,7 +180,7 @@ public class ParameterCreator extends BorderPane{
         }
     }
 
-    // a helper method to format the ImageView
+    // a helper method to format the ImageView and add it to the appropriate VBox
     private void setImageSpecs() {
         imageString = fileChooserButton.getImageString();
         imageView = new ImageView(imageString);
@@ -190,19 +192,7 @@ public class ParameterCreator extends BorderPane{
         previewVBox.getChildren().add(imageView);
     }
 
-    //TODO: fix this
-    private double getImageSpecs(String nodeLabel, Node currentNode, String s) {
-        AtomicReference<Double> d = new AtomicReference<>(0.0);
-        if (nodeLabel.equals(s)) {
-            currentNode.setOnMouseClicked((event) -> {
-                d.set(Double.parseDouble((new FieldTextReturnFactory()).getAppropriateText(currentNode)));
-            });
-        }
-        return d.get();
-    }
-
-
-
+    //a helper method to implement reflection
     private Node createObjectFromString(String type){
         try{
             if (type.equals(SUBMITBUTTONCLASS)) {
@@ -229,6 +219,7 @@ public class ParameterCreator extends BorderPane{
         }
     }
 
+    //a helper method to add the input field type (ComboBox, TextField, etc.) to a List
     private void storeAllFieldTypes(){
         for(String key : paramFieldType.keySet()){
             String typesOfFields = paramFieldType.getString(key);
@@ -238,6 +229,7 @@ public class ParameterCreator extends BorderPane{
         }
     }
 
+    //a helper method to make a button for the new Tower, Enemy, or Obstacle
     private Button createObjectIcon(Map<String, String> objectContentMap, String objectName){
         Button icon = new Button(objectName);
         icon.setOnMouseClicked(event -> {
@@ -253,6 +245,7 @@ public class ParameterCreator extends BorderPane{
         return icon;
     }
 
+    //a helper method to add the Tower, Enemy, or Obstacle button to the Level tab
     private void addToAppropriateField(String gameObjectNameParam, Button icon){
         levelConfigPane.addIconToVBox(gameObjectNameParam, icon);
     }
