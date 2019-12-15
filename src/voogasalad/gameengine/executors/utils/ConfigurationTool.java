@@ -15,7 +15,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Configures the test document
+ */
 public class ConfigurationTool {
+
+    /**
+     * Converts a node to an element
+     * @param node to be converted to an element
+     * @return the node as an element
+     */
     public static Element convertNodeToElement(Node node) {
         Element element = null;
         if (node.getNodeType()==Node.ELEMENT_NODE) {
@@ -24,6 +33,13 @@ public class ConfigurationTool {
         return element;
     }
 
+    /**
+     * Configures the game authoring environment with a test document by making the XML into a document through the
+     * document factory and then parsing it
+     * @param path the string representing the path to the test document
+     * @return the newly parsed document
+     * @throws GameEngineException
+     */
     public static Document configureWithTestDocument(String path) throws GameEngineException {
         File testFile = new File(path);
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -37,6 +53,11 @@ public class ConfigurationTool {
         }
     }
 
+    /**
+     * Parses a string that represents points on a path, and converts it to a List of Points to be used by the engine
+     * @param pathString a string that represents an indefinite number of points on a path
+     * @return a list of newly converted path points
+     */
     public static List<Point2D.Double> parsePath(String pathString) {
         List<Point2D.Double> parsedPath = new ArrayList<>();
         String[] pointStrings = pathString.strip().split(";");
