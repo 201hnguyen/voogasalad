@@ -5,6 +5,9 @@ import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+/**
+ * Originally used to verify and pass parameters to strategy constructors.
+ */
 public class Verifier {
     //TODO: I'm not completely satisfied with how we're doing verification right now; let's rework how this process works later.
     public static final String STRATEGY_PARAMETERS_IDENTIFIER_RESOURCE_PATH = "resources.engine.StrategyParameters";
