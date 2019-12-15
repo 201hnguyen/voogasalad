@@ -6,7 +6,14 @@ import voogasalad.gameengine.executors.control.condition.ConditionClassification
 
 import java.util.Map;
 import java.util.Set;
-
+/**
+ * Class:
+ * Purpose:
+ * Assumptions:
+ * Dependencies:
+ * Example of how to use:
+ * Other details:
+ */
 public class TemporalCondition extends LevelCondition {
 
     public static final String MARKED_TIME_MAP_KEY = "MarkedTime";
@@ -14,11 +21,26 @@ public class TemporalCondition extends LevelCondition {
 
     private double myMarkedTime;
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param levelConditionId
+     * @param markedTime
+     * @param conditionClassification
+     * @param actions
+     */
     public TemporalCondition(int levelConditionId, double markedTime, ConditionClassification conditionClassification, Set<LevelAction> actions) {
         super(levelConditionId, conditionClassification, actions);
         myMarkedTime = markedTime;
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param levelConditionId
+     * @param parameters
+     * @param actions
+     */
     public TemporalCondition(int levelConditionId, Map<String, String> parameters, Set<LevelAction> actions) {
         super(levelConditionId, parameters, actions);
         try {
@@ -28,6 +50,12 @@ public class TemporalCondition extends LevelCondition {
         }
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param level
+     * @return
+     */
     @Override
     public boolean hasHappened(Level level) {
         if (level.getStatusManager().getTotalElapsedTime() >= myMarkedTime) {

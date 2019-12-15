@@ -7,17 +7,43 @@ import voogasalad.gameengine.executors.control.condition.ConditionClassification
 
 import java.util.Map;
 import java.util.Set;
-
-public class CurrentLevelLossCondition extends GameCondition {
-
+/**
+ * Class:
+ * Purpose:
+ * Assumptions:
+ * Dependencies:
+ * Example of how to use:
+ * Other details:
+ */
+public class  CurrentLevelLossCondition extends GameCondition {
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param gameConditionId
+     * @param classification
+     * @param actions
+     */
     public CurrentLevelLossCondition(int gameConditionId, ConditionClassification classification, Set<GameAction> actions) {
         super(gameConditionId, classification, actions);
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param gameConditionId
+     * @param parameters
+     * @param actions
+     */
     public CurrentLevelLossCondition(int gameConditionId, Map<String, String> parameters, Set<GameAction> actions) {
         super(gameConditionId, parameters, actions);
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param game
+     * @return
+     */
     @Override
     public boolean hasHappened(Game game) {
         return game.getCurrentLevelStatus() == Status.LOST;

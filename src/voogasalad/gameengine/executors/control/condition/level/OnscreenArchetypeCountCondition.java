@@ -7,7 +7,14 @@ import voogasalad.gameengine.executors.utils.SpriteArchetype;
 
 import java.util.Map;
 import java.util.Set;
-
+/**
+ * Class:
+ * Purpose:
+ * Assumptions:
+ * Dependencies:
+ * Example of how to use:
+ * Other details:
+ */
 public class OnscreenArchetypeCountCondition extends LevelCondition {
 
     public static final String ARCHETYPE_MAP_KEY = "Archetype";
@@ -18,12 +25,28 @@ public class OnscreenArchetypeCountCondition extends LevelCondition {
     private int myMarkedCount;
     private SpriteArchetype myArchetype;
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param levelConditionId
+     * @param archetype
+     * @param markedCount
+     * @param conditionClassification
+     * @param actions
+     */
     public OnscreenArchetypeCountCondition(int levelConditionId, SpriteArchetype archetype, int markedCount, ConditionClassification conditionClassification, Set<LevelAction> actions) {
         super(levelConditionId, conditionClassification, actions);
         myArchetype = archetype;
         myMarkedCount = markedCount;
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param levelConditionId
+     * @param parameters
+     * @param actions
+     */
     public OnscreenArchetypeCountCondition(int levelConditionId, Map<String, String> parameters, Set<LevelAction> actions) {
         super(levelConditionId, parameters, actions);
         try {
@@ -38,6 +61,12 @@ public class OnscreenArchetypeCountCondition extends LevelCondition {
         }
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param level
+     * @return
+     */
     @Override
     public boolean hasHappened(Level level) {
         System.out.println("ON SCREEN COUNT" + level.getSpriteManager().getOnScreenSpritesByArchetype(myArchetype).size());
