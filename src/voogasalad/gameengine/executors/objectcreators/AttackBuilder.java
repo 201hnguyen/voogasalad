@@ -99,7 +99,7 @@ public class AttackBuilder implements StrategyBuilder {
     }
 
     /**
-     * @return the currently set type; if none has been set, returns the default.
+     * @return the currently set type; if none has been set, does not return the default until AFTER build() is called
      */
     public String getType() {
         return myType;
