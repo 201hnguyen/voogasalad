@@ -8,18 +8,40 @@ import voogasalad.gameengine.executors.control.condition.level.LevelCondition;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-
+/**
+ * Class:
+ * Purpose:
+ * Assumptions:
+ * Dependencies:
+ * Example of how to use:
+ * Other details:
+ */
 public class LevelConditionsManager {
     private Set<LevelCondition> myLevelConditions;
 
+    /**
+     * Purpose:
+     * Assumptions:
+     */
     public LevelConditionsManager() {
         myLevelConditions = new HashSet<>();
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param levelConditions
+     */
     public void addLevelConditionsCollection(Collection<LevelCondition> levelConditions) {
         myLevelConditions.addAll(levelConditions);
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param level
+     * @return
+     */
     public Set<LevelAction> getLevelActionsToExecute(Level level){
         Set<LevelCondition> conditionsToRemove = new HashSet<>();
         Set<LevelAction> actionsToExecute = new HashSet<>();
@@ -37,6 +59,11 @@ public class LevelConditionsManager {
         return actionsToExecute;
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @return
+     */
     public Set<LevelCondition> getLevelConditions() {
         return myLevelConditions;
     }

@@ -12,7 +12,14 @@ import voogasalad.gameengine.executors.sprites.Sprite;
 import voogasalad.gameengine.executors.sprites.SpriteManager;
 
 import java.util.Set;
-
+/**
+ * Class:
+ * Purpose:
+ * Assumptions:
+ * Dependencies:
+ * Example of how to use:
+ * Other details:
+ */
 public class Level implements GameScene {
 
     private SpriteManager mySpriteManager;
@@ -25,6 +32,11 @@ public class Level implements GameScene {
     private String mySoundPath;
     private LevelActionsRequester myActionsRequester;
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param levelBuilder
+     */
     public Level(LevelBuilder levelBuilder) {
         myLevelId = levelBuilder.getLevelId();
         mySpriteManager = levelBuilder.getSpriteManager();
@@ -37,6 +49,13 @@ public class Level implements GameScene {
         myActionsRequester = levelBuilder.getLevelActionsRequester();
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param elapsedTime
+     * @return
+     * @throws GameEngineException
+     */
     public GameSceneObject execute(double elapsedTime) throws GameEngineException {
         mySpriteManager.executeSpriteNextState(elapsedTime);
         myLevelStatusManager.notifyNewCycle(elapsedTime);
@@ -46,36 +65,81 @@ public class Level implements GameScene {
         return new GameSceneObject(myBackgroundPath, myLevelStatusManager.getCopyOfStatusManager(), mySpriteManager);
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @return
+     */
     public String getBackgroundPath() {
         return myBackgroundPath;
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @return
+     */
     public String getSoundPath() { return mySoundPath; }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @return
+     */
     public LevelActionsRequester getActionsRequester() {
         return myActionsRequester;
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @return
+     */
     public SpriteManager getSpriteManager() {
         return mySpriteManager;
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @return
+     */
     public LevelWaveManager getWaveManager() {
         return myLevelWaveManager;
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @return
+     */
     public LevelStatusManager getStatusManager() {
         return myLevelStatusManager;
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @return
+     */
     public int getLevelId() {
         return myLevelId;
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @return
+     */
     public int getCurrentScore() {
         return myLevelStatusManager.getScore();
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @return
+     */
     public Set<LevelCondition> getLevelConditions() {
         return myLevelConditionsManager.getLevelConditions();
     }

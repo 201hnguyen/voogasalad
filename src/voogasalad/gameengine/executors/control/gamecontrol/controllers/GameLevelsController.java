@@ -5,18 +5,37 @@ import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.objectcreators.LevelBuilder;
 
 import java.util.List;
-
+/**
+ * Class:
+ * Purpose:
+ * Assumptions:
+ * Dependencies:
+ * Example of how to use:
+ * Other details:
+ */
 public class GameLevelsController {
     private List<Level> myLevels;
     private List<Integer> myLevelsSequence;
     private int myNextLevelIndex;
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param levels
+     * @param levelsSequence
+     */
     public GameLevelsController(List<Level> levels, List<Integer> levelsSequence) {
         myLevels = levels;
         myLevelsSequence = levelsSequence;
         myNextLevelIndex = 0;
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param currentLevel
+     * @return
+     */
     public Level getNextLevel(Level currentLevel) {
         if (hasNextLevel()) {
             for (Level level : myLevels) {
@@ -29,6 +48,12 @@ public class GameLevelsController {
         return currentLevel;
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @return
+     * @throws GameEngineException
+     */
     public Level loadBaseLevel() throws GameEngineException {
         return new LevelBuilder(-1).build();
 
@@ -42,6 +67,11 @@ public class GameLevelsController {
         }
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @return
+     */
     public int getTotalScoreForAllLevels() {
         int totalScore = 0;
         for (Level level : myLevels) {
@@ -50,6 +80,11 @@ public class GameLevelsController {
         return totalScore;
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @return
+     */
     public List<Level> getLevels() {
         return myLevels;
     }

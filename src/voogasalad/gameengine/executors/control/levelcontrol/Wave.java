@@ -8,7 +8,14 @@ import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.List;
 import java.util.Queue;
-
+/**
+ * Class:
+ * Purpose:
+ * Assumptions:
+ * Dependencies:
+ * Example of how to use:
+ * Other details:
+ */
 public class Wave {
     Queue<Integer> mySpritesQueue;
     double mySpritesInterval;
@@ -16,6 +23,14 @@ public class Wave {
     double myElapsedTimeSinceLastEntry;
     List<Point2D.Double> myPath;
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param spritesQueue
+     * @param spriteInterval
+     * @param spawnPoint
+     * @param path
+     */
     public Wave(Queue<Integer> spritesQueue, Double spriteInterval, Point spawnPoint, List<Point2D.Double> path){
         mySpritesInterval = spriteInterval;
         myElapsedTimeSinceLastEntry = mySpritesInterval;
@@ -24,6 +39,14 @@ public class Wave {
         myPath = path;
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param spriteManager
+     * @param elapsedTime
+     * @return
+     * @throws GameEngineException
+     */
     public boolean spawnNextSprite(SpriteManager spriteManager, double elapsedTime) throws GameEngineException {
         Integer nextSpriteToSpawn = getNextSpriteToSpawn(elapsedTime);
         if (nextSpriteToSpawn != null) {

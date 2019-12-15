@@ -10,22 +10,43 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
+/**
+ * Class:
+ * Purpose:
+ * Assumptions:
+ * Dependencies:
+ * Example of how to use:
+ * Other details:
+ */
 public class GameRulesController {
 
     private Collection<GameCondition> myGameConditions;
     private Collection<GameAction> myGameActionsToExecute;
 
+    /**
+     * Purpose:
+     * Assumptions:
+     */
     public GameRulesController() {
         myGameActionsToExecute = new HashSet<>();
         myGameConditions = new HashSet<>();
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param gameConditions
+     */
     public void addGameConditionsAsCollection(Collection<GameCondition> gameConditions) {
         myGameConditions.addAll(gameConditions);
     }
 
-
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param game
+     * @throws GameEngineException
+     */
     public void checkConditionsAndRunGameActions(Game game) throws GameEngineException {
         Set<GameCondition> conditionsToRemove = new HashSet<>();
         for (GameCondition condition : myGameConditions) {
@@ -53,10 +74,20 @@ public class GameRulesController {
                 forEach(action -> myGameActionsToExecute.remove(action));
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @return
+     */
     public Collection<GameCondition> getGameConditions() {
         return myGameConditions;
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param actions
+     */
     public void addGameActions(Collection<GameAction> actions) {
         myGameActionsToExecute.addAll(actions);
     }

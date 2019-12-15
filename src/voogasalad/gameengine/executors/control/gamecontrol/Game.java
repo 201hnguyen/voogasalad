@@ -16,7 +16,14 @@ import voogasalad.gameengine.executors.utils.SpriteArchetype;
 
 import java.util.Collection;
 import java.util.List;
-
+/**
+ * Class:
+ * Purpose:
+ * Assumptions:
+ * Dependencies:
+ * Example of how to use:
+ * Other details:
+ */
 public class Game {
     //    private EngineConfigurator myEngineConfigurator;
     private Level myCurrentLevel;
@@ -30,6 +37,12 @@ public class Game {
     private Status myStatus;
     private String myGameTitle;
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param gameConfigDocument
+     * @throws GameEngineException
+     */
     public Game(Document gameConfigDocument) throws GameEngineException {
         myStatus = Status.ONGOING;
         myGameRulesController = new GameRulesController();
@@ -58,6 +71,13 @@ public class Game {
         return doc;
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param elapsedTime
+     * @return
+     * @throws GameEngineException
+     */
     public GameSceneObject execute(double elapsedTime) throws GameEngineException {
         switchedLevel = false;
         myGameRulesController.addGameActions(myGameActionsRequester.getRequestedActions());
@@ -65,6 +85,10 @@ public class Game {
         return myCurrentLevel.execute(elapsedTime);
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     */
     public void loadNextLevel() {
         myCurrentLevel = myGameLevelsController.getNextLevel(myCurrentLevel);
         myCurrentLevel.getStatusManager().setGameSceneStatus(Status.ONGOING);
@@ -72,62 +96,139 @@ public class Game {
         switchedLevel = true;
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @return
+     */
     public Status getCurrentLevelStatus() {
         return myCurrentLevel.getStatusManager().getGameSceneStatus();
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @return
+     */
     public ActionsProcessor getActionsProcessor() {
         return myCurrentActionsProcessor;
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @return
+     */
     public List<Sprite> getCurrentLevelSpritePrototypes() {
         return myCurrentLevel.getSpriteManager().getSpritePrototypes();
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @return
+     */
     public List<Sprite> getCompletePrototypesCollection() {
         return myCompletePrototypesCollection;
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param spriteArchetype
+     * @return
+     * @throws GameEngineException
+     */
     public List<Sprite> getCopySpritePrototypesByArchetype(SpriteArchetype spriteArchetype) throws GameEngineException {
         return myCurrentLevel.getSpriteManager().getCopyPrototypesForArchetype(spriteArchetype);
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @return
+     */
     public String getCurrentLevelBackgroundPath() {
         return myCurrentLevel.getBackgroundPath();
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @return
+     */
     public String getCurrentLevelSoundPath() { return myCurrentLevel.getSoundPath(); }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @return
+     */
     public boolean didLevelSwitch() {
         boolean ret = switchedLevel;
         switchedLevel = false;
         return ret;
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @return
+     */
     public int getCurrentTotalGameScore() {
         return myGameLevelsController.getTotalScoreForAllLevels();
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @return
+     */
     public Collection<GameCondition> getAllGameConditions() {
         return myGameRulesController.getGameConditions();
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @return
+     */
     public List<Level> getLevels() {
         return myGameLevelsController.getLevels();
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @return
+     */
     public int getCurrentLevelId() {
         return myCurrentLevel.getLevelId();
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param status
+     */
     public void setGameStatus(Status status) {
         myStatus = status;
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @return
+     */
     public Status getGameStatus() {
         return myStatus;
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @return
+     */
     public String getGameTitle() {
         return myGameTitle;
     }
