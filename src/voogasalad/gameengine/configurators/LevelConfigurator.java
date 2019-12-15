@@ -15,6 +15,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Class: GameSceneObject
+ * Purpose:
+ * Assumptions:
+ * Dependencies:
+ * Example of how to use:
+ * Other details:
+ */
 public class LevelConfigurator {
 
     public static final String WAVE_NODES_KEY = "WavesNodeTag";
@@ -31,6 +39,14 @@ public class LevelConfigurator {
     private Element myCurrentLevelRoot;
     private List<Sprite> myAvailablePrototypesList;
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param levelNodes
+     * @param gamePrototypes
+     * @return
+     * @throws GameEngineException
+     */
     public List<Level> configureLevels(NodeList levelNodes, List<Sprite> gamePrototypes) throws GameEngineException {
         List<Level> levels = new ArrayList<>();
         for (int i=0; i<levelNodes.getLength(); i++) {

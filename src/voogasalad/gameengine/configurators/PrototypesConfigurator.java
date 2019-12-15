@@ -16,7 +16,14 @@ import voogasalad.gameengine.executors.utils.ConfigurationTool;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
-
+/**
+ * Class: GameSceneObject
+ * Purpose:
+ * Assumptions:
+ * Dependencies:
+ * Example of how to use:
+ * Other details:
+ */
 public class PrototypesConfigurator {
 
     public static final String PROTOTYPE_CONFIG_METHOD_CALLS_PATH = "resources/engine/PrototypeConfiguratorMethodCalls";
@@ -35,6 +42,13 @@ public class PrototypesConfigurator {
 
     private NodeList myPrototypesNodesList;
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param prototypesNodeList
+     * @return
+     * @throws GameEngineException
+     */
     public List<Sprite> buildPrototypesList(NodeList prototypesNodeList) throws GameEngineException {
         myPrototypesNodesList = prototypesNodeList; // this is all the defined prototypes in a level in the xml
         List<Sprite> prototypesForLevel = new ArrayList<>();

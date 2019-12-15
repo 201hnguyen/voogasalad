@@ -13,6 +13,14 @@ import voogasalad.gameengine.executors.utils.ConfigurationTool;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
+/**
+ * Class: GameSceneObject
+ * Purpose:
+ * Assumptions:
+ * Dependencies:
+ * Example of how to use:
+ * Other details:
+ */
 public class ConditionsConfigurator {
 
     public static final String LEVEL_CONDITIONS_PACKAGE_PATH = "voogasalad.gameengine.executors.control.condition.level.";
@@ -25,6 +33,13 @@ public class ConditionsConfigurator {
     public static final String ASSOCIATED_ACTION_TYPE_KEY = "ActionTypeNodeTag";
     public static final String CONDITION_ID_ROOT_KEY = "ConditionIdNodeTag";
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param conditionNodeList
+     * @return
+     * @throws GameEngineException
+     */
     public Collection<LevelCondition> buildLevelConditionsCollection(NodeList conditionNodeList) throws GameEngineException {
         Set<LevelCondition> levelConditions = new HashSet<>();
         for (int i=0; i< conditionNodeList.getLength(); i++) {
@@ -47,6 +62,13 @@ public class ConditionsConfigurator {
         return levelConditions;
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param conditionNodeList
+     * @return
+     * @throws GameEngineException
+     */
     public Collection<GameCondition> buildGameConditionsCollection(NodeList conditionNodeList) throws GameEngineException {
         Set<GameCondition> gameConditions = new HashSet<>();
         for (int i=0; i< conditionNodeList.getLength(); i++) {

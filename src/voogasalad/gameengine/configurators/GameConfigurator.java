@@ -11,6 +11,14 @@ import voogasalad.gameengine.executors.sprites.Sprite;
 
 import java.util.*;
 
+/**
+ * Class: GameSceneObject
+ * Purpose:
+ * Assumptions:
+ * Dependencies:
+ * Example of how to use:
+ * Other details:
+ */
 public class GameConfigurator {
 
     public static final String GAME_CONFIGURATION_RESOURCE_PATH = "resources/engine/EngineXMLTags";
@@ -25,16 +33,33 @@ public class GameConfigurator {
     private Document myDocument;
     private List<Sprite> myGamePrototypes;
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param doc
+     * @throws GameEngineException
+     */
     public GameConfigurator(Document doc) throws GameEngineException {
         myDocument = doc;
         myRoot = myDocument.getDocumentElement();
         myGamePrototypes = configurePrototypes();
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @return
+     */
     public List<Sprite> getGamePrototypesCollection() {
         return myGamePrototypes;
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @return
+     * @throws GameEngineException
+     */
     public GameLevelsController loadLevelsFromXML() throws GameEngineException {
         List<Level> levels = loadLevels();
         List<Integer> levelsSequence = loadLevelsSequence();
@@ -69,12 +94,23 @@ public class GameConfigurator {
         return prototypesConfigurator.buildPrototypesList(prototypeNodes);
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @return
+     * @throws GameEngineException
+     */
     public Collection<GameCondition> configureGameConditions() throws GameEngineException {
         ConditionsConfigurator conditionsConfigurator = new ConditionsConfigurator();
         NodeList conditionNodes = myRoot.getElementsByTagName(GAME_CONFIGURATION_RESOURCE_BUNDLE.getString(GAME_CONDITIONS_NODES_KEY));
         return conditionsConfigurator.buildGameConditionsCollection(conditionNodes);
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @return
+     */
     public String configureGameTitle() {
         try {
             return myRoot.getElementsByTagName(GAME_CONFIGURATION_RESOURCE_BUNDLE.getString(GAME_TITLE_NODE_KEY)).item(0).getTextContent();

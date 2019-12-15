@@ -11,7 +11,14 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.*;
 import java.util.List;
-
+/**
+ * Class: GameSceneObject
+ * Purpose:
+ * Assumptions:
+ * Dependencies:
+ * Example of how to use:
+ * Other details:
+ */
 public class WavesConfigurator {
 
     public static final String WAVE_QUEUE_KEY = "WaveQueueNodeTag";
@@ -23,6 +30,14 @@ public class WavesConfigurator {
     private List<Integer> myAvailablePrototypeIds;
     private Element myDefinedWave;
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param waveNodesList
+     * @param availablePrototypesList
+     * @return
+     * @throws GameEngineException
+     */
     public Collection<Wave> buildWavesCollection(NodeList waveNodesList, List<Sprite> availablePrototypesList) throws GameEngineException {
         List<Wave> wavesCollection = new ArrayList<>();
         myAvailablePrototypeIds = calculateAvailablePrototypeIds(availablePrototypesList);
