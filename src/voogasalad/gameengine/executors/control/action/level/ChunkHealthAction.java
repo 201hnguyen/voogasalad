@@ -4,7 +4,6 @@ import voogasalad.gameengine.executors.control.levelcontrol.Level;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.sprites.Sprite;
 /**
- * Class:
  * Purpose:
  * Assumptions:
  * Dependencies:
