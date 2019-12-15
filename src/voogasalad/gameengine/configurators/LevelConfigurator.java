@@ -16,12 +16,12 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Class:
- * Purpose:
- * Assumptions:
- * Dependencies:
- * Example of how to use:
- * Other details:
+ * Class: LevelConfigurator
+ * Purpose: configures the list of levels for the game
+ * Assumptions: Assumes existence of default background and sound in the correct path
+ * Dependencies: Depends on WavesConfigurator and ConditionsConfigurator; dependent on resource bundle static constant from GameConfigurator
+ * Example of how to use: GameConfigurator uses LevelConfigurator's configure method to configure levels
+ * Other details: N/A
  */
 public class LevelConfigurator {
 
@@ -40,12 +40,12 @@ public class LevelConfigurator {
     private List<Sprite> myAvailablePrototypesList;
 
     /**
-     * Purpose:
-     * Assumptions:
-     * @param levelNodes
-     * @param gamePrototypes
-     * @return
-     * @throws GameEngineException
+     * Purpose: Configures the list of levels for the game
+     * Assumptions: Assumes the existence of the bundles required
+     * @param levelNodes list of nodes that represent the levels
+     * @param gamePrototypes list of sprite prototypes available for the level
+     * @return the list of levels for the game
+     * @throws GameEngineException if levels fail to configure
      */
     public List<Level> configureLevels(NodeList levelNodes, List<Sprite> gamePrototypes) throws GameEngineException {
         List<Level> levels = new ArrayList<>();

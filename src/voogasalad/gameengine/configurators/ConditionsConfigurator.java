@@ -14,12 +14,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 /**
- * Class:
- * Purpose:
- * Assumptions:
- * Dependencies:
- * Example of how to use:
- * Other details:
+ * Class: Conditions Configurator
+ * Purpose: Configure game and level conditions for a game
+ * Assumptions: Assumes game and level conditions are in the packages specified
+ * Dependencies: Depends on the Configuration tool and LevelAction and GameAction classes; dependent on resource bundle static constant from GameConfigurator
+ * Example of how to use: Used by GameConfigurator and LevelConfigurator to build game and level conditions
+ * Other details: N/A
  */
 public class ConditionsConfigurator {
 
@@ -34,11 +34,11 @@ public class ConditionsConfigurator {
     public static final String CONDITION_ID_ROOT_KEY = "ConditionIdNodeTag";
 
     /**
-     * Purpose:
-     * Assumptions:
-     * @param conditionNodeList
-     * @return
-     * @throws GameEngineException
+     * Purpose: builds the collection of conditions for the level
+     * Assumptions: Assumes correct resource bundles
+     * @param conditionNodeList the XML node list that represent the conditions for the level
+     * @return the collection of level conditions for the level
+     * @throws GameEngineException if the conditions failed to initialize
      */
     public Collection<LevelCondition> buildLevelConditionsCollection(NodeList conditionNodeList) throws GameEngineException {
         Set<LevelCondition> levelConditions = new HashSet<>();
@@ -63,11 +63,11 @@ public class ConditionsConfigurator {
     }
 
     /**
-     * Purpose:
-     * Assumptions:
-     * @param conditionNodeList
-     * @return
-     * @throws GameEngineException
+     * Purpose: Builds the collection of conditions for the game
+     * Assumptions: Assumes correct resource bundle
+     * @param conditionNodeList the XML node list that represent the conditions for the game
+     * @return the collection of conditions for the game and their associated actions
+     * @throws GameEngineException if the conditions failed to initialize
      */
     public Collection<GameCondition> buildGameConditionsCollection(NodeList conditionNodeList) throws GameEngineException {
         Set<GameCondition> gameConditions = new HashSet<>();

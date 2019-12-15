@@ -12,12 +12,12 @@ import voogasalad.gameengine.executors.sprites.Sprite;
 import java.util.*;
 
 /**
- * Class:
- * Purpose:
- * Assumptions:
- * Dependencies:
- * Example of how to use:
- * Other details:
+ * Class: GameConfigurator
+ * Purpose: Configures a game
+ * Assumptions: Assumes correct resource bundle and resource path
+ * Dependencies: Depends on LevelsConfigurator to configure levels and PrototypesConfigurator to configure prototypes
+ * Example of how to use: Can be used by Game to set up its initial state
+ * Other details: N/A
  */
 public class GameConfigurator {
 
@@ -34,10 +34,10 @@ public class GameConfigurator {
     private List<Sprite> myGamePrototypes;
 
     /**
-     * Purpose:
-     * Assumptions:
-     * @param doc
-     * @throws GameEngineException
+     * Purpose: Constructor for GameConfigurator to set up game
+     * Assumptions: N/A
+     * @param doc the XML document to configure the game
+     * @throws GameEngineException if the game fails to configure
      */
     public GameConfigurator(Document doc) throws GameEngineException {
         myDocument = doc;
@@ -46,19 +46,19 @@ public class GameConfigurator {
     }
 
     /**
-     * Purpose:
-     * Assumptions:
-     * @return
+     * Purpose: Gets the prototypes for the game
+     * Assumptions: N/A
+     * @return the list of prototypes configured for the game
      */
     public List<Sprite> getGamePrototypesCollection() {
         return myGamePrototypes;
     }
 
     /**
-     * Purpose:
-     * Assumptions:
-     * @return
-     * @throws GameEngineException
+     * Purpose: Configures the levels for the game from the XML for the LevelsController
+     * Assumptions: Assumes GameLevelsController class existence
+     * @return a GameLevelsController for the game with the configured list of levels and level sequence
+     * @throws GameEngineException if levels fail to configure
      */
     public GameLevelsController loadLevelsFromXML() throws GameEngineException {
         List<Level> levels = loadLevels();
@@ -95,10 +95,10 @@ public class GameConfigurator {
     }
 
     /**
-     * Purpose:
-     * Assumptions:
-     * @return
-     * @throws GameEngineException
+     * Purpose: Configures the conditions of the game from the XML
+     * Assumptions: Assumes dependency on ConditionsConfigurator
+     * @return a collection of conditions for the game
+     * @throws GameEngineException if the conditions fail to configure
      */
     public Collection<GameCondition> configureGameConditions() throws GameEngineException {
         ConditionsConfigurator conditionsConfigurator = new ConditionsConfigurator();
@@ -107,9 +107,9 @@ public class GameConfigurator {
     }
 
     /**
-     * Purpose:
-     * Assumptions:
-     * @return
+     * Purpose: Configures the title of the game from the XML
+     * Assumptions: N/A
+     * @return the String that represents the title of the game
      */
     public String configureGameTitle() {
         try {

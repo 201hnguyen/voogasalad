@@ -17,12 +17,12 @@ import voogasalad.gameengine.executors.utils.ConfigurationTool;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 /**
- * Class:
- * Purpose:
- * Assumptions:
- * Dependencies:
- * Example of how to use:
- * Other details:
+ * Class: PrototypesConfigurator
+ * Purpose: Configure prototypes for the game
+ * Assumptions: Assumes correct resource bundle and path for resource bundles
+ * Dependencies: Dependent on Strategy and StrategyBuilder classes; dependent on resource bundle static constant from GameConfigurator
+ * Example of how to use: Can be used by GameConfigurator to configure prototypes for level
+ * Other details: N/A
  */
 public class PrototypesConfigurator {
 
@@ -43,11 +43,11 @@ public class PrototypesConfigurator {
     private NodeList myPrototypesNodesList;
 
     /**
-     * Purpose:
-     * Assumptions:
-     * @param prototypesNodeList
-     * @return
-     * @throws GameEngineException
+     * Purpose: Builds list of prototype for a game from XML nodes list
+     * Assumptions: N/A
+     * @param prototypesNodeList the list of prototype nodes from the XML
+     * @return the list of prototypes converted from the XML node list
+     * @throws GameEngineException when sprites fail to configure
      */
     public List<Sprite> buildPrototypesList(NodeList prototypesNodeList) throws GameEngineException {
         myPrototypesNodesList = prototypesNodeList; // this is all the defined prototypes in a level in the xml

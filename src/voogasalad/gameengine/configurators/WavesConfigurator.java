@@ -12,12 +12,12 @@ import java.awt.geom.Point2D;
 import java.util.*;
 import java.util.List;
 /**
- * Class:
- * Purpose:
- * Assumptions:
- * Dependencies:
- * Example of how to use:
- * Other details:
+ * Class: WavesConfigurator
+ * Purpose: Configures waves for a level
+ * Assumptions: N/A
+ * Dependencies: Assumes dependency on ConfiguratorTool; dependent on resource bundle static constant from GameConfigurator
+ * Example of how to use: Used by LevelsConfigurator to configure waves
+ * Other details: N/A
  */
 public class WavesConfigurator {
 
@@ -31,12 +31,12 @@ public class WavesConfigurator {
     private Element myDefinedWave;
 
     /**
-     * Purpose:
-     * Assumptions:
-     * @param waveNodesList
-     * @param availablePrototypesList
-     * @return
-     * @throws GameEngineException
+     * Purpose: Builds a collection of waves for the level
+     * Assumptions: N/A
+     * @param waveNodesList the list of XML nodes that represent the wave nodes
+     * @param availablePrototypesList the list of prototypes available for the level
+     * @return the collection of waves for the level
+     * @throws GameEngineException when the wave fails to configure
      */
     public Collection<Wave> buildWavesCollection(NodeList waveNodesList, List<Sprite> availablePrototypesList) throws GameEngineException {
         List<Wave> wavesCollection = new ArrayList<>();
