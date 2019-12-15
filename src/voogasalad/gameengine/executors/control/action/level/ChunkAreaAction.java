@@ -15,6 +15,13 @@ public class ChunkAreaAction implements LevelAction {
     private double myRadius;
     private boolean isFinished;
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param spriteId
+     * @param damageValue
+     * @param radius
+     */
     public ChunkAreaAction(int spriteId, int damageValue, double radius) {
         mySpriteId = spriteId;
         myDamageValue = damageValue;
@@ -22,6 +29,12 @@ public class ChunkAreaAction implements LevelAction {
         isFinished = false;
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param level
+     * @throws GameEngineException
+     */
     @Override
     public void execute(Level level) throws GameEngineException {
         Sprite root = level.getSpriteManager().getSpriteById(mySpriteId);
@@ -40,6 +53,11 @@ public class ChunkAreaAction implements LevelAction {
         isFinished = true;
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @return
+     */
     @Override
     public boolean isFinished() {
         return isFinished;

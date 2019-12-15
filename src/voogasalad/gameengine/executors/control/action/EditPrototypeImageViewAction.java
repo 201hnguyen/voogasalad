@@ -9,7 +9,14 @@ import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.sprites.Sprite;
 
 import java.util.List;
-
+/**
+ * Class:
+ * Purpose:
+ * Assumptions:
+ * Dependencies:
+ * Example of how to use:
+ * Other details:
+ */
 public class EditPrototypeImageViewAction implements GameAction, LevelAction {
 
     private int myPrototypeId;
@@ -17,11 +24,22 @@ public class EditPrototypeImageViewAction implements GameAction, LevelAction {
     private boolean levelUpdateFinished;
     private boolean gameUpdateFinished;
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param editableObjectRoot
+     */
     public EditPrototypeImageViewAction(Element editableObjectRoot) {
         myPrototypeId = Integer.parseInt(editableObjectRoot.getElementsByTagName("PrototypeId").item(0).getTextContent());
         myImageViewPath = editableObjectRoot.getElementsByTagName("EditedField").item(0).getTextContent();
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param game
+     * @throws GameEngineException
+     */
     @Override
     public void execute(Game game) throws GameEngineException {
         List<Sprite> gamePrototypes = game.getCompletePrototypesCollection();
@@ -29,6 +47,12 @@ public class EditPrototypeImageViewAction implements GameAction, LevelAction {
         gameUpdateFinished = true;
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param level
+     * @throws GameEngineException
+     */
     @Override
     public void execute(Level level) throws GameEngineException {
         List<Sprite> onScreenSprites = level.getSpriteManager().getOnsScreenSprites();
@@ -44,6 +68,11 @@ public class EditPrototypeImageViewAction implements GameAction, LevelAction {
         }
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @return
+     */
     @Override
     public boolean isFinished() {
         return levelUpdateFinished && gameUpdateFinished;

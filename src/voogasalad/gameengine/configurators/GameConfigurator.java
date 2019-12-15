@@ -12,7 +12,7 @@ import voogasalad.gameengine.executors.sprites.Sprite;
 import java.util.*;
 
 /**
- * Class: GameSceneObject
+ * Class:
  * Purpose:
  * Assumptions:
  * Dependencies:

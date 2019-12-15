@@ -9,15 +9,33 @@ import voogasalad.gameengine.executors.exceptions.GameEngineException;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Class:
+ * Purpose:
+ * Assumptions:
+ * Dependencies:
+ * Example of how to use:
+ * Other details:
+ */
 public class EditNonCurrentGameLevelAction implements GameAction {
 
     private NodeList myEditedLevelsList;
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param editableObjectRoot
+     */
     public EditNonCurrentGameLevelAction(Element editableObjectRoot) {
         myEditedLevelsList = editableObjectRoot.getElementsByTagName("Level");
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param game
+     * @throws GameEngineException
+     */
     @Override
     public void execute(Game game) throws GameEngineException {
         LevelConfigurator levelConfigurator = new LevelConfigurator();
@@ -35,6 +53,11 @@ public class EditNonCurrentGameLevelAction implements GameAction {
         currentGameLevels.addAll(editedLevels);
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @return
+     */
     @Override
     public boolean isFinished() {
         return true;

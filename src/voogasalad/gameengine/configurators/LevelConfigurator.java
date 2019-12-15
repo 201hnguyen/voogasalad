@@ -16,7 +16,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Class: GameSceneObject
+ * Class:
  * Purpose:
  * Assumptions:
  * Dependencies:

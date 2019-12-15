@@ -3,7 +3,14 @@ package voogasalad.gameengine.executors.control.action.level;
 import voogasalad.gameengine.executors.control.levelcontrol.Level;
 import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import voogasalad.gameengine.executors.sprites.Sprite;
-
+/**
+ * Class:
+ * Purpose:
+ * Assumptions:
+ * Dependencies:
+ * Example of how to use:
+ * Other details:
+ */
 public class TickHealthAction implements LevelAction {
 
     private int mySpriteId;
@@ -14,6 +21,14 @@ public class TickHealthAction implements LevelAction {
     private boolean isFinished;
     private double timeSinceLastTick;
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param spriteId
+     * @param damageValue
+     * @param tickCount
+     * @param tickDelay
+     */
     public TickHealthAction(int spriteId, int damageValue, int tickCount, double tickDelay) {
         mySpriteId = spriteId;
         myDamageValue = damageValue;
@@ -24,6 +39,12 @@ public class TickHealthAction implements LevelAction {
         myTickDelay = tickDelay;
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param level
+     * @throws GameEngineException
+     */
     @Override
     public void execute(Level level) throws GameEngineException {
         Sprite toAct = level.getSpriteManager().getSpriteById(mySpriteId);
@@ -38,6 +59,11 @@ public class TickHealthAction implements LevelAction {
         }
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @return
+     */
     @Override
     public boolean isFinished() {
         return isFinished;

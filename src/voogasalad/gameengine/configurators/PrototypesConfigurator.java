@@ -17,7 +17,7 @@ import voogasalad.gameengine.executors.utils.ConfigurationTool;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 /**
- * Class: GameSceneObject
+ * Class:
  * Purpose:
  * Assumptions:
  * Dependencies:

@@ -11,6 +11,12 @@ public class SpawnWaveAction implements LevelAction {
     private Wave myWave;
     private boolean isFinished;
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param level
+     * @throws GameEngineException
+     */
     @Override
     public void execute(Level level) throws GameEngineException {
         checkAndResetAction();
@@ -32,6 +38,11 @@ public class SpawnWaveAction implements LevelAction {
         }
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @return
+     */
     @Override
     public boolean isFinished() {
         return isFinished;

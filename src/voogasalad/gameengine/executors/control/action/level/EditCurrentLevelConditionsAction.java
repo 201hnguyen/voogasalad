@@ -10,15 +10,33 @@ import voogasalad.gameengine.executors.exceptions.GameEngineException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-
+/**
+ * Class:
+ * Purpose:
+ * Assumptions:
+ * Dependencies:
+ * Example of how to use:
+ * Other details:
+ */
 public class EditCurrentLevelConditionsAction implements LevelAction {
 
     private NodeList myEditedConditionsList;
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param editableObjectRoot
+     */
     public EditCurrentLevelConditionsAction(Element editableObjectRoot) {
         myEditedConditionsList = editableObjectRoot.getElementsByTagName("Condition");
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param level
+     * @throws GameEngineException
+     */
     @Override
     public void execute(Level level) throws GameEngineException {
         ConditionsConfigurator conditionsConfigurator = new ConditionsConfigurator();
@@ -36,6 +54,11 @@ public class EditCurrentLevelConditionsAction implements LevelAction {
         currentLevelConditions.addAll(editedGameConditions);
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @return
+     */
     @Override
     public boolean isFinished() {
         return true;
