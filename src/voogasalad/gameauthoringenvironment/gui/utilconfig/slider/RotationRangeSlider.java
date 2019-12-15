@@ -2,6 +2,16 @@ package voogasalad.gameauthoringenvironment.gui.utilconfig.slider;
 
 import javafx.scene.control.Slider;
 
+
+/**
+ * This class is used to create a slider that sets the range of rotation in the GAE GUI.
+ * This class does not make any assumptions and it will not cause any errors because
+ * if no selection is made, it sets the default to 180 degrees.
+ * Example:
+ *          RotationRangeSlider slider = new RotationRangeSlider();
+ *          VBox vbox = new Vbox(slider);
+ * @author Amber Johnson
+ */
 public class RotationRangeSlider extends Slider implements SliderConfiguration {
 
     private double mySliderValue;
@@ -18,6 +28,10 @@ public class RotationRangeSlider extends Slider implements SliderConfiguration {
         mySliderValue = this.getValue();
     }
 
+    /**
+     * a public method to get the value shown of the slider
+     * @return a double that represents the current slider value
+     */
     @Override
     public double getSliderValue() {
         return mySliderValue;
