@@ -10,6 +10,10 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
+
+/**
+ * An attack strategy that that consists of shooting bullets from multiple points around the sprite
+ */
 public class MultipleGunsAttack implements AttackStrategy {
 
     private AttackBuilder myBuilder;
@@ -18,6 +22,11 @@ public class MultipleGunsAttack implements AttackStrategy {
     private Integer bulletPrototypeID;
     private ArrayList<Double> shootingPositions;
 
+    /**
+     * Constructs a MultipleGunsAttack strategy
+     * @param attackBuilder a copy of the attack builder that holds the information to create a specific instance of a
+     *                      MultipleGunsAttack strategy
+     */
     public MultipleGunsAttack(AttackBuilder attackBuilder){
         myBuilder = attackBuilder;
         attackRate = myBuilder.getAttackRate();
@@ -25,6 +34,14 @@ public class MultipleGunsAttack implements AttackStrategy {
         shootingPositions = myBuilder.getMyShootingPositions();
     }
 
+    /**
+     * Shoots bullets from multiple points around the sprite. Called every tick, but only attacks according to attackRate
+     * @param elapsedTime time since last call to attack
+     * @param currentAngle the current angle the sprite is facing
+     * @param actionsRequester the LevelActionsRequester the of the level in which the sprite exists
+     * @param currentPos the current position of the sprite
+     * @throws GameEngineException
+     */
     @Override
     public void attack(double elapsedTime, double currentAngle, LevelActionsRequester actionsRequester, Point2D.Double currentPos) throws GameEngineException {
         elapsedTimeSinceLastAttack += elapsedTime;
@@ -34,6 +51,12 @@ public class MultipleGunsAttack implements AttackStrategy {
         }
     }
 
+    /**
+     * Spawns bullet sprites from every point on the sprite according to initialized shootingPositions
+     * @param currentAngle the current angle the sprite is facing
+     * @param actionsRequester the LevelActionsRequester the of the level in which the sprite exists
+     * @param currentPos the current position of the sprite
+     */
     private void shootBullet(double currentAngle, LevelActionsRequester actionsRequester, Point2D.Double currentPos){
         for(double gun : shootingPositions){
             double shootFrom = (gun + currentAngle) % 360;
@@ -43,6 +66,11 @@ public class MultipleGunsAttack implements AttackStrategy {
         }
     }
 
+    /**
+     * Makes a clone of itself in order to fabricate many sprites with the same strategy characteristics
+     * @return a clone of the same attack strategy
+     * @throws GameEngineException
+     */
     @Override
     public AttackStrategy makeClone() throws GameEngineException {
         return new MultipleGunsAttack(myBuilder);
