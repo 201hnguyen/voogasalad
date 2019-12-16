@@ -47,8 +47,8 @@ public class Game {
         myStatus = Status.ONGOING;
         myGameRulesController = new GameRulesController();
         myGameActionsRequester = new GameActionsRequester();
-        myGameConfigDocument = ConfigurationTool.configureWithTestDocument("src/resources/player/MockGame.xml");
-        GameConfigurator gameConfigurator = new GameConfigurator(myGameConfigDocument);
+        //myGameConfigDocument = ConfigurationTool.configureWithTestDocument("src/resources/player/MockGame.xml");
+        GameConfigurator gameConfigurator = new GameConfigurator(gameConfigDocument);
         try {
             myGameTitle = gameConfigurator.configureGameTitle();
         } catch (NullPointerException e) {
