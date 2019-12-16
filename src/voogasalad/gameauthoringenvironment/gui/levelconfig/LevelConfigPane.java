@@ -39,7 +39,16 @@ public class LevelConfigPane extends BorderPane{
     private GameLevelComboBox gameLevelComboBox;
     private int levelLookingAt;
 
-
+    /**
+     * @author Marc Jabbour
+     * This class configures the BorderPane associated with the "Level" Tab
+     * @param sendToXMLParam
+     * @param createdXMLParam
+     * @param busInstanceParam
+     * @param allActiveObjectMapParam
+     * @param allActiveObjectObjectsParam
+     * @param allObjectTypesParam
+     */
     public LevelConfigPane(AddToXML sendToXMLParam, Document createdXMLParam, Bus busInstanceParam, Map<String, Map<String, String>> allActiveObjectMapParam,
                            List<ObjectPreviewAndActive> allActiveObjectObjectsParam, String[] allObjectTypesParam){
         allActiveObjectObjects = allActiveObjectObjectsParam;
@@ -173,6 +182,11 @@ public class LevelConfigPane extends BorderPane{
         return h;
     }
 
+    /**
+     * This method adds game object icons to their appropriate VBox
+     * @param objectType
+     * @param icon
+     */
     public void addIconToVBox(String objectType, Button icon){
         for(VBoxCreator objectVBox : objectVBoxes){
           objectVBox.addToObjectHBox(icon, objectType);
@@ -194,6 +208,11 @@ public class LevelConfigPane extends BorderPane{
     }
 
 
+    /**
+     * @author Marc Jabbour
+     * This method was refactored in BranchForXMLLinking to incorporate the commented methods below.
+     * It serves to save the information configured in the current level
+     */
     public void saveInfoForLevel(){
         saveActive();
         //saveMap();
@@ -217,7 +236,8 @@ public class LevelConfigPane extends BorderPane{
         sendToLevelSave(allActiveObjects, levelLookingAt);
 
     }
-    public void updateLevelConfigPane(){
+
+    private void updateLevelConfigPane(){
         title = createTitleHBox();
         rules = createRulesVBox();
         createMapButton = new MapButton(width, height, allActiveObjects);

@@ -13,6 +13,13 @@ public class VBoxCreator extends VBox {
     FlowPane createdObjects;
     String type;
 
+    /**
+     * @author Marc Jabbour
+     * This constructor creates a VBox for each game object, with the parameter "typeParam" coming from a properties file
+     * @param typeParam
+     * @param width
+     * @param height
+     */
     public VBoxCreator(String typeParam, int width, int height){
         type = typeParam;
         Label createdLabel = createLabel(type, Color.CHOCOLATE);
@@ -45,6 +52,11 @@ public class VBoxCreator extends VBox {
         return createdLabel;
     }
 
+    /**
+     * This method adds a game object icon to the appropriate HBox
+     * @param icon
+     * @param objectType
+     */
     public void addToObjectHBox(Node icon, String objectType){
         if(objectType.equals(type)){
             createdObjects.getChildren().add(icon);

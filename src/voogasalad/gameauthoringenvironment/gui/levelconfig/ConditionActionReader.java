@@ -12,7 +12,11 @@ public class ConditionActionReader {
     private ConditionActionComboBox conditionComboBox;
     private ConditionActionComboBox actionComboBox;
 
-
+    /**
+     * @author Marc Jabbour
+     * This method adds a list of all available conditions and actions to their respective ComboBoxes, based on a properties file
+     * @param allActiveObjectMap
+     */
     public ConditionActionReader(Map<String, Map<String, String>> allActiveObjectMap){
         conditionComboBox = new ConditionActionComboBox(allActiveObjectMap);
         actionComboBox = new ConditionActionComboBox(allActiveObjectMap);

@@ -13,6 +13,13 @@ public class SubmitButton extends Button {
     public Document createdXML;
     public Bus busInstance;
 
+    /**
+     * @author Marc Jabbour
+     * This class is one that had added functionality in the branch BranchForXMLLinking. This is where, on click, information would be sent to the XML.
+     * @param createdXMLParam
+     * @param sendToXMLParam
+     * @param busInstanceParam
+     */
     public SubmitButton(Document createdXMLParam, AddToXML sendToXMLParam, Bus busInstanceParam){
         super("Submit");
         createdXML = createdXMLParam;
@@ -24,7 +31,7 @@ public class SubmitButton extends Button {
                 busInstance.goToPlayer(createdXML);
 
             } catch (ParserConfigurationException | GameEngineException e) {
-                e.printStackTrace();
+                throw new Error(e);
             }
         });
     }

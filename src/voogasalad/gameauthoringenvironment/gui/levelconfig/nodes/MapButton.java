@@ -10,6 +10,13 @@ import java.util.Map;
 public class MapButton extends Button {
     private List<Integer> listOfActiveEnemies;
 
+    /**
+     * @author Marc Jabbour
+     * This constructor takes in a map of all active objects so that only active enemies can be associated with waves in the map
+     * @param width
+     * @param height
+     * @param allActiveObjects
+     */
     public MapButton(int width, int height, Map<String, Map<String, String>> allActiveObjects){
         super("Click To Configure Map For Level");
         this.setPrefWidth(width);
@@ -20,6 +27,10 @@ public class MapButton extends Button {
         });
     }
 
+    /**
+     * @author Marc Jabbour
+     * This method is invoked once that map is successfully configured and restyles the MapButton
+     */
     public void mapSubmitted(){
         this.setText("Map Successfully Configured!");
         this.setStyle("-fx-background-color: #00ff00");

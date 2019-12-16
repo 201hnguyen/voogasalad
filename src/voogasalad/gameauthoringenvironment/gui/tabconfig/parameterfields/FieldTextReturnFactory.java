@@ -7,6 +7,12 @@ import voogasalad.gameauthoringenvironment.gui.utilconfig.slider.*;
 
 public class FieldTextReturnFactory {
 
+    /**
+     * @author Marc Jabbour
+     * This Factory class is used to obtain data from different Node objects
+     * @param node
+     * @return
+     */
     public String getAppropriateText(Object node){
         if(node instanceof javafx.scene.control.TextField){
             return ((TextField) node).getText();
