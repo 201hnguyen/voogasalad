@@ -23,6 +23,11 @@ public class GameLevelComboBox extends ComboBox {
     private int highestLevel;
     private int localHighest;
 
+    /**
+     * @author Marc Jabbour
+     * This class creates the ComboBox that displays the created levels in the game and allows the user to return to old levels and re-edit them
+     * @param levelConfigPaneInstanceParam
+     */
     public GameLevelComboBox(LevelConfigPane levelConfigPaneInstanceParam){
         levelConfigPaneInstance = levelConfigPaneInstanceParam;
         allLevels = new ArrayList<>();
@@ -59,6 +64,12 @@ public class GameLevelComboBox extends ComboBox {
 
     }
 
+    /**
+     * @author Marc Jabbour
+     * This method is invoked when a new level is created, and it adds each created level to the level-choosing ComboBox
+     * @param previousLevel
+     * @param currentLevelParam
+     */
     public void addToComboBox(int previousLevel, int currentLevelParam){
         localHighest = highestLevel;
         highestLevel = currentLevelParam;

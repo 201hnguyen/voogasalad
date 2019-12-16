@@ -58,13 +58,13 @@ public class Bus {
     }
 
     /**
-     * This method should return frontend to chose GAE or GamePlayer
+     * This method returns the initial screen we see when we load up the game
      */
     public Scene getBusScene() {
         return createBusScene();
     }
 
-    public Scene createBusScene() {
+    private Scene createBusScene() {
         busRoot = new VBox();
         busRoot.setAlignment(Pos.CENTER);
         busRoot.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -95,7 +95,7 @@ public class Bus {
 //    }
 
 
-    public void changeToGAE(){
+    private void changeToGAE(){
         currentStage.setScene(gaeObject.createGAEScene(root));
     }
 
@@ -115,6 +115,11 @@ public class Bus {
     }
 
 
+    /**
+     * This method is called within SubmitButton, and it changes the scene to that of the Game Player
+     * @param createdXML
+     * @throws GameEngineException
+     */
     public void goToPlayer(Document createdXML) throws GameEngineException {
         new Player(currentStage, createdXML);
     }

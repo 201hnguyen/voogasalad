@@ -28,6 +28,17 @@ public class ArgumentHBox extends HBox {
     }
 
 
+    /**
+     * @author Marc Jabbour
+     * This method returns a Node object based on what was specified as its associated Node object in a properties file
+     * @param allActiveObjectMap
+     * @return
+     * @throws ClassNotFoundException
+     * @throws NoSuchMethodException
+     * @throws IllegalAccessException
+     * @throws InvocationTargetException
+     * @throws InstantiationException
+     */
     public Node appropriateNode(Map<String, Map<String, String>> allActiveObjectMap) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         ActiveObjectComboBox activeObjectComboBox = new ActiveObjectComboBox(allActiveObjectMap);
         if (!conditionArgumentTypes.getString(condition).equals("")) {

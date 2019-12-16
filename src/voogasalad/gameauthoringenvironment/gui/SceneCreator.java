@@ -25,6 +25,13 @@ public class SceneCreator {
     public Bus busInstance;
 
 
+    /**
+     * @author Marc Jabbour
+     * This class is referenced in the Bus.java class and creates the GAE Scene by displaying the TabPane created by TabPaneCreator.java
+     * @param widthParam
+     * @param heightParam
+     * @param myBusInstance
+     */
     public SceneCreator(int widthParam, int heightParam, Bus myBusInstance){
         sendToXML = new AddToXML();
         busInstance = myBusInstance;
@@ -35,7 +42,8 @@ public class SceneCreator {
     }
 
     /**
-     * Called in
+     * @author Marc Jabbour
+     * Creates the GAE Scene by adding the TabPane to the root
      * @param root
      * @return
      */

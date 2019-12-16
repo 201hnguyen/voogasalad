@@ -30,6 +30,17 @@ public class ObjectPreviewAndActive extends BorderPane{
     private static boolean reactivateBoolean;
 
 
+    /**
+     * @author Marc Jabbour
+     * This class configures the border pane that appears once an object's icon is clicked
+     * @param gameObjectNameParam
+     * @param objectContentMapParam
+     * @param windowHeightParam
+     * @param windowWidthParam
+     * @param windowStageParam
+     * @param activeObjectsParam
+     * @param iconParam
+     */
     public ObjectPreviewAndActive(String gameObjectNameParam, Map<String, String> objectContentMapParam, int windowHeightParam,
                                   int windowWidthParam, Stage windowStageParam, Map<String, Map<String, String>> activeObjectsParam, Button iconParam){
         icon = iconParam;
@@ -111,12 +122,18 @@ public class ObjectPreviewAndActive extends BorderPane{
         vBox.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, null, null)));
     }
 
-    public void addToActive(){
+
+    private void addToActive(){
         activeObjects.put(gameObjectName, objectContentMap);
         icon.setStyle("-fx-background-color: #00ff00; -fx-border-color:black;");
         windowStage.close();
     }
 
+    /**
+     * @author Marc Jabbour
+     * This method removes an object from the list of active objects
+     * It is called upon a level change
+     */
     public void removeFromActive(){
         activeObjects.remove(gameObjectName, objectContentMap);
         icon.setStyle(null);
@@ -127,6 +144,13 @@ public class ObjectPreviewAndActive extends BorderPane{
         return gameObjectName;
     }
 
+    /**
+     * @author Marc Jabbour
+     * This method reactivates formerly active objects
+     * It is called upon when the user decides to switch back to a previously configured level to further edit it
+     * @param activeObjectsParam
+     * @param gameObjectNameParam
+     */
     public void reactivate(Map<String, Map<String, String>> activeObjectsParam, String gameObjectNameParam){
         icon.setStyle("-fx-background-color: #00ff00; -fx-border-color:black;");
         activeObjects.putIfAbsent(gameObjectNameParam, activeObjectsParam.get(gameObjectNameParam));
@@ -134,7 +158,4 @@ public class ObjectPreviewAndActive extends BorderPane{
 
     }
 
-    public void setReactivateBoolean(boolean tf){
-        reactivateBoolean = tf;
-    }
 }

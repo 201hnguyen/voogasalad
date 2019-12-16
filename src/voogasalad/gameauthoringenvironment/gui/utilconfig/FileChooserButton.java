@@ -13,6 +13,10 @@ public class FileChooserButton extends Button {
     private String imageString;
 
 
+    /**
+     * @author Marc Jabbour
+     * This class represents a button, which on click will allow the user to select a file
+     */
     public FileChooserButton() {
         super("Select Image");
         createButton();
@@ -20,14 +24,14 @@ public class FileChooserButton extends Button {
     }
 
     /**
-     *
+     * This method returns the selected-Image string
      */
     public String getImageString() {
         return imageString;
     }
 
     /**
-     *
+     * This method clears a selected-Image string
      * @return
      */
     public String clearImageString() {

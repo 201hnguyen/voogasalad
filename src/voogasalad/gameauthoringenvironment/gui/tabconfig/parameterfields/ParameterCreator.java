@@ -71,6 +71,9 @@ public class ParameterCreator extends BorderPane{
      * @param allActiveObjectMapParam
      * @param allActiveObjectObjectsParam
      *
+     * This class creates the BorderPane which represents Enemy,Tower,Obstacle tabs and a new instance
+     * of it is called upon for every element in a properties file using reflection
+     *
      * @author Marc Jabbour
      * @author Amber Johnson
      */
@@ -108,6 +111,7 @@ public class ParameterCreator extends BorderPane{
     }
 
     /**
+     * @author Marc Jabbour
      * a public method to reset the contents of the Tower, Enemy, and Obstacle tabs
      */
     public void clearFields(){
@@ -117,6 +121,7 @@ public class ParameterCreator extends BorderPane{
     }
 
     /**
+     * @author Marc Jabbour
      * a public method to set the action of the Submit button in the Tower, Enemy, and Obstacle tabs
      */
     public void createSubmitButton(){

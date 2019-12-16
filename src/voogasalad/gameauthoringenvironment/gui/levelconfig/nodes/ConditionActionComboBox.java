@@ -23,6 +23,11 @@ public class ConditionActionComboBox extends ComboBox {
 
     private ResourceBundle expectedArguments;
 
+    /**
+     * @author Marc Jabbour
+     * This constructor takes in a map of active objects so that if a condition need specify game-objects, it can only select from active ones
+     * @param allActiveObjectMap
+     */
     public ConditionActionComboBox(Map<String, Map<String, String>> allActiveObjectMap){
         expectedArguments = ResourceBundle.getBundle(CONDITION_ARGUMENTS);
         this.valueProperty().addListener(new ChangeListener() {
@@ -31,21 +36,22 @@ public class ConditionActionComboBox extends ComboBox {
                 try {
                     openArgumentWindow(allActiveObjectMap);
                 } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
+                    throw new Error(e);
                 } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
+                    throw new Error(e);
                 } catch (InstantiationException e) {
-                    e.printStackTrace();
+                    throw new Error(e);
                 } catch (IllegalAccessException e) {
-                    e.printStackTrace();
+                    throw new Error(e);
                 } catch (InvocationTargetException e) {
-                    e.printStackTrace();
+                    throw new Error(e);
                 }
             }
         });
     }
 
-    public void openArgumentWindow(Map<String, Map<String, String>> allActiveObjectMap) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+
+    private void openArgumentWindow(Map<String, Map<String, String>> allActiveObjectMap) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         boolean isPopulated = true;
         VBox argumentVBox = new VBox();
         String condition = this.getValue().toString();

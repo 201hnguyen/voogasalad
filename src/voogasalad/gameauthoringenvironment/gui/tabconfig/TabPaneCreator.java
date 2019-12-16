@@ -31,6 +31,14 @@ public class TabPaneCreator {
     private Map<String, Map<String, String>> allActiveObjects;
     private List<ObjectPreviewAndActive> allActiveObjectObjects;
 
+    /**
+     * @author Marc Jabbour
+     * This class defines what Tabs are going to be added to the TabPane
+     * It reads properties files and creates Tabs accordingly, associating the parameters each Tab should contain to associated Nodes using reflection
+     * @param sendToXMLParam
+     * @param createdXMLParam
+     * @param busInstanceParam
+     */
     public TabPaneCreator(AddToXML sendToXMLParam, Document createdXMLParam, Bus busInstanceParam) {
         allActiveObjectObjects = new ArrayList<>();
         allActiveObjects = new HashMap<>();
