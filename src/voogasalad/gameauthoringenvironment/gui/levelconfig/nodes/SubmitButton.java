@@ -31,7 +31,7 @@ public class SubmitButton extends Button {
                 busInstance.goToPlayer(createdXML);
 
             } catch (ParserConfigurationException | GameEngineException e) {
-                e.printStackTrace();
+                throw new Error(e);
             }
         });
     }

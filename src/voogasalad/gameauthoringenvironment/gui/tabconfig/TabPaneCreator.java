@@ -81,7 +81,7 @@ public class TabPaneCreator {
                 Tab objectTab = new Tab(key, new ParameterCreator(key, typeToParams.getString(key).split(","), paramFieldType, levelConfigPane, allActiveObjects, allActiveObjectObjects));
                 tabPane.getTabs().add(objectTab);
             } catch (ParserConfigurationException e) {
-                e.printStackTrace();
+                throw new Error(e);
             }
         });
     }
