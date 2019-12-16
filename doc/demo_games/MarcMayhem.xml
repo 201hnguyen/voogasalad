@@ -192,7 +192,7 @@
         </Strategies>
         <Properties>
             <Archetype>ENEMY</Archetype>
-            <ImagePath>zombie.png</ImagePath>
+            <ImagePath>enemy1.png</ImagePath>
             <PrototypeId>5</PrototypeId>
             <Height>70</Height>
             <Width>70</Width>
