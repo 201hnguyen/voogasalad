@@ -26,6 +26,8 @@ Game Authoring and Player Project
 **Files necessary to start the project (classes containing main):** src.voogasalad.Main
 
 **Files used to test:** all files in src.testing
+
+* Updated codes are on another branch BranchForXMLLinking. Please use the code there to ensure all xml files run.
 ### Errors that can be handled without crashing
 #### GAME ENGINE EXCEPTIONS
 
