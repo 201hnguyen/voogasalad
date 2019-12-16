@@ -151,7 +151,7 @@
                 <Type>PathMovement</Type>
                 <Parameters>
                     <Path>190,150</Path>
-                    <Speed>70</Speed>
+                    <Speed>300</Speed>
                 </Parameters>
             </MovementStrategy>
             <CostStrategy>
